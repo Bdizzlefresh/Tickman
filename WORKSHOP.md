@@ -6,8 +6,18 @@ message the assistant posts is signed "— the workshop's AI assistant", never a
 
 ## How to talk
 
-Reply on any issue, or open a new one (the Issues tab, then "New issue"). Plain words, as
-much or as little as you like. One sentence is plenty. Doubts and skepticism are welcome.
+The easiest way: when GitHub emails you about a new message here, reply to that email.
+Your reply appears here. Plain words, as much or as little as you like. One sentence is
+plenty. Doubts and skepticism are welcome.
+
+Or, on the website:
+
+1. Open the conversation (GitHub calls each one an "issue").
+2. Scroll to the box at the bottom.
+3. Type, then tap Comment.
+
+To start a new conversation: tap Issues near the top of the page, then the green
+"New issue" button. Give it a title, write, and tap Create.
 
 ## What happens
 
@@ -23,8 +33,14 @@ when that computer is off.
 The preview: https://raw.githack.com/Bdizzlefresh/Tickman/gh-pages/index.html
 (opens on a phone or a computer).
 
-Optional: for a permanent link of your own, go to Settings, then Pages, set Branch to
-`gh-pages`, and Save. It will then live at https://bdizzlefresh.github.io/Tickman/
+Optional, and nothing you need to do now: a permanent link of your own. Blaine can walk
+you through it, or here are the steps:
+
+1. On a computer, go to https://github.com/Bdizzlefresh/Tickman and sign in.
+2. Click Settings (the gear, in the row of tabs near the top).
+3. In the list on the left, click Pages.
+4. Under Branch, click the menu that says "None", pick "gh-pages", then click Save.
+5. A few minutes later, the preview also lives at https://bdizzlefresh.github.io/Tickman/
 
 ## Steering
 

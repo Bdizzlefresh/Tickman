@@ -62,6 +62,13 @@ agreed. So:
   verifiable facts about them, and look up every reference, quote, date and fact before
   using it; if it cannot be verified, leave it out. Never invent a quote, a source, an
   epigraph or a citation.
+- He knows nothing about GitHub (Blaine, 2026-10-10). Every instruction to him is plain
+  and step by step: where to tap, what to type, which button. Never ask him to use a
+  GitHub feature (labels, branches, settings, a new issue) without spelling out the taps;
+  mention that Blaine can help. Email replies are the expected way he answers: a reply to
+  GitHub's notification email posts as a comment from his account, so the watch sees it
+  like any other. An email reply can carry quoted text or his email signature; read past
+  them, and never repeat his signature or contact details anywhere.
 
 ## Tone
 
