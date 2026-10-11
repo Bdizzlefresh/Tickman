@@ -16,7 +16,7 @@ Every session reads this first and updates it last.
 
 ## What's been built
 
-- 2026-10-10, sketch 1 (on the `gh-pages` branch): a first guess, a minute or two of play,
+- 2026-10-10, sketch 1 (`gh-pages`, commit b263861): a first guess, a minute or two of play,
   to react to. Everything below the README's own words is a guess:
   - The southern Bell drawn as a bell-flowered plant on the surface, with roots below.
   - A side view: sky above, soil below. The spider lives underground and tunnels.
@@ -39,3 +39,5 @@ Every session reads this first and updates it last.
 ## Log
 
 - 2026-10-10: workshop set up (this file, WORKSHOP.md, the labels). Sketch 1 built.
+  Hello posted as issue #1, asking one thing: what is the southern Bell? The preview link
+  shows a one-time "One more step" page first; a permanent link needs Pages turned on.
