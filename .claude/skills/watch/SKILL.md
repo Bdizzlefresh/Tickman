@@ -65,7 +65,10 @@ blocked steps).
 >    replied after his newest comment there. Write at the current register: at 1, short,
 >    exact and useful, with one small lead (one or two questions at most). No AI-isms, no
 >    anachronisms, no product name; real, checked references only. Sign
->    `— the workshop's AI assistant`.
+>    `— the workshop's AI assistant`. Post each reply from a file, never with the text on
+>    a command line (your commands show in Blaine's terminal): write it to
+>    `~/workspace/2026-tickman/.workshop-reply.md`, then
+>    `gh issue comment <n> -R Bdizzlefresh/Tickman --body-file ~/workspace/2026-tickman/.workshop-reply.md`.
 > 2. Early sessions are fast and light: a prompt and a short reply, at most one small
 >    change to the sketch, no big builds, no new pages unless he asks.
 > 3. If he says "slower", "pause", "just talk", or "stop", honor it at once: acknowledge
@@ -88,5 +91,11 @@ blocked steps).
 
 ## Arming
 
-`/loop 10m /watch`. A session opened in another folder can run the same tick by following
-this file: every path above is absolute.
+In a terminal: `cd ~/workspace/2026-tickman && claude`, then `/loop 10m /watch`. Leave it
+open; each tick prints one line. The session's permissions are in `.claude/settings.local.json`
+(on this machine only, never committed): they allow the sweep, reading threads, posting
+from a file, the workshop's git (no force-push), edits inside this folder, and reading the
+private background, so a tick never stops to ask and no reply text appears in a prompt. A
+session opened in another folder can run the same tick by following this file: every path
+above is absolute. Run one watch at a time (the state file keeps two from tending the
+same thing, but one is clearer).
