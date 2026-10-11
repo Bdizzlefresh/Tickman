@@ -55,7 +55,8 @@ blocked steps).
 > conversation" and "Register" sections; the rest is taste only (never quote it, commit
 > it, or bring up anything in it he hasn't said himself). The current register is
 > `"register"` in `~/workspace/2026-tickman/.git/workshop-state.json`. Then read these
-> threads in full, with `gh issue view <n> -R Bdizzlefresh/Tickman --comments`:
+> threads in full, with `gh issue view <n> -R Bdizzlefresh/Tickman --json title,body,author,comments`
+> (the JSON form: the plain `--comments` view prints nothing outside a terminal):
 > <THREADS>. New from him since the last tick: <ITEMS>.
 >
 > Then:
