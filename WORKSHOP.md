@@ -46,7 +46,10 @@ you through it, or here are the steps:
 
 Say "slower", "pause", "just talk", or "stop", any time. They all work.
 
-## Three labels, use them or ignore them
+## Labels (nothing for you to do)
+
+You never need labels. Just write, by email or in the box. The assistant adds labels
+itself, so you may see one of these words on a message. Here is what each means:
 
 - `idea`: something you want in the game
 - `question`: something to ask or talk through
