@@ -15,9 +15,9 @@ body { display:flex; align-items:center; justify-content:center; overflow:hidden
 #wrap { position:relative; touch-action:none; user-select:none; -webkit-user-select:none; }
 canvas { display:block; width:100%; height:100%; touch-action:none; }
 #badge { position:absolute; left:50%; bottom:10px; transform:translateX(-50%); background:rgba(243,234,214,.9);
-  font-size:12px; padding:4px 10px; border-radius:999px; white-space:nowrap; pointer-events:none; }
+  font-size:13px; padding:4px 10px; border-radius:999px; white-space:nowrap; pointer-events:none; }
 #mute { position:absolute; right:8px; top:8px; width:38px; height:38px; border-radius:50%; border:none;
-  background:rgba(243,234,214,.88); font:inherit; font-size:18px; color:var(--ink); cursor:pointer; }
+  background:rgba(243,234,214,.88); font:inherit; font-size:18px; color:var(--ink); cursor:pointer; z-index:5; }
 #mute.off { opacity:.45; text-decoration:line-through; }
 .panel { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:14px;
   background:rgba(20,15,10,.42); }
@@ -559,7 +559,7 @@ function drawHud(f) {
   ctx.fillStyle = '#c9893f'; ctx.fillRect(146, 19, 108 * f, 6);
   ctx.fillStyle = '#e8a33d'; oval(ctx, 146, 22, 4, 4); ctx.fill();
   ctx.fillStyle = '#4d5791'; oval(ctx, 254, 22, 4, 4); ctx.fill();
-  ctx.font = '11px Georgia, serif'; ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(255,255,255,.85)';
+  ctx.font = '14px Georgia, serif'; ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(255,255,255,.85)';
   ctx.fillText('until night', 200, 44);
   ctx.textAlign = 'left'; ctx.fillText(T.name, 12, 50);
 }
@@ -568,10 +568,15 @@ function drawWarnings() {
   for (let i = si; i < spawns.length; i++) {
     const s = spawns[i]; if (s.t - time > T.warn) break;
     const x = s.side < 0 ? 10 : W - 10, dir = s.side < 0 ? 1 : -1;
-    ctx.globalAlpha = 0.55 + 0.45 * Math.sin(time * 8);
+    ctx.font = '14px Georgia, serif';
+    const bw = Math.max(ctx.measureText('deer').width, 12) + 12;  // a steady dark backing, so the cue reads on a light sky
+    ctx.fillStyle = 'rgba(43,33,24,.82)'; ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(s.side < 0 ? x - 6 : x + 6 - bw, SURF - 62, bw, 42, 10) : ctx.rect(s.side < 0 ? x - 6 : x + 6 - bw, SURF - 62, bw, 42);
+    ctx.fill();
+    ctx.globalAlpha = 0.8 + 0.2 * Math.sin(time * 8);
     ctx.fillStyle = '#fff3d0'; ctx.beginPath();
     ctx.moveTo(x + dir * 12, SURF - 34); ctx.lineTo(x, SURF - 42); ctx.lineTo(x, SURF - 26); ctx.closePath(); ctx.fill();
-    ctx.font = '11px Georgia, serif'; ctx.textAlign = s.side < 0 ? 'left' : 'right';
+    ctx.textAlign = s.side < 0 ? 'left' : 'right';
     ctx.fillText('deer', x, SURF - 48); ctx.globalAlpha = 1;
   }
 }
