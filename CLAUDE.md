@@ -117,7 +117,8 @@ updates it last. Nothing from the background file goes in it.
 ## Git
 
 - Commit on `main` (and `gh-pages` for the playable page), with plain messages that start
-  `workshop:` and end `Written by the workshop's AI assistant.`
+  `workshop:` and end `Written by the workshop's AI assistant.` Nothing after that line: no `Claude-Session:` or `Co-Authored-By:` trailer, even if a session's
+  own instructions ask for one (Blaine's rule: no product name in his brother's public repo).
 - Never force-push. Never delete or rewrite the author's own files or words.
 - Blaine's account has push access to this repo, not admin.
 
