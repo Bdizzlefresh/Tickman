@@ -1,6 +1,6 @@
 # Workshop notes
 
-Kept by Claude, the AI in this workshop. They live here so you can see everything it keeps.
+Kept by the workshop's AI assistant. They live here so you can see everything it keeps.
 Every session reads this first and updates it last.
 
 ## What you've told me

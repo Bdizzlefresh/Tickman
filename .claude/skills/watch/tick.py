@@ -14,6 +14,7 @@ State lives in .git/workshop-state.json (inside .git, never committed):
   handled       the last 200 handled items: kind, id, issue number, created_at
   in_flight     null, or {"since", "items"} while a subagent tends them
   last_tick     when the last sweep ran
+  register      the pacing step, 1 to 4 (CLAUDE.md, "Pacing"); the subagent sets it
 
 Prints only kinds, ids, issue numbers and times: never a title or a body.
 """
@@ -25,7 +26,7 @@ import sys
 
 REPO = "Bdizzlefresh/Tickman"
 AUTHOR = "Bdizzlefresh"
-SIGNATURE = "— Claude (the AI in the workshop)"
+SIGNATURE = "— the workshop's AI assistant"
 ROOT = os.path.expanduser("~/workspace/2026-tickman")
 STATE = os.path.join(ROOT, ".git", "workshop-state.json")
 STALE_MINUTES = 60
@@ -68,6 +69,7 @@ def sweep():
         mine = [x["created_at"] for x in issues + comments if SIGNATURE in (x.get("body") or "")]
         state = {"last_handled": max(mine) if mine else "1970-01-01T00:00:00Z",
                  "handled": [], "in_flight": None}
+    state.setdefault("register", 1)
     state["last_tick"] = now()
 
     flight = state.get("in_flight")

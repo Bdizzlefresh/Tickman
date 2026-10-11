@@ -1,8 +1,8 @@
 # The workshop
 
-This is a workshop where you and an AI make your game together. The AI is Claude, made by
-Anthropic. Blaine set it up here on his GitHub account, at your request, so you can build
-Tickman your way. Every message the AI posts is signed as the AI, never as Blaine.
+This is a workshop where you and an AI assistant make your game together. Blaine set it
+up here on his GitHub account, at your request, so you can build Tickman your way. Every
+message the assistant posts is signed "— the workshop's AI assistant", never as Blaine.
 
 ## How to talk
 
@@ -11,8 +11,8 @@ much or as little as you like. One sentence is plenty. Doubts and skepticism are
 
 ## What happens
 
-The AI reads what you write and answers. Sometimes it builds a small thing for you to try.
-It changes nothing about your idea without your say. It keeps its working notes in
+The assistant reads what you write and answers. Sometimes it builds a small thing for you
+to try. It changes nothing about your idea without your say. It keeps its working notes in
 [workshop/notes.md](workshop/notes.md), right here, so you can see everything it keeps.
 
 It runs on Blaine's computer, so an answer can take a little while, and sometimes longer
@@ -34,7 +34,7 @@ Say "slower", "pause", "just talk", or "stop", any time. They all work.
 
 - `idea`: something you want in the game
 - `question`: something to ask or talk through
-- `try-this`: build something for me to play
+- `try-this`: build something to play
 
 ## Who sees what
 
