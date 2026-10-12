@@ -9,10 +9,12 @@ Every session reads this first and updates it last.
   southern Bell from the local deer. The spider can eat a tick filled with dog blood, a
   tick filled with human blood, or a regular tick, and each gives it different traits for
   the rescue.
+- 2026-10-12, issue #1: the southern Bell is your wife, Isabella, and she is very Mexican.
 
 ## What you've decided
 
-- Nothing yet beyond the README. Everything else is yours to decide.
+- The southern Bell is Isabella, a person. (Sketch 1 guessed a flower; that guess was wrong.)
+- Everything else is yours to decide.
 
 ## What's been built
 
@@ -30,7 +32,9 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
-- What is the southern Bell?
+- What are the deer doing to Isabella? Have they taken her somewhere, or are they closing
+  in on her? (Asked 2026-10-12.)
+- When she's drawn, what should it get right about her? (Asked 2026-10-12.)
 - What should each tick really give the spider? Is the choice made once, or again and
   again?
 - Which games, books, art or places feel like this to you?
@@ -41,3 +45,6 @@ Every session reads this first and updates it last.
 - 2026-10-10: workshop set up (this file, WORKSHOP.md, the labels). Sketch 1 built.
   Hello posted as issue #1, asking one thing: what is the southern Bell? The preview link
   shows a one-time "One more step" page first; a permanent link needs Pages turned on.
+- 2026-10-12: you answered on issue #1: the Bell is Isabella. Replied there with two
+  questions (above) before the next sketch puts her in. Sketch unchanged for now: its
+  flower Bell is still on screen, labeled as a guess.
