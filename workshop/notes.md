@@ -43,6 +43,10 @@ Every session reads this first and updates it last.
 - 2026-10-14, issue #1: you asked for it as a level-based game, seen from above like
   Pokémon Red.
 - 2026-10-14, issue #1: make Isabella a little more sexy, and make the gnats a little gay.
+- 2026-10-14, issue #1: clarify the type 1 diabetic powers, and how to use them.
+- 2026-10-14, issue #1: make level 1's room look like a one-bedroom apartment, like a college
+  apartment, with a bunch of empty Rolling Rock bottles and a laptop that's been puked on. An
+  angry, large white man named Phil is there. Add a text box that says "oh no! My laptop!!".
 
 ## What you've decided
 
@@ -51,6 +55,8 @@ Every session reads this first and updates it last.
   taking Isabella, the two bosses, the mounts, the cornfield and the egg sack.
 - The choice of tick is made once, before leaving the sunroom.
 - A level-based game, seen from above, like Pokémon Red.
+- Level 1's room is a one-bedroom college apartment: empty Rolling Rock bottles, a puked-on
+  laptop, and Phil, large and angry, whose line is "oh no! My laptop!!".
 - Everything else is yours to decide.
 
 ## What's been built
@@ -74,16 +80,32 @@ Every session reads this first and updates it last.
   long hair, red lips, gold earrings, and a red dress with a slit, in heels. The gnats have
   rainbow wings, a faint rainbow trail, and a little twirl as they fly. Both are guesses at
   what you meant.
+- 2026-10-14, sketch 2 changed (`gh-pages`, commit 6ddded2), as you asked: level 1 is now a
+  one-bedroom college apartment. Empty Rolling Rock bottles all over the carpet, the puked-on
+  laptop on a coffee table, and Phil, large and angry (red in the face, fists clenched, steam
+  rising off him), standing by it. The level opens on him with your text box, "oh no! My
+  laptop!!", and tapping A on him shows it again. The opening line, title card and end screen
+  now say "the apartment". Guesses, labeled on the end screen: the couch, coffee table, carpet,
+  walls and windows; how Phil looks; the view outside (still the lawn, beach and lake).
 
 ## Open questions
 
+- The type 1 diabetic powers. Offered one way they could work (a guess): a blood sugar meter
+  on screen; when it's low, vision blurs, you move slowly, and you can't cast; eat something
+  sweet to bring it back up; once it's steady, the psychic powers work (shoot Lyme disease, and
+  other spells); every spell burns sugar, so cast too much and you crash. Does that fit? Should
+  high blood sugar be a danger too, or only lows? (Asked 2026-10-14.)
 - Fights: like Pokémon Red (their own screen, a move each turn from a short list), or
-  right on the map, dodging as you go? (Asked 2026-10-14, and again later that day, no
-  rush.)
+  right on the map, dodging as you go? (Asked 2026-10-14, twice, no rush. Not asked again in
+  the latest reply.)
+- Is the apartment where the story starts now, in place of the sunroom of the Lake Michigan
+  home? The view outside is still the lawn, beach and lake, a guess. (Mentioned 2026-10-14,
+  not asked.)
 - Are the new looks for Isabella and the gnats what you meant? (Asked 2026-10-14.)
 - When Isabella is drawn, what should it get right about her? (Asked 2026-10-12.)
 - Not asked yet: the miniature tangerine vespa, a scooter or a wasp? Who placed the three
-  ticks in the web? What does the spider eat in its ordinary days?
+  ticks in the web? What does the spider eat in its ordinary days? Who is Phil in the story,
+  and does he come back?
 - Which other games, books, art or places feel like this to you? (So far: Super Mario's
   Princess Peach, and Pokémon Red.)
 
@@ -105,3 +127,7 @@ Every session reads this first and updates it last.
   Changed both in sketch 2, same link, and replied on issue #1 with what changed, asking
   again (no rush) about fights. Two more messages from you came in as that reply went
   up; the next session answers them.
+- 2026-10-14: three messages from you on issue #1: clarify the type 1 diabetic powers, and
+  make level 1 a college apartment with the bottles, the puked-on laptop, Phil, and his line.
+  Changed level 1 in sketch 2, same link. Replied on issue #1 with what changed and one way
+  the powers could work, with two questions about them.
