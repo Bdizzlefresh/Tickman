@@ -42,6 +42,7 @@ Every session reads this first and updates it last.
     tick units" attach to Isabella and keep her safe until the deer are gone.
 - 2026-10-14, issue #1: you asked for it as a level-based game, seen from above like
   Pokémon Red.
+- 2026-10-14, issue #1: make Isabella a little more sexy, and make the gnats a little gay.
 
 ## What you've decided
 
@@ -69,11 +70,17 @@ Every session reads this first and updates it last.
     into the woods.
   - The ticks' colors, and the spider's colors after eating one.
   - Sound: a few soft plucked notes, with a mute button.
+- 2026-10-14, sketch 2 changed (`gh-pages`, commit be3749d), as you asked: Isabella now has
+  long hair, red lips, gold earrings, and a red dress with a slit, in heels. The gnats have
+  rainbow wings, a faint rainbow trail, and a little twirl as they fly. Both are guesses at
+  what you meant.
 
 ## Open questions
 
 - Fights: like Pokémon Red (their own screen, a move each turn from a short list), or
-  right on the map, dodging as you go? (Asked 2026-10-14.)
+  right on the map, dodging as you go? (Asked 2026-10-14, and again later that day, no
+  rush.)
+- Are the new looks for Isabella and the gnats what you meant? (Asked 2026-10-14.)
 - When Isabella is drawn, what should it get right about her? (Asked 2026-10-12.)
 - Not asked yet: the miniature tangerine vespa, a scooter or a wasp? Who placed the three
   ticks in the web? What does the spider eat in its ordinary days?
@@ -94,3 +101,7 @@ Every session reads this first and updates it last.
 - 2026-10-14: you wrote the whole storyline on issue #1 and asked for a level-based game
   seen from above, like Pokémon Red. Built sketch 2 (level 1, the sunroom) and replied
   with the link and one question, about how fights should work.
+- 2026-10-14: you asked for Isabella a little more sexy and the gnats a little gay.
+  Changed both in sketch 2, same link, and replied on issue #1 with what changed, asking
+  again (no rush) about fights. Two more messages from you came in as that reply went
+  up; the next session answers them.
