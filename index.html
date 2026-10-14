@@ -426,25 +426,27 @@ const TICK_ART = {
   human:   [FAT_TICK, { m: '#2b1d14', S: '#3a2418', B: '#a0636a', H: '#d9a5a8', d: '#6e3c44', l: '#2b1d14' }],
   dog:     [FAT_TICK, { m: '#2b1d14', S: '#3a2418', B: '#8a8494', H: '#c8c3cf', d: '#5a5563', l: '#2b1d14' }],
 };
+// Isabella: long hair, a red dress, red lips, heels (a guess at "a little more sexy")
 const ISABELLA = [
   '................',
   '.....hhhhhh.....',
-  '....hhhhhhhh....',
+  '....hHHhhhhh....',
   '...hhhhhhhhhh...',
   '...hhsssssshh...',
   '...hsessssesh...',
-  '...hssssssssh...',
-  '...hhssmmsshh...',
-  '..hhhttsstthhh..',
-  '..hhtttttttthh..',
-  '..hsttttttttsh..',
-  '...stttttttts...',
-  '....pppppppp....',
-  '....ppp..ppp....',
-  '....ppp..ppp....',
-  '....kkk..kkk....'];
-const ISABELLA_STEP = ISABELLA.slice(0, 13).concat(['....ppp...pp....', '....ppp...pp....', '....kkk...kk....']);
-const ISABELLA_PAL = { h: '#2a1a14', s: '#b97a52', e: '#1a100c', m: '#8e4a3a', t: '#2f7f7a', p: '#34406b', k: '#2b2118' };
+  '...gssssssssg...',
+  '...hhssllsshh...',
+  '..hhhsssssshhh..',
+  '..hhsRRRRRRshh..',
+  '..hhs.rRRr.shh..',
+  '...hsRRRRRRsh...',
+  '.....RRRRRR.....',
+  '.....rRRRrs.....',
+  '.....ss..ss.....',
+  '.....kk..kk.....'];
+const ISABELLA_STEP = ISABELLA.slice(0, 14).concat(['.....ss...s.....', '.....kk...k.....']);
+const ISABELLA_PAL = { h: '#2a1a14', H: '#4a2e22', s: '#b97a52', e: '#1a100c', l: '#c0283c', g: '#e8c25a',
+  R: '#b3202e', r: '#7e1520', k: '#7e1520' };
 const DEER = [
   '................',
   '................',
@@ -463,6 +465,7 @@ const DEER = [
   '..d.d...d.d.....',
   '..n.n...n.n.....'];
 const DEER_STEP = DEER.slice(0, 12).concat(['...d.d...d.d....', '...d.d..d...d...', '..d...d.d...d...', '..n...n.n...n...']);
+const RAINBOW = ['#e40303', '#ff8c00', '#ffed00', '#008026', '#24408e', '#732982'];
 const DEER_PAL = { D: '#9a6538', d: '#5a3820', L: '#eadfc8', W: '#ffffff', n: '#1a120c', e: '#7a4d2b' };
 
 function drawSprite(g, rows, pal, x, y, rot = 0, flip = false, legShift = 0) {
@@ -819,13 +822,22 @@ function draw() {
     const t = TICKS[k], [art, pal] = TICK_ART[k];
     list.push([t.y * TS, () => drawSprite(ctx, art, pal, t.x * TS - cx, t.y * TS - cy + Math.round(Math.sin(time * 2 + t.x)), 0)]);
   }
+  // the gnats: rainbow wings, and a little twirl as they fly (a guess at "a little gay")
   for (const g of gnats) list.push([g.y * TS, () => {
-    const gx = g.x * TS + 6 + Math.round(Math.sin(time * 9 + g.ph) * 1.5) - cx;
-    const gy = g.y * TS + 6 + Math.round(Math.cos(time * 7 + g.ph)) - cy;
+    const at = t => [g.x * TS + 6 + Math.round(Math.sin(t * 5 + g.ph) * 4) - cx,
+                     g.y * TS + 6 + Math.round(Math.sin(t * 10 + g.ph * 2) * 2) - cy];
+    const [gx, gy] = at(time);
+    const hue = k => RAINBOW[(Math.floor(time * 8 + g.ph * 3) + k) % RAINBOW.length];
+    for (let k = 4; k >= 1; k--) {  // a little rainbow trail
+      const [tx, ty] = at(time - k * 0.09);
+      ctx.globalAlpha = 0.85 - k * 0.15; ctx.fillStyle = RAINBOW[(k + 5) % RAINBOW.length]; ctx.fillRect(tx + 1, ty + 1, 1, 1);
+    }
+    ctx.globalAlpha = 1;
     ctx.fillStyle = 'rgba(43,33,24,.25)'; ctx.fillRect(gx + 1, gy + 4, 3, 1);
     ctx.fillStyle = '#2b2118'; ctx.fillRect(gx, gy, 3, 2); ctx.fillRect(gx + 1, gy + 2, 1, 1);
-    if (Math.floor(time * 18 + g.ph) % 2) { ctx.fillStyle = '#ffffff'; ctx.fillRect(gx - 1, gy - 1, 1, 1); ctx.fillRect(gx + 3, gy - 1, 1, 1); }
-    else { ctx.fillStyle = '#9bb3c4'; ctx.fillRect(gx - 1, gy, 1, 1); ctx.fillRect(gx + 3, gy, 1, 1); }
+    const up = Math.floor(time * 18 + g.ph) % 2 ? -1 : 0;
+    ctx.fillStyle = hue(0); ctx.fillRect(gx - 2, gy + up, 2, 1);
+    ctx.fillStyle = hue(3); ctx.fillRect(gx + 3, gy + up, 2, 1);
   }]);
   if (isa.visible) list.push([isa.y * TS, () => {
     const moving = isa.path && isa.path.length;
