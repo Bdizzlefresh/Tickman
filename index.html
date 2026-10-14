@@ -95,7 +95,7 @@ a { color:var(--accent); }
 <div id="title" class="panel">
   <div class="card">
     <h1>Tickman</h1>
-    <div class="sub">Level 1: the sunroom</div>
+    <div class="sub">Level 1: the apartment</div>
     <p>A sketch from your story, to react to. It's not the game. Anything your story didn't say is a guess.</p>
     <p><b>How to play:</b> move with the arrows under the screen. Tap <b>A</b> to look at things, and to read on.</p>
     <div class="btns"><button class="btn" id="start">Start</button></div>
@@ -108,14 +108,14 @@ a { color:var(--accent); }
     <p id="endText"></p>
     <p><b>The levels, from your story:</b></p>
     <ol>
-      <li>The sunroom: a spider's life, three ticks, Isabella taken. <i>(This sketch.)</i></li>
+      <li>The apartment: a spider's life, Phil, three ticks, Isabella taken. <i>(This sketch.)</i></li>
       <li>Toward the woods: the coffee roaster, the first boss.</li>
       <li>Faster: your mount (a naked mole rat, a miniature tangerine vespa, or the zoomies), then the second
         boss, the crumbling American middle class and high rent gouging.</li>
       <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
     </ol>
-    <p class="small">Guesses in this sketch: the gnats, the room, how Isabella and the deer look, and how they
-      take her.</p>
+    <p class="small">Guesses in this sketch: the gnats, the rest of the apartment, the view outside, how Phil,
+      Isabella and the deer look, and how the deer take her.</p>
     <div class="btns">
       <button class="btn" id="another">Try another tick</button>
       <button class="btn alt" id="over">Start over</button>
@@ -132,19 +132,19 @@ const $ = id => document.getElementById(id);
 const SPEED = Math.max(1, Math.min(8, Number(new URLSearchParams(location.search).get('speed')) || 1));
 const TS = 16, VW = 160, VH = 144, STEP = 0.19;
 
-// ---- the map. w web, H home, T tunnel, K the nook, S the silk sheet, . floor, r rug, c chair, t table,
-// p plant, # wall, D door, W window, g grass, f trees, b sand, ~ the lake ----
+// ---- the map. w web, H home, T tunnel, K the nook, S the silk sheet, . carpet, o empty bottles, u couch,
+// n coffee table, L the laptop, # wall, D door, W window, g grass, f trees, b sand, ~ the lake ----
 const MAP = [
   'wwwwwwwww###########',
-  'wHTTwwwww..p.....pp#',
-  'wwwTwKKKw..........#',
-  'wTTTTTTTw...rrrrr..#',
-  'wTwwwwwTw...rctcr..#',
-  'wTwSSSSSS...rrrrr..D',
-  'wTTSSSSSS..........#',
-  'wwwSSSSSS..........#',
-  '#p................p#',
-  '#WWWWWWWWWWWWWWWWWW#',
+  'wHTTwwwww.o.uuu..oo#',
+  'wwwTwKKKw...o....o.#',
+  'wTTTTTTTw...nLn...o#',
+  'wTwwwwwTw.o..o.....#',
+  'wTwSSSSSS...o......D',
+  'wTTSSSSSS.o.....o..#',
+  'wwwSSSSSS..o.....o.#',
+  '#.o...o.....o...o..#',
+  '#WWWWWW###WWWWWW####',
   'gggggggggggggggfffff',
   'ggggggggggggggggffff',
   'gggggggggggggggggfff',
@@ -203,63 +203,83 @@ const canopy = document.createElement('canvas'); canopy.width = MAPW; canopy.hei
 const bg = base.getContext('2d'), cg = canopy.getContext('2d');
 const wallish = c => c === 'w' || c === '#';
 
+// the apartment: worn carpet, empty bottles, a beat-up couch, a coffee table (guesses, around what you asked for)
 function paintFloor(g, x, y, tx, ty) {
-  for (let i = 0; i < 4; i++) {
-    const py = y + i * 4;
-    g.fillStyle = (tx * 7 + ty * 3 + i * 5) % 3 === 0 ? '#c2925a' : '#cea26b'; g.fillRect(x, py, 16, 3);
-    g.fillStyle = '#a07848'; g.fillRect(x, py + 3, 16, 1); g.fillRect(x + ((tx * 5 + ty * 11 + i * 7) % 16), py, 1, 3);
+  g.fillStyle = '#b3a68a'; g.fillRect(x, y, 16, 16);
+  const r = rng(tx * 23 + ty * 47 + 11);
+  for (let i = 0; i < 16; i++) px(g, x + Math.floor(r() * 16), y + Math.floor(r() * 16), r() < 0.5 ? '#a39579' : '#c1b597');
+  if ((tx * 5 + ty * 3) % 7 === 2) disc(g, x + 5 + Math.floor(r() * 6), y + 5 + Math.floor(r() * 6), 2, 'rgba(96,74,40,.3)');
+}
+const GLASS = '#2f7d3a', GLASS_HI = '#6cbf72', GLASS_DK = '#1f5a28', LABEL = '#eef0e4';
+function bottleLying(g, bx, by, vertical) {  // an empty green bottle on its side, white painted label
+  const R = (a, b, w, h, c) => { g.fillStyle = c; vertical ? g.fillRect(bx + b, by + a, h, w) : g.fillRect(bx + a, by + b, w, h); };
+  R(0, 3, 7, 1, 'rgba(0,0,0,.22)');
+  R(0, 0, 7, 3, GLASS); R(1, 0, 5, 1, GLASS_HI);
+  R(2, 0, 2, 3, LABEL);
+  R(7, 1, 3, 1, GLASS); R(10, 1, 1, 1, GLASS_DK);
+}
+function bottleStanding(g, bx, by) {  // seen from above
+  disc(g, bx + 1, by + 2, 2, 'rgba(0,0,0,.22)');
+  disc(g, bx, by, 2, GLASS); px(g, bx - 1, by - 1, GLASS_HI); px(g, bx, by, GLASS_DK);
+}
+function paintBottles(g, x, y, tx, ty) {
+  paintFloor(g, x, y, tx, ty);
+  const r = rng(tx * 41 + ty * 13 + 7), n = 2 + Math.floor(r() * 2);
+  for (let i = 0; i < n; i++) {
+    const k = r();
+    if (k < 0.25) bottleStanding(g, x + 3 + Math.floor(r() * 10), y + 3 + Math.floor(r() * 10));
+    else if (k < 0.62) bottleLying(g, x + Math.floor(r() * 6), y + 1 + Math.floor(r() * 11), false);
+    else bottleLying(g, x + 1 + Math.floor(r() * 11), y + Math.floor(r() * 6), true);
   }
 }
-function paintRug(g, x, y, tx, ty) {
-  g.fillStyle = '#8e3b2e'; g.fillRect(x, y, 16, 16);
-  for (let j = 0; j < 16; j++) for (let i = 0; i < 16; i++) {
-    const u = (x + i) % 8, v = (y + j) % 8, d = Math.abs(u - 3.5) + Math.abs(v - 3.5);
-    if (d < 1.2) px(g, x + i, y + j, '#e9d3a8'); else if (d > 2.4 && d < 3.4) px(g, x + i, y + j, '#b8733a');
+function paintCouch(g, x, y, tx, ty) {
+  paintFloor(g, x, y, tx, ty);
+  const left = tile(tx - 1, ty) !== 'u', right = tile(tx + 1, ty) !== 'u';
+  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(x, y + 14, 16, 2);
+  g.fillStyle = '#4c5532'; g.fillRect(x, y, 16, 15);
+  g.fillStyle = '#5f6a3e'; g.fillRect(x, y + 1, 16, 5);
+  g.fillStyle = '#76824f'; g.fillRect(x + (left ? 1 : 0), y + 6, 16 - (left ? 1 : 0) - (right ? 1 : 0), 8);
+  g.fillStyle = '#4c5532'; g.fillRect(x + 15, y + 6, 1, 8);
+  if (left) { g.fillStyle = '#5f6a3e'; g.fillRect(x, y + 1, 4, 13); g.fillStyle = '#4c5532'; g.fillRect(x + 4, y + 6, 1, 8); }
+  if (right) { g.fillStyle = '#5f6a3e'; g.fillRect(x + 12, y + 1, 4, 13); g.fillStyle = '#4c5532'; g.fillRect(x + 11, y + 6, 1, 8); }
+  if (!left && !right) {  // a worn spot on the middle cushion
+    disc(g, x + 8, y + 10, 2, '#a39a72'); px(g, x + 7, y + 9, '#d8d0b0'); px(g, x + 9, y + 11, '#d8d0b0');
   }
-  const isR = (a, b) => 'rct'.includes(tile(a, b));
-  g.fillStyle = '#e9d3a8';
-  if (!isR(tx, ty - 1)) g.fillRect(x, y + 1, 16, 2);
-  if (!isR(tx, ty + 1)) g.fillRect(x, y + 13, 16, 2);
-  if (!isR(tx - 1, ty)) g.fillRect(x + 1, y, 2, 16);
-  if (!isR(tx + 1, ty)) g.fillRect(x + 13, y, 2, 16);
-}
-function paintChair(g, x, y, tx, ty) {
-  paintRug(g, x, y, tx, ty);
-  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(x + 2, y + 3, 13, 13);
-  g.fillStyle = '#7a5a2e'; g.fillRect(x + 1, y + 1, 14, 14);
-  for (let j = 0; j < 12; j++) for (let i = 0; i < 12; i++)
-    px(g, x + 2 + i, y + 2 + j, ((i >> 1) + (j >> 1)) % 2 ? '#c9a46a' : '#b48f56');
-  const backLeft = tile(tx + 1, ty) === 't';
-  g.fillStyle = '#7a5a2e'; g.fillRect(backLeft ? x + 1 : x + 12, y + 1, 3, 14);
-  g.fillStyle = '#efe6cf'; g.fillRect(backLeft ? x + 6 : x + 3, y + 4, 7, 8);
-  g.fillStyle = '#d8cba9'; g.fillRect(backLeft ? x + 6 : x + 3, y + 11, 7, 1);
 }
 function paintTable(g, x, y, tx, ty) {
-  paintRug(g, x, y, tx, ty);
-  disc(g, x + 8, y + 9, 7, 'rgba(0,0,0,.25)');
-  disc(g, x + 8, y + 8, 7, '#6f4a2c'); disc(g, x + 8, y + 8, 6, '#9a6a40');
-  g.fillStyle = '#b88552'; g.fillRect(x + 5, y + 4, 3, 1); g.fillRect(x + 4, y + 5, 1, 2);
-}
-function paintPlant(g, x, y, tx, ty) {
   paintFloor(g, x, y, tx, ty);
-  disc(g, x + 8, y + 9, 6, 'rgba(0,0,0,.25)');
-  disc(g, x + 8, y + 8, 6, '#a5582f'); disc(g, x + 8, y + 8, 5, '#c26c3c'); disc(g, x + 8, y + 8, 4, '#4a3426');
-  const r = rng(tx * 31 + ty * 17);
-  for (let k = 0; k < 9; k++) {
-    const a = k / 9 * Math.PI * 2 + r() * 0.5, len = 5 + r() * 2;
-    for (let s = 1; s <= len; s++) {
-      const lx = clamp(Math.round(x + 7 + Math.cos(a) * s), x, x + 14), ly = clamp(Math.round(y + 7 + Math.sin(a) * s), y, y + 14);
-      g.fillStyle = s > len - 2 ? '#7cb85a' : (k % 2 ? '#4f8a3c' : '#3f7431'); g.fillRect(lx, ly, 2, 2);
-    }
-  }
+  const left = !'nL'.includes(tile(tx - 1, ty)), right = !'nL'.includes(tile(tx + 1, ty));
+  const x0 = x + (left ? 2 : 0), w = 16 - (left ? 2 : 0) - (right ? 2 : 0);
+  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(x0 + 1, y + 13, w, 2);
+  g.fillStyle = '#4a3220'; g.fillRect(x0, y + 3, w, 11);
+  g.fillStyle = '#6b4a2e'; g.fillRect(x0 + (left ? 1 : 0), y + 4, w - (left ? 1 : 0) - (right ? 1 : 0), 8);
+  g.fillStyle = '#7d5837'; g.fillRect(x0 + (left ? 2 : 0), y + 5, 5, 1);
+  if (left) bottleStanding(g, x + 7, y + 7);
+}
+function paintLaptop(g, x, y, tx, ty) {  // the laptop, puked on
+  paintTable(g, x, y, tx, ty);
+  g.fillStyle = '#4a4f55'; g.fillRect(x + 2, y, 12, 8);
+  g.fillStyle = '#26323e'; g.fillRect(x + 3, y + 1, 10, 6);
+  g.fillStyle = '#3d5163'; g.fillRect(x + 4, y + 2, 3, 1);
+  g.fillStyle = '#4a4f55'; g.fillRect(x + 2, y + 8, 12, 5);
+  g.fillStyle = '#a7adb3'; g.fillRect(x + 3, y + 8, 10, 4);
+  g.fillStyle = '#7f868d'; for (let i = 0; i < 5; i++) g.fillRect(x + 4 + i * 2, y + 9, 1, 1);
+  for (let i = 0; i < 4; i++) g.fillRect(x + 5 + i * 2, y + 10, 1, 1);
+  disc(g, x + 9, y + 10, 3, '#a7a443'); disc(g, x + 6, y + 6, 2, '#a7a443'); disc(g, x + 12, y + 13, 2, '#a7a443');
+  g.fillStyle = '#c3bf5c'; g.fillRect(x + 8, y + 9, 2, 1); g.fillRect(x + 5, y + 5, 1, 1);
+  px(g, x + 10, y + 11, '#d8c97a'); px(g, x + 7, y + 7, '#d8c97a'); px(g, x + 13, y + 14, '#8a8836');
 }
 function paintWall(g, x, y, tx, ty) {
   if (ty === 0) {
-    g.fillStyle = '#e9dfc8'; g.fillRect(x, y, 16, 16);
-    g.fillStyle = '#d6c9aa'; g.fillRect(x, y + 8, 16, 6);
-    g.fillStyle = '#c4b591'; for (let i = 0; i < 16; i += 4) g.fillRect(x + i, y + 8, 1, 6);
-    g.fillStyle = '#f6efde'; g.fillRect(x, y + 7, 16, 1);
-    g.fillStyle = '#6f5638'; g.fillRect(x, y + 14, 16, 2);
+    g.fillStyle = '#e2dccd'; g.fillRect(x, y, 16, 16);
+    g.fillStyle = '#d4ccb8'; g.fillRect(x, y + 11, 16, 3);
+    if (tx % 3 === 1) { g.fillStyle = '#cfc6b0'; g.fillRect(x + 4, y + 9, 5, 1); g.fillRect(x + 6, y + 10, 3, 1); }
+    g.fillStyle = '#7d6e58'; g.fillRect(x, y + 14, 16, 2);
+  } else if ('gf'.includes(tile(tx, ty + 1))) {  // the outside wall, between the windows
+    g.fillStyle = '#d4ccb8'; g.fillRect(x, y, 16, 16);
+    g.fillStyle = '#e2dccd'; g.fillRect(x, y + 2, 16, 10);
+    g.fillStyle = '#bfb59e'; g.fillRect(x, y + 12, 16, 1);
+    g.fillStyle = '#e2d8c2'; g.fillRect(x, y + 13, 16, 3);
   } else {
     g.fillStyle = '#cdbf9f'; g.fillRect(x, y, 16, 16);
     g.fillStyle = '#e9dfc8'; g.fillRect(x + 3, y, 10, 16);
@@ -353,10 +373,10 @@ for (let ty = 0; ty < MH; ty++) for (let tx = 0; tx < MW; tx++) {
   const ch = MAP[ty][tx], x = tx * TS, y = ty * TS;
   switch (ch) {
     case '.': paintFloor(bg, x, y, tx, ty); break;
-    case 'r': paintRug(bg, x, y, tx, ty); break;
-    case 'c': paintChair(bg, x, y, tx, ty); break;
-    case 't': paintTable(bg, x, y, tx, ty); break;
-    case 'p': paintPlant(bg, x, y, tx, ty); break;
+    case 'o': paintBottles(bg, x, y, tx, ty); break;
+    case 'u': paintCouch(bg, x, y, tx, ty); break;
+    case 'n': paintTable(bg, x, y, tx, ty); break;
+    case 'L': paintLaptop(bg, x, y, tx, ty); break;
     case '#': paintWall(bg, x, y, tx, ty); break;
     case 'D': paintDoor(bg, x, y, tx, ty); break;
     case 'W': paintWindow(bg, x, y, tx, ty); break;
@@ -529,6 +549,9 @@ let gnats = [], deer = [];
 const seen = new Set();
 const P = { tx: 1, ty: 1, nx: 1, ny: 1, t: 0, moving: false, facing: 'right', anim: 0, stepTime: STEP };
 const isa = { x: 8, y: 11, visible: true, alarm: false, path: [], walkT: 0 };
+const phil = { x: 15, y: 3, mad: 0 };  // he stands on two tiles across and two down
+const PHIL_LINE = 'oh no! My laptop!!';
+const isPhil = (x, y) => x >= phil.x && x <= phil.x + 1 && y >= phil.y && y <= phil.y + 1;
 const cam = { x: 0, y: 0 };
 let camMode = 'follow', pan = null, fade = { v: 0, tween: null }, timers = [];
 
@@ -539,7 +562,7 @@ const tickAt = (x, y) => ticksIn ? ORDER.find(k => k !== choice && TICKS[k].x ==
 function walkable(x, y) {
   const ch = tile(x, y);
   if (ch === 'D') return exitOpen;
-  return 'HTKS.r'.includes(ch) && !tickAt(x, y);
+  return 'HTKS.o'.includes(ch) && !tickAt(x, y) && !isPhil(x, y);
 }
 
 // ---- time-based helpers for the little scenes ----
@@ -599,12 +622,16 @@ function hud(t) { $('hud').hidden = !t; $('hud').textContent = t || ''; }
 // ---- the scenes ----
 async function intro() {
   phase = 'intro'; lock++;
-  await say(['A sunroom, in a beautiful home on Lake Michigan.',
-             'You are a tunneling spider, deep in your tunneled web.',
-             "A spider's life: wait on your web for something to land, then eat it.",
+  await say(['A one-bedroom apartment. A college apartment.',
+             'You are a tunneling spider, deep in your tunneled web.']);
+  await panTo(camAt(phil.x * TS + 16, phil.y * TS + 16), 1.1);
+  await say(["Phil is here. He's large, and he's angry.", { t: PHIL_LINE, fx: philYells }]);
+  await panTo(playerCam(), 1.0); camMode = 'follow';
+  await say(["A spider's life: wait on your web for something to land, then eat it.",
              'Go out to the silk at the mouth of your web, and catch three gnats.']);
   phase = 'gnats'; gnatT = 0.8; hud('Catch gnats on your web: 0 of 3'); lock--;
 }
+function philYells() { phil.mad = 1.1; pluck(NOTE.D3, 0.22); pluck(NOTE.F3, 0.16, 0.12); }
 function spawnGnat() {
   const free = SHEET.filter(([x, y]) => Math.abs(x - P.tx) + Math.abs(y - P.ty) >= 2 && !gnats.some(g => g.x === x && g.y === y));
   if (!free.length) return;
@@ -677,7 +704,7 @@ async function offer(k) {
   blur(false);
   if (k === 'dog') P.stepTime = 0.11;
   exitOpen = true; phase = 'exit';
-  await say(['The sunroom door has a gap under it.', 'Go after her.']);
+  await say(['The apartment door has a gap under it.', 'Go after her.']);
   hud('Go after her: the door, on the right side of the room'); lock--;
 }
 async function finish() {
@@ -711,6 +738,7 @@ function interact() {
   const [dx, dy] = DIRS[P.facing], fx = P.tx + dx, fy = P.ty + dy;
   const gi = gnats.findIndex(g => g.x === fx && g.y === fy);
   if (gi >= 0 && phase === 'gnats') { eatGnat(gi); return; }
+  if (isPhil(fx, fy)) { say([{ t: PHIL_LINE, fx: philYells }]); return; }
   const k = tickAt(fx, fy);
   if (k) {
     if (phase === 'ticks') lookTick(k);
@@ -725,9 +753,10 @@ function interact() {
       else if (isa.visible) say(['Through the glass: Isabella, out on the lawn.', 'Beyond her, the beach and Lake Michigan.']);
       else say(['The lawn is empty. Hoofprints lead into the woods.']);
       break;
-    case 'p': say(['A potted plant, huge from down here.']); break;
-    case 'c': say(['A wicker chair.']); break;
-    case 't': say(['A little table.']); break;
+    case 'o': say(['Empty Rolling Rock bottles. A lot of them.']); break;
+    case 'u': say(['A beat-up old couch.']); break;
+    case 'n': say(['A coffee table.']); break;
+    case 'L': say(['A laptop. Someone puked on it.']); break;
     case 'w': say(['Your web: silk, thick as a wall.']); break;
     case 'D':
       if (phase === 'choose') say(["You can't save her as you are.", 'Eat one of the ticks first.']);
@@ -766,6 +795,7 @@ const ease = k => k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
 
 function update(dt) {
   time += dt;
+  if (phil.mad > 0) phil.mad -= dt;
   timers = timers.filter(t => { t.t -= dt; if (t.t <= 0) { t.res(); return false; } return true; });
   if (box.active && box.shown < box.full.length) {
     box.acc += dt * 48; const n = Math.min(box.full.length, Math.floor(box.acc));
@@ -797,6 +827,36 @@ function bubble(x, y) {
   ctx.fillStyle = '#2b2118'; ctx.fillRect(x + 4, y - 12, 9, 11);
   ctx.fillStyle = '#ffffff'; ctx.fillRect(x + 5, y - 11, 7, 9);
   ctx.fillStyle = '#c0392b'; ctx.fillRect(x + 8, y - 10, 1, 5); ctx.fillRect(x + 8, y - 4, 1, 1);
+}
+// Phil: large and angry (how he looks is a guess)
+function drawPhil(X, Y) {
+  const g = ctx, O = '#2b1d14', SKIN = '#f2caa8', FACE = '#efaa90', SHIRT = '#5d7f9e', SHADE = '#4a6884',
+        SHORTS = '#8c7f5c', SHOE = '#ecebe4', HAIR = '#8a6136', RED = '#d9604c';
+  if (phil.mad > 0) X += Math.floor(time * 30) % 2 ? 1 : -1;
+  const out = (a, b, w, h) => { g.fillStyle = O; g.fillRect(X + a - 1, Y + b - 1, w + 2, h + 2); };
+  const fill = (a, b, w, h, c) => { g.fillStyle = c; g.fillRect(X + a, Y + b, w, h); };
+  const part = (a, b, w, h, c) => { out(a, b, w, h); fill(a, b, w, h, c); };
+  fill(6, 30, 20, 2, 'rgba(0,0,0,.25)');
+  part(11, 23, 4, 5, SKIN); part(17, 23, 4, 5, SKIN);           // legs
+  part(10, 27, 6, 3, SHOE); part(16, 27, 6, 3, SHOE);           // sneakers
+  part(9, 19, 14, 4, SHORTS); fill(15, 21, 2, 2, O);            // shorts
+  part(3, 12, 4, 8, SKIN); part(25, 12, 4, 8, SKIN);            // arms
+  part(2, 19, 5, 4, SKIN); part(25, 19, 5, 4, SKIN);            // fists
+  part(3, 11, 5, 3, SHIRT); part(24, 11, 5, 3, SHIRT);          // sleeves
+  out(8, 11, 16, 8); out(7, 14, 18, 5);                         // a T-shirt over a big belly
+  fill(8, 11, 16, 8, SHIRT); fill(7, 14, 18, 5, SHIRT); fill(8, 17, 16, 2, SHADE);
+  part(11, 1, 10, 10, FACE);                                     // red in the face
+  fill(11, 1, 10, 2, HAIR); fill(11, 3, 1, 1, HAIR); fill(20, 3, 1, 1, HAIR);
+  fill(12, 4, 1, 1, O); fill(13, 5, 2, 1, O); fill(17, 5, 2, 1, O); fill(19, 4, 1, 1, O);
+  fill(13, 6, 1, 1, O); fill(18, 6, 1, 1, O);
+  fill(11, 7, 2, 1, RED); fill(19, 7, 2, 1, RED);
+  fill(14, 8, 4, 2, '#4a1414'); fill(15, 8, 2, 1, '#f4efe6');
+  for (let i = 0; i < 2; i++) {                                  // steam, rising off him
+    const k = (time * 0.9 + i * 0.5) % 1, sx = i ? 22 : 8, sy = -1 - Math.round(k * 6);
+    g.globalAlpha = 0.85 * (1 - k);
+    fill(sx, sy, 2, 2, '#f4f0e6'); fill(sx + (i ? 1 : -1), sy - 1, 2, 1, '#f4f0e6');
+    g.globalAlpha = 1;
+  }
 }
 function draw() {
   const cx = cam.x, cy = cam.y;
@@ -839,6 +899,7 @@ function draw() {
     ctx.fillStyle = hue(0); ctx.fillRect(gx - 2, gy + up, 2, 1);
     ctx.fillStyle = hue(3); ctx.fillRect(gx + 3, gy + up, 2, 1);
   }]);
+  list.push([(phil.y + 1) * TS, () => drawPhil(phil.x * TS - cx, phil.y * TS - cy)]);
   if (isa.visible) list.push([isa.y * TS, () => {
     const moving = isa.path && isa.path.length;
     const art = moving && Math.floor(isa.walkT * 7) % 2 ? ISABELLA_STEP : ISABELLA;
