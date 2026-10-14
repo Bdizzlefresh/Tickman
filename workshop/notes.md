@@ -48,3 +48,6 @@ Every session reads this first and updates it last.
 - 2026-10-12: you answered on issue #1: the Bell is Isabella. Replied there with two
   questions (above) before the next sketch puts her in. Sketch unchanged for now: its
   flower Bell is still on screen, labeled as a guess.
+- 2026-10-14: a short check-in on issue #1, saying there's no rush. Offered a simpler
+  version of the first open question, answerable in a word: have the deer taken her, or
+  are they closing in? Sketch unchanged.
