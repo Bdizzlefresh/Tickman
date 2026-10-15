@@ -49,6 +49,7 @@ Every session reads this first and updates it last.
   angry, large white man named Phil is there. Add a text box that says "oh no! My laptop!!".
 - 2026-10-15, issue #1: only low blood sugar. You like the premise. "Something sweet": make that
   a bottle of orange juice.
+- 2026-10-15, issue #1: instead of the orange juice, a honeybun, a gas station pastry.
 
 ## What you've decided
 
@@ -62,7 +63,8 @@ Every session reads this first and updates it last.
 - The type 1 diabetic powers work as offered on 2026-10-14: a blood sugar meter on screen; when
   it's low, vision blurs, you move slowly, and you can't cast; once it's steady, the psychic
   powers work; every spell burns sugar, so cast too much and you crash. Only low blood sugar is
-  a danger, not high. The fix for a low is a bottle of orange juice.
+  a danger, not high. The fix for a low is a honeybun, a gas station pastry (it replaced the
+  bottle of orange juice on 2026-10-15).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -99,11 +101,17 @@ Every session reads this first and updates it last.
   The meter comes back up to steady, your vision clears, and the powers come. Then out the door.
   Guesses, labeled on the end screen: where the bottle sits and how it looks. No spells to cast
   yet in level 1, so the sugar cost of spells isn't in the sketch.
+- 2026-10-15, sketch 2 changed (`gh-pages`, commit d3e50e5), as you asked: the orange juice is now a
+  honeybun, still in its gas station wrapper, in the same spot on the apartment floor. Tap A on it
+  to eat it when your blood sugar is low; an empty wrapper and a few crumbs are left. Guesses,
+  labeled on the end screen: where it sits and how it looks (a glazed swirl in a clear wrapper,
+  crimped at both ends).
 
 ## Open questions
 
-- The orange juice: does the spider carry a few bottles with it, or find them along the way,
-  like the items lying on the ground in Pokémon Red? (Asked 2026-10-15.)
+- The honeybuns: does the spider keep a stash of them, or find them along the way, like the items
+  lying on the ground in Pokémon Red? (Asked 2026-10-15 about the orange juice, then again about
+  honeybuns.)
 - Fights: like Pokémon Red (their own screen, a move each turn from a short list), or
   right on the map, dodging as you go? (Asked 2026-10-14, twice, no rush. Not asked again in
   the latest reply.)
@@ -114,7 +122,7 @@ Every session reads this first and updates it last.
 - When Isabella is drawn, what should it get right about her? (Asked 2026-10-12.)
 - Not asked yet: the miniature tangerine vespa, a scooter or a wasp? Who placed the three
   ticks in the web? What does the spider eat in its ordinary days? Who is Phil in the story,
-  and does he come back? Does the orange juice work at once, or take a moment? Which other
+  and does he come back? Does the honeybun work at once, or take a moment? Which other
   spells besides shooting Lyme disease?
 - Which other games, books, art or places feel like this to you? (So far: Super Mario's
   Princess Peach, and Pokémon Red.)
@@ -145,3 +153,6 @@ Every session reads this first and updates it last.
   a bottle of orange juice. Put the low blood sugar and the orange juice into level 1 of sketch
   2, same link. Replied on issue #1 with how to try it, and one question: carry the bottles, or
   find them along the way?
+- 2026-10-15: you asked on issue #1 for a honeybun, a gas station pastry, in place of the orange
+  juice. Swapped it in sketch 2, same link. Replied on issue #1 with how to try it, and the same
+  question in honeybun form: keep a stash, or find them along the way?
