@@ -124,8 +124,8 @@ a { color:var(--accent); }
       <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
     </ol>
     <p class="small">Guesses in this sketch: the bugs, the futon's colors, the rest of the apartment, the view outside, how Phil,
-      Isabella, the ticks and the deer look, how the deer take her, and where the honeybun sits and how it
-      looks.</p>
+      Isabella, the ticks and the deer look, how she blows the kiss, how the deer take her, where the honeybun sits
+      and how it looks, and the music (original, in a house style).</p>
     <div class="btns">
       <button class="btn" id="another">Try another tick</button>
       <button class="btn alt" id="over">Start over</button>
@@ -493,15 +493,15 @@ const TICK_ART = {
   dog:     [FAT_TICK, { ...TICK_BASE, B: '#56505e', H: '#9a94a4', v: '#2a2430', d: '#2a2630' }],
 };
 // Isabella, a California hippy: long brown hair, a flower crown, a peasant top, a long flowing skirt,
-// bare feet (how she looks is a guess)
+// bare feet; cuter, and a little more brown: sun-tanned skin, rosy cheeks, bigger eyes (how she looks is a guess)
 const ISABELLA = [
   '................',
   '.....hhhhhh.....',
   '....pvyvpvov....',
   '...hhhhddhhhh...',
   '...hhsssssshh...',
-  '...hsessssesh...',
-  '...hssssssssh...',
+  '...hssessessh...',
+  '...hscessecsh...',
   '...hhssllsshh...',
   '..hhhsssssshhh..',
   '..hhwwwwwwwwhh..',
@@ -513,7 +513,9 @@ const ISABELLA = [
   '.....s....s.....'];
 const ISABELLA_STEP = ISABELLA.slice(0, 14).concat(['....mkkqkkqkkm..', '.....s.....s....']);
 const ISABELLA_PAL = { h: '#7b4a2b', d: '#55311b', p: '#e8679a', y: '#f5d548', v: '#5d9b48', o: '#ef8b3c',
-  s: '#f4d3bb', e: '#3b5f86', l: '#d46a72', w: '#f7f1e2', k: '#c45f2a', q: '#f0b648', m: '#8f4520' };
+  s: '#d69e78', e: '#2a1a14', c: '#e5786c', l: '#c4505e', w: '#f7f1e2', k: '#c45f2a', q: '#f0b648', m: '#8f4520' };
+// a little heart, for the kiss she blows
+const HEART = ['.X.X.', 'XXXXX', '.XXX.', '..X..'];
 const DEER = [
   '................',
   '................',
@@ -565,6 +567,7 @@ function audio() {
     } catch (e) { ac = null; }
   }
   if (ac && ac.state === 'suspended') ac.resume();
+  if (ac && musicOn && !mus) musicBegin();
 }
 function string(f) {  // Karplus-Strong: a burst of noise, fed back through a short delay
   const sr = ac.sampleRate, len = Math.floor(sr * 1.8), N = Math.max(2, Math.round(sr / f));
@@ -585,6 +588,123 @@ function pluck(f, vol = 0.3, when = 0) {
 }
 const NOTE = { D3: 146.83, F3: 174.61, G3: 196, A3: 220, Bb3: 233.08, D4: 293.66, Fs4: 369.99, A4: 440, D5: 587.33 };
 
+// ---- the house music: original, a warm house groove with a disco feel (the style is a guess at what you named).
+// It kicks in when the spider sets out after Isabella, so the quiet life on the web comes first. ----
+const BPM = 122, SIX = 60 / BPM / 4, MUSIC_VOL = 0.3;  // SIX: one sixteenth note, in seconds
+const CHORDS = [  // two chords, two bars each: Dm9, then G13 (the bass plays their roots)
+  { pad: [174.61, 220, 261.63, 329.63], lead: [440, 523.25, 587.33, 523.25, 440],
+    bass: { r: 73.42, o: 146.83, f: 110, s: 130.81 } },
+  { pad: [174.61, 220, 246.94, 329.63], lead: [493.88, 587.33, 659.25, 587.33, 493.88],
+    bass: { r: 98, o: 196, f: 146.83, s: 174.61 } },
+];
+const BASSLINE = [[0, 'r', 1], [3, 'r', 1], [6, 'o', 1], [8, 'r', 2], [11, 'f', 1], [14, 's', 2]];
+const STABS = [2, 7, 10], LEAD_AT = [0, 3, 6, 10, 12];
+let musicOn = false, mus = null, noise = null;
+function musicStart() { musicOn = true; musicBegin(); }
+function musicStop() {
+  musicOn = false;
+  if (!mus) return;
+  clearInterval(mus.timer);
+  const out = mus.out; out.gain.cancelScheduledValues(ac.currentTime); out.gain.setTargetAtTime(0, ac.currentTime, 0.15);
+  setTimeout(() => out.disconnect(), 1500);
+  mus = null;
+}
+function musicVolume() { if (mus) mus.out.gain.setTargetAtTime(muted ? 0 : MUSIC_VOL, ac.currentTime, 0.08); }
+function musicBegin() {
+  if (!ac || mus || !musicOn) return;
+  if (!noise) {
+    noise = ac.createBuffer(1, ac.sampleRate, ac.sampleRate);
+    const d = noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  const out = ac.createGain(); out.gain.value = muted ? 0 : MUSIC_VOL;
+  const comp = ac.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 3;
+  out.connect(comp); comp.connect(ac.destination);
+  const pump = ac.createGain(); pump.connect(out);  // the chords and the bass dip under each kick
+  mus = { out, pump, step: 0, next: ac.currentTime + 0.08 };
+  mus.timer = setInterval(musicTick, 25);
+  musicTick();
+}
+function musicTick() {
+  if (!mus) return;
+  const now = ac.currentTime;
+  if (mus.next < now - 0.2) mus.next = now + 0.05;  // the page slept: pick the beat back up
+  while (mus.next < now + 0.15) { if (!muted) musicStep(mus.step, mus.next); mus.step++; mus.next += SIX; }
+}
+function musicStep(n, t) {
+  const bar = Math.floor(n / 16), s = n % 16, ch = CHORDS[Math.floor(bar / 2) % 2];
+  if (s === 0) pad(ch.pad, t, SIX * 16, bar === 0);
+  if (STABS.includes(s)) stab(ch.pad, t, bar === 0 ? 0.5 : 1);
+  if (bar === 0) { if (s === 8) riser(t, SIX * 8); return; }  // the first bar: just the chords, opening up
+  if (s % 4 === 0) { kick(t); duck(t); }                       // then the beat kicks in
+  if (s === 4 || s === 12) clap(t);
+  if (s % 4 === 2) hat(t, 0.12, 0.14);        // an open hat on the offbeat
+  else if (s % 2 === 1) hat(t, 0.03, 0.045);  // a light shaker between
+  for (const [at, k, len] of BASSLINE) if (at === s) bass(ch.bass[k], t, len * SIX);
+  const i = LEAD_AT.indexOf(s);                // a little tune, every other four bars
+  if (i >= 0 && bar % 2 === 1 && (bar - 1) % 8 >= 4) bell(ch.lead[i], t);
+}
+function kick(t) {
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(48, t + 0.09);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.9, t + 0.004);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+  o.connect(g); g.connect(mus.out); o.start(t); o.stop(t + 0.4);
+}
+function duck(t) { const p = mus.pump.gain; p.setValueAtTime(0.45, t); p.linearRampToValueAtTime(1, t + 0.24); }
+function noiseHit(t, type, freq, q, peak, d) {
+  const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+  s.buffer = noise; f.type = type; f.frequency.value = freq; f.Q.value = q;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + 0.002);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  s.connect(f); f.connect(g); g.connect(mus.out); s.start(t, Math.random() * 0.5); s.stop(t + d + 0.02);
+}
+function hat(t, d, v) { noiseHit(t, 'highpass', 7500, 0.7, v, d); }
+function clap(t) { for (const k of [0, 0.011, 0.022]) noiseHit(t + k, 'bandpass', 1400, 1.2, 0.3, k ? 0.16 : 0.02); }
+function riser(t, d) {
+  const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+  s.buffer = noise; s.loop = true; f.type = 'bandpass'; f.Q.value = 2;
+  f.frequency.setValueAtTime(500, t); f.frequency.exponentialRampToValueAtTime(6000, t + d);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07, t + d); g.gain.linearRampToValueAtTime(0, t + d + 0.02);
+  s.connect(f); f.connect(g); g.connect(mus.out); s.start(t); s.stop(t + d + 0.05);
+}
+function bass(f, t, len) {
+  const o = ac.createOscillator(), sub = ac.createOscillator(), lp = ac.createBiquadFilter(), sg = ac.createGain(), g = ac.createGain();
+  o.type = 'sawtooth'; o.frequency.value = f; sub.frequency.value = f; sg.gain.value = 0.6;
+  lp.type = 'lowpass'; lp.Q.value = 6; lp.frequency.setValueAtTime(900, t); lp.frequency.exponentialRampToValueAtTime(220, t + len);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.32, t + 0.008); g.gain.setTargetAtTime(0.0001, t + len * 0.8, 0.03);
+  o.connect(lp); lp.connect(g); sub.connect(sg); sg.connect(g); g.connect(mus.pump);
+  o.start(t); sub.start(t); o.stop(t + len + 0.2); sub.stop(t + len + 0.2);
+}
+function pad(freqs, t, dur, opening) {
+  const lp = ac.createBiquadFilter(), g = ac.createGain();
+  lp.type = 'lowpass'; lp.Q.value = 0.8;
+  if (opening) { lp.frequency.setValueAtTime(250, t); lp.frequency.exponentialRampToValueAtTime(1600, t + dur); }
+  else lp.frequency.value = 1100;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.035, t + 0.3);
+  g.gain.setValueAtTime(0.035, t + dur - 0.2); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.1);
+  lp.connect(g); g.connect(mus.pump);
+  for (const f of freqs) for (const det of [-6, 6]) {
+    const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = det;
+    o.connect(lp); o.start(t); o.stop(t + dur + 0.15);
+  }
+}
+function stab(freqs, t, v) {
+  const lp = ac.createBiquadFilter(), g = ac.createGain();
+  lp.type = 'lowpass'; lp.frequency.setValueAtTime(2600, t); lp.frequency.exponentialRampToValueAtTime(700, t + 0.25);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.06 * v, t + 0.006);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
+  lp.connect(g); g.connect(mus.pump);
+  for (const f of freqs) { const o = ac.createOscillator(); o.type = 'triangle'; o.frequency.value = f * 2; o.connect(lp); o.start(t); o.stop(t + 0.35); }
+}
+function bell(f, t) {  // a soft, bell-like note
+  const o = ac.createOscillator(), o2 = ac.createOscillator(), g2 = ac.createGain(), g = ac.createGain();
+  o.frequency.value = f; o2.frequency.value = f * 4; g2.gain.value = 0.15;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.09, t + 0.005);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.6);
+  o.connect(g); o2.connect(g2); g2.connect(g); g.connect(mus.out);
+  o.start(t); o2.start(t); o.stop(t + 0.65); o2.stop(t + 0.65);
+}
+
 // ---- the state of play ----
 const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
 const ROT = { up: 0, right: 1, down: 2, left: 3 };
@@ -597,7 +717,8 @@ const BUGS = ['gnat', 'fly', 'mosquito', 'moth', 'ladybug', 'beetle', 'firefly']
 let lastBug = null;
 const seen = new Set();
 const P = { tx: 1, ty: 1, nx: 1, ny: 1, t: 0, moving: false, facing: 'right', anim: 0, stepTime: STEP };
-const isa = { x: 8, y: 11, visible: true, alarm: false, path: [], walkT: 0 };
+const isa = { x: 8, y: 11, visible: true, alarm: false, path: [], walkT: 0, kiss: false, spook: -9 };
+let hearts = [];  // the kiss she blows, floating to the spider
 const phil = { x: 15, y: 3, mad: 0 };  // he stands on two tiles across and two down
 const PHIL_LINE = 'oh no! My laptop!!';
 const isPhil = (x, y) => x >= phil.x && x <= phil.x + 1 && y >= phil.y && y <= phil.y + 1;
@@ -744,13 +865,18 @@ async function capture() {
   phase = 'capture'; lock++; hud(null); P.facing = 'down';
   pluck(NOTE.G3, 0.26); pluck(NOTE.Bb3, 0.2, 0.15);
   await panTo(camAt(11 * TS + 8, 12 * TS + 8), 1.1);
+  // when you first see her, she makes a kissy face and blows you a kiss (how it looks is a guess)
+  isa.kiss = true; blowKiss(); pluck(NOTE.A4, 0.14); pluck(NOTE.D5, 0.1, 0.12);
+  await wait(0.8);
+  await say(['Isabella, out on the lawn. She sees you at the window.',
+             'She makes a kissy face, and blows you a kiss.', 'You hope to win her heart.']);
+  isa.kiss = false;
   const mk = (x, y) => ({ x, y, face: -1, path: [], walkT: 0 });
   deer = [mk(20, 11), mk(20, 10), mk(21, 12), mk(21, 10), mk(22, 12)];
   await Promise.all([walkTo(deer[0], [[9, 11]]), walkTo(deer[1], [[8, 10]]), walkTo(deer[2], [[8, 12]]),
                      walkTo(deer[3], [[14, 10]]), walkTo(deer[4], [[15, 12]])]);
-  isa.alarm = true; pluck(NOTE.A3, 0.26);
-  await say(['Isabella!', 'A damsel in distress, out on the lawn. The white-tailed deer have her surrounded.',
-             'You hope to win her heart.']);
+  isa.alarm = true; isa.spook = time; pluck(NOTE.A3, 0.26);
+  await say(['The white-tailed deer! Isabella is spooked.', 'A damsel in distress. The deer have her surrounded.']);
   isa.alarm = false;
   const go = 3, off = 23;
   await Promise.all([
@@ -789,14 +915,19 @@ async function eatBun() {
              'Steady now, the psychic powers come: you can cast spells, like shooting Lyme disease at your enemies.']);
   await openExit(); lock--;
 }
+function blowKiss() {
+  const from = [isa.x * TS + 11, isa.y * TS + 1], to = [P.tx * TS + 6, P.ty * TS + 6];  // from beside her face
+  for (let i = 0; i < 3; i++) hearts.push({ t0: time + i * 0.35, dur: 1.7, from, to, ph: i * 2 });
+}
 async function openExit() {
   exitOpen = true; phase = 'exit';
+  musicStart();  // the house music kicks in as the spider sets out after her
   await say(['The apartment door has a gap under it.', 'Go after her.']);
   hud('Go after her: the door, on the right side of the room');
 }
 async function finish() {
   phase = 'done'; lock++; hud(null);
-  [NOTE.D4, NOTE.Fs4, NOTE.A4, NOTE.D5].forEach((n, j) => pluck(n, 0.24, j * 0.15));
+  if (!musicOn) [NOTE.D4, NOTE.Fs4, NOTE.A4, NOTE.D5].forEach((n, j) => pluck(n, 0.24, j * 0.15));
   await fadeTo(1, 0.9);
   $('endText').textContent = 'You ate the ' + TICKS[choice].name +
     (choice === 'human' ? ', ate the honeybun,' : ',') +
@@ -805,7 +936,7 @@ async function finish() {
 }
 async function tryAnother() {
   $('end').hidden = true;
-  choice = null; exitOpen = false; P.stepTime = STEP; blur(false); bun.eaten = false; sugarMeter(null);
+  choice = null; exitOpen = false; P.stepTime = STEP; blur(false); bun.eaten = false; sugarMeter(null); musicStop();
   Object.assign(P, { tx: 6, ty: 3, nx: 6, ny: 3, moving: false, t: 0, facing: 'up' });
   camMode = 'follow'; [cam.x, cam.y] = playerCam();
   phase = 'choose'; lock = 1;
@@ -893,6 +1024,7 @@ function update(dt) {
   time += dt;
   if (phil.mad > 0) phil.mad -= dt;
   timers = timers.filter(t => { t.t -= dt; if (t.t <= 0) { t.res(); return false; } return true; });
+  if (hearts.length) hearts = hearts.filter(h => time - h.t0 < h.dur);
   if (box.active && box.shown < box.full.length) {
     box.acc += dt * 48; const n = Math.min(box.full.length, Math.floor(box.acc));
     if (n !== box.shown) { box.shown = n; renderBox(); }
@@ -1067,8 +1199,16 @@ function draw() {
     const moving = isa.path && isa.path.length;
     const art = moving && Math.floor(isa.walkT * 7) % 2 ? ISABELLA_STEP : ISABELLA;
     const bob = !moving && Math.floor(time * 1.2) % 2 ? 1 : 0;
-    const x = Math.round(isa.x * TS) - cx, y = Math.round(isa.y * TS) - cy - bob;
+    const sp = time - isa.spook, hop = sp >= 0 && sp < 0.6 ? Math.round(Math.abs(Math.sin(sp / 0.3 * Math.PI)) * 3) : 0;
+    const x = Math.round(isa.x * TS) - cx, y = Math.round(isa.y * TS) - cy - bob - hop;
     drawSprite(ctx, art, ISABELLA_PAL, x, y);
+    if (isa.kiss) {  // the kissy face: eyes shut, lips puckered
+      const f = (a, b, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, 1, 1); };
+      const S = ISABELLA_PAL.s;
+      f(6, 5, S); f(9, 5, S);
+      for (const [a, b] of [[7, 7], [8, 7], [7, 8], [8, 8]]) f(a, b, '#b8304c');
+      f(7, 7, '#e27a8e');
+    }
     if (isa.alarm) bubble(x, y);
   }]);
   for (const d of deer) list.push([d.y * TS, () => {
@@ -1083,6 +1223,16 @@ function draw() {
     drawSprite(ctx, SPIDER, pal, Math.round(ppx) - cx, Math.round(ppy) - cy, ROT[P.facing], false, leg);
   }]);
   list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
+  for (const h of hearts) {  // the kiss, floating up to the spider
+    const k = (time - h.t0) / h.dur; if (k < 0) continue;
+    const e = ease(Math.min(1, k));
+    const hx = Math.round(h.from[0] + (h.to[0] - h.from[0]) * e + Math.sin(k * 7 + h.ph) * 3) - cx;
+    const hy = Math.round(h.from[1] + (h.to[1] - h.from[1]) * e) - cy;
+    ctx.globalAlpha = k > 0.75 ? Math.max(0, (1 - k) / 0.25) : 1;
+    HEART.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (row[i] === 'X') {
+      ctx.fillStyle = i === 1 && j === 1 ? '#ffc2d4' : '#ff4f86'; ctx.fillRect(hx + i, hy + j, 1, 1); } });
+    ctx.globalAlpha = 1;
+  }
   ctx.drawImage(canopy, cx, cy, VW, VH, 0, 0, VW, VH);
 }
 
@@ -1144,7 +1294,8 @@ muteBtn.classList.toggle('off', muted);
 muteBtn.addEventListener('click', () => {
   muteBtn.blur(); muted = !muted; muteBtn.classList.toggle('off', muted);
   try { localStorage.setItem('tickman-muted', muted ? '1' : '0'); } catch (e) {}
-  if (!muted) { audio(); pluck(NOTE.A4, 0.2); }
+  musicVolume();
+  if (!muted) { audio(); if (!mus) pluck(NOTE.A4, 0.2); }
 });
 
 // ---- the loop ----
@@ -1169,6 +1320,8 @@ window.__sketch = {
   get ended() { return !$('end').hidden; },
   get sugar() { return sugarState; }, get bun() { return { x: bun.x, y: bun.y, eaten: bun.eaten }; },
   get slow() { return P.stepTime > STEP; },
+  get music() { return musicOn; }, get musicPlaying() { return !!mus; }, get kiss() { return isa.kiss; },
+  get hearts() { return hearts.length; },
   walkable, speed: SPEED, map: MAP,
 };
 })();
