@@ -50,6 +50,17 @@ Every session reads this first and updates it last.
 - 2026-10-15, issue #1: only low blood sugar. You like the premise. "Something sweet": make that
   a bottle of orange juice.
 - 2026-10-15, issue #1: instead of the orange juice, a honeybun, a gas station pastry.
+- 2026-10-15, issue #1: make Isabella not the spider's love, but a damsel in distress he is in pursuit
+  of, as a love interest.
+- 2026-10-15, issue #1: make the music soundtrack something from an Austrian house musician, such as
+  "Gerd Jansen" (your spelling).
+- 2026-10-15, issue #1: instead of gay gnats, make the bugs randomized insects. Keep them gay.
+- 2026-10-15, issue #1: make the ticks a bit more scary in appearance, and turn Isabella into a
+  Caucasian California hippy.
+- 2026-10-15, issue #1: the spider stores the honeybuns in his N.E.R.D. album case. He opens it, and
+  the sound of Pharrell springs up.
+- 2026-10-15, issue #1: the insects the spider eats get wrapped up in the web, like a mini game, not
+  just eaten.
 
 ## What you've decided
 
@@ -65,6 +76,17 @@ Every session reads this first and updates it last.
   powers work; every spell burns sugar, so cast too much and you crash. Only low blood sugar is
   a danger, not high. The fix for a low is a honeybun, a gas station pastry (it replaced the
   bottle of orange juice on 2026-10-15).
+- Isabella (changed 2026-10-15): not the spider's love, at least not yet. She's a damsel in
+  distress he is pursuing, hoping to win her heart. And she's a Caucasian California hippy (before,
+  very Mexican).
+- The spider keeps his honeybuns in his N.E.R.D. album case; when he opens it, the sound of Pharrell
+  springs up. (2026-10-15; not built yet.)
+- The bugs on the web are random insects, still gay (rainbow). The ticks look scarier. (2026-10-15.)
+- Catching bugs becomes a mini game: wrap them up in the web, not just eat them. (2026-10-15; not
+  built yet.)
+- Music: house, in the vein of the musician you named. (2026-10-15; not built yet.) Real recordings
+  can't go in the game, so it would be original music in that style; same for the sound when the
+  album case opens.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -106,26 +128,41 @@ Every session reads this first and updates it last.
   to eat it when your blood sugar is low; an empty wrapper and a few crumbs are left. Guesses,
   labeled on the end screen: where it sits and how it looks (a glazed swirl in a clear wrapper,
   crimped at both ends).
+- 2026-10-15, sketch 2 changed (`gh-pages`, commit a80c120), as you asked:
+  - Isabella is a California hippy: long blond hair, a flower crown, a white peasant top, a long
+    flowing orange skirt, bare feet. On the lawn, the words now call her a damsel in distress the
+    spider hopes to win, not his love.
+  - The ticks are scarier: dark, with barbed mouths, red eyes, and long hooked legs that twitch now
+    and then.
+  - The gnats are now a random mix of bugs (gnat, fly, mosquito, moth, ladybug, beetle, firefly),
+    all still with rainbow wings, a rainbow trail and a twirl. The level asks you to catch three
+    bugs, and says which kind you caught.
+  - Guesses, labeled on the end screen: how Isabella, the ticks and the bugs look, and which bugs.
 
 ## Open questions
 
-- The honeybuns: does the spider keep a stash of them, or find them along the way, like the items
-  lying on the ground in Pokémon Red? (Asked 2026-10-15 about the orange juice, then again about
-  honeybuns.)
+- Which comes first: the web-wrapping mini game, the honeybun stash in the N.E.R.D. album case, or
+  the house music? (Asked 2026-10-15.)
+- Are the new looks what you meant: Isabella as a hippy, the scarier ticks, the random bugs? (Said
+  2026-10-15 that they're guesses.)
+- Answered 2026-10-15: the honeybuns are a stash, kept in the spider's N.E.R.D. album case.
 - Fights: like Pokémon Red (their own screen, a move each turn from a short list), or
   right on the map, dodging as you go? (Asked 2026-10-14, twice, no rush. Not asked again in
   the latest reply.)
 - Is the apartment where the story starts now, in place of the sunroom of the Lake Michigan
   home? The view outside is still the lawn, beach and lake, a guess. (Mentioned 2026-10-14,
   not asked.)
-- Are the new looks for Isabella and the gnats what you meant? (Asked 2026-10-14.)
-- When Isabella is drawn, what should it get right about her? (Asked 2026-10-12.)
+- When Isabella is drawn, what should it get right about her? (Asked 2026-10-12; your 2026-10-15
+  answers, a California hippy and a damsel in distress, cover much of it.)
+- Before building the music: check the musician you named (the spelling, and whether you meant
+  someone Austrian), and say only what's checked. (A note for the workshop, not yet asked.)
 - Not asked yet: the miniature tangerine vespa, a scooter or a wasp? Who placed the three
   ticks in the web? What does the spider eat in its ordinary days? Who is Phil in the story,
   and does he come back? Does the honeybun work at once, or take a moment? Which other
   spells besides shooting Lyme disease?
 - Which other games, books, art or places feel like this to you? (So far: Super Mario's
-  Princess Peach, and Pokémon Red.)
+  Princess Peach, and Pokémon Red. For sound: N.E.R.D. and Pharrell, and the house musician you
+  named.)
 
 ## Log
 
@@ -156,3 +193,9 @@ Every session reads this first and updates it last.
 - 2026-10-15: you asked on issue #1 for a honeybun, a gas station pastry, in place of the orange
   juice. Swapped it in sketch 2, same link. Replied on issue #1 with how to try it, and the same
   question in honeybun form: keep a stash, or find them along the way?
+- 2026-10-15: six messages from you on issue #1 (some came in while the honeybun reply was being
+  written). Made three of them in sketch 2, same link: Isabella as a California hippy, a damsel in
+  distress rather than the spider's love; scarier ticks; random rainbow bugs. Replied on issue #1
+  with what changed, noted the other three (the web-wrapping mini game, the album case, the house
+  music) to build one at a time, said plainly that real recordings can't go in the game but original
+  music in that style can, and asked which comes first.
