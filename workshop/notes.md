@@ -47,6 +47,8 @@ Every session reads this first and updates it last.
 - 2026-10-14, issue #1: make level 1's room look like a one-bedroom apartment, like a college
   apartment, with a bunch of empty Rolling Rock bottles and a laptop that's been puked on. An
   angry, large white man named Phil is there. Add a text box that says "oh no! My laptop!!".
+- 2026-10-15, issue #1: only low blood sugar. You like the premise. "Something sweet": make that
+  a bottle of orange juice.
 
 ## What you've decided
 
@@ -57,6 +59,10 @@ Every session reads this first and updates it last.
 - A level-based game, seen from above, like Pokémon Red.
 - Level 1's room is a one-bedroom college apartment: empty Rolling Rock bottles, a puked-on
   laptop, and Phil, large and angry, whose line is "oh no! My laptop!!".
+- The type 1 diabetic powers work as offered on 2026-10-14: a blood sugar meter on screen; when
+  it's low, vision blurs, you move slowly, and you can't cast; once it's steady, the psychic
+  powers work; every spell burns sugar, so cast too much and you crash. Only low blood sugar is
+  a danger, not high. The fix for a low is a bottle of orange juice.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -87,14 +93,17 @@ Every session reads this first and updates it last.
   laptop!!", and tapping A on him shows it again. The opening line, title card and end screen
   now say "the apartment". Guesses, labeled on the end screen: the couch, coffee table, carpet,
   walls and windows; how Phil looks; the view outside (still the lawn, beach and lake).
+- 2026-10-15, sketch 2 changed (`gh-pages`, commit 5230731), from your answer: eat the tick with
+  human blood and a blood sugar meter shows low, your vision blurs, and you move slowly. A bottle
+  of orange juice lies on the apartment floor (it glints while you're low); tap A on it to drink.
+  The meter comes back up to steady, your vision clears, and the powers come. Then out the door.
+  Guesses, labeled on the end screen: where the bottle sits and how it looks. No spells to cast
+  yet in level 1, so the sugar cost of spells isn't in the sketch.
 
 ## Open questions
 
-- The type 1 diabetic powers. Offered one way they could work (a guess): a blood sugar meter
-  on screen; when it's low, vision blurs, you move slowly, and you can't cast; eat something
-  sweet to bring it back up; once it's steady, the psychic powers work (shoot Lyme disease, and
-  other spells); every spell burns sugar, so cast too much and you crash. Does that fit? Should
-  high blood sugar be a danger too, or only lows? (Asked 2026-10-14.)
+- The orange juice: does the spider carry a few bottles with it, or find them along the way,
+  like the items lying on the ground in Pokémon Red? (Asked 2026-10-15.)
 - Fights: like Pokémon Red (their own screen, a move each turn from a short list), or
   right on the map, dodging as you go? (Asked 2026-10-14, twice, no rush. Not asked again in
   the latest reply.)
@@ -105,7 +114,8 @@ Every session reads this first and updates it last.
 - When Isabella is drawn, what should it get right about her? (Asked 2026-10-12.)
 - Not asked yet: the miniature tangerine vespa, a scooter or a wasp? Who placed the three
   ticks in the web? What does the spider eat in its ordinary days? Who is Phil in the story,
-  and does he come back?
+  and does he come back? Does the orange juice work at once, or take a moment? Which other
+  spells besides shooting Lyme disease?
 - Which other games, books, art or places feel like this to you? (So far: Super Mario's
   Princess Peach, and Pokémon Red.)
 
@@ -131,3 +141,7 @@ Every session reads this first and updates it last.
   make level 1 a college apartment with the bottles, the puked-on laptop, Phil, and his line.
   Changed level 1 in sketch 2, same link. Replied on issue #1 with what changed and one way
   the powers could work, with two questions about them.
+- 2026-10-15: you answered on issue #1: only lows, you like the premise, and the sweet thing is
+  a bottle of orange juice. Put the low blood sugar and the orange juice into level 1 of sketch
+  2, same link. Replied on issue #1 with how to try it, and one question: carry the bottles, or
+  find them along the way?
