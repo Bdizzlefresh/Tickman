@@ -64,6 +64,10 @@ Every session reads this first and updates it last.
 - 2026-10-15, issue #1: give Isabella brown hair. Build the house music soundtrack first, then the
   N.E.R.D. album, then the mini game of wrapping bugs in silk.
 - 2026-10-15, issue #1: make the green couch a multicolored futon that says "Norwood Futon Factory".
+- 2026-10-15, issue #1: make the house music kick in when setting out for Isabella.
+- 2026-10-15, issue #1: make Isabella a little more brown and cuter.
+- 2026-10-15, issue #1: when you first see her, maybe she makes a kissy face and blows a kiss to the spider, like a
+  tantalizing lady. Then she is spooked by the deer as they take her away.
 
 ## What you've decided
 
@@ -81,7 +85,9 @@ Every session reads this first and updates it last.
   bottle of orange juice on 2026-10-15).
 - Isabella (changed 2026-10-15): not the spider's love, at least not yet. She's a damsel in
   distress he is pursuing, hoping to win her heart. And she's a Caucasian California hippy (before,
-  very Mexican), with brown hair (2026-10-15).
+  very Mexican), with brown hair (2026-10-15). Cuter, and a little more brown (2026-10-15).
+- When you first see Isabella, she makes a kissy face and blows the spider a kiss. Then the deer spook her and
+  take her away. (2026-10-15.)
 - In the apartment, the couch is a multicolored futon that says "Norwood Futon Factory". (2026-10-15.)
 - The order for what's next (2026-10-15): the house music soundtrack, then the N.E.R.D. album case,
   then the silk-wrapping mini game.
@@ -90,9 +96,9 @@ Every session reads this first and updates it last.
 - The bugs on the web are random insects, still gay (rainbow). The ticks look scarier. (2026-10-15.)
 - Catching bugs becomes a mini game: wrap them up in the web, not just eat them. (2026-10-15; not
   built yet.)
-- Music: house, in the vein of the musician you named. (2026-10-15; not built yet.) Real recordings
-  can't go in the game, so it would be original music in that style; same for the sound when the
-  album case opens.
+- Music: house, in the vein of the musician you named. It kicks in when the spider sets out after
+  Isabella, so the quiet life on the web comes first. (2026-10-15; built.) Real recordings can't go in
+  the game, so it's original music in that style; same for the sound when the album case opens.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -149,11 +155,26 @@ Every session reads this first and updates it last.
   many colors and "NORWOOD / FUTON FACTORY" printed on a cream band across the front. Tap A on it and
   the text box reads the name too. Guesses, labeled on the end screen: the futon's colors (and its
   frame).
+- 2026-10-15, sketch 2 changed (`gh-pages`, commit 8fdda75), as you asked:
+  - The house music, original: a warm house groove with a disco feel, 122 beats a minute. A kick on every
+    beat, claps, hi-hats on the offbeat, a bassline, two jazzy chords (D minor 9, then G13), and a little
+    bell tune every few bars. It kicks in when the door opens and the spider sets out after Isabella: one bar
+    of chords opening up, then the beat drops. It keeps playing on the end screen, stops on "Try another
+    tick", and kicks in again when you set out again. The ♪ button turns it off.
+  - Isabella: sun-tanned skin, rosy cheeks, bigger eyes.
+  - When you first see her on the lawn, she makes a kissy face (eyes shut, lips puckered) and blows the spider
+    a kiss: three little hearts float up to him at the window. Then the deer come; she jumps, spooked, and
+    they take her away.
+  - Guesses, labeled on the end screen: the music, and how she blows the kiss. "A little more brown" was read
+    as sun-tanned skin, a guess too.
 
 ## Open questions
 
-- The house music: should it play the whole time, or kick in when the spider sets out after
-  Isabella, so the quiet life on the web comes before the beat? (Asked 2026-10-15, before building it.)
+- Where does the spider keep the N.E.R.D. album case with the honeybuns: deep in his tunnel, or out in the
+  apartment? (Asked 2026-10-15, before building it. Next in your order after the music.)
+- "A little more brown": read as sun-tanned skin. If you meant her hair or her clothes, it can change. (Said
+  2026-10-15.)
+- Answered 2026-10-15: the house music kicks in when the spider sets out after Isabella.
 - Answered 2026-10-15: what comes first. The house music, then the album case, then the mini game.
 - Are the new looks what you meant: the scarier ticks, the random bugs, the futon's colors? (Said
   2026-10-15 that they're guesses. Isabella as a hippy: you kept it and changed her hair to brown.)
@@ -217,3 +238,7 @@ Every session reads this first and updates it last.
   the album case, then the mini game), and the futon. Made the hair and the futon in sketch 2, same
   link. Replied on issue #1 with what changed, the checked facts about the musician, and one question
   before building the music: play the whole time, or kick in when the spider sets out?
+- 2026-10-15: three messages from you on issue #1: the music kicks in when setting out, Isabella a little
+  more brown and cuter, and the kiss when you first see her. Made all three in sketch 2, same link. Replied
+  on issue #1 with what changed, how to hear the music on a phone, and one question before the album case:
+  where does the spider keep it?
