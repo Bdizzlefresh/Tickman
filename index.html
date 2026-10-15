@@ -123,8 +123,9 @@ a { color:var(--accent); }
         boss, the crumbling American middle class and high rent gouging.</li>
       <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
     </ol>
-    <p class="small">Guesses in this sketch: the gnats, the rest of the apartment, the view outside, how Phil,
-      Isabella and the deer look, how the deer take her, and where the honeybun sits and how it looks.</p>
+    <p class="small">Guesses in this sketch: the bugs, the rest of the apartment, the view outside, how Phil,
+      Isabella, the ticks and the deer look, how the deer take her, and where the honeybun sits and how it
+      looks.</p>
     <div class="btns">
       <button class="btn" id="another">Try another tick</button>
       <button class="btn alt" id="over">Start over</button>
@@ -421,59 +422,67 @@ const SPIDER_PAL = {
   human:   { C: '#3a2a20', A: '#4f3f78', M: '#b9a9e3', L: '#2b1d14', e: '#e6dcff', f: '#2b1d14' },
   dog:     { C: '#3a2a20', A: '#6b3f2a', M: '#f4efe4', L: '#2b1d14', e: '#e8dcc0', f: '#2b1d14' },
 };
+// the ticks, scarier: a barbed mouth, red eyes, long hooked legs that twitch (how they look is a guess)
 const SMALL_TICK = [
-  '................', '................', '................', '................',
-  '.......mm.......',
-  '....l.SSSS.l....',
-  '...l.lSSSSl.l...',
-  '....lBSSSSBl....',
-  '...l.BBBBBB.l...',
-  '....lBBHBBBl....',
+  '..K....xx....K..',
+  '..L...mxxm...L..',
+  '...L..mmmm..L...',
+  '.K..L.SSSS.L..K.',
+  '..LL.rSSSSr.LL..',
+  '....LSSSSSSL....',
   '.....BBBBBB.....',
-  '......BBBB......',
-  '................', '................', '................', '................'];
+  '...LLBBHBBBLL...',
+  '..L..BBBBBB..L..',
+  '.K..LBBBBBBL..K.',
+  '...L.BBBBBB.L...',
+  '..L..dBBBBd..L..',
+  '..K...dddd...K..',
+  '................', '................', '................'];
 const FAT_TICK = [
-  '................', '................',
-  '.......mm.......',
-  '....l.SSSS.l....',
-  '...l.lSSSSl.l...',
-  '....BBBBBBBB....',
-  '...BBHHBBBBBB...',
-  '..BBHHBBBBBBBB..',
-  '..BBBBBBBBBBBB..',
-  '..BBBBBBBBBBBB..',
-  '..BBBBBBBBBBBB..',
-  '..dBBBBBBBBBBd..',
+  '.......xx.......',
+  '..K...mxxm...K..',
+  '...L..mmmm..L...',
+  '.K..LrSSSSrL..K.',
+  '..LL.BBSSBB.LL..',
+  '.K.BBBBBBBBBB.K.',
+  '..BBHHBBvBBBBB..',
+  '..BHHBBvBBBvBB..',
+  '.LBBBBvBBBvBBBL.',
+  'K.BBBBBvBvBBBB.K',
+  '..BBvBBBvBBvBB..',
+  '..dBBBvBBBBBBd..',
   '...dBBBBBBBBd...',
   '....ddBBBBdd....',
   '......dddd......',
   '................'];
+const TICK_BASE = { x: '#d8ccb0', m: '#1a0f0a', S: '#120a06', r: '#e3241c', L: '#140b07', K: '#bfb39a' };
 const TICK_ART = {
-  regular: [SMALL_TICK, { m: '#2b1d14', S: '#3a2418', B: '#7a3b26', H: '#a5604a', l: '#2b1d14' }],
-  human:   [FAT_TICK, { m: '#2b1d14', S: '#3a2418', B: '#a0636a', H: '#d9a5a8', d: '#6e3c44', l: '#2b1d14' }],
-  dog:     [FAT_TICK, { m: '#2b1d14', S: '#3a2418', B: '#8a8494', H: '#c8c3cf', d: '#5a5563', l: '#2b1d14' }],
+  regular: [SMALL_TICK, { ...TICK_BASE, B: '#3d1a12', H: '#7a3424', d: '#24100a' }],
+  human:   [FAT_TICK, { ...TICK_BASE, B: '#6e2c3a', H: '#b0606e', v: '#3a0f1c', d: '#2e0f18' }],
+  dog:     [FAT_TICK, { ...TICK_BASE, B: '#56505e', H: '#9a94a4', v: '#2a2430', d: '#2a2630' }],
 };
-// Isabella: long hair, a red dress, red lips, heels (a guess at "a little more sexy")
+// Isabella, a California hippy: long blond hair, a flower crown, a peasant top, a long flowing skirt,
+// bare feet (how she looks is a guess)
 const ISABELLA = [
   '................',
   '.....hhhhhh.....',
-  '....hHHhhhhh....',
-  '...hhhhhhhhhh...',
+  '....pvyvpvov....',
+  '...hhhhddhhhh...',
   '...hhsssssshh...',
   '...hsessssesh...',
-  '...gssssssssg...',
+  '...hssssssssh...',
   '...hhssllsshh...',
   '..hhhsssssshhh..',
-  '..hhsRRRRRRshh..',
-  '..hhs.rRRr.shh..',
-  '...hsRRRRRRsh...',
-  '.....RRRRRR.....',
-  '.....rRRRrs.....',
-  '.....ss..ss.....',
-  '.....kk..kk.....'];
-const ISABELLA_STEP = ISABELLA.slice(0, 14).concat(['.....ss...s.....', '.....kk...k.....']);
-const ISABELLA_PAL = { h: '#2a1a14', H: '#4a2e22', s: '#b97a52', e: '#1a100c', l: '#c0283c', g: '#e8c25a',
-  R: '#b3202e', r: '#7e1520', k: '#7e1520' };
+  '..hhwwwwwwwwhh..',
+  '..hhswwwwwwshh..',
+  '...hskqkkqksh...',
+  '....kkqkkqkk....',
+  '....kqkkqkkq....',
+  '...mkkqkkqkkm...',
+  '.....s....s.....'];
+const ISABELLA_STEP = ISABELLA.slice(0, 14).concat(['....mkkqkkqkkm..', '.....s.....s....']);
+const ISABELLA_PAL = { h: '#e2c06e', d: '#b8924a', p: '#e8679a', y: '#f5d548', v: '#5d9b48', o: '#ef8b3c',
+  s: '#f4d3bb', e: '#3b5f86', l: '#d46a72', w: '#f7f1e2', k: '#c45f2a', q: '#f0b648', m: '#8f4520' };
 const DEER = [
   '................',
   '................',
@@ -502,7 +511,7 @@ function drawSprite(g, rows, pal, x, y, rot = 0, flip = false, legShift = 0) {
       const ch = row[sx0]; if (ch === '.') continue;
       const col = pal[ch]; if (!col) continue;
       const sx = flip ? 15 - sx0 : sx0;
-      let sy = sy0; if (legShift && ch === 'L') sy += sx < 8 ? -legShift : legShift;
+      let sy = sy0; if (legShift && (ch === 'L' || ch === 'K')) sy += sx < 8 ? -legShift : legShift;
       let dx, dy;
       if (rot === 0) { dx = sx; dy = sy; } else if (rot === 1) { dx = 15 - sy; dy = sx; }
       else if (rot === 2) { dx = 15 - sx; dy = 15 - sy; } else { dx = sy; dy = 15 - sx; }
@@ -552,7 +561,9 @@ const SHEET = [];
 for (let y = 0; y < MH; y++) for (let x = 0; x < MW; x++) if (MAP[y][x] === 'S') SHEET.push([x, y]);
 
 let phase = 'title', lock = 0, time = 0, choice = null, exitOpen = false, ticksIn = false, gnatsEaten = 0, gnatT = 0;
-let gnats = [], deer = [];
+let gnats = [], deer = [];  // gnats: the bugs on the web, each a random kind
+const BUGS = ['gnat', 'fly', 'mosquito', 'moth', 'ladybug', 'beetle', 'firefly'];
+let lastBug = null;
 const seen = new Set();
 const P = { tx: 1, ty: 1, nx: 1, ny: 1, t: 0, moving: false, facing: 'right', anim: 0, stepTime: STEP };
 const isa = { x: 8, y: 11, visible: true, alarm: false, path: [], walkT: 0 };
@@ -652,25 +663,28 @@ async function intro() {
   await say(["Phil is here. He's large, and he's angry.", { t: PHIL_LINE, fx: philYells }]);
   await panTo(playerCam(), 1.0); camMode = 'follow';
   await say(["A spider's life: wait on your web for something to land, then eat it.",
-             'Go out to the silk at the mouth of your web, and catch three gnats.']);
-  phase = 'gnats'; gnatT = 0.8; hud('Catch gnats on your web: 0 of 3'); lock--;
+             'Go out to the silk at the mouth of your web, and catch three bugs.']);
+  phase = 'gnats'; gnatT = 0.8; hud('Catch bugs on your web: 0 of 3'); lock--;
 }
 function philYells() { phil.mad = 1.1; pluck(NOTE.D3, 0.22); pluck(NOTE.F3, 0.16, 0.12); }
 function spawnGnat() {
   const free = SHEET.filter(([x, y]) => Math.abs(x - P.tx) + Math.abs(y - P.ty) >= 2 && !gnats.some(g => g.x === x && g.y === y));
   if (!free.length) return;
   const [x, y] = free[Math.floor(Math.random() * free.length)];
-  gnats.push({ x, y, ph: Math.random() * 6, born: time });
+  const kinds = BUGS.filter(k => k !== lastBug && !gnats.some(g => g.kind === k));
+  lastBug = kinds[Math.floor(Math.random() * kinds.length)];
+  gnats.push({ x, y, ph: Math.random() * 6, born: time, kind: lastBug });
 }
 function eatGnat(i) {
+  const kind = gnats[i].kind;
   gnats.splice(i, 1); gnatsEaten++;
   pluck(NOTE.A4, 0.16); pluck(NOTE.D5, 0.1, 0.07);
-  hud('Catch gnats on your web: ' + gnatsEaten + ' of 3');
+  hud('Caught a ' + kind + ': ' + gnatsEaten + ' of 3');
   if (gnatsEaten >= 3) later();
 }
 async function later() {
   phase = 'later'; lock++; hud(null);
-  await say(['Three gnats. You are full.', 'A good day in the web.']);
+  await say(['Three bugs. You are full.', 'A good day in the web.']);
   await fadeTo(1, 0.9);
   gnats = []; ticksIn = true;
   Object.assign(P, { tx: 1, ty: 1, nx: 1, ny: 1, moving: false, t: 0, facing: 'right' });
@@ -704,7 +718,8 @@ async function capture() {
   await Promise.all([walkTo(deer[0], [[9, 11]]), walkTo(deer[1], [[8, 10]]), walkTo(deer[2], [[8, 12]]),
                      walkTo(deer[3], [[14, 10]]), walkTo(deer[4], [[15, 12]])]);
   isa.alarm = true; pluck(NOTE.A3, 0.26);
-  await say(['Isabella!', 'Your love, out on the lawn. The white-tailed deer have her surrounded.']);
+  await say(['Isabella!', 'A damsel in distress, out on the lawn. The white-tailed deer have her surrounded.',
+             'You hope to win her heart.']);
   isa.alarm = false;
   const go = 3, off = 23;
   await Promise.all([
@@ -935,6 +950,47 @@ function drawBun(x, y) {
     ctx.globalAlpha = 1;
   }
 }
+// one small bug of the given kind, its wings flapping (up), its wings in rainbow colors (hue)
+function drawBug(kind, x, y, up, hue) {
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+  f(0, 5, 4, 1, 'rgba(43,33,24,.25)');
+  switch (kind) {
+    case 'fly':
+      f(-3, up, 3, 2, hue(0)); f(3, up, 3, 2, hue(3));
+      f(0, -1, 3, 4, '#30343a'); f(0, 1, 3, 1, '#50565e');
+      f(0, -1, 1, 1, '#b0302a'); f(2, -1, 1, 1, '#b0302a');
+      break;
+    case 'mosquito':
+      f(-2, 3, 2, 1, '#3a3028'); f(3, 3, 2, 1, '#3a3028'); f(-1, -1, 1, 1, '#3a3028'); f(3, -1, 1, 1, '#3a3028');
+      f(-2, up, 2, 1, hue(0)); f(3, up, 2, 1, hue(3));
+      f(1, -1, 1, 5, '#4a3e30'); f(1, -3, 1, 2, '#2b2118');
+      break;
+    case 'moth':
+      f(-3, up - 1, 3, 4, hue(0)); f(3, up - 1, 3, 4, hue(3));
+      f(-2, up, 1, 1, hue(2)); f(4, up, 1, 1, hue(5));
+      f(1, -1, 1, 5, '#9a8a6a'); f(0, -2, 1, 1, '#7a6a4a'); f(2, -2, 1, 1, '#7a6a4a');
+      break;
+    case 'ladybug':
+      f(-3, 1 + up, 2, 1, hue(0)); f(4, 1 + up, 2, 1, hue(3));
+      f(-1, 0, 5, 3, '#d0282a'); f(0, 3, 3, 1, '#d0282a'); f(0, -1, 3, 1, '#1a1410');
+      f(1, 0, 1, 4, '#1a1410'); f(-1, 1, 1, 1, '#1a1410'); f(3, 1, 1, 1, '#1a1410'); f(0, 0, 1, 1, '#f07a6a');
+      break;
+    case 'beetle':
+      f(-3, 1 + up, 2, 2, hue(0)); f(4, 1 + up, 2, 2, hue(3));
+      f(0, -1, 3, 1, '#1c2a20'); f(-1, 0, 5, 4, '#2a4a3a'); f(1, 0, 1, 4, '#16261c'); f(0, 1, 1, 1, '#5aa07a');
+      break;
+    case 'firefly':
+      f(-2, up, 2, 1, hue(0)); f(3, up, 2, 1, hue(3));
+      f(0, -1, 3, 3, '#2b2118'); f(1, -2, 1, 1, '#d8603a');
+      ctx.globalAlpha = 0.5 + 0.5 * Math.abs(Math.sin(time * 4));
+      f(-1, 1, 5, 4, 'rgba(247,240,122,.35)'); f(0, 2, 3, 2, '#f7f07a');
+      ctx.globalAlpha = 1;
+      break;
+    default:  // a gnat
+      f(0, 0, 3, 2, '#2b2118'); f(1, 2, 1, 1, '#2b2118');
+      f(-2, up, 2, 1, hue(0)); f(3, up, 2, 1, hue(3));
+  }
+}
 function draw() {
   const cx = cam.x, cy = cam.y;
   ctx.drawImage(base, cx, cy, VW, VH, 0, 0, VW, VH);
@@ -957,9 +1013,11 @@ function draw() {
   const list = [];
   if (ticksIn) for (const k of ORDER) if (k !== choice) {
     const t = TICKS[k], [art, pal] = TICK_ART[k];
-    list.push([t.y * TS, () => drawSprite(ctx, art, pal, t.x * TS - cx, t.y * TS - cy + Math.round(Math.sin(time * 2 + t.x)), 0)]);
+    const twitch = Math.floor(time * 7 + t.x * 5) % 9 < 2 ? 1 : 0;  // the legs twitch, now and then
+    list.push([t.y * TS, () => drawSprite(ctx, art, pal, t.x * TS - cx, t.y * TS - cy + Math.round(Math.sin(time * 2 + t.x)), 0, false, twitch)]);
   }
-  // the gnats: rainbow wings, and a little twirl as they fly (a guess at "a little gay")
+  // the bugs: a random kind each time, all with rainbow wings, a rainbow trail, and a little twirl
+  // (a guess at "randomized insects", kept "a little gay")
   for (const g of gnats) list.push([g.y * TS, () => {
     const at = t => [g.x * TS + 6 + Math.round(Math.sin(t * 5 + g.ph) * 4) - cx,
                      g.y * TS + 6 + Math.round(Math.sin(t * 10 + g.ph * 2) * 2) - cy];
@@ -970,11 +1028,7 @@ function draw() {
       ctx.globalAlpha = 0.85 - k * 0.15; ctx.fillStyle = RAINBOW[(k + 5) % RAINBOW.length]; ctx.fillRect(tx + 1, ty + 1, 1, 1);
     }
     ctx.globalAlpha = 1;
-    ctx.fillStyle = 'rgba(43,33,24,.25)'; ctx.fillRect(gx + 1, gy + 4, 3, 1);
-    ctx.fillStyle = '#2b2118'; ctx.fillRect(gx, gy, 3, 2); ctx.fillRect(gx + 1, gy + 2, 1, 1);
-    const up = Math.floor(time * 18 + g.ph) % 2 ? -1 : 0;
-    ctx.fillStyle = hue(0); ctx.fillRect(gx - 2, gy + up, 2, 1);
-    ctx.fillStyle = hue(3); ctx.fillRect(gx + 3, gy + up, 2, 1);
+    drawBug(g.kind, gx, gy, Math.floor(time * 18 + g.ph) % 2 ? -1 : 0, hue);
   }]);
   list.push([bun.y * TS, () => drawBun(bun.x * TS - cx, bun.y * TS - cy)]);
   list.push([(phil.y + 1) * TS, () => drawPhil(phil.x * TS - cx, phil.y * TS - cy)]);
@@ -1078,7 +1132,7 @@ window.__sketch = {
   get choice() { return choice; }, get exitOpen() { return exitOpen; },
   get player() { return { x: P.tx, y: P.ty, facing: P.facing, moving: P.moving }; },
   get text() { return box.active ? box.full : null; }, get asking() { return !!box.ask; },
-  get onWeb() { return gnats.map(g => ({ x: g.x, y: g.y })); },
+  get onWeb() { return gnats.map(g => ({ x: g.x, y: g.y, kind: g.kind })); },
   get isabella() { return { x: isa.x, y: isa.y, visible: isa.visible }; },
   get busy() { return lock > 0 || !!fade.tween || !!pan; },
   get ended() { return !$('end').hidden; },
