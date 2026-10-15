@@ -123,7 +123,7 @@ a { color:var(--accent); }
         boss, the crumbling American middle class and high rent gouging.</li>
       <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
     </ol>
-    <p class="small">Guesses in this sketch: the bugs, the rest of the apartment, the view outside, how Phil,
+    <p class="small">Guesses in this sketch: the bugs, the futon's colors, the rest of the apartment, the view outside, how Phil,
       Isabella, the ticks and the deer look, how the deer take her, and where the honeybun sits and how it
       looks.</p>
     <div class="btns">
@@ -142,12 +142,12 @@ const $ = id => document.getElementById(id);
 const SPEED = Math.max(1, Math.min(8, Number(new URLSearchParams(location.search).get('speed')) || 1));
 const TS = 16, VW = 160, VH = 144, STEP = 0.19;
 
-// ---- the map. w web, H home, T tunnel, K the nook, S the silk sheet, . carpet, o empty bottles, u couch,
+// ---- the map. w web, H home, T tunnel, K the nook, S the silk sheet, . carpet, o empty bottles, u futon,
 // n coffee table, L the laptop, # wall, D door, W window, g grass, f trees, b sand, ~ the lake ----
 const MAP = [
   'wwwwwwwww###########',
-  'wHTTwwwww.o.uuu..oo#',
-  'wwwTwKKKw...o....o.#',
+  'wHTTwwwww.o.uuuu.oo#',
+  'wwwTwKKKw...uuuu.o.#',
   'wTTTTTTTw...nLn...o#',
   'wTwwwwwTw.o..o.....#',
   'wTwSSSSSS...o......D',
@@ -211,7 +211,7 @@ const canopy = document.createElement('canvas'); canopy.width = MAPW; canopy.hei
 const bg = base.getContext('2d'), cg = canopy.getContext('2d');
 const wallish = c => c === 'w' || c === '#';
 
-// the apartment: worn carpet, empty bottles, a beat-up couch, a coffee table (guesses, around what you asked for)
+// the apartment: worn carpet, empty bottles, the futon, a coffee table (guesses, around what you asked for)
 function paintFloor(g, x, y, tx, ty) {
   g.fillStyle = '#b3a68a'; g.fillRect(x, y, 16, 16);
   const r = rng(tx * 23 + ty * 47 + 11);
@@ -240,19 +240,43 @@ function paintBottles(g, x, y, tx, ty) {
     else bottleLying(g, x + 1 + Math.floor(r() * 11), y + Math.floor(r() * 6), true);
   }
 }
-function paintCouch(g, x, y, tx, ty) {
-  paintFloor(g, x, y, tx, ty);
-  const left = tile(tx - 1, ty) !== 'u', right = tile(tx + 1, ty) !== 'u';
-  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(x, y + 14, 16, 2);
-  g.fillStyle = '#4c5532'; g.fillRect(x, y, 16, 15);
-  g.fillStyle = '#5f6a3e'; g.fillRect(x, y + 1, 16, 5);
-  g.fillStyle = '#76824f'; g.fillRect(x + (left ? 1 : 0), y + 6, 16 - (left ? 1 : 0) - (right ? 1 : 0), 8);
-  g.fillStyle = '#4c5532'; g.fillRect(x + 15, y + 6, 1, 8);
-  if (left) { g.fillStyle = '#5f6a3e'; g.fillRect(x, y + 1, 4, 13); g.fillStyle = '#4c5532'; g.fillRect(x + 4, y + 6, 1, 8); }
-  if (right) { g.fillStyle = '#5f6a3e'; g.fillRect(x + 12, y + 1, 4, 13); g.fillStyle = '#4c5532'; g.fillRect(x + 11, y + 6, 1, 8); }
-  if (!left && !right) {  // a worn spot on the middle cushion
-    disc(g, x + 8, y + 10, 2, '#a39a72'); px(g, x + 7, y + 9, '#d8d0b0'); px(g, x + 9, y + 11, '#d8d0b0');
+// the futon: a multicolored cover on a wooden frame, and it says "Norwood Futon Factory"
+// (its colors, the frame, and where the words sit are guesses)
+const FONT = {  // a tiny pixel alphabet: just the letters the futon needs
+  N: ['X...X', 'XX..X', 'X.X.X', 'X..XX', 'X...X'], O: ['XXX', 'X.X', 'X.X', 'X.X', 'XXX'],
+  R: ['XX.', 'X.X', 'XX.', 'X.X', 'X.X'], W: ['X...X', 'X...X', 'X.X.X', 'X.X.X', '.X.X.'],
+  D: ['XX.', 'X.X', 'X.X', 'X.X', 'XX.'], F: ['XXX', 'X..', 'XX.', 'X..', 'X..'],
+  U: ['X.X', 'X.X', 'X.X', 'X.X', 'XXX'], T: ['XXX', '.X.', '.X.', '.X.', '.X.'],
+  A: ['.X.', 'X.X', 'XXX', 'X.X', 'X.X'], C: ['.XX', 'X..', 'X..', 'X..', '.XX'],
+  Y: ['X.X', 'X.X', '.X.', '.X.', '.X.'], ' ': ['.', '.', '.', '.', '.'],
+};
+const textWidth = s => [...s].reduce((w, ch) => w + FONT[ch][0].length + 1, -1);
+function pixelText(g, s, x, y, c) {
+  g.fillStyle = c;
+  for (const ch of s) {
+    const glyph = FONT[ch];
+    glyph.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (row[i] === 'X') g.fillRect(x + i, y + j, 1, 1); });
+    x += glyph[0].length + 1;
   }
+}
+const FUTON_COLORS = ['#c8452f', '#e8862e', '#e9c23a', '#5b9a4a', '#2f8a8a', '#3f6fb0', '#7b4f9e', '#d0607f'];
+function paintFuton(g, x, y, w, h) {
+  const WOOD = '#b98a55', WOOD_DK = '#7d5532', WOOD_HI = '#d3a874', INK = '#3a2a1e', BAND = '#f4ecd6';
+  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(x + 2, y + h - 2, w - 2, 2);    // its shadow on the carpet
+  g.fillStyle = WOOD_DK; g.fillRect(x, y, w, h - 2);                          // the wooden frame
+  g.fillStyle = WOOD; g.fillRect(x + 1, y, w - 2, 2); g.fillRect(x + 1, y + 1, 2, h - 4); g.fillRect(x + w - 3, y + 1, 2, h - 4);
+  g.fillStyle = WOOD_HI; g.fillRect(x + 1, y, w - 2, 1);
+  const cx = x + 3, cw = w - 6;                                               // the mattress, in stripes of many colors
+  for (let i = 0; i < cw; i++) { g.fillStyle = FUTON_COLORS[Math.floor(i / 3) % FUTON_COLORS.length]; g.fillRect(cx + i, y + 2, 1, h - 5); }
+  g.fillStyle = 'rgba(255,255,255,.2)'; g.fillRect(cx, y + 2, cw, 1);
+  g.fillStyle = 'rgba(0,0,0,.32)'; g.fillRect(cx, y + 11, cw, 1);              // the fold, between back and seat
+  g.fillStyle = 'rgba(255,255,255,.12)'; g.fillRect(cx, y + 12, cw, 4);
+  g.fillStyle = 'rgba(0,0,0,.3)';                                              // tufts
+  for (let i = 6; i < cw - 3; i += 11) { g.fillRect(cx + i, y + 6, 1, 1); g.fillRect(cx + i + 5, y + 13, 1, 1); }
+  const by = y + 16;                                                           // the words, on a band across the front
+  g.fillStyle = BAND; g.fillRect(cx, by, cw, h - 5 - 14);
+  g.fillStyle = '#d9cdb0'; g.fillRect(cx, by, cw, 1);
+  for (const [s, dy] of [['NORWOOD', 1], ['FUTON FACTORY', 7]]) pixelText(g, s, cx + Math.floor((cw - textWidth(s)) / 2), by + dy, INK);
 }
 function paintTable(g, x, y, tx, ty) {
   paintFloor(g, x, y, tx, ty);
@@ -382,7 +406,7 @@ for (let ty = 0; ty < MH; ty++) for (let tx = 0; tx < MW; tx++) {
   switch (ch) {
     case '.': paintFloor(bg, x, y, tx, ty); break;
     case 'o': paintBottles(bg, x, y, tx, ty); break;
-    case 'u': paintCouch(bg, x, y, tx, ty); break;
+    case 'u': paintFloor(bg, x, y, tx, ty); break;  // the futon is painted whole, below
     case 'n': paintTable(bg, x, y, tx, ty); break;
     case 'L': paintLaptop(bg, x, y, tx, ty); break;
     case '#': paintWall(bg, x, y, tx, ty); break;
@@ -396,6 +420,13 @@ for (let ty = 0; ty < MH; ty++) for (let tx = 0; tx < MW; tx++) {
     case 'b': paintSand(bg, x, y, tx, ty); break;
     case '~': paintWater(bg, x, y, tx, ty); break;
   }
+}
+for (let ty = 0; ty < MH; ty++) for (let tx = 0; tx < MW; tx++) {  // the futon spans several tiles: paint it in one piece
+  if (MAP[ty][tx] !== 'u' || tile(tx - 1, ty) === 'u' || tile(tx, ty - 1) === 'u') continue;
+  let w = 0, h = 0;
+  while (tile(tx + w, ty) === 'u') w++;
+  while (tile(tx, ty + h) === 'u') h++;
+  paintFuton(bg, tx * TS, ty * TS, w * TS, h * TS);
 }
 
 // ---- sprites, drawn as little grids of letters ----
@@ -461,7 +492,7 @@ const TICK_ART = {
   human:   [FAT_TICK, { ...TICK_BASE, B: '#6e2c3a', H: '#b0606e', v: '#3a0f1c', d: '#2e0f18' }],
   dog:     [FAT_TICK, { ...TICK_BASE, B: '#56505e', H: '#9a94a4', v: '#2a2430', d: '#2a2630' }],
 };
-// Isabella, a California hippy: long blond hair, a flower crown, a peasant top, a long flowing skirt,
+// Isabella, a California hippy: long brown hair, a flower crown, a peasant top, a long flowing skirt,
 // bare feet (how she looks is a guess)
 const ISABELLA = [
   '................',
@@ -481,7 +512,7 @@ const ISABELLA = [
   '...mkkqkkqkkm...',
   '.....s....s.....'];
 const ISABELLA_STEP = ISABELLA.slice(0, 14).concat(['....mkkqkkqkkm..', '.....s.....s....']);
-const ISABELLA_PAL = { h: '#e2c06e', d: '#b8924a', p: '#e8679a', y: '#f5d548', v: '#5d9b48', o: '#ef8b3c',
+const ISABELLA_PAL = { h: '#7b4a2b', d: '#55311b', p: '#e8679a', y: '#f5d548', v: '#5d9b48', o: '#ef8b3c',
   s: '#f4d3bb', e: '#3b5f86', l: '#d46a72', w: '#f7f1e2', k: '#c45f2a', q: '#f0b648', m: '#8f4520' };
 const DEER = [
   '................',
@@ -818,7 +849,7 @@ function interact() {
       else say(['The lawn is empty. Hoofprints lead into the woods.']);
       break;
     case 'o': say(['Empty Rolling Rock bottles. A lot of them.']); break;
-    case 'u': say(['A beat-up old couch.']); break;
+    case 'u': say(['A futon in a lot of colors. It says "Norwood Futon Factory".']); break;
     case 'n': say(['A coffee table.']); break;
     case 'L': say(['A laptop. Someone puked on it.']); break;
     case 'w': say(['Your web: silk, thick as a wall.']); break;
