@@ -26,6 +26,14 @@ canvas { display:block; width:100%; height:auto; image-rendering:pixelated; imag
 #fade { position:absolute; inset:0; background:#000; opacity:0; pointer-events:none; }
 #hud { position:absolute; left:6px; top:6px; max-width:calc(100% - 12px); background:rgba(43,33,24,.85);
   color:#fff3d0; font-size:13px; line-height:1.3; padding:3px 9px; border-radius:999px; pointer-events:none; }
+#screen.sugar #hud { max-width:calc(100% - 132px); }
+#sugar { position:absolute; right:6px; top:6px; min-width:96px; white-space:nowrap; background:rgba(43,33,24,.85); color:#fff3d0;
+  font-size:11px; line-height:1.2; padding:4px 7px 6px; border-radius:8px; pointer-events:none; }
+#sugar i { display:block; height:7px; margin-top:3px; background:#4a3a2c; border-radius:4px; overflow:hidden; }
+#sugar b { display:block; height:100%; width:15%; background:#d0452f; border-radius:4px;
+  transition:width 1.6s ease-out, background-color 1.6s; }
+#sugar.low b { animation:low 0.9s ease-in-out infinite; }
+@keyframes low { 50% { opacity:.35; } }
 #box { position:absolute; left:5px; right:5px; bottom:5px; min-height:36%; background:#fbf7ec; color:var(--ink);
   border:4px double var(--ink); border-radius:6px; padding:8px 12px 14px; font-size:16px; line-height:1.38;
   cursor:pointer; }
@@ -78,6 +86,7 @@ a { color:var(--accent); }
   <div id="screen">
     <canvas id="c" width="160" height="144"></canvas>
     <div id="hud" hidden></div>
+    <div id="sugar" hidden><span id="sugarText">Blood sugar: low</span><i><b id="sugarBar"></b></i></div>
     <div id="fade"></div>
     <div id="box" hidden><p id="text"></p><div id="choices" hidden></div><span id="more" hidden>&#9660;</span></div>
   </div>
@@ -115,7 +124,7 @@ a { color:var(--accent); }
       <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
     </ol>
     <p class="small">Guesses in this sketch: the gnats, the rest of the apartment, the view outside, how Phil,
-      Isabella and the deer look, and how the deer take her.</p>
+      Isabella and the deer look, how the deer take her, and where the orange juice sits and how it looks.</p>
     <div class="btns">
       <button class="btn" id="another">Try another tick</button>
       <button class="btn alt" id="over">Start over</button>
@@ -166,9 +175,7 @@ const TICKS = {
   human: { x: 6, y: 2, name: 'tick swollen with human blood', look: 'A tick, swollen with human blood.',
     ask: 'Eat the tick swollen with human blood?',
     gifts: ['You eat the tick swollen with human blood.',
-            { t: 'The blood is type 1 diabetic. Your blood sugar drops. Your vision blurs.', fx: () => blur(true) },
-            { t: 'Deal with that, and psychic powers come: you can cast spells, like shooting Lyme disease at your enemies.',
-              fx: () => blur(false) }] },
+            { t: 'The blood is type 1 diabetic. Your blood sugar drops. Your vision blurs.', fx: () => sugarLow() }] },
   dog: { x: 7, y: 2, name: 'tick swollen with dog blood', look: 'A tick, swollen with dog blood.',
     ask: 'Eat the tick swollen with dog blood?',
     gifts: ['You eat the tick swollen with dog blood.',
@@ -552,6 +559,9 @@ const isa = { x: 8, y: 11, visible: true, alarm: false, path: [], walkT: 0 };
 const phil = { x: 15, y: 3, mad: 0 };  // he stands on two tiles across and two down
 const PHIL_LINE = 'oh no! My laptop!!';
 const isPhil = (x, y) => x >= phil.x && x <= phil.x + 1 && y >= phil.y && y <= phil.y + 1;
+const oj = { x: 11, y: 6, drunk: false };  // the bottle of orange juice (where it sits is a guess)
+const isOJ = (x, y) => x === oj.x && y === oj.y;
+let sugarState = null;  // null, 'low' or 'steady': only lows are a danger
 const cam = { x: 0, y: 0 };
 let camMode = 'follow', pan = null, fade = { v: 0, tween: null }, timers = [];
 
@@ -562,7 +572,7 @@ const tickAt = (x, y) => ticksIn ? ORDER.find(k => k !== choice && TICKS[k].x ==
 function walkable(x, y) {
   const ch = tile(x, y);
   if (ch === 'D') return exitOpen;
-  return 'HTKS.o'.includes(ch) && !tickAt(x, y) && !isPhil(x, y);
+  return 'HTKS.o'.includes(ch) && !tickAt(x, y) && !isPhil(x, y) && !isOJ(x, y);
 }
 
 // ---- time-based helpers for the little scenes ----
@@ -575,6 +585,20 @@ function walkTo(a, pts, speed = 2.6) {
   return new Promise(res => { a.path = pts.map(([x, y]) => ({ x, y })); a.speed = speed; a.res = res; });
 }
 function blur(on) { cv.style.filter = on ? 'blur(1.6px)' : ''; }
+
+// ---- blood sugar: low means blurry, slow, and no casting; orange juice brings it back ----
+function sugarMeter(state) {
+  sugarState = state;
+  $('screen').classList.toggle('sugar', !!state);
+  $('sugar').hidden = !state;
+  $('sugar').classList.toggle('low', state === 'low');
+  if (!state) return;
+  $('sugarText').textContent = state === 'low' ? 'Blood sugar: low' : 'Blood sugar: steady';
+  $('sugarBar').style.width = state === 'low' ? '15%' : '72%';
+  $('sugarBar').style.backgroundColor = state === 'low' ? '#d0452f' : '#6f9e4f';
+}
+function sugarLow() { blur(true); P.stepTime = STEP * 2; sugarMeter('low'); }
+function sugarSteady() { blur(false); P.stepTime = STEP; sugarMeter('steady'); }
 
 // ---- the text box ----
 const box = { active: false, pages: [], i: 0, full: '', shown: 0, acc: 0, resolve: null, ask: null, sel: 0 };
@@ -701,23 +725,41 @@ async function offer(k) {
   phase = 'eating'; choice = k; hud(null);
   [NOTE.D4, NOTE.Fs4, NOTE.A4].forEach((n, j) => pluck(n, 0.24, j * 0.12));
   await say(TICKS[k].gifts);
+  if (k === 'human') {
+    phase = 'low';
+    await say(["Low blood sugar. You move slowly, and you can't cast.",
+               'You need something sweet. There is a bottle of orange juice on the floor.']);
+    hud('Low blood sugar: find the orange juice'); lock--; return;
+  }
   blur(false);
   if (k === 'dog') P.stepTime = 0.11;
+  await openExit(); lock--;
+}
+async function drink() {
+  phase = 'drinking'; lock++; hud(null); oj.drunk = true;
+  pluck(NOTE.D4, 0.22); pluck(NOTE.Fs4, 0.18, 0.14); pluck(NOTE.A4, 0.16, 0.28);
+  await say(['You drink the orange juice.',
+             { t: 'Your blood sugar comes back up. Your vision clears.', fx: sugarSteady },
+             'Steady now, the psychic powers come: you can cast spells, like shooting Lyme disease at your enemies.']);
+  await openExit(); lock--;
+}
+async function openExit() {
   exitOpen = true; phase = 'exit';
   await say(['The apartment door has a gap under it.', 'Go after her.']);
-  hud('Go after her: the door, on the right side of the room'); lock--;
+  hud('Go after her: the door, on the right side of the room');
 }
 async function finish() {
   phase = 'done'; lock++; hud(null);
   [NOTE.D4, NOTE.Fs4, NOTE.A4, NOTE.D5].forEach((n, j) => pluck(n, 0.24, j * 0.15));
   await fadeTo(1, 0.9);
   $('endText').textContent = 'You ate the ' + TICKS[choice].name +
-    ', and slipped out under the door after Isabella. Next: level 2, the coffee roaster.';
+    (choice === 'human' ? ', drank the orange juice,' : ',') +
+    ' and slipped out under the door after Isabella. Next: level 2, the coffee roaster.';
   $('end').hidden = false;
 }
 async function tryAnother() {
   $('end').hidden = true;
-  choice = null; exitOpen = false; P.stepTime = STEP; blur(false);
+  choice = null; exitOpen = false; P.stepTime = STEP; blur(false); oj.drunk = false; sugarMeter(null);
   Object.assign(P, { tx: 6, ty: 3, nx: 6, ny: 3, moving: false, t: 0, facing: 'up' });
   camMode = 'follow'; [cam.x, cam.y] = playerCam();
   phase = 'choose'; lock = 1;
@@ -739,11 +781,18 @@ function interact() {
   const gi = gnats.findIndex(g => g.x === fx && g.y === fy);
   if (gi >= 0 && phase === 'gnats') { eatGnat(gi); return; }
   if (isPhil(fx, fy)) { say([{ t: PHIL_LINE, fx: philYells }]); return; }
+  if (isOJ(fx, fy)) {
+    if (phase === 'low') drink();
+    else if (oj.drunk) say(['An empty orange juice bottle.']);
+    else say(['A bottle of orange juice.']);
+    return;
+  }
   const k = tickAt(fx, fy);
   if (k) {
     if (phase === 'ticks') lookTick(k);
     else if (phase === 'choose') offer(k);
     else if (phase === 'exit') say(["You've eaten. Go after her."]);
+    else if (phase === 'low') say(["You've eaten. Now the orange juice."]);
     else say([TICKS[k].look]);
     return;
   }
@@ -760,6 +809,7 @@ function interact() {
     case 'w': say(['Your web: silk, thick as a wall.']); break;
     case 'D':
       if (phase === 'choose') say(["You can't save her as you are.", 'Eat one of the ticks first.']);
+      else if (phase === 'low') say(['Your vision is too blurry. Drink the orange juice first.']);
       else if (!exitOpen) say(['The door out. There is a gap under it, just big enough for a spider.', 'No reason to go. Not yet.']);
       break;
   }
@@ -858,6 +908,22 @@ function drawPhil(X, Y) {
     g.globalAlpha = 1;
   }
 }
+// the bottle of orange juice, lying on its side (how it looks is a guess)
+function drawOJ(x, y) {
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+  const EDGE = oj.drunk ? '#b9b2a2' : '#d0700f', JUICE = oj.drunk ? '#e4dfd2' : '#f59a23',
+        HI = oj.drunk ? '#f4f1ea' : '#ffc766';
+  f(2, 11, 13, 1, 'rgba(0,0,0,.22)');
+  f(1, 5, 10, 6, EDGE); f(2, 6, 8, 4, JUICE); f(2, 6, 7, 1, HI);
+  f(4, 5, 4, 6, '#fbf3dc'); f(5, 7, 2, 2, '#f08a12'); ctx.fillStyle = '#4f8a3a'; ctx.fillRect(x + 6, y + 6, 1, 1);
+  f(11, 6, 2, 4, EDGE); f(11, 7, 2, 2, JUICE);
+  f(13, 6, 2, 4, '#3d7a3a'); f(13, 6, 2, 1, '#5d9e55');
+  if (phase === 'low') {  // a glint, so it can be found with blurry eyes
+    ctx.globalAlpha = 0.45 + 0.55 * Math.abs(Math.sin(time * 3));
+    f(12, 1, 1, 3, '#fffbe8'); f(11, 2, 3, 1, '#fffbe8');
+    ctx.globalAlpha = 1;
+  }
+}
 function draw() {
   const cx = cam.x, cy = cam.y;
   ctx.drawImage(base, cx, cy, VW, VH, 0, 0, VW, VH);
@@ -899,6 +965,7 @@ function draw() {
     ctx.fillStyle = hue(0); ctx.fillRect(gx - 2, gy + up, 2, 1);
     ctx.fillStyle = hue(3); ctx.fillRect(gx + 3, gy + up, 2, 1);
   }]);
+  list.push([oj.y * TS, () => drawOJ(oj.x * TS - cx, oj.y * TS - cy)]);
   list.push([(phil.y + 1) * TS, () => drawPhil(phil.x * TS - cx, phil.y * TS - cy)]);
   if (isa.visible) list.push([isa.y * TS, () => {
     const moving = isa.path && isa.path.length;
@@ -1004,6 +1071,8 @@ window.__sketch = {
   get isabella() { return { x: isa.x, y: isa.y, visible: isa.visible }; },
   get busy() { return lock > 0 || !!fade.tween || !!pan; },
   get ended() { return !$('end').hidden; },
+  get sugar() { return sugarState; }, get oj() { return { x: oj.x, y: oj.y, drunk: oj.drunk }; },
+  get slow() { return P.stepTime > STEP; },
   walkable, speed: SPEED, map: MAP,
 };
 })();
