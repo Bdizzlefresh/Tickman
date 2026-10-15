@@ -61,6 +61,9 @@ Every session reads this first and updates it last.
   the sound of Pharrell springs up.
 - 2026-10-15, issue #1: the insects the spider eats get wrapped up in the web, like a mini game, not
   just eaten.
+- 2026-10-15, issue #1: give Isabella brown hair. Build the house music soundtrack first, then the
+  N.E.R.D. album, then the mini game of wrapping bugs in silk.
+- 2026-10-15, issue #1: make the green couch a multicolored futon that says "Norwood Futon Factory".
 
 ## What you've decided
 
@@ -78,7 +81,10 @@ Every session reads this first and updates it last.
   bottle of orange juice on 2026-10-15).
 - Isabella (changed 2026-10-15): not the spider's love, at least not yet. She's a damsel in
   distress he is pursuing, hoping to win her heart. And she's a Caucasian California hippy (before,
-  very Mexican).
+  very Mexican), with brown hair (2026-10-15).
+- In the apartment, the couch is a multicolored futon that says "Norwood Futon Factory". (2026-10-15.)
+- The order for what's next (2026-10-15): the house music soundtrack, then the N.E.R.D. album case,
+  then the silk-wrapping mini game.
 - The spider keeps his honeybuns in his N.E.R.D. album case; when he opens it, the sound of Pharrell
   springs up. (2026-10-15; not built yet.)
 - The bugs on the web are random insects, still gay (rainbow). The ticks look scarier. (2026-10-15.)
@@ -138,13 +144,19 @@ Every session reads this first and updates it last.
     all still with rainbow wings, a rainbow trail and a twirl. The level asks you to catch three
     bugs, and says which kind you caught.
   - Guesses, labeled on the end screen: how Isabella, the ticks and the bugs look, and which bugs.
+- 2026-10-15, sketch 2 changed (`gh-pages`, commit 3294d9c), as you asked: Isabella's hair is brown,
+  and the green couch is now a futon, two tiles deep, on a wooden frame, with a cover in stripes of
+  many colors and "NORWOOD / FUTON FACTORY" printed on a cream band across the front. Tap A on it and
+  the text box reads the name too. Guesses, labeled on the end screen: the futon's colors (and its
+  frame).
 
 ## Open questions
 
-- Which comes first: the web-wrapping mini game, the honeybun stash in the N.E.R.D. album case, or
-  the house music? (Asked 2026-10-15.)
-- Are the new looks what you meant: Isabella as a hippy, the scarier ticks, the random bugs? (Said
-  2026-10-15 that they're guesses.)
+- The house music: should it play the whole time, or kick in when the spider sets out after
+  Isabella, so the quiet life on the web comes before the beat? (Asked 2026-10-15, before building it.)
+- Answered 2026-10-15: what comes first. The house music, then the album case, then the mini game.
+- Are the new looks what you meant: the scarier ticks, the random bugs, the futon's colors? (Said
+  2026-10-15 that they're guesses. Isabella as a hippy: you kept it and changed her hair to brown.)
 - Answered 2026-10-15: the honeybuns are a stash, kept in the spider's N.E.R.D. album case.
 - Fights: like Pokémon Red (their own screen, a move each turn from a short list), or
   right on the map, dodging as you go? (Asked 2026-10-14, twice, no rush. Not asked again in
@@ -154,8 +166,10 @@ Every session reads this first and updates it last.
   not asked.)
 - When Isabella is drawn, what should it get right about her? (Asked 2026-10-12; your 2026-10-15
   answers, a California hippy and a damsel in distress, cover much of it.)
-- Before building the music: check the musician you named (the spelling, and whether you meant
-  someone Austrian), and say only what's checked. (A note for the workshop, not yet asked.)
+- The musician you named, checked 2026-10-15 and told you: Gerd Janson (with an o) is a German DJ
+  from near Frankfurt, not Austrian, and co-founded the house label Running Back (sources: Mixmag's
+  feature "Gerd Janson: The craft", and his artist bios). If you meant someone Austrian, the music can
+  follow them instead.
 - Not asked yet: the miniature tangerine vespa, a scooter or a wasp? Who placed the three
   ticks in the web? What does the spider eat in its ordinary days? Who is Phil in the story,
   and does he come back? Does the honeybun work at once, or take a moment? Which other
@@ -199,3 +213,7 @@ Every session reads this first and updates it last.
   with what changed, noted the other three (the web-wrapping mini game, the album case, the house
   music) to build one at a time, said plainly that real recordings can't go in the game but original
   music in that style can, and asked which comes first.
+- 2026-10-15: two more messages from you on issue #1: brown hair for Isabella, the order (music, then
+  the album case, then the mini game), and the futon. Made the hair and the futon in sketch 2, same
+  link. Replied on issue #1 with what changed, the checked facts about the musician, and one question
+  before building the music: play the whole time, or kick in when the spider sets out?
