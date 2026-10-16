@@ -40,6 +40,16 @@ canvas { display:block; width:100%; height:auto; image-rendering:pixelated; imag
 #silk i { display:block; height:7px; margin-top:3px; background:#4a3a2c; border-radius:4px; overflow:hidden; }
 #silk b { display:block; height:100%; width:30%; background:#f4efe0; border-radius:4px; }
 #silk.slip b { background:#e0a24a; }
+.bpanel { position:absolute; width:47%; background:rgba(251,247,236,.94); color:var(--ink); border:2px solid var(--ink);
+  border-radius:6px; padding:3px 7px 5px; font-size:12px; line-height:1.25; pointer-events:none; }
+.bpanel .nm { font-weight:bold; }
+.bpanel .row { display:flex; justify-content:space-between; gap:6px; font-size:11px; margin-top:2px; }
+.bpanel i { display:block; height:6px; margin-top:2px; background:#d8cfbb; border-radius:3px; overflow:hidden; }
+.bpanel i b { display:block; height:100%; width:100%; background:#5d9b48; border-radius:3px;
+  transition:width .6s ease-out, background-color .6s; }
+.bpanel .tag { font-size:11px; margin-top:3px; color:var(--accent); font-weight:bold; }
+#bfoe { left:6px; top:6px; }
+#bme { right:6px; top:38%; }
 #box { position:absolute; left:5px; right:5px; bottom:5px; min-height:36%; background:#fbf7ec; color:var(--ink);
   border:4px double var(--ink); border-radius:6px; padding:8px 12px 14px; font-size:16px; line-height:1.38;
   cursor:pointer; }
@@ -95,6 +105,12 @@ a { color:var(--accent); }
     <div id="hud" hidden></div>
     <div id="sugar" hidden><span id="sugarText">Blood sugar: low</span><i><b id="sugarBar"></b></i></div>
     <div id="silk" hidden><span>Silk</span><i><b id="silkBar"></b></i></div>
+    <div id="bfoe" class="bpanel" hidden><span class="nm" id="bfoeName"></span><i><b id="bfoeBar"></b></i></div>
+    <div id="bme" class="bpanel" hidden>
+      <div class="row"><span class="nm">You</span><span id="bmeHp"></span></div><i><b id="bmeBar"></b></i>
+      <div id="bmeSugar" hidden><div class="row"><span>Blood sugar</span><span id="bmeSugarTxt"></span></div><i><b id="bmeSugarBar"></b></i></div>
+      <div id="bmeTag" class="tag" hidden></div>
+    </div>
     <div id="fade"></div>
     <div id="box" hidden><p id="text"></p><div id="choices" hidden></div><span id="more" hidden>&#9660;</span></div>
   </div>
@@ -140,7 +156,8 @@ a { color:var(--accent); }
     <ol>
       <li>The apartment: a spider's life, Phil, three ticks, Isabella taken. <i>(Level 1, in this sketch.)</i></li>
       <li>The North Shore of Lake Superior: your mount (a naked mole rat, the tangerine vespa, or the zoomies),
-        Brudda Blaine, three camps, and the climb up Palisade Head. <i>(Level 2, in this sketch.)</i></li>
+        Brudda Blaine, three camps, a fight between each, and the climb up Palisade Head. <i>(Level 2, in this
+        sketch.)</i></li>
       <li>The coffee roaster, the first boss.</li>
       <li>The second boss: the crumbling American middle class and high rent gouging.</li>
       <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
@@ -169,17 +186,19 @@ a { color:var(--accent); }
     <p><b>The levels, from your story:</b></p>
     <ol>
       <li>The apartment: a spider's life, Phil, three ticks, Isabella taken. <i>(Level 1, in this sketch.)</i></li>
-      <li>The North Shore of Lake Superior: your mount, Brudda Blaine, three camps, and the climb up Palisade
-        Head. <i>(Level 2, in this sketch.)</i></li>
+      <li>The North Shore of Lake Superior: your mount, Brudda Blaine, three camps, a fight between each, the pizza
+        joint, and the climb up Palisade Head. <i>(Level 2, in this sketch.)</i></li>
       <li>The coffee roaster, the first boss.</li>
       <li>The second boss: the crumbling American middle class and high rent gouging.</li>
       <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
     </ol>
     <p class="small">Guesses in level 2: the whole map (the path, the woods, the rocky shore, where things sit); the
       apartment door and its mat; how the naked mole rat, the vespa (drawn as a scooter) and the zoomies look, and how
-      fast each goes; how Brudda Blaine and his bicycle look; the camps (the tent, the fire, his decks); his three
-      tracks (all original, in the spirit of underground hip hop); the pizza joint, inside and out; how the falls look;
-      the trail up the cliff; and the view from the top.</p>
+      fast each goes; how Brudda Blaine's bicycle looks; the camps (the fire, his decks); how the tent goes wrong at the
+      first camp; his three tracks (all original, in the spirit of underground hip hop); who dances, and how; the pizza
+      joint, inside and out; the fish in the lake; how the falls, the rapids and the salmon look; the fights (their own
+      screen, like Pokémon Red, a move each turn), the gull and the bear, your moves, and all the numbers; the road up
+      through giant trees; and the view from the top.</p>
     <div class="btns">
       <button class="btn" id="again2">Ride level 2 again</button>
     </div>
@@ -1567,7 +1586,8 @@ function interact() {
   }
 }
 const canMove = () => !box.active && !wrap && lock === 0 && !fade.tween && fade.v < 0.5 &&
-  !['title', 'intro', 'later', 'capture', 'eating', 'done', 'l2intro', 'mounting', 'camp', 'sleep', 'warp', 'vista', 'done2'].includes(phase);
+  !['title', 'intro', 'later', 'capture', 'eating', 'done', 'l2intro', 'mounting', 'camp', 'sleep', 'warp', 'vista', 'done2',
+    'fightin', 'battle'].includes(phase);
 
 function updatePlayer(dt) {
   if (P.moving) {
@@ -1584,6 +1604,7 @@ function updatePlayer(dt) {
         if (level === 2) bruddaStep();  // he rides into the spot you just left
         P.nx = P.tx + dx; P.ny = P.ty + dy; P.t = 0; P.moving = true;
       }
+      else if (level === 2) nudge2(P.tx + dx, P.ty + dy);  // level 2: say why you can't go that way, if there's a reason
       else { const gi = bugAt(P.tx + dx, P.ty + dy); if (gi >= 0) startWrap(gi); }  // walk into a bug: start wrapping
     }
   }
@@ -1807,6 +1828,7 @@ function drawBundle(b, cx, cy) {
 }
 function draw() {
   if (vista) { drawVista(); return; }
+  if (battle) { drawBattle(); return; }
   const cx = cam.x, cy = cam.y;
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ctx.drawImage(base, cx, cy, VW, VH, 0, 0, VW, VH);
@@ -1917,9 +1939,14 @@ function draw() {
 const CAMPS = [{ cx: 21, cy: 7 }, { cx: 45, cy: 7 }, { cx: 64, cy: 3 }];
 const MOUNT = { x: 10, y: 5 };
 const MOUNT_STEP = { molerat: 0.1, vespa: 0.085, zoomies: 0.065 };  // how fast each goes, a tile at a time (a guess)
-const CLIMB_FOOT = 30, CLIMB_TOP = 3, CLIMB_FEET = 400;
+const CLIMB_FOOT = 65, CLIMB_TOP = 3, CLIMB_FEET = 400;
 let camps = 0, night = null, vista = null, matWiggle = -9, bruddaSparkle = -9, built2 = false, fromPanel = 'title';
 const smoke = { t0: -9 };  // the cigarette, at the first camp
+const gust = { t0: -9 }, pole = { t0: -9 };  // at the first camp: the wind that takes the tent, the pole that springs loose
+let pizzaVisited = false;  // you have to go in the pizza joint before you can ride on past it
+let fishJumps = [], fishT = 0, salmonJumps = [], salmonT = 0;  // fish jumping in the lake; salmon leaping up the falls
+const dance = { t0: -9, camp: -1 };  // when Brudda Blaine's track drops, and at which camp
+const FALLS = [60, 61, 62, 63];  // Gooseberry Falls: the river's columns
 const B = { here: false, mode: 'off', x: 0, y: 0, fx: 0, fy: 0, tx: 0, ty: 0, side: 1, face: 1, crank: 0,
   path: [], walkT: 0, playing: false };  // Brudda Blaine
 
@@ -1952,10 +1979,14 @@ function buildRoute() {
   }
   for (let y = 1; y <= 3; y++) put(37, y, 'QQQQQQQ');  // the pizza joint, and its door
   put(40, 3, 'P'); put(37, 4, 'ggg-ggg');
-  for (let y = 0; y <= 8; y++) m[y][62] = m[y][63] = 'v';  // Gooseberry Falls: the river, the falls, a footbridge
-  for (let y = 1; y <= 3; y++) { m[y][62] = m[y][63] = 'Y'; m[y][61] = 'x'; }
-  m[4][62] = m[4][63] = m[5][62] = m[5][63] = 'b';
-  m[4][59] = '?';
+  // Gooseberry Falls, violent: a wide river crashing over the falls into a churning pool, a footbridge, then rapids
+  // with rocks in them, down to the lake
+  for (let y = 0; y <= 8; y++) for (const x of FALLS) m[y][x] = 'v';
+  for (let y = 0; y <= 3; y++) m[y][59] = 'x';
+  for (let y = 0; y <= 2; y++) for (const x of FALLS) m[y][x] = 'Y';
+  for (const y of [4, 5]) for (const x of FALLS) m[y][x] = 'b';
+  for (const [x, y] of [[61, 6], [63, 7], [60, 8]]) m[y][x] = 'j';
+  m[4][58] = '?';
   for (let y = 0; y <= 4; y++) for (let x = 80; x < W; x++) m[y][x] = 'C';  // Palisade Head: cliffs, and the trail up
   m[4][85] = 'T'; m[4][83] = '?';
   return m.map(row => row.join(''));
@@ -1971,21 +2002,26 @@ const PIZZA_MAP = [  // inside the pizza joint, stuck in the 1980s
   '..........',
   'WWWWmmWWWW',
 ];
-function buildClimb() {  // the trail up Palisade Head: switchbacks up the rock, the lake below on the right
-  const W = 12, H = 32, r = rng(400), m = [];
-  for (let y = 0; y < H; y++) {
-    const row = [];
-    for (let x = 0; x < W; x++) row.push(x <= 1 ? (r() < 0.3 ? 'i' : 't') : x <= 8 ? (r() < 0.12 ? 'p' : 'R') : x === 9 ? 'E' : '~');
-    m.push(row);
+// the road up Palisade Head, cruising through giant trees like redwoods: long, with few turns (a guess at the vibe).
+// Its middle, from the bottom up: long straights, and three gentle bends.
+const ROAD = [[7, 64], [7, 50], [4, 44], [4, 28], [10, 20], [10, 10], [7, 6], [7, 4]];
+function buildClimb() {
+  const W = 16, H = 68, r = rng(400), m = [];
+  for (let y = 0; y < H; y++) m.push(Array(W).fill('f'));                      // ferns, under the giant trees
+  const mid = [];
+  for (let i = 0; i + 1 < ROAD.length; i++) {
+    const [x0, y0] = ROAD[i], [x1, y1] = ROAD[i + 1];
+    for (let y = y0; y > y1; y--) mid[y] = Math.round(x0 + (x1 - x0) * (y0 - y) / (y0 - y1));
   }
-  for (let y = 1; y <= 3; y++) for (let x = 2; x <= 8; x++) m[y][x] = 'o';     // the overlook, at the top
-  for (let y = 29; y <= 31; y++) for (let x = 2; x <= 8; x++) m[y][x] = 'g';   // the foot of the trail
-  const pts = [[4, 29], [4, 27], [7, 27], [7, 24], [3, 24], [3, 21], [7, 21], [7, 18], [3, 18], [3, 15], [7, 15],
-               [7, 12], [3, 12], [3, 9], [7, 9], [7, 6], [4, 6], [4, 4]];
-  for (let i = 0; i + 1 < pts.length; i++) {
-    let [x, y] = pts[i]; const [x1, y1] = pts[i + 1];
-    m[y][x] = '=';
-    while (x !== x1 || y !== y1) { x += Math.sign(x1 - x); y += Math.sign(y1 - y); m[y][x] = '='; }
+  mid[ROAD[ROAD.length - 1][1]] = ROAD[ROAD.length - 1][0];
+  for (let y = 0; y < H; y++) if (mid[y] != null) for (let x = mid[y] - 1; x <= mid[y] + 1; x++) m[y][x] = x === mid[y] ? 'l' : '=';
+  for (let y = 1; y <= 3; y++) for (let x = 3; x <= 11; x++) m[y][x] = 'o';     // the overlook, at the top
+  for (let y = 65; y <= 66; y++) for (let x = 3; x <= 11; x++) m[y][x] = 'g';   // the foot of the road
+  for (let y = 0; y <= 9; y++) { m[y][14] = 'E'; m[y][15] = '~'; }             // near the top: the cliff edge, the lake
+  // the giant trees: a two-tile trunk, rising up out of view, in rows on both sides of the road
+  const clear = (x, y) => { for (let j = y - 4; j <= y; j++) for (const i of [x, x + 1]) if (m[j] === undefined || m[j][i] !== 'f') return false; return true; };
+  for (let y = 10; y <= 63; y += 3) for (let x = 0; x < W - 1; x++) {
+    if (r() < 0.32 && clear(x, y) && m[y][x - 1] !== 'X') { m[y][x] = m[y][x + 1] = 'X'; x += 2; }
   }
   return m.map(row => row.join(''));
 }
@@ -2080,19 +2116,25 @@ function fireRing(g, x, y) {  // a ring of stones, ash in the middle
 function river(g, x, y, tx, ty) {
   g.fillStyle = '#3b7fae'; g.fillRect(x, y, 16, 16);
   speckle(g, x, y, tx * 3 + ty * 13, 6, ['#5d9cc8', '#336f9a']);
-  const wet = c => 'vYb~'.includes(c);
+  const wet = c => 'vYbj~'.includes(c);
   g.fillStyle = '#4b3f3a';
   if (!wet(tile(tx - 1, ty))) g.fillRect(x, y, 2, 16);
   if (!wet(tile(tx + 1, ty))) g.fillRect(x + 14, y, 2, 16);
+  if (ty === 3 || ty >= 6) speckle(g, x + 2, y, tx * 17 + ty * 3, 10, ['#e4f1f7', '#b9d9ea']);  // white water
 }
-function falls(g, x, y, tx, ty) {  // water pouring down over ledges of dark rock, in steps
-  g.fillStyle = '#cfe4ee'; g.fillRect(x, y, 16, 16);
-  for (let i = 0; i < 16; i += 2) { g.fillStyle = (i + tx * 2) % 6 ? '#a9cde0' : '#eef6f9'; g.fillRect(x + i, y, 1, 16); }
-  if (ty > 1) {  // a ledge, the water spilling over it, foam below
+function rapidRock(g, x, y, tx, ty) {  // a dark, wet rock in the rapids
+  river(g, x, y, tx, ty);
+  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(x + 4, y + 11, 10, 3);
+  disc(g, x + 8, y + 8, 5, '#3a3430'); disc(g, x + 7, y + 7, 4, '#4f4640'); disc(g, x + 6, y + 6, 1, '#7a706a');
+}
+function falls(g, x, y, tx, ty) {  // water crashing down over ledges of dark rock, in steps
+  g.fillStyle = '#d8ecf4'; g.fillRect(x, y, 16, 16);
+  for (let i = 0; i < 16; i += 2) { g.fillStyle = (i + tx * 2) % 6 ? '#a9cde0' : '#ffffff'; g.fillRect(x + i, y, 1, 16); }
+  if (ty >= 1) {  // a ledge, the water smashing over it, foam below
     const o = (tx * 3) % 4;
-    g.fillStyle = '#5a4c44'; g.fillRect(x, y + o, 16, 1);
-    g.fillStyle = '#f7fbfd'; g.fillRect(x, y + o + 1, 16, 2);
-    speckle(g, x, y + o + 1, tx * 9 + ty, 5, ['#ffffff', '#dceef5']);
+    g.fillStyle = '#3e322c'; g.fillRect(x, y + o, 16, 2);
+    g.fillStyle = '#ffffff'; g.fillRect(x, y + o + 2, 16, 3);
+    speckle(g, x, y + o + 2, tx * 9 + ty, 8, ['#ffffff', '#cfe6f1']);
   }
   const wet = c => 'vYb'.includes(c);
   g.fillStyle = '#4b3f3a';
@@ -2185,6 +2227,7 @@ function paintRoute(ch, x, y, tx, ty) {
     case 'F': ground2(g, x, y, tx, ty); fireRing(g, x, y); break;
     case 'v': river(g, x, y, tx, ty); break;
     case 'Y': falls(g, x, y, tx, ty); break;
+    case 'j': rapidRock(g, x, y, tx, ty); break;
     case 'x': rockLedge(g, x, y, tx, ty); break;
     case 'b': bridge(g, x, y, tx, ty); break;
     case 'C': cliff(g, x, y, tx, ty); break;
@@ -2250,10 +2293,17 @@ function paintClimb(ch, x, y, tx, ty) {
     const r = rng(tx * 5 + ty * 11); g.fillStyle = '#6a3424'; g.fillRect(x + Math.floor(r() * 12), y + Math.floor(r() * 16), 4, 1);
   };
   switch (ch) {
-    case 't': forestFloor(g, x, y, tx, ty); spruce(g, x, y, tx * 7 + ty * 13); break;
-    case 'i': forestFloor(g, x, y, tx, ty); birch(g, x, y, tx * 11 + ty * 5); break;
-    case 'R': rock(); break;
-    case 'p': rock(); spruce(g, x, y, tx * 3 + ty * 17, true); break;
+    case 'f': case 'X': fernFloor(g, x, y, tx, ty); break;  // the giant trunks are painted whole, after
+    case 'l': case '=': {  // the road: asphalt, white edge lines, a dashed yellow line down the middle
+      g.fillStyle = '#4a4a4e'; g.fillRect(x, y, 16, 16);
+      speckle(g, x, y, tx * 13 + ty * 31, 10, ['#58585c', '#3e3e42', '#626266']);
+      const road = c => c === '=' || c === 'l';
+      g.fillStyle = '#e8e4d8';
+      if (!road(tile(tx - 1, ty))) g.fillRect(x + 1, y, 1, 16);
+      if (!road(tile(tx + 1, ty))) g.fillRect(x + 14, y, 1, 16);
+      if (ch === 'l' && ty % 3) { g.fillStyle = '#e8c23a'; g.fillRect(x + 7, y, 2, 16); }
+      break;
+    }
     case 'E':  // the edge: the rock drops away to the lake
       rock(); g.fillStyle = '#4e2418'; g.fillRect(x + 7, y, 9, 16); g.fillStyle = '#3a1a12'; g.fillRect(x + 11, y, 5, 16);
       g.fillStyle = '#a5583a'; g.fillRect(x + 6, y, 1, 16);
@@ -2261,20 +2311,45 @@ function paintClimb(ch, x, y, tx, ty) {
     case '~': lake2(g, x, y, tx, ty); break;
     case 'o': g.fillStyle = '#a0614a'; g.fillRect(x, y, 16, 16); speckle(g, x, y, tx * 7 + ty * 19, 8, ['#b8775c', '#9aa86a', '#c99a3a', '#8a5240']); break;
     case 'g': grass2(g, x, y, tx, ty); break;
-    case '=':  // the trail: packed earth and stones, a step now and then
-      rock(); g.fillStyle = '#a88e6a'; g.fillRect(x + 2, y + 2, 12, 12);
-      for (const [dx, dy] of [[0, -1], [0, 1], [-1, 0], [1, 0]]) if (tile(tx + dx, ty + dy) === '=' || tile(tx + dx, ty + dy) === 'o' || tile(tx + dx, ty + dy) === 'g')
-        g.fillRect(x + (dx > 0 ? 14 : dx < 0 ? 0 : 2), y + (dy > 0 ? 14 : dy < 0 ? 0 : 2), dx ? 2 : 12, dy ? 2 : 12);
-      speckle(g, x, y, tx * 13 + ty * 31, 5, ['#8a7456', '#c0a882']);
-      if (ty % 2) { g.fillStyle = '#8a7456'; g.fillRect(x + 3, y + 8, 10, 1); }
-      break;
   }
+}
+function fernFloor(g, x, y, tx, ty) {  // the shady floor under the giant trees, with ferns
+  g.fillStyle = '#26381f'; g.fillRect(x, y, 16, 16);
+  speckle(g, x, y, tx * 5 + ty * 9, 8, ['#30462a', '#1e2e1a', '#4a3424']);
+  const r = rng(tx * 31 + ty * 7 + 3);
+  for (let n = 0; n < 2; n++) if (r() < 0.75) {
+    const fx = x + 3 + Math.floor(r() * 10), fy = y + 6 + Math.floor(r() * 8);
+    for (const a of [-2.4, -1.9, -1.57, -1.2, -0.7]) for (let s = 1; s <= 5; s++) {
+      const X = Math.round(fx + Math.cos(a) * s), Y = Math.round(fy + Math.sin(a) * s * 0.8);
+      px(g, X, Y, s % 2 ? '#5f9a45' : '#4a7f36');
+      if (s % 2 === 0) px(g, X + 1, Y, '#3e6e2e');
+    }
+  }
+}
+function redwood(g, x, y, seed) {  // a giant trunk, like a redwood's, on a two-tile footprint, rising up out of view
+  const W = 24, H = 80, x0 = x + 4;
+  g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(x + 1, y + 12, 30, 4);  // its shadow
+  for (let j = 0; j < H; j++) {
+    const yy = y + 15 - j, flare = j < 7 ? Math.round((7 - j) * 0.7) : 0;  // the roots flare out at the base
+    for (let i = -flare; i < W + flare; i++) {
+      const u = (i + flare) / (W + flare * 2);
+      let c = u < 0.16 ? '#4a2213' : u > 0.82 ? '#56281a' : '#7a3b22';            // shade on both sides
+      if (i % 5 === 2 || (i + seed) % 7 === 0) c = u < 0.16 ? '#3a1a0e' : '#5a2a18'; // deep furrows, up and down
+      else if ((i * 3 + seed) % 11 === 0) c = '#9a5232';                             // a ridge, catching the light
+      g.fillStyle = c; g.fillRect(x0 + i, yy, 1, 1);
+    }
+    if (j > H - 16) { g.fillStyle = 'rgba(20,32,20,' + ((j - (H - 16)) / 16 * 0.9).toFixed(2) + ')'; g.fillRect(x0 - flare, yy, W + flare * 2, 1); }
+  }
+}
+function paintClimbWhole() {  // the giant trunks, top to bottom, so the nearer ones stand in front
+  for (let ty = 0; ty < MH; ty++) for (let tx = 0; tx < MW; tx++)
+    if (MAP[ty][tx] === 'X' && tile(tx - 1, ty) !== 'X') redwood(bg, tx * TS, ty * TS, tx * 7 + ty * 3);
 }
 function buildLevel2() {
   if (built2) return; built2 = true;
   makeArea('route', buildRoute(), paintRoute, paintBuilding2);
   makeArea('pizza', PIZZA_MAP, paintPizza, paintPizzaWhole);
-  makeArea('climb', buildClimb(), paintClimb);
+  makeArea('climb', buildClimb(), paintClimb, paintClimbWhole);
 }
 
 // ---- level 2 sprites ----
@@ -2386,24 +2461,71 @@ function drawDecks(x, y, spin) {  // two turntables and a mixer, on a wooden cra
   f(7, 3, 2, 3, '#6a6a72'); px(ctx, x + 7, y + 4, '#f2c94c');
 }
 // the tent: a little A-frame, green; at the first camp it does not go very well (how it looks is a guess)
+function fillTri(ax, ay, bx, by, cx0, cy0, c) {  // a filled triangle, pixel by pixel
+  const x0 = Math.floor(Math.min(ax, bx, cx0)), x1 = Math.ceil(Math.max(ax, bx, cx0));
+  const y0 = Math.floor(Math.min(ay, by, cy0)), y1 = Math.ceil(Math.max(ay, by, cy0));
+  const e = (px0, py0, qx, qy, rx, ry) => (qx - px0) * (ry - py0) - (qy - py0) * (rx - px0);
+  const area = e(ax, ay, bx, by, cx0, cy0); if (!area) return;
+  ctx.fillStyle = c;
+  for (let yy = y0; yy <= y1; yy++) for (let xx = x0; xx <= x1; xx++) {
+    const X = xx + 0.5, Y = yy + 0.5, w0 = e(bx, by, cx0, cy0, X, Y) / area, w1 = e(cx0, cy0, ax, ay, X, Y) / area, w2 = e(ax, ay, bx, by, X, Y) / area;
+    if (w0 >= 0 && w1 >= 0 && w2 >= 0) ctx.fillRect(xx, yy, 1, 1);
+  }
+}
+function tentHeap(x, y, wide, soggy) {  // a heap of tent, a pole sticking out; soggy: soaked, dripping, in a puddle
+  const TG = soggy ? '#225a4c' : '#2f7f6a', TD = soggy ? '#173f35' : '#22604f', TL = soggy ? '#357e6c' : '#46a088';
+  if (soggy) { ctx.globalAlpha = 0.55; disc(ctx, x + 16, y - 1, 15, '#3b6f9a'); ctx.globalAlpha = 1; ctx.fillStyle = '#3b6f9a'; ctx.fillRect(x + 1, y - 2, 30, 3); }
+  else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(x + 2, y - 2, 28 + wide, 3); }
+  ctx.fillStyle = TD; ctx.fillRect(x + 3, y - 6, 26 + wide, 5); ctx.fillRect(x + 6, y - 8, 9, 2); ctx.fillRect(x + 18, y - 7, 8, 1);
+  ctx.fillStyle = TG; ctx.fillRect(x + 4, y - 6, 10, 2); ctx.fillRect(x + 17, y - 5, 9, 2); ctx.fillRect(x + 7, y - 8, 6, 1);
+  ctx.fillStyle = TL; ctx.fillRect(x + 8, y - 7, 3, 1);
+  line(ctx, x + 9, y - 5, x + 3, y - 11, '#9aa1a8');
+  if (!soggy) line(ctx, x + 20, y - 6, x + 27, y - 15, '#9aa1a8');
+  if (soggy) for (let i = 0; i < 4; i++) {  // drips
+    const k = (time * 0.9 + i * 0.27) % 1;
+    ctx.globalAlpha = 1 - k; ctx.fillStyle = '#9fd0ee'; ctx.fillRect(x + 5 + i * 7, y - 5 + Math.round(k * 6), 1, 2); ctx.globalAlpha = 1;
+  }
+}
 function drawTent(x, y, C) {  // x, y: the bottom-left of a 32-wide spot
   const k = time - C.tentT0, TG = '#2f7f6a', TD = '#22604f', TL = '#46a088', DOOR = '#173f34';
   let h = 18, sway = 0;
   if (C.tent === 'packed' || C.tent === 'none') return;
+  if (C.tent === 'soggy') { tentHeap(x, y, 0, true); return; }
+  if (C.tent === 'tangle') {  // the tent fell on you: a heap, with you wriggling under it, a leg poking out
+    tentHeap(x, y, 16, false);
+    const w = Math.round(Math.sin(time * 16) * 1.5), lx = x + 40;
+    ctx.fillStyle = TD; ctx.fillRect(lx - 7 + w, y - 11, 14, 6); ctx.fillStyle = TG; ctx.fillRect(lx - 5 + w, y - 12, 9, 2);
+    ctx.fillStyle = TL; ctx.fillRect(lx - 3 + w, y - 12, 3, 1);
+    if (Math.floor(time * 3) % 2) { ctx.fillStyle = '#2b1d14'; ctx.fillRect(lx + 7, y - 7 - (Math.floor(time * 9) % 2), 3, 1); ctx.fillRect(lx + 9, y - 8, 1, 1); }
+    return;
+  }
+  if (C.tent === 'gust' || C.tent === 'swim') {  // the wind takes it, end over end, into the lake; then it floats
+    const t = C.tent === 'swim' ? 1 : clamp(k / 1.6, 0, 1);
+    const sx = x + 16 + 56 * t + Math.sin(t * Math.PI * 3) * 4, sy = y - 8 + 47 * t - Math.sin(t * Math.PI) * 34;
+    const a = C.tent === 'swim' ? 0.5 + Math.sin(time * 2) * 0.12 : t * Math.PI * 3.5;
+    const bob = C.tent === 'swim' ? Math.round(Math.sin(time * 2.4)) : 0;
+    const pt = (dx, dy) => [sx + dx * Math.cos(a) - dy * Math.sin(a), sy + bob + dx * Math.sin(a) + dy * Math.cos(a)];
+    const [ax, ay] = pt(0, -9), [bx, by] = pt(-12, 7), [cx0, cy0] = pt(12, 7), [mx, my] = pt(0, 7);
+    fillTri(ax, ay, bx, by, mx, my, TG); fillTri(ax, ay, mx, my, cx0, cy0, TD);
+    if (C.tent === 'swim') {  // half sunk: the lake covers its lower part, with ripples
+      ctx.fillStyle = '#285d88'; ctx.fillRect(Math.round(sx) - 16, Math.round(sy) + 3 + bob, 32, 9);
+      const r = 10 + ((time * 6) % 8);
+      ctx.globalAlpha = 0.6; ctx.fillStyle = '#d8e8ee';
+      ctx.fillRect(Math.round(sx - r), Math.round(sy) + 3, Math.round(r * 2), 1); ctx.globalAlpha = 1;
+    }
+    return;
+  }
   if (C.tent === 'rise') h = Math.max(1, Math.round(18 * ease(clamp(k / 1.2, 0, 1))));
+  if (C.tent === 'snap') {  // it goes halfway up, a pole springs loose, it sways
+    if (k < 1.0) h = Math.max(1, Math.round(12 * ease(clamp(k / 1.0, 0, 1))));
+    else { h = 12; sway = Math.round(Math.sin((k - 1.0) * 18) * 3); }
+  }
   if (C.tent === 'flop') {
     if (k < 1.2) h = Math.max(1, Math.round(16 * ease(clamp(k / 1.2, 0, 1))));
     else if (k < 2.0) { h = 16; sway = Math.round(Math.sin((k - 1.2) * 14) * 2); }
     else h = Math.max(3, Math.round(16 * (1 - clamp((k - 2.0) / 0.35, 0, 1))));
   }
-  if (C.tent === 'heap' || (C.tent === 'flop' && k >= 2.35)) {  // a heap of tent, a pole sticking out
-    ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(x + 2, y - 2, 28, 3);
-    ctx.fillStyle = TD; ctx.fillRect(x + 3, y - 6, 26, 5); ctx.fillRect(x + 6, y - 8, 9, 2); ctx.fillRect(x + 18, y - 7, 8, 1);
-    ctx.fillStyle = TG; ctx.fillRect(x + 4, y - 6, 10, 2); ctx.fillRect(x + 17, y - 5, 9, 2); ctx.fillRect(x + 7, y - 8, 6, 1);
-    ctx.fillStyle = TL; ctx.fillRect(x + 8, y - 7, 3, 1);
-    line(ctx, x + 20, y - 6, x + 27, y - 15, '#9aa1a8'); line(ctx, x + 9, y - 5, x + 3, y - 11, '#9aa1a8');
-    return;
-  }
+  if (C.tent === 'heap' || (C.tent === 'flop' && k >= 2.35)) { tentHeap(x, y, 0, false); return; }
   ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(x + 2, y - 2, 28, 3);
   const top = y - 1 - h, cxm = x + 16;
   for (let j = 0; j < h; j++) {  // the front of the tent, row by row from the top
@@ -2444,15 +2566,159 @@ function sparkleAt(x, y, k) {  // a little twinkle
   ctx.fillStyle = '#ffffff'; ctx.fillRect(x, y - s, 1, s * 2 + 1); ctx.fillRect(x - s, y, s * 2 + 1, 1);
   ctx.fillStyle = '#fff6c8'; ctx.fillRect(x - 1, y - 1, 3, 3); ctx.fillStyle = '#ffffff'; ctx.fillRect(x, y, 1, 1);
 }
+function drawBig(rows, pal, x, y, s, flip = false, legShift = 0) {  // a sprite grid, s times bigger
+  const w = rows[0].length;
+  for (let j = 0; j < rows.length; j++) for (let i = 0; i < w; i++) {
+    const ch = rows[j][i], c = pal[ch]; if (!c) continue;
+    const jj = legShift && (ch === 'L' || ch === 'K') ? j + (i < w / 2 ? -legShift : legShift) : j;
+    ctx.fillStyle = c; ctx.fillRect(x + (flip ? w - 1 - i : i) * s, y + jj * s, s, s);
+  }
+}
+// the enemies (how they look is a guess): a big gull, and a black bear. Both face left, toward you.
+const GULL = [
+  '................',
+  '................',
+  '...WWW..........',
+  '..WWWWW.........',
+  '.YYWeWW.........',
+  'YYRWWWW.........',
+  '...WWWWW........',
+  '...WWWWGGGG.....',
+  '....WWGGGGGGG...',
+  '....WWWGgGgGGKK.',
+  '.....WWWGGGGKKK.',
+  '......WWWWWWK...',
+  '.......wwww.....',
+  '........L.L.....',
+  '........L.L.....',
+  '.......LL.LL....'];
+const GULL_PAL = { W: '#f4f4f0', w: '#d4d8dc', G: '#9aa4ae', g: '#7d8791', K: '#1d1d22', Y: '#f2c94c', R: '#d8402a', e: '#1d1d22', L: '#e0a080' };
+const BEAR = [
+  '................',
+  '................',
+  '................',
+  '.BB.............',
+  '.BBBB...bbbbb...',
+  'BBeBBBbBBBBBBBB.',
+  'MMBBBBBBBBBBBBBB',
+  'nMMBBBBBBBBBBBBB',
+  '.MMBBBBBBBBBBBBB',
+  '...BBBBBBBBBBBB.',
+  '...BBB.BBBB.BBB.',
+  '...BBB..BB..BB..',
+  '...BB...BB..BB..',
+  '...cc...cc..cc..',
+  '................',
+  '................'];
+const BEAR_PAL = { B: '#1f1b1b', b: '#3a3232', M: '#8a6a4a', n: '#0d0b0b', e: '#f2e6c8', c: '#d8cfbb' };
+// a porcupine, for the regular tick to latch onto in the second fight (a guess)
+const PORCUPINE = [
+  '......qQqQq.....',
+  '....qQqQqQqQq...',
+  '...QqQqQqQqQqQ..',
+  '..pqQqQqQqQqQqQ.',
+  '.ppQqQqQqQqQqQq.',
+  'eppPPPPPPPPPPP..',
+  'nppPPPPPPPPPP...',
+  '..PP.PP..PP.PP..',
+  '..ff.ff..ff.ff..'];
+const PORC_PAL = { q: '#e2d8c0', Q: '#4a3a2c', p: '#7a6048', P: '#4a3a2c', e: '#111111', n: '#2a1d14', f: '#2a1d14' };
+// a little fish, pointing along ang (radians); s: the size of each pixel. Lake fish are silver; salmon are red.
+const FISH = { back: '#4a5a6a', side: '#c9d3da', belly: '#eef2f4', tail: '#7a8a9a' };
+const SALMON = { back: '#3e4a32', side: '#c8443a', belly: '#e8c8b8', tail: '#3e4a32' };
+function drawFish(cx0, cy0, ang, s, pal) {
+  const dx = Math.cos(ang), dy = Math.sin(ang), nx = -dy, ny = dx;
+  const prof = [[[0, pal.side]], [[-1, pal.back], [0, '#1d1d22'], [1, pal.belly]], [[-1, pal.back], [0, pal.side], [1, pal.belly]],
+    [[-1, pal.back], [0, pal.side], [1, pal.belly]], [[-1, pal.back], [0, pal.side], [1, pal.belly]], [[0, pal.back]], [[-1, pal.tail], [1, pal.tail]]];
+  prof.forEach((cells, i) => {
+    const ax = cx0 - dx * (i - 3) * s, ay = cy0 - dy * (i - 3) * s;
+    for (const [o, c] of cells) { ctx.fillStyle = c; ctx.fillRect(Math.round(ax + nx * o * s), Math.round(ay + ny * o * s), s, s); }
+  });
+}
+function splash(x, y, k, big = 1) {  // a splash: a ring spreading on the water, and drops flying up
+  if (k < 0 || k > 1) return;
+  const r = Math.round((2 + k * 6) * big);
+  ctx.globalAlpha = 1 - k; ctx.fillStyle = '#e8f4f8';
+  ctx.fillRect(Math.round(x - r), Math.round(y), r * 2 + 1, 1);
+  ctx.fillRect(Math.round(x - r + 1), Math.round(y - 1), 1, 1); ctx.fillRect(Math.round(x + r - 1), Math.round(y - 1), 1, 1);
+  for (const [vx, vy] of [[-3, -7], [3, -8], [-1, -10], [2, -6]]) ctx.fillRect(Math.round(x + vx * k * big), Math.round(y + (vy * k + 14 * k * k) * big), 1, 1);
+  ctx.globalAlpha = 1;
+}
+// ---- who dances at Brudda Blaine's sets (a guess at "fairies, animals, elves, and anything else of that nature"):
+// fairies in the air, and on the ground elves, a gnome, a fox, a rabbit, a raccoon, an owl ----
+const ELF = [
+  '...g...', '..ggg..', '.ggggg.', 'sgssssg', '..sss..', '..ttt..', '.ttttt.', 's.tbt.s', '..ttt..', '..l.l..', '.bb.bb.'];
+const ELF2 = ELF.slice(0, 9).concat(['.l...l.', 'bb...bb']);
+const ELF_PAL = { g: '#2f8a4a', s: '#f0c8a0', t: '#4aa860', b: '#6a4428', l: '#3a6a3a' };
+const GNOME = ['...r...', '..rrr..', '..rrr..', '.rrrrr.', '..sns..', '.wwsww.', '.wwwww.', '.bwwwb.', '.bbbbb.', '..k.k..'];
+const GNOME_PAL = { r: '#d0302a', s: '#f0c8a0', n: '#e08a7a', w: '#f4f1ea', b: '#3a62a8', k: '#4a3020' };
+const FOX = ['.......o.o.', '.......oooo', 'w.....ooeoK', 'tt.oooooww.', '.ttoooooo..', '..o.o..o.o.', '..K.K..K.K.'];
+const FOX2 = FOX.slice(0, 5).concat(['...o.o.o.o.', '...K.K.K.K.']);
+const FOX_PAL = { o: '#e0782a', w: '#f4efe6', t: '#e0782a', e: '#1d1d22', K: '#1d1d22' };
+const RABBIT = ['....ii..', '....ii..', '....rrr.', '...rrrEr', '.rrrrrr.', 'wrrrrrr.', '..rr.rr.', '..ff.ff.'];
+const RABBIT_PAL = { i: '#b8a898', r: '#9a8a7a', E: '#1d1d22', w: '#f4f1ea', f: '#8a7a6a' };
+const RACCOON = ['.......g.g', '......gggg', '......mEmE', '.......gnK', 'rgggggggg.', 'RrRggggg..', '..g.g..g.g', '..K.K..K.K'];
+const RACCOON_PAL = { g: '#8a8a88', m: '#2a2a2a', E: '#f4f1ea', n: '#d8d4cc', K: '#1d1d22', r: '#b8b6b0', R: '#3a3a3a' };
+const OWL = ['.b...b.', '.bbbbb.', 'bYKbKYb', '.bbobb.', '.bwwwb.', '.bwbwb.', '..bbb..', '..y.y..'];
+const OWL_PAL = { b: '#8a6a48', Y: '#f2c94c', K: '#1d1d22', o: '#e8a040', w: '#e8dcc4', y: '#e8a040' };
+const DANCE = [  // at each camp: how many fairies, and who dances on the ground
+  { fairies: 2, ground: ['elf', 'fox', 'rabbit', 'owl'] },
+  { fairies: 1, ground: ['gnome', 'elf', 'raccoon', 'rabbit', 'owl'] },
+  { fairies: 3, ground: ['elf', 'elf', 'gnome', 'fox', 'raccoon', 'rabbit'] },
+];
+const DANCE_SLOTS = [[1.6, -1.1], [3.9, -1.25], [2.2, 1.05], [4.6, 1.1], [0.3, 1.0], [7.4, -1.0], [7.7, 0.9], [-1.3, 0.1]];
+const FAIRY_COLS = ['#ffb0e0', '#a8ffd8', '#d0b8ff', '#fff0a0'];
+const DANCER_WORDS = { elf: 'An elf, dancing.', gnome: 'A gnome, dancing.', fox: 'A fox, dancing.', rabbit: 'A rabbit, dancing.',
+  raccoon: 'A raccoon, dancing.', owl: 'An owl, bobbing to the beat.' };
+function danceBeat() { return 60 / (mus && mus.style.kind === 'hip' ? mus.style.bpm : 90); }
+function dancersAt(C) {  // the ones dancing at this camp right now, with where they stand (in tiles)
+  const i = CAMPS.indexOf(C);
+  if (night !== C || !B.playing || dance.camp !== i) return [];
+  return DANCE[i].ground.map((kind, j) => ({ kind, j, x: C.cx + DANCE_SLOTS[j][0], y: C.cy + DANCE_SLOTS[j][1], at: dance.t0 + 0.6 + j * 0.3 }));
+}
+function drawDancer(d, X, Y) {  // X, Y: where its feet are, on screen
+  const beat = danceBeat(), n = Math.floor(time / beat), bp = (time / beat) % 1;
+  const hop = Math.round(Math.abs(Math.sin(bp * Math.PI)) * 2), flip = (n + d.j) % 2 === 1, alt = (n + d.j) % 2;
+  const put = (rows, pal, up = hop) => drawGrid(rows, pal, Math.round(X - rows[0].length / 2), Math.round(Y - rows.length - up), flip);
+  ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(Math.round(X - 3), Math.round(Y), 7, 1);
+  switch (d.kind) {
+    case 'elf': put(alt ? ELF2 : ELF, ELF_PAL); break;
+    case 'gnome': drawGrid(GNOME, GNOME_PAL, Math.round(X - 3 + (alt ? 1 : -1)), Math.round(Y - GNOME.length - hop), false); break;
+    case 'fox': put(alt ? FOX2 : FOX, FOX_PAL); break;
+    case 'rabbit': put(RABBIT, RABBIT_PAL, hop * 2); break;
+    case 'raccoon': put(RACCOON, RACCOON_PAL); break;
+    case 'owl': drawGrid(OWL, OWL_PAL, Math.round(X - 3), Math.round(Y - OWL.length - (bp < 0.5 ? 1 : 0)), alt === 1); break;
+  }
+}
+function drawFairies(C, cx, cy) {  // fairies, glowing, looping round the fire in the air
+  const i = CAMPS.indexOf(C), beat = danceBeat(), hop = Math.round(Math.abs(Math.sin(((time / beat) % 1) * Math.PI)) * 2);
+  for (let j = 0; j < DANCE[i].fairies; j++) {
+    const k = time - (dance.t0 + 0.3 + j * 0.4); if (k < 0) continue;
+    const a = time * 1.2 + j * 2.1, col = FAIRY_COLS[(j + i) % FAIRY_COLS.length];
+    const x = Math.round((C.cx + 3) * TS + 8 + Math.cos(a) * (24 + j * 7) - cx), y = Math.round(C.cy * TS - 4 + Math.sin(a * 1.6) * 8 - hop - cy);
+    if (k < 0.5) sparkleAt(x, y, k / 0.5);
+    for (let t = 1; t <= 3; t++) {  // a trail of fairy dust
+      const at = a - t * 0.12;
+      ctx.globalAlpha = 0.5 - t * 0.13; ctx.fillStyle = col;
+      ctx.fillRect(Math.round((C.cx + 3) * TS + 8 + Math.cos(at) * (24 + j * 7) - cx), Math.round(C.cy * TS - 4 + Math.sin(at * 1.6) * 8 - cy), 1, 1);
+    }
+    ctx.globalAlpha = 0.3; disc(ctx, x, y, 3, col); ctx.globalAlpha = 1;
+    const up = Math.floor(time * 16 + j) % 2;
+    ctx.fillStyle = 'rgba(255,255,255,.8)'; ctx.fillRect(x - 2, y - 1 - up, 2, 2); ctx.fillRect(x + 1, y - 1 - up, 2, 2);  // wings
+    ctx.fillStyle = col; ctx.fillRect(x, y - 1, 1, 3); ctx.fillStyle = '#ffffff'; ctx.fillRect(x, y - 2, 1, 1);
+  }
+}
 
 // ---- level 2: moving about ----
 function walkable2(x, y) {
   const ch = tile(x, y);
-  const WALK = { route: 'g*-skMbTP', pizza: '.m', climb: '=og' }[area];
+  const WALK = { route: 'g*-skMbTP', pizza: '.m', climb: '=log' }[area];
   if (!WALK.includes(ch)) return false;
   if (area !== 'route') return true;
   if (!P.mount && choice !== 'dog' && x === MOUNT.x && y === MOUNT.y) return false;
   if (!P.mount && x > MOUNT.x) return false;  // get your ride first
+  if (FOES.some(F => !F.beaten && x >= F.x)) return false;  // an enemy blocks the way, until it's killed
+  if (!pizzaVisited && x > PIZZA_PAST) return false;        // you have to go in the pizza joint first
   if (night) {  // at night, you stay by the fire
     const C = night;
     if (Math.abs(x - (C.cx + 3)) > 5) return false;
@@ -2472,9 +2738,65 @@ function bruddaAt() {
   const k = B.mode === 'follow' && P.moving ? P.t : 1;
   return [(B.fx + (B.tx - B.fx) * k) * TS, (B.fy + (B.ty - B.fy) * k) * TS];
 }
+let nudged = -9;
+function nudge2(x, y) {  // you tried to go somewhere you can't yet: say why, now and then
+  if (area !== 'route' || box.active || lock || time - nudged < 3) return;
+  if (!pizzaVisited && x > PIZZA_PAST && !FOES.some(F => !F.beaten && x >= F.x)) {
+    nudged = time;
+    say(['The smell of pizza pulls you back.', 'You have to go into the pizza joint first. Its door is just up off the path.']);
+  }
+}
+function routeHud() {  // what to do next, on the shore
+  if (camps >= 3) return 'Ride on to Palisade Head, at the end of the shore';
+  if (camps === 1 && FOES[0].beaten && !pizzaVisited) return 'Next: the pizza joint. Go in';
+  return 'Camp at three spots along the shore: ' + camps + ' of 3';
+}
 function update2(dt) {
   if (B.mode === 'actor') { updateActor(B, dt); B.side = B.face; if (B.path.length) B.crank += dt * 10; }
   else if (B.mode === 'follow' && P.moving) B.crank += dt * 2.2 / P.stepTime;
+  updateWater(dt);
+  roarUpdate();
+}
+function updateWater(dt) {  // fish jump in the lake; salmon leap up the falls, while they're in view
+  if (vista || battle) return;
+  fishT -= dt;
+  if (fishT <= 0) {
+    fishT = 0.8 + Math.random() * 1.2;
+    const spots = [], x0 = Math.floor(cam.x / TS), y0 = Math.floor(cam.y / TS);
+    for (let ty = y0; ty <= y0 + 9; ty++) for (let tx = x0; tx <= x0 + 10; tx++)
+      if (tile(tx, ty) === '~' && tile(tx, ty - 1) === '~' && tile(tx - 1, ty) === '~' && tile(tx + 1, ty) === '~') spots.push([tx, ty]);
+    if (spots.length) {
+      const [tx, ty] = spots[Math.floor(Math.random() * spots.length)];
+      fishJumps.push({ x: tx * TS + 8, y: ty * TS + 10, t0: time, dur: 0.7, dir: Math.random() < 0.5 ? -1 : 1, h: 8 + Math.random() * 6, area });
+    }
+  }
+  fishJumps = fishJumps.filter(f => time - f.t0 < f.dur + 0.5 && f.area === area);
+  if (area === 'route' && cam.x < (FALLS[3] + 1) * TS + 8 && cam.x + VW > FALLS[0] * TS - 8) {
+    salmonT -= dt;
+    if (salmonT <= 0) {
+      salmonT = 0.45 + Math.random() * 0.7;
+      salmonJumps.push({ x: FALLS[0] * TS + 4 + Math.random() * (FALLS.length * TS - 8), y: 3 * TS + 10, t0: time,
+        dur: 0.8 + Math.random() * 0.3, h: 18 + Math.random() * 20, dx: (Math.random() - 0.5) * 8, up: Math.random() < 0.45 });
+    }
+  }
+  salmonJumps = salmonJumps.filter(s => time - s.t0 < s.dur + 0.45 && area === 'route');
+}
+let roar = null;  // the roar of the falls, louder as you get close
+function roarUpdate() {
+  if (!ac) return;
+  if (!roar) {
+    makeNoise();
+    const s = ac.createBufferSource(), lp = ac.createBiquadFilter(), g = ac.createGain();
+    s.buffer = noise; s.loop = true; lp.type = 'lowpass'; lp.frequency.value = 650; lp.Q.value = 0.3; g.gain.value = 0;
+    s.connect(lp); lp.connect(g); g.connect(master); s.start();
+    roar = { g, level: 0 };
+  }
+  let v = 0;
+  if (level === 2 && area === 'route' && !vista && !battle && !muted) {
+    const [px0, py0] = ppos(), d = Math.hypot(px0 / TS - 61.5, py0 / TS - 2);
+    v = Math.pow(clamp(1 - d / 9, 0, 1), 1.5) * 0.35;
+  }
+  if (Math.abs(v - roar.level) > 0.004) { roar.level = v; roar.g.gain.setTargetAtTime(v, ac.currentTime, 0.25); }
 }
 function setMount(kind) { P.mount = kind; P.stepTime = MOUNT_STEP[kind]; }
 function climbFeet() { return Math.round(clamp((CLIMB_FOOT - P.ty) / (CLIMB_FOOT - CLIMB_TOP), 0, 1) * CLIMB_FEET / 10) * 10; }
@@ -2482,11 +2804,13 @@ function arrive2() {
   const ch = tile(P.tx, P.ty);
   if (area === 'route') {
     if (phase === 'trail' && choice === 'dog' && P.tx >= MOUNT.x - 2) { mountUp(); return; }
+    const F = FOES.find(f => !f.beaten && camps === f.after && P.tx >= f.x - 1);
+    if (phase === 'route' && F) { fight(F); return; }
     if (phase === 'route' && camps < 3 && P.tx >= CAMPS[camps].cx - 1) { camp(camps); return; }
-    if (ch === 'P') { warp('pizza', 4, 7, 'up', 5, 7); return; }
+    if (ch === 'P') { enterPizza(); return; }
     if (ch === 'T' && phase === 'route' && camps >= 3) { toClimb(); return; }
   } else if (area === 'pizza') {
-    if (ch === 'm') warp('route', 40, 4, 'down', 41, 4);
+    if (ch === 'm') warp('route', 40, 4, 'down', 41, 4).then(() => { if (phase === 'route') hud(routeHud()); });
   } else if (area === 'climb' && phase === 'climb') {
     hud('Climb: ' + climbFeet() + ' of ' + CLIMB_FEET + ' feet');
     if (P.ty <= CLIMB_TOP) overlook();
@@ -2502,6 +2826,13 @@ async function warp(to, x, y, facing, bx, by) {
   await fadeTo(0, 0.3);
   phase = was; lock--;
 }
+async function enterPizza() {  // going in is a must: the path past it stays shut until you do
+  await warp('pizza', 4, 7, 'up', 5, 7);
+  if (pizzaVisited) return;
+  pizzaVisited = true; lock++;
+  await say(['Inside the pizza joint.', "It's still the 1980s in here."]);
+  hud('Look around. The door out is at the bottom'); lock--;
+}
 
 // ---- level 2: the scenes ----
 async function level2(k) {
@@ -2512,6 +2843,8 @@ async function level2(k) {
   closeBox(); box.resolve = null; box.ask = null;
   level = 2; useArea('route');
   lock = 1; phase = 'l2intro'; vista = null; night = null; camps = 0; smoke.t0 = -9; hud(null);
+  battle = null; panels(false); pizzaVisited = false; FOES.forEach(F => { F.beaten = false; });
+  gust.t0 = pole.t0 = dance.t0 = -9; dance.camp = -1; fishJumps = []; salmonJumps = [];
   CAMPS.forEach(C => Object.assign(C, { done: false, lit: false, tent: 'none', tentT0: -9 }));
   Object.assign(B, { here: false, mode: 'off', playing: false, path: [] });
   P.mount = null; P.stepTime = choice === 'dog' ? 0.11 : STEP; blur(false); P.hidden = true; P.side = 1;
@@ -2529,6 +2862,16 @@ async function level2(k) {
              'The goal is simple: camp at three spots along the shore, in your tent.']);
   hud(choice === 'dog' ? 'Follow the path, to the right' : 'Your ride is up the path: tap A on it');
   phase = 'trail'; lock = 0;
+  const at = { fight1: [1, 30], fight2: [2, 53], climb: [3, 84] }[new URLSearchParams(location.search).get('at')];
+  if (at) {  // for checks: start part way along (?at=fight1, fight2 or climb)
+    const [n, x] = at;
+    setMount({ regular: 'molerat', human: 'vespa', dog: 'zoomies' }[choice]);
+    Object.assign(B, { here: true, mode: 'follow' }); bruddaPlace(x - 1, 5);
+    camps = n; pizzaVisited = n >= 2; FOES.forEach(F => { F.beaten = F.after < n; });
+    CAMPS.forEach((C, i) => { if (i < n) Object.assign(C, { done: true, tent: 'packed' }); });
+    Object.assign(P, { tx: x, ty: 5, nx: x, ny: 5 }); [cam.x, cam.y] = playerCam(); phase = 'route'; hud(routeHud());
+    if (n === 3) toClimb();
+  }
 }
 async function mountUp() {
   lock++; phase = 'mounting'; hud(null);
@@ -2567,7 +2910,7 @@ async function camp(i) {
   camMode = 'follow'; [cam.x, cam.y] = playerCam();
   await fadeTo(0, 0.9);
   await say(CAMP_WORDS[i]);
-  if (i === 0) {
+  if (i === 0) {  // the tent does not go well. At all.
     smoke.t0 = time;
     await say(['You smoke a cigarette, rolled from the weed you got in Milwaukee.']);
     await wait(1.2);
@@ -2576,24 +2919,42 @@ async function camp(i) {
     await wait(2.0); flop(); await wait(0.8);
     C.tent = 'heap';
     await say(["It doesn't go very well."]);
+    await say(['You try again.']);
+    C.tent = 'snap'; C.tentT0 = time;
+    await wait(1.0); pole.t0 = time; boing(); await wait(0.7);
+    C.tent = 'tangle'; P.hidden = true; flop();
+    await say(['A pole springs loose. The tent falls on you.', "You're all tangled up in it."]);
+    P.hidden = false; C.tent = 'heap';
+    await say(['You wriggle out.', 'One more try.']);
+    C.tent = 'rise'; C.tentT0 = time;
+    await wait(1.3); C.tent = 'up';
+    await say(['It stays up. For a moment.']);
+    C.tent = 'gust'; C.tentT0 = time; gust.t0 = time; whoosh();
+    await wait(1.6); splashSound(); C.tent = 'swim'; await wait(0.6);
+    await say(['A gust of wind takes it, end over end, into Lake Superior.', "It doesn't go well at all."]);
+    await fadeTo(1, 0.5); C.tent = 'soggy'; await fadeTo(0, 0.5);
+    await say(["You fish it out. It's soaked through."]);
   } else {
     await say(['You pitch the tent.']);
     C.tent = 'rise'; C.tentT0 = time;
     await wait(1.3);
     C.tent = 'up';
-    await say([i === 1 ? 'Its neon glows all night.' : 'You can hear the falls.']);
+    await say([i === 1 ? 'Its neon glows all night.' : 'Gooseberry Falls roars, right beside you.']);
   }
-  B.playing = true; musicStart(HIP[i]);
+  B.playing = true; musicStart(HIP[i]); dance.t0 = time; dance.camp = i;
   await say([i === 0 ? 'Brudda Blaine sets up his decks, and drops a track: underground hip hop.'
                      : 'Brudda Blaine sets up his decks, and drops another track.']);
-  hud(i === 0 ? 'Night. Tap A on the heap of tent to sleep' : 'Night. Tap A on the tent to sleep');
+  await wait(1.2);
+  await say([i === 0 ? 'Out of the woods come fairies, elves and animals. They dance.'
+                     : 'The fairies, elves and animals come out of the woods again. They dance.']);
+  hud(i === 0 ? 'Night. Tap A on the soggy tent to sleep' : 'Night. Tap A on the tent to sleep');
   phase = 'night'; lock--;
 }
 async function sleep() {
   const C = night, i = CAMPS.indexOf(C); phase = 'sleep'; lock++; hud(null);
-  await say([i === 0 ? 'You crawl into the heap of tent, and sleep anyway.' : 'You crawl into the tent, and sleep.']);
+  await say([i === 0 ? 'You crawl into the soggy heap of tent, and sleep anyway. Badly.' : 'You crawl into the tent, and sleep.']);
   await fadeTo(1, 1.0);
-  musicStop(); B.playing = false;
+  musicStop(); B.playing = false; dance.camp = -1;
   night = null; C.done = true; C.lit = false; C.tent = 'packed'; camps++;
   Object.assign(P, { tx: C.cx + 4, ty: 5, nx: C.cx + 4, ny: 5, moving: false, t: 0, facing: 'right' }); P.side = 1;
   B.mode = 'follow'; bruddaPlace(C.cx + 3, 5);
@@ -2601,18 +2962,19 @@ async function sleep() {
   await wait(0.6);
   await fadeTo(0, 1.0);
   musicStart();  // back on the road, and your beat comes back
-  await say(camps < 3 ? ['Morning. You pack up the tent, and ride on.']
+  await say(camps === 1 ? ['Morning. You wring out the tent, and ride on.']
+          : camps < 3 ? ['Morning. You pack up the tent, and ride on.']
                       : ['Morning. You pack up the tent.', 'One last climb: 400 feet, up Palisade Head.']);
-  hud(camps < 3 ? 'Camp at three spots along the shore: ' + camps + ' of 3' : 'Ride on to Palisade Head, at the end of the shore');
+  hud(routeHud());
   phase = 'route'; lock--;
 }
 async function toClimb() {
   lock++; phase = 'warp'; hud(null);
-  await say(['The trail up Palisade Head: 400 feet, to the overlook.']);
+  await say(['The road up Palisade Head: 400 feet, through giant trees, to the overlook.']);
   await fadeTo(1, 0.5);
   useArea('climb');
-  Object.assign(P, { tx: 4, ty: 30, nx: 4, ny: 30, moving: false, t: 0, facing: 'up' });
-  bruddaPlace(5, 30);
+  Object.assign(P, { tx: 7, ty: 65, nx: 7, ny: 65, moving: false, t: 0, facing: 'up' });
+  bruddaPlace(7, 66);
   [cam.x, cam.y] = playerCam();
   await fadeTo(0, 0.5);
   phase = 'climb'; hud('Climb: 0 of ' + CLIMB_FEET + ' feet'); lock--;
@@ -2633,9 +2995,299 @@ async function overlook() {
   await fadeTo(1, 1.0);
   vista = null; phase = 'done2';
   const how = { regular: 'rode a naked mole rat', human: 'rode the tangerine vespa', dog: 'ran with the zoomies' }[choice];
-  $('end2Text').textContent = 'You ' + how + ' up the North Shore with Brudda Blaine, camped three times, and climbed ' +
-    'Palisade Head. The deer still have Isabella. Next: level 3, the coffee roaster.';
+  $('end2Text').textContent = 'You ' + how + ' up the North Shore with Brudda Blaine, killed a gull and a bear, camped ' +
+    'three times, and climbed Palisade Head. The deer still have Isabella. Next: level 3, the coffee roaster.';
   $('end2').hidden = false;
+}
+
+// =====================================================================================================
+// ---- level 2: the fights. Between each camp, an enemy blocks the path, and only your tick's own gifts can kill it.
+// A fight cuts to its own screen, like Pokemon Red: you pick a move each turn, then the enemy goes. (The enemies, the
+// moves, and all the numbers are guesses.)
+//   the regular tick: drain its life (and heal), or latch onto an animal nearby and use it as a weapon (not two turns
+//     in a row: you need a turn to find another animal)
+//   the human-blood tick: shoot Lyme disease (each spell burns blood sugar; run low, your vision blurs and you can't
+//     cast), or eat a honeybun from your N.E.R.D. album case
+//   the dog-blood tick: dodge (it misses, and you get an opening), or point (with an opening, the shot comes, right
+//     where you point; without one, it only grazes). Hard to hit: some attacks just miss.
+// If you're knocked out, you get back up and the fight goes on. ----
+const ME_MAX = 32, LOW = 35, PIZZA_PAST = 43;
+const FOES = [
+  { kind: 'gull', x: 33, y: 5, after: 1, hp: 26, min: 4, max: 6, name: 'Big gull', the: 'the gull', art: GULL, pal: GULL_PAL,
+    meet: ['A big gull lands on the path.', 'It looks at you like lunch.'],
+    hits: ['The gull swoops at you.', 'The gull stabs at you with its beak.'],
+    latch: ['A fish leaps out of the lake. You latch onto it.', 'Mind control: you fling it at the gull.'] },
+  { kind: 'bear', x: 56, y: 5, after: 2, hp: 36, min: 4, max: 7, name: 'Black bear', the: 'the bear', art: BEAR, pal: BEAR_PAL,
+    meet: ['A black bear blocks the path, fresh from fishing for salmon at the falls.', 'It rears up. It wants a fight.'],
+    hits: ['The bear swipes at you.', 'The bear charges.'],
+    latch: ['A porcupine waddles by. You latch onto it.', 'Mind control: it backs into the bear, quills first.'] },
+];
+const MOVES = {
+  regular: [{ id: 'drain', label: 'Drain life' }, { id: 'latch', label: 'Latch on' }],
+  human: [{ id: 'lyme', label: 'Lyme disease' }, { id: 'bun', label: 'Honeybun' }],
+  dog: [{ id: 'dodge', label: 'Dodge' }, { id: 'point', label: 'Point' }],
+};
+const TEACH = {
+  regular: ['Drain its life to heal, or latch onto an animal and use it as a weapon.', "You can't latch on two turns in a row."],
+  human: ['Every spell burns blood sugar.', "Run low, and you can't cast: eat a honeybun."],
+  dog: ['Dodge, and you get an opening.', 'Then point, and the shot comes.'],
+};
+let battle = null;
+const pick2 = a => a[Math.floor(Math.random() * a.length)];
+function fx(kind, dur, hitAt, onHit) {  // play one move's animation; onHit lands partway through
+  battle.fx = { kind, t0: time, dur }; sfx(kind, dur);
+  if (onHit) wait(hitAt).then(onHit);
+  const mine = battle.fx;
+  return wait(dur).then(() => { if (battle && battle.fx === mine) battle.fx = null; });
+}
+function setBar(id, k, colorByLevel = true) {
+  const el = $(id); el.style.width = Math.round(clamp(k, 0, 1) * 100) + '%';
+  if (colorByLevel) el.style.backgroundColor = k > 0.5 ? '#5d9b48' : k > 0.2 ? '#e0a83a' : '#d0452f';
+}
+function panels(on) {
+  for (const id of ['bfoe', 'bme']) $(id).hidden = !on;
+  if (!on || !battle) return;
+  const b = battle;
+  $('bfoeName').textContent = b.F.name; setBar('bfoeBar', b.hp / b.F.hp);
+  $('bmeHp').textContent = 'HP ' + b.me + ' / ' + ME_MAX; setBar('bmeBar', b.me / ME_MAX);
+  $('bmeSugar').hidden = choice !== 'human';
+  if (choice === 'human') {
+    $('bmeSugarTxt').textContent = b.sugar < LOW ? 'low' : 'steady';
+    setBar('bmeSugarBar', b.sugar / 100, false); $('bmeSugarBar').style.backgroundColor = b.sugar < LOW ? '#d0452f' : '#6f9e4f';
+  }
+  const tag = choice === 'dog' ? (b.open ? 'An opening: point now' : '')
+            : choice === 'regular' ? (b.cool > 0 ? 'Latch on: next turn' : 'Latch on: ready') : '';
+  $('bmeTag').hidden = !tag; $('bmeTag').textContent = tag;
+}
+async function fight(F) {
+  lock++; phase = 'fightin'; hud(null);
+  await say(F.meet);
+  battleSting();
+  for (let i = 0; i < 3; i++) { await fadeTo(0.8, 0.07); await fadeTo(0, 0.07); }
+  await fadeTo(1, 0.2);
+  battle = { F, hp: F.hp, me: ME_MAX, sugar: 100, open: false, cool: 0, dodging: false, fx: null, t0: time, out: false, down: false };
+  $('sugar').hidden = true; panels(true);
+  await fadeTo(0, 0.3);
+  phase = 'battle';
+  await say([F.name + ' wants a fight.', ...(FOES.indexOf(F) === 0 ? TEACH[choice] : [])]);
+  for (;;) {
+    const moves = MOVES[choice];
+    const k = await ask('What will you do?', moves.map(m => m.label));
+    if (!(await myMove(moves[k].id))) continue;
+    panels(true);
+    if (battle.hp <= 0) break;
+    await foeMove();
+    panels(true);
+    if (battle.me <= 0) {
+      battle.down = true;
+      await Promise.all([fx('ko', 1.0), say(["You're knocked out."])]);
+      battle.me = ME_MAX; battle.sugar = 100; battle.down = false; blur(false); panels(true);
+      await say(['You come to, and get back up.', 'The fight goes on.']);
+    }
+  }
+  await Promise.all([fx('win', 1.3), say(['You killed ' + F.the + '.'])]);
+  battle.out = true;
+  if (choice === 'human' && battle.sugar < LOW) await say(['You eat a honeybun from your album case. Steady again.']);
+  await fadeTo(1, 0.4);
+  battle = null; F.beaten = true; panels(false); blur(false);
+  if (choice === 'human') sugarMeter('steady');
+  await fadeTo(0, 0.4);
+  hud(routeHud()); phase = 'route'; lock--;
+}
+function hurtFoe(n) { battle.hp = Math.max(0, battle.hp - n); panels(true); }
+async function myMove(id) {
+  const b = battle, F = b.F;
+  if (id === 'drain') {
+    await Promise.all([fx('drain', 1.3, 0.35, () => { hurtFoe(6); b.me = Math.min(ME_MAX, b.me + 5); panels(true); }),
+                       say(['You bite, and drain its life.', 'You feel stronger.'])]);
+  } else if (id === 'latch') {
+    if (b.cool > 0) { await say(['No animal close enough to latch onto.', 'Not yet: next turn.']); return false; }
+    await Promise.all([fx('latch', 1.9, 1.4, () => hurtFoe(11)), say(F.latch)]);
+    b.cool = 2;
+  } else if (id === 'lyme') {
+    if (b.sugar < LOW) { await say(['Your blood sugar is too low to cast.', 'Eat a honeybun first.']); return false; }
+    b.sugar -= 35; panels(true);
+    await Promise.all([fx('lyme', 1.3, 0.9, () => hurtFoe(10)), say(['You shoot Lyme disease at ' + F.the + '.'])]);
+    if (b.sugar < LOW) { blur(true); await say(['Your blood sugar drops. Your vision blurs.']); }
+  } else if (id === 'bun') {
+    if (b.sugar >= 100) { await say(["Your blood sugar is steady. You don't need one yet."]); return false; }
+    await Promise.all([fx('bun', 1.2, 0.5, () => { b.sugar = 100; blur(false); panels(true); }),
+                       say(['You eat a honeybun from your N.E.R.D. album case.', 'Your blood sugar comes back up.'])]);
+  } else if (id === 'dodge') {
+    b.dodging = true;
+    await Promise.all([fx('ready', 0.6), say(['You get ready to dodge.'])]);
+  } else if (id === 'point') {
+    if (b.open) {
+      b.open = false; panels(true);
+      await Promise.all([fx('point', 1.5, 0.95, () => hurtFoe(13)), say(['You point.', 'A shot rings out, right where you point.'])]);
+    } else {
+      await Promise.all([fx('graze', 1.4, 0.95, () => hurtFoe(5)), say(['You point, but it moves too fast.', 'The shot only grazes it. Dodge first, for an opening.'])]);
+    }
+  }
+  if (b.cool > 0) b.cool--;
+  return true;
+}
+async function foeMove() {
+  const b = battle, F = b.F, line = pick2(F.hits);
+  if (b.dodging) {
+    b.dodging = false; b.open = true;
+    await Promise.all([fx('miss', 0.9), say([line, 'You dodge it. An opening.'])]); return;
+  }
+  if (choice === 'dog' && Math.random() < 0.3) { await Promise.all([fx('miss', 0.9), say([line, "You're too quick. It misses."])]); return; }
+  const d = F.min + Math.floor(Math.random() * (F.max - F.min + 1));
+  await Promise.all([fx('hit', 0.9, 0.3, () => { b.me = Math.max(0, b.me - d); panels(true); }), say([line])]);
+}
+// ---- the fight screen ----
+function drawBattle() {
+  const b = battle, F = b.F, f = b.fx, k = f ? clamp((time - f.t0) / f.dur, 0, 1) : 0, kind = f ? f.kind : '';
+  const seg = (a, z) => clamp((k - a) / (z - a), 0, 1);  // how far through one part of the move
+  const blink = () => Math.floor(time * 24) % 2 === 0;
+  // the scene behind: the shore for the gull, the falls for the bear
+  if (F.kind === 'gull') {
+    for (let y = 0; y < 48; y++) { ctx.fillStyle = y < 24 ? '#8fc1de' : y < 40 ? '#a9d0e4' : '#c6e1ec'; ctx.fillRect(0, y, VW, 1); }
+    ctx.fillStyle = '#f4f1ea'; ctx.fillRect(20, 12, 16, 2); ctx.fillRect(24, 10, 8, 2); ctx.fillRect(60, 20, 12, 2);
+    ctx.fillStyle = '#2f6a98'; ctx.fillRect(0, 48, VW, 16);
+    ctx.fillStyle = '#8cc4de'; for (let i = 0; i < 8; i++) ctx.fillRect(((i * 23 + Math.floor(time * 6)) % (VW + 10)) - 5, 51 + (i % 3) * 4, 5, 1);
+    ctx.fillStyle = '#8c8279'; ctx.fillRect(0, 64, VW, VH - 64);
+    const r = rng(7); for (let i = 0; i < 140; i++) { ctx.fillStyle = ['#a39a8f', '#6e665e', '#b07a5c', '#c9bfb2'][i % 4]; ctx.fillRect(Math.floor(r() * VW), 64 + Math.floor(r() * 80), 2, 1); }
+  } else {
+    ctx.fillStyle = '#1f3a26'; ctx.fillRect(0, 0, VW, 44);
+    for (let i = 0; i < 9; i++) { const x = i * 19 - 4; for (let j = 0; j < 22; j++) { ctx.fillStyle = '#16301e'; ctx.fillRect(x + 9 - Math.floor(j / 3), 4 + j, Math.floor(j / 3) * 2 + 1, 1); } }
+    ctx.fillStyle = '#d8ecf4'; ctx.fillRect(78, 0, 18, 44);  // the falls, behind
+    ctx.fillStyle = '#ffffff'; for (let i = 0; i < 6; i++) ctx.fillRect(79 + i * 3, ((Math.floor(time * 40) + i * 9) % 44), 1, 6);
+    ctx.fillStyle = '#5f8f43'; ctx.fillRect(0, 44, VW, VH - 44);
+    const r = rng(9); for (let i = 0; i < 90; i++) { ctx.fillStyle = i % 2 ? '#4f7f38' : '#73a352'; ctx.fillRect(Math.floor(r() * VW), 44 + Math.floor(r() * 100), 1, 2); }
+  }
+  const oval = (cx0, cy0, rx, c) => { ctx.fillStyle = c; for (let j = -5; j <= 5; j++) { const w = Math.round(rx * Math.sqrt(1 - (j / 5.5) ** 2)); ctx.fillRect(cx0 - w, cy0 + j, w * 2, 1); } };
+  oval(124, 44, 30, 'rgba(0,0,0,.18)'); oval(36, 86, 30, 'rgba(0,0,0,.18)');
+  // the enemy, top right, three times bigger
+  let ex = 100, ey = -3 + (Math.floor(time * 2) % 2), showFoe = !b.out;
+  if (kind === 'hit' || kind === 'miss') ex -= Math.round(Math.sin(seg(0, 0.45) * Math.PI) * 16);
+  if (['drain', 'lyme'].includes(kind) && k > 0.35 && k < 0.8) showFoe = showFoe && blink();
+  if (kind === 'latch' && k > 0.72 && k < 0.95) { ex += Math.round(Math.sin(time * 50) * 2); showFoe = showFoe && blink(); }
+  if (kind === 'point' && k > 0.62 && k < 0.9) { ex += 4; showFoe = showFoe && blink(); }
+  if (kind === 'graze' && k > 0.62 && k < 0.75) ex += 2;
+  if (kind === 'win') { showFoe = showFoe && (k > 0.4 || blink()); ey += Math.round(seg(0.4, 1) * 50); }
+  if (showFoe) {
+    if (kind === 'win' && k > 0.4) ctx.globalAlpha = 1 - seg(0.4, 1);
+    drawBig(F.art, F.pal, ex, ey, 3);
+    ctx.globalAlpha = 1;
+  }
+  // you, bottom left, twice as big
+  let mx = 20, my = 54, showMe = true;
+  if (kind === 'hit' && k > 0.3 && k < 0.75) { mx += Math.round(Math.sin(time * 60) * 2); showMe = blink(); }
+  if (kind === 'miss') mx -= Math.round(Math.sin(seg(0.1, 0.6) * Math.PI) * 14);
+  if (kind === 'drain') { mx += Math.round(Math.sin(seg(0, 0.3) * Math.PI) * 12); my -= Math.round(Math.sin(seg(0, 0.3) * Math.PI) * 8); }
+  if (kind === 'ready') my += 2;
+  if (kind === 'ko' || b.down) { my += Math.round((kind === 'ko' ? k : 1) * 10); ctx.globalAlpha = 1 - 0.6 * (kind === 'ko' ? k : 1); }
+  const onAlly = kind === 'latch' && k > 0.3 && k < 0.85;
+  if (showMe && !onAlly) drawBig(SPIDER, SPIDER_PAL[choice || 'none'], mx, my, 2, false, Math.floor(time * 3) % 2);
+  ctx.globalAlpha = 1;
+  const MC = [52, 70], FC = [124, 22];  // your middle, and the enemy's
+  if (kind === 'drain' && k > 0.3 && k < 0.95) for (let i = 0; i < 6; i++) {  // life, flowing from it to you
+    const t = (seg(0.3, 0.95) * 1.6 - i * 0.12); if (t < 0 || t > 1) continue;
+    const x = FC[0] + (MC[0] - FC[0]) * t, y = FC[1] + (MC[1] - FC[1]) * t + Math.sin(t * Math.PI) * -10;
+    ctx.fillStyle = '#d0302a'; ctx.fillRect(Math.round(x), Math.round(y), 2, 2); ctx.fillStyle = '#ff8a7a'; ctx.fillRect(Math.round(x), Math.round(y), 1, 1);
+  }
+  if (kind === 'lyme') {  // a sickly orb, wobbling across, and a burst where it lands
+    if (k > 0.1 && k < 0.7) {
+      const t = seg(0.1, 0.7), x = MC[0] + (FC[0] - MC[0]) * t, y = MC[1] + (FC[1] - MC[1]) * t + Math.sin(t * 18) * 3;
+      for (let i = 1; i <= 4; i++) { ctx.globalAlpha = 0.5 - i * 0.1; ctx.fillStyle = '#b8e05a'; ctx.fillRect(Math.round(x - (FC[0] - MC[0]) * 0.04 * i), Math.round(y - (FC[1] - MC[1]) * 0.04 * i + Math.sin(time * 30 + i) * 2), 2, 2); }
+      ctx.globalAlpha = 1; disc(ctx, Math.round(x), Math.round(y), 4, '#7aa83a'); disc(ctx, Math.round(x), Math.round(y), 2, '#d8f07a');
+      ctx.fillStyle = '#7a3a9a'; for (let i = -3; i <= 3; i++) ctx.fillRect(Math.round(x + i), Math.round(y + Math.sin(i + time * 20)), 1, 1);  // a squiggle in it
+    }
+    if (k >= 0.7) for (let i = 0; i < 10; i++) {
+      const a = i / 10 * Math.PI * 2, r = seg(0.7, 1) * 18;
+      ctx.globalAlpha = 1 - seg(0.7, 1); ctx.fillStyle = i % 2 ? '#b8e05a' : '#9a5ac0';
+      ctx.fillRect(Math.round(FC[0] + Math.cos(a) * r), Math.round(FC[1] + Math.sin(a) * r), 2, 2);
+    }
+    ctx.globalAlpha = 1;
+  }
+  if (kind === 'latch') {  // an animal comes by, you ride it in, and it hits the enemy
+    const ally = F.kind === 'gull' ? 'fish' : 'porcupine';
+    let ax, ay;
+    if (k < 0.3) { const t = seg(0, 0.3); ax = ally === 'fish' ? 76 : -20 + t * 80; ay = ally === 'fish' ? 58 - Math.sin(t * Math.PI * 0.5) * 22 : 66; }
+    else if (k < 0.72) { const t = seg(0.3, 0.72); ax = (ally === 'fish' ? 76 : 60) + (FC[0] - 10 - (ally === 'fish' ? 76 : 60)) * ease(t); ay = (ally === 'fish' ? 36 : 66) + (FC[1] + 4 - (ally === 'fish' ? 36 : 66)) * ease(t); }
+    else { const t = seg(0.72, 1); ax = FC[0] - 10 - t * 30; ay = FC[1] + 4 + t * 50; }
+    if (k < 0.9) {
+      if (ally === 'fish') drawFish(ax, ay, k < 0.3 ? -1.2 : Math.atan2(FC[1] - 36, FC[0] - 86), 2, FISH);
+      else drawBig(PORCUPINE, PORC_PAL, Math.round(ax - 16), Math.round(ay - 9), 2, k > 0.3);
+      if (onAlly) drawBig(SPIDER, SPIDER_PAL[choice || 'none'], Math.round(ax - 8), Math.round(ay - (ally === 'fish' ? 16 : 24)), 1);  // you, riding it
+    }
+    if (k > 0.72 && k < 0.92) sparkleAt(FC[0] - 6, FC[1] + 6, seg(0.72, 0.92));
+  }
+  if (kind === 'bun') {  // the album case pops open over you; a honeybun comes out
+    const t = seg(0, 0.5), x = MC[0] - 8, y = MC[1] - 30 - Math.round(t * 4);
+    ctx.fillStyle = '#c9d3da'; ctx.fillRect(x, y, 16, 8); ctx.fillStyle = '#16130f'; ctx.fillRect(x + 1, y + 1, 14, 6);
+    ctx.fillStyle = '#e8322a'; ctx.fillRect(x + 3, y + 3, 10, 1);
+    ctx.fillStyle = '#c9d3da'; ctx.fillRect(x, y + 8, 16, 8); ctx.fillStyle = '#26262b'; ctx.fillRect(x + 1, y + 9, 14, 6);
+    if (k < 0.6) miniBun(x + 8, y + 12 - Math.round(seg(0.2, 0.6) * 10));
+  }
+  if (kind === 'point' || kind === 'graze') {  // you point; a mark on the enemy; the shot
+    if (k > 0.1) { ctx.fillStyle = '#2b1d14'; line(ctx, mx + 22, my + 6, mx + 30, my - 2, '#2b1d14'); }  // a leg, pointing
+    if (k > 0.15 && k < 0.6) for (let i = 0; i < 12; i++) {
+      if ((i + Math.floor(time * 12)) % 2) continue;
+      const t = i / 12; ctx.fillStyle = '#fff6c8'; ctx.fillRect(Math.round(mx + 30 + (FC[0] - mx - 30) * t), Math.round(my - 2 + (FC[1] - my + 2) * t), 1, 1);
+    }
+    const off = kind === 'graze' ? Math.round(Math.sin(time * 9) * 10) + 12 : 0;
+    if (k > 0.3 && k < 0.62) {  // the mark: a red ring and cross
+      const cx0 = FC[0] + off, cy0 = FC[1];
+      ctx.fillStyle = '#e3241c';
+      for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2; ctx.fillRect(Math.round(cx0 + Math.cos(a) * 7), Math.round(cy0 + Math.sin(a) * 7), 1, 1); }
+      ctx.fillRect(cx0 - 10, cy0, 6, 1); ctx.fillRect(cx0 + 5, cy0, 6, 1); ctx.fillRect(cx0, cy0 - 10, 1, 6); ctx.fillRect(cx0, cy0 + 5, 1, 6);
+    }
+    if (k > 0.62 && k < 0.67) { ctx.fillStyle = 'rgba(255,255,255,.8)'; ctx.fillRect(0, 0, VW, VH); }  // the flash of the shot
+    if (k > 0.62) for (let i = 0; i < 6; i++) {  // a puff of smoke
+      const t = seg(0.62, 1), a = i / 6 * Math.PI * 2;
+      ctx.globalAlpha = 1 - t; ctx.fillStyle = '#d8d4cc';
+      ctx.fillRect(Math.round(FC[0] + off + Math.cos(a) * t * 10), Math.round(FC[1] + Math.sin(a) * t * 8 - t * 6), 2, 2);
+    }
+    ctx.globalAlpha = 1;
+  }
+  if (kind === 'ready') { ctx.fillStyle = 'rgba(200,180,140,.7)'; ctx.fillRect(mx + 2, my + 30, 3, 2); ctx.fillRect(mx + 27, my + 30, 3, 2); }
+}
+// ---- level 2: sounds for the fights, the tent, the falls ----
+function battleSting() { if (!ac || muted) return; [392, 523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(master, 'square', f, ac.currentTime + i * 0.06, 0.09, 0.035, 2200)); }
+function whoosh(d = 1.2, v = 0.12) {
+  if (!ac || muted) return; makeNoise();
+  const t = ac.currentTime, s = ac.createBufferSource(), bp = ac.createBiquadFilter(), g = ac.createGain();
+  s.buffer = noise; s.loop = true; bp.type = 'bandpass'; bp.Q.value = 1.2;
+  bp.frequency.setValueAtTime(300, t); bp.frequency.exponentialRampToValueAtTime(1800, t + d * 0.5); bp.frequency.exponentialRampToValueAtTime(400, t + d);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + d * 0.35); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  s.connect(bp); bp.connect(g); g.connect(master); s.start(t); s.stop(t + d + 0.05);
+}
+function splashSound(v = 0.25) { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTime, 'lowpass', 1400, 0.7, v, 0.5, 0, master); tone(master, 'sine', 180, ac.currentTime, 0.15, v * 0.4); }
+function boing() {
+  if (!ac || muted) return;
+  const t = ac.currentTime, o = ac.createOscillator(), vib = ac.createOscillator(), vg = ac.createGain(), g = ac.createGain();
+  o.frequency.setValueAtTime(220, t); o.frequency.exponentialRampToValueAtTime(440, t + 0.4);
+  vib.frequency.value = 22; vg.gain.value = 40; vib.connect(vg); vg.connect(o.frequency);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.08, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.5);
+  o.connect(g); g.connect(master); o.start(t); vib.start(t); o.stop(t + 0.55); vib.stop(t + 0.55);
+}
+function sfx(kind, dur) {
+  if (!ac || muted) return; makeNoise();
+  const t = ac.currentTime, T = (a, f, d, v, type = 'sine', cut) => tone(master, type, f, t + a, d, v, cut);
+  switch (kind) {
+    case 'hit': T(0.3, 110, 0.12, 0.08, 'square', 600); T(0.32, 70, 0.2, 0.15); break;
+    case 'miss': whoosh(0.4, 0.06); break;
+    case 'drain': [880, 740, 622, 523].forEach((f, i) => T(0.35 + i * 0.12, f, 0.16, 0.05)); break;
+    case 'latch': squeak(); T(dur * 0.74, 90, 0.2, 0.18); noiseHit(t + dur * 0.74, 'lowpass', 900, 0.7, 0.12, 0.2, 0, master); break;
+    case 'lyme': {
+      const o = ac.createOscillator(), vib = ac.createOscillator(), vg = ac.createGain(), g = ac.createGain();
+      o.type = 'triangle'; o.frequency.setValueAtTime(300, t + 0.1); o.frequency.exponentialRampToValueAtTime(900, t + 0.9);
+      vib.frequency.value = 9; vg.gain.value = 30; vib.connect(vg); vg.connect(o.frequency);
+      g.gain.setValueAtTime(0.0001, t + 0.1); g.gain.exponentialRampToValueAtTime(0.05, t + 0.2); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.0);
+      o.connect(g); g.connect(master); o.start(t + 0.1); vib.start(t + 0.1); o.stop(t + 1.05); vib.stop(t + 1.05);
+      break;
+    }
+    case 'bun': caseSting(); break;
+    case 'point': noiseHit(t + dur * 0.62, 'lowpass', 2500, 0.7, 0.3, 0.35, 0, master); T(dur * 0.62, 60, 0.25, 0.2); break;
+    case 'graze': noiseHit(t + dur * 0.62, 'lowpass', 2500, 0.7, 0.18, 0.3, 0, master); break;
+    case 'ready': whoosh(0.3, 0.03); break;
+    case 'win': [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => pluck(f, 0.16, 0.5 + i * 0.1)); break;
+    case 'ko': [392, 330, 262, 196].forEach((f, i) => pluck(f, 0.16, i * 0.15)); break;
+  }
 }
 
 // ---- level 2: looking at things ----
@@ -2650,6 +3302,8 @@ function interact2() {
     if (!P.mount && choice !== 'dog' && fx === MOUNT.x && fy === MOUNT.y) { mountUp(); return; }
     if (night) {
       const N = night;
+      const d = dancersAt(N).find(d => time > d.at && Math.round(d.x) === fx && Math.round(d.y) === fy);
+      if (d) { say([DANCER_WORDS[d.kind]]); return; }
       if (fy === N.cy && (fx === N.cx || fx === N.cx + 1)) { sleep(); return; }
       if (fy === N.cy && fx === N.cx + 5) { say(['His decks, on a crate. The record spins.']); return; }
       if (fy === N.cy && fx === N.cx + 6) { say(['His bicycle.']); return; }
@@ -2661,7 +3315,9 @@ function interact2() {
       '~': 'Lake Superior.', 't': 'The woods, thick and dark.', 'i': 'A birch tree.', 'r': 'A big rock.',
       'A': 'The apartment, behind you.', 'd': 'The apartment door.', 'M': 'The mat you crawled out from under.',
       'Q': 'A pizza joint, stuck in the 1980s.', 'P': 'A pizza joint, stuck in the 1980s. Walk in, if you like.',
-      'v': 'The river, running down from the falls.', 'Y': 'Gooseberry Falls.', 'x': 'Wet rock, by the falls.',
+      'v': fy >= 6 ? 'Rapids, white and wild, crashing down to the lake.' : 'The pool under the falls, churning.',
+      'Y': 'Gooseberry Falls, roaring. Salmon leap up it.', 'x': 'Wet rock, by the falls.',
+      'j': 'A rock in the rapids. The water smashes over it.',
       'C': 'The cliffs of Palisade Head.', 'T': 'The trail up Palisade Head.',
     }[ch];
     if (ch === '?') {
@@ -2675,8 +3331,8 @@ function interact2() {
       'N': 'A neon sign: PIZZA.', 'W': 'Wood paneling.' }[ch];
     if (words) say([words]);
   } else {
-    const words = { 'R': 'The rock of Palisade Head.', 'p': 'A little tree, growing out of the rock.',
-      'E': 'The edge. A long way down to the lake.', '~': 'Lake Superior.', 't': 'The woods, thick and dark.', 'i': 'A birch tree.' }[ch];
+    const words = { 'X': 'A giant tree, like a redwood. It goes up and up.', 'f': 'Ferns, in the shade of the giant trees.',
+      'E': 'The edge. A long way down to the lake.', '~': 'Lake Superior.', 'o': 'The overlook.' }[ch];
     if (words) say([words]);
   }
 }
@@ -2693,13 +3349,31 @@ function draw2(cx, cy) {
   // things that move: the river and the falls, the neon, the arcade screens, the jukebox
   for (let ty = y0; ty <= y0 + 9; ty++) for (let tx = x0; tx <= x0 + 10; tx++) {
     const ch = tile(tx, ty), X = tx * TS - cx, Y = ty * TS - cy;
-    if (area === 'route' && ch === 'v') {
+    if (area === 'route' && (ch === 'v' || ch === 'j')) {
+      const wild = ty === 3 || ty >= 6;  // the churning pool under the falls, and the rapids below the bridge
       ctx.fillStyle = '#7fb6da';
-      for (const k of [0, 1]) { const o = ((Math.floor(time * 14) + tx * 5 + k * 8) % 16 + 16) % 16; ctx.fillRect(X + 4 + k * 6, Y + o, 1, 3); }
-    } else if (area === 'route' && ch === 'Y') {
-      ctx.fillStyle = '#ffffff';
-      for (const k of [0, 1, 2]) { const o = ((Math.floor(time * 30) + tx * 7 + k * 5) % 16 + 16) % 16; ctx.fillRect(X + 2 + k * 5, Y + o, 1, 4); }
-      if (tile(tx, ty + 1) === 'b') { ctx.globalAlpha = 0.5 + 0.3 * Math.sin(time * 6 + tx); ctx.fillStyle = '#f4fafc'; ctx.fillRect(X, Y + 13, 16, 3); ctx.globalAlpha = 1; }
+      for (const k of [0, 1]) { const o = ((Math.floor(time * (wild ? 34 : 14)) + tx * 5 + k * 8) % 16 + 16) % 16; ctx.fillRect(X + 4 + k * 6, Y + o, 1, 3); }
+      if (wild) for (let k = 0; k < 6; k++) {  // white water, tumbling down
+        const o = ((Math.floor(time * (ty === 3 ? 22 : 38)) + tx * 5 + k * 7) % 16 + 16) % 16;
+        const sx = ((k * 5 + tx * 3 + Math.floor(time * (ty === 3 ? 11 : 5))) % 13) + 1;
+        ctx.fillStyle = k % 2 ? '#ffffff' : '#d8ecf6'; ctx.fillRect(X + sx, Y + o, 2 + (k % 2), 1);
+      }
+      if (ty === 3) { ctx.globalAlpha = 0.45 + 0.25 * Math.sin(time * 9 + tx); ctx.fillStyle = '#f4fafc'; ctx.fillRect(X, Y, 16, 5); ctx.globalAlpha = 1; }
+      if (ch === 'j') {  // the water smashing into the rock, and a wake below it
+        ctx.fillStyle = '#ffffff';
+        for (let i = 0; i < 7; i++) { const a = Math.PI + i / 6 * Math.PI; if ((i + Math.floor(time * 12)) % 3) ctx.fillRect(Math.round(X + 8 + Math.cos(a) * 6), Math.round(Y + 8 + Math.sin(a) * 5), 2, 1); }
+        const w = Math.floor(time * 10) % 2;
+        ctx.fillRect(X + 3 - w, Y + 13, 2, 1); ctx.fillRect(X + 12 + w, Y + 13, 2, 1); ctx.fillRect(X + 1 - w, Y + 15, 2, 1); ctx.fillRect(X + 14 + w, Y + 15, 2, 1);
+      }
+    } else if (area === 'route' && ch === 'Y') {  // the falls, crashing down
+      for (const k of [0, 1, 2, 3, 4, 5]) {
+        const o = ((Math.floor(time * 46) + tx * 7 + k * 5) % 16 + 16) % 16;
+        ctx.fillStyle = k % 2 ? '#ffffff' : '#bcdcec'; ctx.fillRect(X + 1 + Math.round(k * 2.5), Y + o, k % 3 ? 1 : 2, 5);
+      }
+      if (ty >= 1) {  // foam boiling at each ledge
+        const o = (tx * 3) % 4;
+        for (let i = 0; i < 6; i++) if ((i + Math.floor(time * 14) + tx) % 3) { ctx.fillStyle = '#ffffff'; ctx.fillRect(X + ((i * 5 + Math.floor(time * 20)) % 15), Y + o + 2 + (i % 3), 2, 1); }
+      }
     } else if (area === 'pizza' && ch === 'G') {
       for (let i = 0; i < 6; i++) { ctx.fillStyle = ['#e8322a', '#2ac0e8', '#f2c94c', '#7ae82a', '#ff5fae'][(Math.floor(time * 6) + i + tx) % 5]; ctx.fillRect(X + 4 + (i * 3 + Math.floor(time * 4)) % 8, Y + 4 + (i * 5 + tx) % 6, 1, 1); }
     } else if (area === 'pizza' && ch === 'J') {
@@ -2708,7 +3382,7 @@ function draw2(cx, cy) {
   }
   if (area === 'route') neonSign(37 * TS + 56 - cx, 1 * TS + 4 - cy, false);
   if (area === 'pizza') neonSign(5 * TS - cx, 4 - cy, false);
-  const list = [];
+  const list = [], late = [];  // late: drawn over the dark of night
   if (area === 'route') {
     if (time - matWiggle < 0.9) {  // something crawling, under the mat
       const k = (time - matWiggle) / 0.9;
@@ -2728,11 +3402,30 @@ function draw2(cx, cy) {
       if (fX < -80 || fX > VW + 80) continue;
       if (C.lit) list.push([row + 2, () => drawFlames(fX, fY)]);
       else if (C.done) list.push([row + 2, () => wisp(fX + 7, fY + 8, 4, 12, '#b8b2a8')]);
-      list.push([row + 3, () => drawTent(C.cx * TS - cx, row + TS - cy - 1, C)]);
+      // the tent, flying off or floating in the lake, is drawn over the dark, so you can see it go
+      (C.tent === 'gust' || C.tent === 'swim' ? late : list).push([row + 3, () => drawTent(C.cx * TS - cx, row + TS - cy - 1, C)]);
       if (night === C) {
         list.push([row + 4, () => drawDecks((C.cx + 5) * TS - cx, row - cy, time * 6)]);
         list.push([row + 1, () => drawBike((C.cx + 6) * TS + 8 - 11 - cx, row + TS - 27 - cy, false, 0, false)]);
+        for (const d of dancersAt(C)) {  // they come out of the woods, one by one, with a little sparkle (lit by the party)
+          const X = (d.x * TS + 8) - cx, Y = (d.y * TS + 14) - cy, k = time - d.at;
+          if (k < 0) continue;
+          late.push([d.y * TS + 2, () => { if (k < 0.45) sparkleAt(Math.round(X), Math.round(Y - 5), k / 0.45); if (k > 0.2) drawDancer(d, X, Y); }]);
+        }
       }
+    }
+    for (const F of FOES) {  // the enemies, waiting on the path
+      const X = F.x * TS - cx, Y = F.y * TS - cy;
+      if (X < -40 || X > VW + 40) continue;
+      if (!F.beaten) list.push([F.y * TS + 1, () => {
+        const bob = Math.floor(time * 2 + F.x) % 2;
+        ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(X + 3, Y + 14, 11, 2);
+        drawSprite(ctx, F.art, F.pal, X, Y - (F.kind === 'gull' ? bob : 0), 0, false);
+        if (F.kind === 'bear' && bob) { ctx.fillStyle = BEAR_PAL.B; ctx.fillRect(X + 1, Y + 3, 2, 1); }
+      }]);
+      else if (F.kind === 'gull') list.push([F.y * TS, () => {  // a few feathers, left on the path
+        ctx.fillStyle = '#f4f4f0'; ctx.fillRect(X + 4, Y + 9, 3, 1); ctx.fillRect(X + 10, Y + 12, 2, 1); ctx.fillStyle = '#9aa4ae'; ctx.fillRect(X + 7, Y + 6, 3, 1);
+      }]);
     }
   }
   const [ppx, ppy] = ppos();
@@ -2745,10 +3438,56 @@ function draw2(cx, cy) {
       list.push([Math.min(by + 1, ppy + 1), () => drawBike(Math.round(bx) + 8 - 11 - cx, Math.round(by) + 16 - 27 - cy, B.side < 0, B.crank, true)]);
   }
   list.push([ppy + 2, () => drawRider(Math.round(ppx) - cx, Math.round(ppy) - cy)]);
+  drawWaterLife(cx, cy);
   list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
+  if (area === 'route' && cx < (FALLS[3] + 2) * TS && cx + VW > (FALLS[0] - 1) * TS) for (let i = 0; i < 16; i++) {  // spray, over the bridge
+    const k = (time * 0.6 + i / 16) % 1, x = FALLS[0] * TS + ((i * 37) % (FALLS.length * TS)) + Math.sin(k * 6 + i) * 4 - cx;
+    ctx.globalAlpha = 0.45 * (1 - k); ctx.fillStyle = '#f4fafc';
+    ctx.fillRect(Math.round(x), Math.round(3 * TS + 14 - k * 30 + (i % 3) * 8 - cy), 2 + (i % 2), 2);
+  }
+  ctx.globalAlpha = 1;
   if (night) nightFall(cx, cy);
+  if (night && dance.camp === CAMPS.indexOf(night) && B.playing) {  // the party: colored lights sweep the ground
+    const C = night, n = Math.floor(time / danceBeat());
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < 3; i++) {
+      const a = time * 0.9 + i * 2.1, x = (C.cx + 3) * TS + 8 + Math.cos(a) * 34 - cx, y = C.cy * TS + 8 + Math.sin(a * 1.3) * 12 - cy;
+      const col = ['255,80,200', '80,220,255', '255,210,80'][(i + n) % 3];
+      const gr = ctx.createRadialGradient(x, y, 1, x, y, 22);
+      gr.addColorStop(0, 'rgba(' + col + ',.3)'); gr.addColorStop(1, 'rgba(' + col + ',0)');
+      ctx.fillStyle = gr; ctx.fillRect(x - 22, y - 22, 44, 44);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  late.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
+  if (night && dance.camp === CAMPS.indexOf(night) && B.playing) drawFairies(night, cx, cy);
+  if (time - pole.t0 < 1.8 && area === 'route') {  // the tent pole, springing loose and flying off
+    const k = (time - pole.t0) / 1.8, C = CAMPS[0];
+    const x = C.cx * TS + 16 + k * 70 - cx, y = C.cy * TS - 4 - Math.sin(k * Math.PI) * 50 + k * 30 - cy, a = k * 14;
+    line(ctx, Math.round(x - Math.cos(a) * 6), Math.round(y - Math.sin(a) * 6), Math.round(x + Math.cos(a) * 6), Math.round(y + Math.sin(a) * 6), '#c9cfd4');
+    if (k > 0.85) splash(C.cx * TS + 16 + 70 - cx, C.cy * TS + 26 - cy, (k - 0.85) / 0.15, 0.6);
+  }
+  if (time - gust.t0 < 2.4 && area === 'route') {  // the gust of wind, across the screen
+    const k = (time - gust.t0) / 2.4;
+    for (let i = 0; i < 9; i++) {
+      const x = ((time - gust.t0) * 220 + i * 47) % (VW + 60) - 30, y = 8 + i * 15 + Math.round(Math.sin(time * 5 + i) * 3);
+      ctx.globalAlpha = 0.55 * Math.sin(k * Math.PI); ctx.fillStyle = '#f4f8fa';
+      ctx.fillRect(Math.round(x), y, 14 + (i % 3) * 6, 1); ctx.fillRect(Math.round(x) + 6, y + 2, 8, 1);
+    }
+    ctx.globalAlpha = 1;
+  }
+  if (area === 'climb') {  // sunlight, slanting down through the giant trees
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < 3; i++) {
+      const base = ((i * 80 - cy * 0.3 + time * 2) % 270 + 270) % 270 - 90;
+      ctx.globalAlpha = 0.06 + 0.025 * Math.sin(time * 0.7 + i * 2);
+      ctx.fillStyle = '#fff0c0';
+      for (let y = 0; y < VH; y++) ctx.fillRect(Math.round(base + y * 0.45), y, 12 + i * 5, 1);
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+  }
   // the cigarette, at the first camp: an ember, and smoke curling up
-  if (time - smoke.t0 < 10) {
+  if (time - smoke.t0 < 10 && !P.hidden) {
     const k = time - smoke.t0, out = Math.min(1, 10 - k);
     const sx = Math.round(ppx) - cx + (P.side > 0 ? 13 : 2), sy = Math.round(ppy) - cy + 6;
     for (let i = 0; i < 9; i++) {
@@ -2774,6 +3513,28 @@ function draw2(cx, cy) {
     const ox = B.mode === 'decks' ? 6 : (B.side > 0 ? 10 : 5), oy = B.mode === 'decks' ? 5 : -8;
     sparkleAt(Math.round(bx) - cx + ox, Math.round(by) - cy + oy, (time - bruddaSparkle) / 0.9);
     sparkleAt(Math.round(bx) - cx + ox, Math.round(by) - cy + oy, ((time % 7) - 6) / 0.9);
+  }
+}
+function drawWaterLife(cx, cy) {  // fish jumping in the lake, and salmon leaping up the falls (how they look is a guess)
+  for (const f of fishJumps) {
+    const t = time - f.t0, p = t / f.dur, x1 = f.x + f.dir * 12;
+    splash(f.x - cx, f.y - cy, t / 0.4); splash(x1 - cx, f.y - cy, (t - f.dur) / 0.4);
+    if (p < 0 || p > 1) continue;
+    const x = f.x + f.dir * 12 * p, y = f.y - f.h * 4 * p * (1 - p), ang = Math.atan2(-f.h * 4 * (1 - 2 * p), f.dir * 12);
+    drawFish(Math.round(x - cx), Math.round(y - cy), ang, 1, FISH);
+  }
+  for (const s of salmonJumps) {
+    const t = time - s.t0, p = t / s.dur;
+    splash(s.x - cx, s.y - cy, t / 0.4, 0.8);
+    if (!s.up) splash(s.x + s.dx - cx, s.y - cy, (t - s.dur) / 0.4, 0.8);
+    if (p < 0 || p > 1) continue;
+    let y, vy;
+    if (s.up) { y = s.y - s.h * (1 - (1 - p) * (1 - p)); vy = -2 * s.h * (1 - p); }   // it makes it: up, and into the falls
+    else { y = s.y - s.h * 4 * p * (1 - p); vy = -s.h * 4 * (1 - 2 * p); }          // it doesn't: back down, with a splash
+    const x = s.x + s.dx * p, ang = Math.atan2(vy, s.dx + 0.001);
+    if (s.up && p > 0.85) ctx.globalAlpha = (1 - p) / 0.15;
+    drawFish(Math.round(x - cx), Math.round(y - cy), ang, 1, SALMON);
+    ctx.globalAlpha = 1;
   }
 }
 function neonSign(x, y, bright) {  // PIZZA, in pink neon; a letter flickers now and then
@@ -3026,6 +3787,11 @@ window.__sketch = {
   get brudda() { return B.here ? { x: B.tx, y: B.ty, mode: B.mode, playing: B.playing } : null; },
   get ended2() { return !$('end2').hidden; }, get stepTime() { return P.stepTime; }, get hidden() { return P.hidden; },
   play(k) { audio(); musicStop(); musicStart(k === 'view' ? VIEW : HIP[k] || STYLES[k]); },  // for loudness checks
+  get battle() { return battle ? { foe: battle.F.kind, hp: battle.hp, me: battle.me, sugar: battle.sugar, open: battle.open, cool: battle.cool } : null; },
+  get foes() { return FOES.map(F => !!F.beaten); }, get pizza() { return pizzaVisited; },
+  get dancers() { return night ? dancersAt(night).filter(d => time > d.at).length : 0; },
+  get fish() { return fishJumps.length; }, get salmon() { return salmonJumps.length; },
+  get roar() { return roar ? roar.level : null; }, get blurred() { return !!cv.style.filter; },
 };
 })();
 </script>
