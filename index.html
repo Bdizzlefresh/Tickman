@@ -124,8 +124,9 @@ a { color:var(--accent); }
       <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
     </ol>
     <p class="small">Guesses in this sketch: the bugs, the futon's colors, the rest of the apartment, the view outside, how Phil,
-      Isabella, the ticks and the deer look, how she blows the kiss, how the deer take her, where the honeybun sits
-      and how it looks, and the music (original, in a house style).</p>
+      Isabella, the ticks and the deer look (the red bandanas too), how she blows the kiss, how the deer take her, how
+      the album case looks (one case, in a new spot each time), the sound when it opens, and the three beats (all
+      original, in the styles you named).</p>
     <div class="btns">
       <button class="btn" id="another">Try another tick</button>
       <button class="btn alt" id="over">Start over</button>
@@ -516,17 +517,19 @@ const ISABELLA_PAL = { h: '#7b4a2b', d: '#55311b', p: '#e8679a', y: '#f5d548', v
   s: '#d69e78', e: '#2a1a14', c: '#e5786c', l: '#c4505e', w: '#f7f1e2', k: '#c45f2a', q: '#f0b648', m: '#8f4520' };
 // a little heart, for the kiss she blows
 const HEART = ['.X.X.', 'XXXXX', '.XXX.', '..X..'];
+// the deer, more intimidating, like a gang: red bandanas, a heavy brow over a mean eye, a big rack of
+// antlers, a darker coat (how they look, and the red, are guesses)
 const DEER = [
-  '................',
-  '................',
+  '........e.e..e.e',
+  '.........ee..ee.',
   '..........e.e...',
   '..........eDe...',
-  '..........DDDD..',
-  '..........DnDDn.',
-  '.........DDDD...',
-  '..W.....DDD.....',
-  '.WWDDDDDDDD.....',
-  '.WDDDDDDDDD.....',
+  '..........bbDD..',
+  '..........DyDDn.',
+  '.........DDDDm..',
+  '..W....rRpR.....',
+  '.WWDDDDrDRRR....',
+  '.WDDDDDDDDR.....',
   '..DDDDDDDDD.....',
   '..dLLLLLLLd.....',
   '..d.d...d.d.....',
@@ -535,7 +538,8 @@ const DEER = [
   '..n.n...n.n.....'];
 const DEER_STEP = DEER.slice(0, 12).concat(['...d.d...d.d....', '...d.d..d...d...', '..d...d.d...d...', '..n...n.n...n...']);
 const RAINBOW = ['#e40303', '#ff8c00', '#ffed00', '#008026', '#24408e', '#732982'];
-const DEER_PAL = { D: '#9a6538', d: '#5a3820', L: '#eadfc8', W: '#ffffff', n: '#1a120c', e: '#7a4d2b' };
+const DEER_PAL = { D: '#7a4a28', d: '#46291a', L: '#e2d6bd', W: '#ffffff', n: '#140d08', e: '#d9c7a0',
+  b: '#1c120b', y: '#f2d24a', m: '#3a2216', R: '#c8102e', r: '#7d0a1c', p: '#ffffff' };
 
 function drawSprite(g, rows, pal, x, y, rot = 0, flip = false, legShift = 0) {
   for (let sy0 = 0; sy0 < 16; sy0++) {
@@ -588,18 +592,49 @@ function pluck(f, vol = 0.3, when = 0) {
 }
 const NOTE = { D3: 146.83, F3: 174.61, G3: 196, A3: 220, Bb3: 233.08, D4: 293.66, Fs4: 369.99, A4: 440, D5: 587.33 };
 
-// ---- the house music: original, a warm house groove with a disco feel (the style is a guess at what you named).
-// It kicks in when the spider sets out after Isabella, so the quiet life on the web comes first. ----
-const BPM = 122, SIX = 60 / BPM / 4, MUSIC_VOL = 0.3;  // SIX: one sixteenth note, in seconds
-const CHORDS = [  // two chords, two bars each: Dm9, then G13 (the bass plays their roots)
-  { pad: [174.61, 220, 261.63, 329.63], lead: [440, 523.25, 587.33, 523.25, 440],
-    bass: { r: 73.42, o: 146.83, f: 110, s: 130.81 } },
-  { pad: [174.61, 220, 246.94, 329.63], lead: [493.88, 587.33, 659.25, 587.33, 493.88],
-    bass: { r: 98, o: 196, f: 146.83, s: 174.61 } },
-];
+// ---- the house music: original, a different beat for each tick (the styles are guesses at what you named).
+// It kicks in when the spider sets out after Isabella, so the quiet life on the web comes first.
+//   the dog-blood tick (the pointer): a warm house groove with a disco feel, the first mix
+//   the regular tick: a spooky disco beat, in a minor key: an octave bass, a trembling organ, an eerie wavering lead
+//   the human-blood tick: a shoegaze house beat: a hazy wall of wavering chords, washed in echo, a softer kick ----
+const MUSIC_VOL = 0.3, METER = new URLSearchParams(location.search).has('meter');
+const STYLES = {
+  dog: { name: 'pointer', bpm: 122, per: 2, chords: [  // two chords, two bars each: Dm9, then G13
+    { pad: [174.61, 220, 261.63, 329.63], lead: [440, 523.25, 587.33, 523.25, 440],
+      bass: { r: 73.42, o: 146.83, f: 110, s: 130.81 } },
+    { pad: [174.61, 220, 246.94, 329.63], lead: [493.88, 587.33, 659.25, 587.33, 493.88],
+      bass: { r: 98, o: 196, f: 146.83, s: 174.61 } }] },
+  regular: { name: 'spooky disco', bpm: 120, per: 2, verb: 0.3, room: 1.8, chords: [  // Dm, Bb, Gm, then a dark A7
+    { pad: [174.61, 220, 293.66, 349.23], lead: [440, 587.33, 523.25], bass: { r: 73.42, o: 146.83 } },
+    { pad: [174.61, 233.08, 293.66, 349.23], lead: [698.46, 587.33, 466.16], bass: { r: 58.27, o: 116.54 } },
+    { pad: [196, 233.08, 293.66, 392], lead: [587.33, 466.16, 392], bass: { r: 49, o: 98 } },
+    { pad: [220, 277.18, 329.63, 392], lead: [554.37, 466.16, 440], bass: { r: 55, o: 110 } }] },
+  human: { name: 'shoegaze house', bpm: 116, per: 2, verb: 0.7, room: 3.2, chords: [  // Fmaj7, Am9, Cmaj9, G6
+    { pad: [174.61, 220, 261.63, 329.63], lead: [659.25, 523.25, 440], bass: { r: 87.31, o: 174.61, f: 130.81 } },
+    { pad: [196, 246.94, 261.63, 329.63], lead: [659.25, 493.88, 523.25], bass: { r: 55, o: 110, f: 82.41 } },
+    { pad: [164.81, 196, 246.94, 293.66], lead: [587.33, 493.88, 392], bass: { r: 65.41, o: 130.81, f: 98 } },
+    { pad: [196, 246.94, 293.66, 329.63], lead: [587.33, 493.88, 659.25], bass: { r: 49, o: 98, f: 73.42 } }] },
+};
 const BASSLINE = [[0, 'r', 1], [3, 'r', 1], [6, 'o', 1], [8, 'r', 2], [11, 'f', 1], [14, 's', 2]];
-const STABS = [2, 7, 10], LEAD_AT = [0, 3, 6, 10, 12];
+const GAZE_BASS = [[0, 'r', 4], [6, 'r', 2], [8, 'f', 3], [12, 'r', 2], [14, 'o', 2]];
+const STABS = [2, 7, 10], LEAD_AT = [0, 3, 6, 10, 12], GLIDE_AT = [0, 6, 10], GLIDE_LEN = [6, 4, 6];
 let musicOn = false, mus = null, noise = null;
+const rooms = {};
+function makeNoise() {
+  if (noise) return;
+  noise = ac.createBuffer(1, ac.sampleRate, ac.sampleRate);
+  const d = noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+}
+function room(sec) {  // a made-up echo: a burst of noise that fades away
+  if (rooms[sec]) return rooms[sec];
+  const sr = ac.sampleRate, len = Math.floor(sr * sec), b = ac.createBuffer(2, len, sr);
+  for (let c = 0; c < 2; c++) { const d = b.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
+  return (rooms[sec] = b);
+}
+function send(node, amt) {  // some of a sound, into the echo
+  if (!mus || !mus.verb || !amt) return;
+  const s = ac.createGain(); s.gain.value = amt; node.connect(s); s.connect(mus.verb);
+}
 function musicStart() { musicOn = true; musicBegin(); }
 function musicStop() {
   musicOn = false;
@@ -612,15 +647,19 @@ function musicStop() {
 function musicVolume() { if (mus) mus.out.gain.setTargetAtTime(muted ? 0 : MUSIC_VOL, ac.currentTime, 0.08); }
 function musicBegin() {
   if (!ac || mus || !musicOn) return;
-  if (!noise) {
-    noise = ac.createBuffer(1, ac.sampleRate, ac.sampleRate);
-    const d = noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-  }
+  makeNoise();
+  const style = STYLES[choice] || STYLES.dog;
   const out = ac.createGain(); out.gain.value = muted ? 0 : MUSIC_VOL;
   const comp = ac.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 3;
   out.connect(comp); comp.connect(ac.destination);
   const pump = ac.createGain(); pump.connect(out);  // the chords and the bass dip under each kick
-  mus = { out, pump, step: 0, next: ac.currentTime + 0.08 };
+  let verb = null;
+  if (style.verb) {
+    verb = ac.createConvolver(); verb.buffer = room(style.room);
+    const wet = ac.createGain(); wet.gain.value = style.verb; verb.connect(wet); wet.connect(out);
+  }
+  mus = { out, pump, verb, style, six: 60 / style.bpm / 4, step: 0, next: ac.currentTime + 0.08 };
+  if (METER) { mus.meter = ac.createAnalyser(); mus.meter.fftSize = 2048; comp.connect(mus.meter); }
   mus.timer = setInterval(musicTick, 25);
   musicTick();
 }
@@ -628,37 +667,72 @@ function musicTick() {
   if (!mus) return;
   const now = ac.currentTime;
   if (mus.next < now - 0.2) mus.next = now + 0.05;  // the page slept: pick the beat back up
-  while (mus.next < now + 0.15) { if (!muted) musicStep(mus.step, mus.next); mus.step++; mus.next += SIX; }
+  while (mus.next < now + 0.15) { if (!muted) musicStep(mus.step, mus.next); mus.step++; mus.next += mus.six; }
 }
 function musicStep(n, t) {
-  const bar = Math.floor(n / 16), s = n % 16, ch = CHORDS[Math.floor(bar / 2) % 2];
-  if (s === 0) pad(ch.pad, t, SIX * 16, bar === 0);
+  const S = mus.style, bar = Math.floor(n / 16), s = n % 16, ch = S.chords[Math.floor(bar / S.per) % S.chords.length];
+  if (S === STYLES.regular) spookyStep(ch, bar, s, t, mus.six);
+  else if (S === STYLES.human) gazeStep(ch, bar, s, t, mus.six);
+  else warmStep(ch, bar, s, t, mus.six);
+}
+function warmStep(ch, bar, s, t, six) {  // the pointer's mix (the dog-blood tick), as it was
+  if (s === 0) pad(ch.pad, t, six * 16, bar === 0);
   if (STABS.includes(s)) stab(ch.pad, t, bar === 0 ? 0.5 : 1);
-  if (bar === 0) { if (s === 8) riser(t, SIX * 8); return; }  // the first bar: just the chords, opening up
+  if (bar === 0) { if (s === 8) riser(t, six * 8); return; }  // the first bar: just the chords, opening up
   if (s % 4 === 0) { kick(t); duck(t); }                       // then the beat kicks in
   if (s === 4 || s === 12) clap(t);
   if (s % 4 === 2) hat(t, 0.12, 0.14);        // an open hat on the offbeat
   else if (s % 2 === 1) hat(t, 0.03, 0.045);  // a light shaker between
-  for (const [at, k, len] of BASSLINE) if (at === s) bass(ch.bass[k], t, len * SIX);
+  for (const [at, k, len] of BASSLINE) if (at === s) bass(ch.bass[k], t, len * six);
   const i = LEAD_AT.indexOf(s);                // a little tune, every other four bars
   if (i >= 0 && bar % 2 === 1 && (bar - 1) % 8 >= 4) bell(ch.lead[i], t);
 }
-function kick(t) {
+function spookyStep(ch, bar, s, t, six) {  // the regular tick: spooky disco
+  if (s === 0) organ(ch.pad, t, six * 16, bar === 0);
+  if (bar === 0) { if (s === 8) riser(t, six * 8); return; }
+  if (s % 4 === 0) { kick(t); duck(t); }
+  if (s === 4 || s === 12) clap(t);
+  if (s % 4 === 2) hat(t, 0.16, 0.13);        // the disco open hat, on every offbeat
+  else hat(t, 0.025, 0.03);                   // and a tight tick between
+  if (s % 2 === 0) bass(s % 4 === 0 ? ch.bass.r : ch.bass.o, t, six * 1.5, 0.26);  // the octave bass, bouncing
+  if ((bar - 1) % 8 >= 4 && (s === 0 || s === 8))  // an eerie, wavering lead, every other four bars
+    theremin(ch.lead[s ? 1 : 0], ch.lead[s ? 2 : 1], t, six * 7.5);
+}
+function gazeStep(ch, bar, s, t, six) {  // the human-blood tick: shoegaze house, hazy and blurred
+  if (s === 0 && bar % 2 === 0) haze(ch.pad, t, six * 32, bar === 0);  // each chord rings for two bars
+  if (bar === 0) { if (s === 8) riser(t, six * 8); return; }
+  if (s % 4 === 0) { kick(t, 0.6); duck(t, 0.7); }  // a softer kick
+  if (s === 4 || s === 12) snare(t);                 // a snare, drowned in echo
+  if (s % 2 === 1) hat(t, 0.06, 0.03, 0.6);          // a soft shaker
+  for (const [at, k, len] of GAZE_BASS) if (at === s) bass(ch.bass[k], t, len * six, 0.26, 420);
+  const i = GLIDE_AT.indexOf(s);                      // a hazy guitar line, every other four bars
+  if (i >= 0 && (bar - 1) % 8 >= 4) glide(ch.lead[i], t, six * GLIDE_LEN[i]);
+}
+function kick(t, v = 0.9, dest) {
   const o = ac.createOscillator(), g = ac.createGain();
   o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(48, t + 0.09);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.9, t + 0.004);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.004);
   g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
-  o.connect(g); g.connect(mus.out); o.start(t); o.stop(t + 0.4);
+  o.connect(g); g.connect(dest || mus.out); o.start(t); o.stop(t + 0.4);
 }
-function duck(t) { const p = mus.pump.gain; p.setValueAtTime(0.45, t); p.linearRampToValueAtTime(1, t + 0.24); }
-function noiseHit(t, type, freq, q, peak, d) {
+function duck(t, depth = 0.45) { const p = mus.pump.gain; p.setValueAtTime(depth, t); p.linearRampToValueAtTime(1, t + 0.24); }
+function noiseHit(t, type, freq, q, peak, d, wet = 0, dest) {
   const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
   s.buffer = noise; f.type = type; f.frequency.value = freq; f.Q.value = q;
   g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + 0.002);
   g.gain.exponentialRampToValueAtTime(0.0001, t + d);
-  s.connect(f); f.connect(g); g.connect(mus.out); s.start(t, Math.random() * 0.5); s.stop(t + d + 0.02);
+  s.connect(f); f.connect(g); g.connect(dest || mus.out); if (!dest) send(g, wet);
+  s.start(t, Math.random() * 0.5); s.stop(t + d + 0.02);
 }
-function hat(t, d, v) { noiseHit(t, 'highpass', 7500, 0.7, v, d); }
+function hat(t, d, v, wet = 0) { noiseHit(t, 'highpass', 7500, 0.7, v, d, wet); }
+function snare(t) {
+  noiseHit(t, 'bandpass', 1800, 0.8, 0.2, 0.18, 1);
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.frequency.setValueAtTime(220, t); o.frequency.exponentialRampToValueAtTime(160, t + 0.08);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.12, t + 0.003);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+  o.connect(g); g.connect(mus.out); send(g, 0.8); o.start(t); o.stop(t + 0.15);
+}
 function clap(t) { for (const k of [0, 0.011, 0.022]) noiseHit(t + k, 'bandpass', 1400, 1.2, 0.3, k ? 0.16 : 0.02); }
 function riser(t, d) {
   const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
@@ -667,11 +741,11 @@ function riser(t, d) {
   g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07, t + d); g.gain.linearRampToValueAtTime(0, t + d + 0.02);
   s.connect(f); f.connect(g); g.connect(mus.out); s.start(t); s.stop(t + d + 0.05);
 }
-function bass(f, t, len) {
+function bass(f, t, len, peak = 0.32, cut = 900) {
   const o = ac.createOscillator(), sub = ac.createOscillator(), lp = ac.createBiquadFilter(), sg = ac.createGain(), g = ac.createGain();
   o.type = 'sawtooth'; o.frequency.value = f; sub.frequency.value = f; sg.gain.value = 0.6;
-  lp.type = 'lowpass'; lp.Q.value = 6; lp.frequency.setValueAtTime(900, t); lp.frequency.exponentialRampToValueAtTime(220, t + len);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.32, t + 0.008); g.gain.setTargetAtTime(0.0001, t + len * 0.8, 0.03);
+  lp.type = 'lowpass'; lp.Q.value = 6; lp.frequency.setValueAtTime(cut, t); lp.frequency.exponentialRampToValueAtTime(Math.min(220, cut * 0.6), t + len);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + 0.008); g.gain.setTargetAtTime(0.0001, t + len * 0.8, 0.03);
   o.connect(lp); lp.connect(g); sub.connect(sg); sg.connect(g); g.connect(mus.pump);
   o.start(t); sub.start(t); o.stop(t + len + 0.2); sub.stop(t + len + 0.2);
 }
@@ -704,6 +778,86 @@ function bell(f, t) {  // a soft, bell-like note
   o.connect(g); o2.connect(g2); g2.connect(g); g.connect(mus.out);
   o.start(t); o2.start(t); o.stop(t + 0.65); o2.stop(t + 0.65);
 }
+function organ(freqs, t, dur, opening) {  // a dark organ, trembling (the spooky disco)
+  const lp = ac.createBiquadFilter(), g = ac.createGain(), trem = ac.createGain(), lfo = ac.createOscillator(), lg = ac.createGain();
+  lp.type = 'lowpass'; lp.Q.value = 0.7;
+  if (opening) { lp.frequency.setValueAtTime(300, t); lp.frequency.exponentialRampToValueAtTime(1500, t + dur); }
+  else lp.frequency.value = 1500;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05, t + 0.06);
+  g.gain.setValueAtTime(0.05, t + dur - 0.12); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.05);
+  lfo.frequency.value = 6; lg.gain.value = 0.3; lfo.connect(lg); lg.connect(trem.gain);
+  lp.connect(g); g.connect(trem); trem.connect(mus.pump); send(trem, 0.4);
+  for (const f of freqs) {
+    const o = ac.createOscillator(), o2 = ac.createOscillator(), g2 = ac.createGain();
+    o.type = 'triangle'; o.frequency.value = f; o2.type = 'square'; o2.frequency.value = f * 2; g2.gain.value = 0.2;
+    o.connect(lp); o2.connect(g2); g2.connect(lp);
+    o.start(t); o2.start(t); o.stop(t + dur + 0.1); o2.stop(t + dur + 0.1);
+  }
+  lfo.start(t); lfo.stop(t + dur + 0.1);
+}
+function theremin(f0, f1, t, dur) {  // an eerie lead that wavers, and slides between notes (the spooky disco)
+  const o = ac.createOscillator(), vib = ac.createOscillator(), vg = ac.createGain(), g = ac.createGain();
+  o.frequency.setValueAtTime(f0, t); o.frequency.setTargetAtTime(f1, t + dur * 0.5, dur * 0.08);
+  vib.frequency.value = 5.5; vg.gain.value = f0 * 0.018; vib.connect(vg); vg.connect(o.frequency);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.06, t + 0.15);
+  g.gain.setValueAtTime(0.06, t + dur * 0.75); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(g); g.connect(mus.out); send(g, 0.6);
+  o.start(t); vib.start(t); o.stop(t + dur + 0.05); vib.stop(t + dur + 0.05);
+}
+function haze(freqs, t, dur, opening) {  // a wall of chords, wavering like a bent guitar, washed in echo (the shoegaze)
+  const lp = ac.createBiquadFilter(), g = ac.createGain(), wob = ac.createOscillator(), wg = ac.createGain();
+  lp.type = 'lowpass'; lp.Q.value = 0.5;
+  if (opening) { lp.frequency.setValueAtTime(300, t); lp.frequency.exponentialRampToValueAtTime(2000, t + dur * 0.5); }
+  else lp.frequency.value = 2000;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.028, t + 0.5);
+  g.gain.setValueAtTime(0.028, t + dur - 0.3); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.2);
+  wob.frequency.value = 0.4; wg.gain.value = 22; wob.connect(wg);
+  lp.connect(g); g.connect(mus.pump); send(g, 1);
+  for (const f of freqs) for (const det of [-14, 0, 14]) {
+    const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = det;
+    wg.connect(o.detune); o.connect(lp); o.start(t); o.stop(t + dur + 0.3);
+  }
+  wob.start(t); wob.stop(t + dur + 0.3);
+}
+function glide(f, t, dur) {  // a hazy guitar note, bent up into pitch (the shoegaze)
+  const o = ac.createOscillator(), o2 = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  o.type = 'sawtooth'; o2.type = 'triangle'; o2.detune.value = 9;
+  for (const x of [o, o2]) { x.frequency.setValueAtTime(f * 0.97, t); x.frequency.exponentialRampToValueAtTime(f, t + 0.12); }
+  lp.type = 'lowpass'; lp.frequency.value = 1700; lp.Q.value = 0.7;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.04, t + 0.09);
+  g.gain.setValueAtTime(0.04, t + dur * 0.7); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.3);
+  o.connect(lp); o2.connect(lp); lp.connect(g); g.connect(mus.out); send(g, 1.2);
+  o.start(t); o2.start(t); o.stop(t + dur + 0.35); o2.stop(t + dur + 0.35);
+}
+
+// ---- the album case opening: a short burst of original funk, bright and bouncy (not a real recording) ----
+function tone(dest, type, f, t, d, v, cut) {
+  const o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.value = f;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  if (cut) { const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = cut; o.connect(lp); lp.connect(g); } else o.connect(g);
+  g.connect(dest); o.start(t); o.stop(t + d + 0.02);
+}
+const RIFF = [[0, 329.63], [2, 392], [3, 440], [5, 493.88], [6, 440], [8, 587.33], [10, 493.88], [11, 659.25]];
+let stings = 0;
+function caseSting() {
+  if (!ac || muted) return;
+  makeNoise(); stings++;
+  const t0 = ac.currentTime + 0.03, e = 60 / 104 / 4;  // sixteenth notes, at 104 beats a minute
+  const out = ac.createGain(); out.gain.value = 0.5; out.connect(ac.destination);
+  if (mus) { mus.out.gain.setTargetAtTime(MUSIC_VOL * 0.25, t0, 0.05); setTimeout(musicVolume, e * 14 * 1000); }  // the beat steps back
+  for (const s of [0, 3, 8]) kick(t0 + s * e, 0.8, out);
+  for (const s of [4, 12]) noiseHit(t0 + s * e, 'bandpass', 1600, 1, 0.35, 0.12, 0, out);
+  for (let s = 1; s < 14; s += 2) noiseHit(t0 + s * e, 'highpass', 8000, 0.7, 0.05, 0.03, 0, out);
+  for (const [s, f] of RIFF) tone(out, 'square', f, t0 + s * e, s === 11 ? 0.5 : 0.12, 0.09, 2400);
+  for (const s of [0, 8]) tone(out, 'sawtooth', 82.41, t0 + s * e, 0.3, 0.2, 400);
+  const ts = t0 + 8 * e, o = ac.createOscillator(), vib = ac.createOscillator(), vg = ac.createGain(), g = ac.createGain();
+  o.frequency.setValueAtTime(493.88, ts); o.frequency.exponentialRampToValueAtTime(659.25, ts + 0.25);  // a falsetto "ooh"
+  vib.frequency.value = 6; vg.gain.value = 8; vib.connect(vg); vg.connect(o.frequency);
+  g.gain.setValueAtTime(0.0001, ts); g.gain.exponentialRampToValueAtTime(0.09, ts + 0.12);
+  g.gain.setValueAtTime(0.09, ts + 0.6); g.gain.exponentialRampToValueAtTime(0.0001, ts + 1.1);
+  o.connect(g); g.connect(out); o.start(ts); vib.start(ts); o.stop(ts + 1.15); vib.stop(ts + 1.15);
+  setTimeout(() => out.disconnect(), 4000);
+}
 
 // ---- the state of play ----
 const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
@@ -719,11 +873,36 @@ const seen = new Set();
 const P = { tx: 1, ty: 1, nx: 1, ny: 1, t: 0, moving: false, facing: 'right', anim: 0, stepTime: STEP };
 const isa = { x: 8, y: 11, visible: true, alarm: false, path: [], walkT: 0, kiss: false, spook: -9 };
 let hearts = [];  // the kiss she blows, floating to the spider
+let caseNotes = [];  // little music notes, springing up out of the album case
 const phil = { x: 15, y: 3, mad: 0 };  // he stands on two tiles across and two down
 const PHIL_LINE = 'oh no! My laptop!!';
 const isPhil = (x, y) => x >= phil.x && x <= phil.x + 1 && y >= phil.y && y <= phil.y + 1;
-const bun = { x: 11, y: 6, eaten: false };  // the honeybun, a gas station pastry (where it sits is a guess)
-const isBun = (x, y) => x === bun.x && y === bun.y;
+// the honeybuns (gas station pastries) are kept in the spider's N.E.R.D. album case, which turns up in a
+// different spot in the apartment each time you play (one case, and how it looks, are guesses)
+const bun = { eaten: false };
+const albumCase = { x: 0, y: 0, opened: -9 };
+const isCase = (x, y) => x === albumCase.x && y === albumCase.y;
+function placeCase() {
+  const solid = (x, y, bx, by) => (x === bx && y === by) || isPhil(x, y) || !'HTKS.oD'.includes(tile(x, y));
+  const reach = (bx, by) => {  // how many tiles you can still walk to, with the case on (bx, by)
+    const seenT = new Set(['1,1']), q = [[1, 1]];
+    while (q.length) {
+      const [x, y] = q.pop();
+      for (const [dx, dy] of Object.values(DIRS)) {
+        const nx = x + dx, ny = y + dy, k = nx + ',' + ny;
+        if (!seenT.has(k) && !solid(nx, ny, bx, by)) { seenT.add(k); q.push([nx, ny]); }
+      }
+    }
+    return seenT.size;
+  };
+  const all = reach(-1, -1), spots = [];
+  for (let y = 1; y <= 8; y++) for (let x = 1; x <= 18; x++)
+    if (tile(x, y) === '.' && !isPhil(x, y) && tile(x + 1, y) !== 'D' && reach(x, y) === all - 1) spots.push([x, y]);
+  const forced = (new URLSearchParams(location.search).get('case') || '').split(',').map(Number);
+  const pick = forced.length === 2 && spots.some(([x, y]) => x === forced[0] && y === forced[1])
+    ? forced : spots[Math.floor(Math.random() * spots.length)];
+  [albumCase.x, albumCase.y] = pick;
+}
 let sugarState = null;  // null, 'low' or 'steady': only lows are a danger
 const cam = { x: 0, y: 0 };
 let camMode = 'follow', pan = null, fade = { v: 0, tween: null }, timers = [];
@@ -735,7 +914,7 @@ const tickAt = (x, y) => ticksIn ? ORDER.find(k => k !== choice && TICKS[k].x ==
 function walkable(x, y) {
   const ch = tile(x, y);
   if (ch === 'D') return exitOpen;
-  return 'HTKS.o'.includes(ch) && !tickAt(x, y) && !isPhil(x, y) && !isBun(x, y);
+  return 'HTKS.o'.includes(ch) && !tickAt(x, y) && !isPhil(x, y) && !isCase(x, y);
 }
 
 // ---- time-based helpers for the little scenes ----
@@ -873,10 +1052,12 @@ async function capture() {
   isa.kiss = false;
   const mk = (x, y) => ({ x, y, face: -1, path: [], walkT: 0 });
   deer = [mk(20, 11), mk(20, 10), mk(21, 12), mk(21, 10), mk(22, 12)];
-  await Promise.all([walkTo(deer[0], [[9, 11]]), walkTo(deer[1], [[8, 10]]), walkTo(deer[2], [[8, 12]]),
-                     walkTo(deer[3], [[14, 10]]), walkTo(deer[4], [[15, 12]])]);
-  isa.alarm = true; isa.spook = time; pluck(NOTE.A3, 0.26);
-  await say(['The white-tailed deer! Isabella is spooked.', 'A damsel in distress. The deer have her surrounded.']);
+  const roll = 1.7;  // they roll up slow, like they own the place
+  await Promise.all([walkTo(deer[0], [[9, 11]], roll), walkTo(deer[1], [[8, 10]], roll), walkTo(deer[2], [[8, 12]], roll),
+                     walkTo(deer[3], [[14, 10]], roll), walkTo(deer[4], [[15, 12]], roll)]);
+  isa.alarm = true; isa.spook = time; pluck(NOTE.D3, 0.3); pluck(NOTE.A3, 0.26, 0.1);
+  await say(['The white-tailed deer roll up in red bandanas, like a gang. This lawn is their turf.',
+             'Isabella is spooked. A damsel in distress. The deer have her surrounded.']);
   isa.alarm = false;
   const go = 3, off = 23;
   await Promise.all([
@@ -900,17 +1081,22 @@ async function offer(k) {
   if (k === 'human') {
     phase = 'low';
     await say(["Low blood sugar. You move slowly, and you can't cast.",
-               'You need something sweet. There is a honeybun on the floor: a gas station pastry, still in its wrapper.']);
-    hud('Low blood sugar: find the honeybun'); lock--; return;
+               'You need something sweet. Your honeybuns are in your N.E.R.D. album case, somewhere in the apartment.']);
+    hud('Low blood sugar: find your album case'); lock--; return;
   }
   blur(false);
   if (k === 'dog') P.stepTime = 0.11;
   await openExit(); lock--;
 }
+function openCase() {  // it opens, and the music springs up (original, not a real recording)
+  albumCase.opened = time; caseSting();
+  for (let i = 0; i < 4; i++) caseNotes.push({ t0: time + i * 0.22, ph: i * 1.9 });
+}
 async function eatBun() {
   phase = 'snacking'; lock++; hud(null); bun.eaten = true;
-  pluck(NOTE.D4, 0.22); pluck(NOTE.Fs4, 0.18, 0.14); pluck(NOTE.A4, 0.16, 0.28);
-  await say(['You eat the honeybun.',
+  openCase();
+  await say(['You open your N.E.R.D. album case, and the music springs up.',
+             'Inside: your honeybuns, gas station pastries, still in their wrappers. You eat one.',
              { t: 'Your blood sugar comes back up. Your vision clears.', fx: sugarSteady },
              'Steady now, the psychic powers come: you can cast spells, like shooting Lyme disease at your enemies.']);
   await openExit(); lock--;
@@ -930,13 +1116,14 @@ async function finish() {
   if (!musicOn) [NOTE.D4, NOTE.Fs4, NOTE.A4, NOTE.D5].forEach((n, j) => pluck(n, 0.24, j * 0.15));
   await fadeTo(1, 0.9);
   $('endText').textContent = 'You ate the ' + TICKS[choice].name +
-    (choice === 'human' ? ', ate the honeybun,' : ',') +
+    (choice === 'human' ? ', ate a honeybun from your N.E.R.D. album case,' : ',') +
     ' and slipped out under the door after Isabella. Next: level 2, the coffee roaster.';
   $('end').hidden = false;
 }
 async function tryAnother() {
   $('end').hidden = true;
   choice = null; exitOpen = false; P.stepTime = STEP; blur(false); bun.eaten = false; sugarMeter(null); musicStop();
+  placeCase(); caseNotes = []; albumCase.opened = -9;  // the album case turns up somewhere new
   Object.assign(P, { tx: 6, ty: 3, nx: 6, ny: 3, moving: false, t: 0, facing: 'up' });
   camMode = 'follow'; [cam.x, cam.y] = playerCam();
   phase = 'choose'; lock = 1;
@@ -958,10 +1145,11 @@ function interact() {
   const gi = gnats.findIndex(g => g.x === fx && g.y === fy);
   if (gi >= 0 && phase === 'gnats') { eatGnat(gi); return; }
   if (isPhil(fx, fy)) { say([{ t: PHIL_LINE, fx: philYells }]); return; }
-  if (isBun(fx, fy)) {
-    if (phase === 'low') eatBun();
-    else if (bun.eaten) say(['An empty honeybun wrapper. A few crumbs.']);
-    else say(['A honeybun, still in its wrapper. A gas station pastry.']);
+  if (isCase(fx, fy)) {
+    if (phase === 'low') { eatBun(); return; }
+    openCase();
+    say(['Your N.E.R.D. album case. You open it, and the music springs up.',
+         'Inside: your stash of honeybuns, gas station pastries.' + (bun.eaten ? ' One fewer than before.' : '')]);
     return;
   }
   const k = tickAt(fx, fy);
@@ -969,7 +1157,7 @@ function interact() {
     if (phase === 'ticks') lookTick(k);
     else if (phase === 'choose') offer(k);
     else if (phase === 'exit') say(["You've eaten. Go after her."]);
-    else if (phase === 'low') say(["You've eaten. Now the honeybun."]);
+    else if (phase === 'low') say(["You've eaten. Now a honeybun, from your album case."]);
     else say([TICKS[k].look]);
     return;
   }
@@ -986,7 +1174,7 @@ function interact() {
     case 'w': say(['Your web: silk, thick as a wall.']); break;
     case 'D':
       if (phase === 'choose') say(["You can't save her as you are.", 'Eat one of the ticks first.']);
-      else if (phase === 'low') say(['Your vision is too blurry. Eat the honeybun first.']);
+      else if (phase === 'low') say(['Your vision is too blurry. Find your album case, and eat a honeybun first.']);
       else if (!exitOpen) say(['The door out. There is a gap under it, just big enough for a spider.', 'No reason to go. Not yet.']);
       break;
   }
@@ -1025,6 +1213,7 @@ function update(dt) {
   if (phil.mad > 0) phil.mad -= dt;
   timers = timers.filter(t => { t.t -= dt; if (t.t <= 0) { t.res(); return false; } return true; });
   if (hearts.length) hearts = hearts.filter(h => time - h.t0 < h.dur);
+  if (caseNotes.length) caseNotes = caseNotes.filter(n => time - n.t0 < 1.6);
   if (box.active && box.shown < box.full.length) {
     box.acc += dt * 48; const n = Math.min(box.full.length, Math.floor(box.acc));
     if (n !== box.shown) { box.shown = n; renderBox(); }
@@ -1086,30 +1275,54 @@ function drawPhil(X, Y) {
     g.globalAlpha = 1;
   }
 }
-// the honeybun: a glazed swirl in a clear gas station wrapper, crimped at both ends (how it looks is a guess)
-function drawBun(x, y) {
+// the N.E.R.D. album case: a CD case, its hinge down the left side, the name on a black cover
+// (how it looks is a guess; it's not the real album art)
+const dotted = glyph => glyph.map((row, j) => row + (j === 4 ? 'X' : '.'));  // a letter, then its period
+const CASE_FONT = { n: dotted(['X..X', 'XX.X', 'X.XX', 'X..X', 'X..X']), e: dotted(['XXX', 'X..', 'XX.', 'X..', 'XXX']),
+  r: dotted(FONT.R), d: dotted(FONT.D) };
+function caseText(s, x, y, c) {
+  ctx.fillStyle = c;
+  for (const ch of s) {
+    const glyph = CASE_FONT[ch];
+    glyph.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (row[i] === 'X') ctx.fillRect(x + i, y + j, 1, 1); });
+    x += glyph[0].length + 1;
+  }
+}
+function miniBun(x, y) {  // a honeybun in its wrapper, small
+  disc(ctx, x, y, 3, 'rgba(236,242,248,.75)'); disc(ctx, x, y, 2, '#c98a3e');
+  ctx.fillStyle = '#8a5222'; ctx.fillRect(x, y - 1, 1, 1); ctx.fillRect(x + 1, y, 1, 1); ctx.fillRect(x - 1, y + 1, 2, 1);
+  ctx.fillStyle = '#f7e3b2'; ctx.fillRect(x - 1, y - 1, 1, 1);
+}
+function drawCase(x, y) {
   const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
-  const SEAL = 'rgba(214,222,230,.95)', WRAP = 'rgba(236,242,248,.5)', CRUMB = '#c98a3e';
-  if (bun.eaten) {  // the empty wrapper, crumpled, and a few crumbs
-    f(4, 11, 9, 1, 'rgba(0,0,0,.18)');
-    f(4, 6, 8, 5, WRAP); f(5, 5, 5, 1, WRAP); f(6, 11, 4, 1, WRAP);
-    f(3, 7, 1, 3, SEAL); f(12, 6, 1, 3, SEAL); f(4, 10, 2, 1, '#d8452f');
-    for (const [a, b] of [[6, 7], [9, 8], [7, 9], [10, 6]]) f(a, b, 1, 1, 'rgba(255,255,255,.85)');
-    for (const [a, b] of [[2, 12], [13, 11], [8, 13]]) f(a, b, 1, 1, CRUMB);
+  const CLEAR = '#c9d3da', SHINE = '#eef3f6', HINGE = '#2c2f33', BLACK = '#16130f', RED = '#e8322a';
+  f(1, 15, 15, 1, 'rgba(0,0,0,.25)');
+  if (time - albumCase.opened < 2.6) {  // open: the lid swung up, the honeybuns in the tray
+    f(0, -7, 16, 8, CLEAR); f(1, -6, 14, 6, BLACK); f(3, -4, 10, 1, RED); f(0, -7, 16, 1, SHINE);
+    f(0, 1, 16, 14, CLEAR); f(1, 2, 14, 12, '#26262b'); f(0, 1, 16, 1, HINGE);
+    miniBun(x + 5, y + 6); miniBun(x + 11, y + 6); miniBun(x + 8, y + 10);
     return;
   }
-  f(2, 13, 13, 1, 'rgba(0,0,0,.22)');
-  f(2, 3, 12, 10, WRAP);                                         // the wrapper
-  for (let j = 3; j < 13; j++) { f(j % 2 ? 0 : 1, j, 2, 1, SEAL); f(j % 2 ? 14 : 13, j, 2, 1, SEAL); }  // crimped ends
-  f(2, 3, 12, 1, SEAL); f(2, 12, 12, 1, SEAL); f(3, 11, 4, 1, '#d8452f');
-  disc(ctx, x + 8, y + 8, 4, '#a8682c'); disc(ctx, x + 8, y + 8, 3, '#d49a4c');  // the bun
-  for (const [a, b] of [[8, 6], [9, 6], [10, 7], [10, 8], [10, 9], [9, 10], [8, 10], [7, 10], [6, 9], [6, 8], [7, 7], [8, 8]])
-    f(a, b, 1, 1, '#8a5222');                                    // the swirl
-  for (const [a, b] of [[6, 5], [7, 5], [5, 7], [11, 10]]) f(a, b, 1, 1, '#f7e3b2');  // the glaze, shining
-  f(3, 4, 2, 1, 'rgba(255,255,255,.8)'); f(12, 10, 1, 1, 'rgba(255,255,255,.8)');      // light on the plastic
+  f(0, 1, 16, 14, CLEAR); f(0, 1, 2, 14, HINGE);                 // the clear case, and its hinge
+  for (let j = 3; j < 14; j += 3) f(0, j, 2, 1, '#585c62');
+  f(3, 2, 12, 12, BLACK);                                        // the cover
+  caseText('ne', x + 4, y + 3, RED); caseText('rd', x + 4, y + 9, RED);
+  f(2, 1, 14, 1, SHINE); f(15, 2, 1, 12, SHINE);                 // light on the plastic
   if (phase === 'low') {  // a glint, so it can be found with blurry eyes
     ctx.globalAlpha = 0.45 + 0.55 * Math.abs(Math.sin(time * 3));
-    f(12, 1, 1, 3, '#fffbe8'); f(11, 2, 3, 1, '#fffbe8');
+    f(13, -2, 1, 5, '#fffbe8'); f(11, 0, 5, 1, '#fffbe8');
+    ctx.globalAlpha = 1;
+  }
+}
+const NOTE_GLYPH = ['.XX', '.X.', '.X.', 'XX.', 'XX.'];
+function drawCaseNotes(cx, cy) {
+  for (const n of caseNotes) {
+    const k = (time - n.t0) / 1.6; if (k < 0) continue;
+    const nx = Math.round(albumCase.x * TS + 7 + Math.sin(k * 6 + n.ph) * 5 + (n.ph - 2.8) * 1.5) - cx;
+    const ny = Math.round(albumCase.y * TS - 2 - k * 24) - cy;
+    ctx.globalAlpha = k > 0.7 ? Math.max(0, (1 - k) / 0.3) : 1;
+    ctx.fillStyle = n.ph % 3.8 < 1 ? '#ffd84a' : '#fff6e0';
+    NOTE_GLYPH.forEach((row, j) => { for (let i = 0; i < 3; i++) if (row[i] === 'X') ctx.fillRect(nx + i, ny + j, 1, 1); });
     ctx.globalAlpha = 1;
   }
 }
@@ -1193,7 +1406,7 @@ function draw() {
     ctx.globalAlpha = 1;
     drawBug(g.kind, gx, gy, Math.floor(time * 18 + g.ph) % 2 ? -1 : 0, hue);
   }]);
-  list.push([bun.y * TS, () => drawBun(bun.x * TS - cx, bun.y * TS - cy)]);
+  list.push([albumCase.y * TS, () => drawCase(albumCase.x * TS - cx, albumCase.y * TS - cy)]);
   list.push([(phil.y + 1) * TS, () => drawPhil(phil.x * TS - cx, phil.y * TS - cy)]);
   if (isa.visible) list.push([isa.y * TS, () => {
     const moving = isa.path && isa.path.length;
@@ -1211,11 +1424,12 @@ function draw() {
     }
     if (isa.alarm) bubble(x, y);
   }]);
-  for (const d of deer) list.push([d.y * TS, () => {
+  deer.forEach((d, i) => list.push([d.y * TS, () => {
     const moving = d.path && d.path.length;
     const art = moving && Math.floor(d.walkT * 8) % 2 ? DEER_STEP : DEER;
-    drawSprite(ctx, art, DEER_PAL, Math.round(d.x * TS) - cx, Math.round(d.y * TS) - cy, 0, d.face < 0);
-  }]);
+    const stomp = isa.alarm && Math.floor(time * 5 + i * 1.7) % 3 === 0 ? 1 : 0;  // they stomp, closing in
+    drawSprite(ctx, art, DEER_PAL, Math.round(d.x * TS) - cx, Math.round(d.y * TS) - cy - stomp, 0, d.face < 0);
+  }]));
   const [ppx, ppy] = ppos();
   if (phase !== 'done' || fade.v < 1) list.push([ppy, () => {
     const pal = SPIDER_PAL[choice || 'none'];
@@ -1233,6 +1447,7 @@ function draw() {
       ctx.fillStyle = i === 1 && j === 1 ? '#ffc2d4' : '#ff4f86'; ctx.fillRect(hx + i, hy + j, 1, 1); } });
     ctx.globalAlpha = 1;
   }
+  drawCaseNotes(cx, cy);
   ctx.drawImage(canopy, cx, cy, VW, VH, 0, 0, VW, VH);
 }
 
@@ -1299,6 +1514,7 @@ muteBtn.addEventListener('click', () => {
 });
 
 // ---- the loop ----
+placeCase();
 [cam.x, cam.y] = playerCam();
 let last = performance.now();
 function frame(now) {
@@ -1318,7 +1534,14 @@ window.__sketch = {
   get isabella() { return { x: isa.x, y: isa.y, visible: isa.visible }; },
   get busy() { return lock > 0 || !!fade.tween || !!pan; },
   get ended() { return !$('end').hidden; },
-  get sugar() { return sugarState; }, get bun() { return { x: bun.x, y: bun.y, eaten: bun.eaten }; },
+  get sugar() { return sugarState; }, get bun() { return { x: albumCase.x, y: albumCase.y, eaten: bun.eaten }; },
+  get albumCase() { return { x: albumCase.x, y: albumCase.y, open: time - albumCase.opened < 2.6, notes: caseNotes.length }; },
+  get beat() { return mus ? mus.style.name : null; }, get stings() { return stings; },
+  get level() {  // with ?meter: how loud the music is right now (for checks)
+    if (!mus || !mus.meter) return null;
+    const a = new Float32Array(mus.meter.fftSize); mus.meter.getFloatTimeDomainData(a);
+    let s = 0; for (const v of a) s += v * v; return Math.sqrt(s / a.length);
+  },
   get slow() { return P.stepTime > STEP; },
   get music() { return musicOn; }, get musicPlaying() { return !!mus; }, get kiss() { return isa.kiss; },
   get hearts() { return hearts.length; },
