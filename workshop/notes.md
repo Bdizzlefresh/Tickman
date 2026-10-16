@@ -68,6 +68,10 @@ Every session reads this first and updates it last.
 - 2026-10-15, issue #1: make Isabella a little more brown and cuter.
 - 2026-10-15, issue #1: when you first see her, maybe she makes a kissy face and blows a kiss to the spider, like a
   tantalizing lady. Then she is spooked by the deer as they take her away.
+- 2026-10-15, issue #1: make the deer more intimidating, like they're part of the Bloods or Crips gang.
+- 2026-10-15, issue #1: the N.E.R.D. album case is randomized throughout the apartment.
+- 2026-10-15, issue #1: have each house beat change with the tick you choose. The current mix is great for the
+  pointer; a more spooky disco beat for the regular tick; a shoegaze house beat for the human tick.
 
 ## What you've decided
 
@@ -92,13 +96,16 @@ Every session reads this first and updates it last.
 - The order for what's next (2026-10-15): the house music soundtrack, then the N.E.R.D. album case,
   then the silk-wrapping mini game.
 - The spider keeps his honeybuns in his N.E.R.D. album case; when he opens it, the sound of Pharrell
-  springs up. (2026-10-15; not built yet.)
+  springs up. The case is randomized throughout the apartment. (2026-10-15; built.)
+- The deer are intimidating, like a gang (the Bloods or the Crips). (2026-10-15; built with red bandanas, a guess.)
 - The bugs on the web are random insects, still gay (rainbow). The ticks look scarier. (2026-10-15.)
 - Catching bugs becomes a mini game: wrap them up in the web, not just eat them. (2026-10-15; not
   built yet.)
 - Music: house, in the vein of the musician you named. It kicks in when the spider sets out after
   Isabella, so the quiet life on the web comes first. (2026-10-15; built.) Real recordings can't go in
   the game, so it's original music in that style; same for the sound when the album case opens.
+- A different beat for each tick (2026-10-15; built): the first mix for the pointer (the dog-blood tick), a
+  spookier disco beat for the regular tick, a shoegaze house beat for the human-blood tick.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -167,11 +174,30 @@ Every session reads this first and updates it last.
     they take her away.
   - Guesses, labeled on the end screen: the music, and how she blows the kiss. "A little more brown" was read
     as sun-tanned skin, a guess too.
+- 2026-10-15, sketch 2 changed (`gh-pages`, commit d78650f), as you asked:
+  - The deer, like a gang: red bandanas tied at the neck, a heavy brow over a mean yellow eye, a bigger rack of
+    antlers, a darker coat. They roll up slowly, stomp while they surround her, and the words say they roll up in
+    red bandanas, like a gang, and the lawn is their turf.
+  - The N.E.R.D. album case: a CD case with "N.E. R.D." in red on a black cover (not the real album art). It turns
+    up in a different spot in the apartment each time you play (and on "Try another tick"). Tap A on it any time:
+    it opens, little music notes float up, a short burst of original funk plays (bouncy drums, a bright riff, a
+    falsetto "ooh"; the beat steps back while it plays), and the honeybuns are inside. When your blood sugar is
+    low, it glints so you can find it, and you eat a honeybun from it. The honeybun on the floor is gone.
+  - A beat for each tick, all original, kicking in when you set out: the first mix for the pointer (unchanged); for
+    the regular tick, a spooky disco beat at 120 beats a minute (D minor, B-flat, G minor, then a dark A7; a bouncing
+    octave bass, a trembling organ, an eerie wavering lead that slides between notes); for the human-blood tick, a
+    shoegaze house beat at 116 (Fmaj7, Am9, Cmaj9, G6; a hazy wall of wavering chords washed in echo, a softer kick,
+    a snare drowned in echo, a bent guitar-like line). The three play at about the same loudness.
+  - Guesses, labeled on the end screen: how the deer look and the red; one case, and how it looks; the sound when it
+    opens; the three beats.
 
 ## Open questions
 
-- Where does the spider keep the N.E.R.D. album case with the honeybuns: deep in his tunnel, or out in the
-  apartment? (Asked 2026-10-15, before building it. Next in your order after the music.)
+- The mini game, next in your order: should wrapping a bug be quick taps on A to spin the silk before it wriggles
+  free, or walking circles around it? (Asked 2026-10-15.)
+- The deer's color: red bandanas are a guess; blue if you'd rather. (Said 2026-10-15.) Also a guess: one album case,
+  not several.
+- Answered 2026-10-15: the N.E.R.D. album case is randomized throughout the apartment.
 - "A little more brown": read as sun-tanned skin. If you meant her hair or her clothes, it can change. (Said
   2026-10-15.)
 - Answered 2026-10-15: the house music kicks in when the spider sets out after Isabella.
@@ -242,3 +268,6 @@ Every session reads this first and updates it last.
   more brown and cuter, and the kiss when you first see her. Made all three in sketch 2, same link. Replied
   on issue #1 with what changed, how to hear the music on a phone, and one question before the album case:
   where does the spider keep it?
+- 2026-10-15: one message from you on issue #1 with three things: the deer like a gang, the album case randomized
+  through the apartment, and a beat for each tick. Made all three in sketch 2, same link. Replied on issue #1 with
+  what changed, and one question before the mini game: taps, or circles?
