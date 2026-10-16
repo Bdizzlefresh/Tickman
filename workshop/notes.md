@@ -87,6 +87,15 @@ Every session reads this first and updates it last.
   - After the last camp, a final climb, 400 feet up to an overlook called Palisade Head. At the top, a beautiful cut
     scene of Lake Superior. In the distance, the deer, still holding on to Isabella, going away from you. You're
     inspired once again to go on with your journey, to face the first boss, the apathetic coffee roaster.
+- 2026-10-16, issue #1, three messages over about 13 minutes:
+  - Brudda Blaine looks perfect.
+  - Add fish jumping in the lake, and salmon jumping up the waterfall.
+  - Make it mandatory to go in the pizza shop.
+  - Add dancing fairies, animals, elves, "and anything else of that nature" during Blaine's DJ sets.
+  - Emphasize that the tent doesn't go well, even more.
+  - Make Gooseberry Falls more violent rapids.
+  - Add an enemy in between each camp that must be killed by each unique tick ability.
+  - Make the climb up Palisade Head look more like a "cruising usa redwoods vibe", with fewer turns, but longer.
 
 ## What you've decided
 
@@ -130,6 +139,12 @@ Every session reads this first and updates it last.
   class and high rent gouging); 5, the cornfield by the woods.
 - Level 2, the North Shore, as you wrote it above: the mounts, Brudda Blaine, the three camps, the climb up Palisade
   Head, and the view of the deer taking Isabella away. (2026-10-16; built.)
+- Brudda Blaine's look is right: sunglasses, a sharp haircut, a black jacket over a white tee, a gold chain, red
+  headphones. (2026-10-16.)
+- In level 2 (2026-10-16; all built): fish jump in the lake and salmon leap up the falls; going into the pizza joint is
+  a must; fairies, elves and animals dance at every DJ set; the tent goes even worse at the first camp; Gooseberry Falls
+  is violent rapids; an enemy between each camp, killed only by your tick's own gifts; the climb is a long road through
+  giant redwoods, with few turns.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -269,11 +284,54 @@ Every session reads this first and updates it last.
     go, how Brudda Blaine and his bicycle look, the camps, his three tracks, the pizza joint inside and out, how the
     falls look, the trail, and the view from the top. Facts about the real places aren't used; only your words (and
     your 400 feet).
+- 2026-10-16, sketch 2 changed (`gh-pages`, commit ccdf6d8), from your three messages:
+  - Fish: silver fish jump out of the lake now and then, with a splash going in and coming out. Salmon (red) leap up
+    Gooseberry Falls from the pool below it; some make it up into the falls, some fall back with a splash.
+  - The falls, violent: the river is twice as wide; the water crashes down over dark ledges with foam boiling at each
+    one, into a churning white pool; spray drifts up over the footbridge; below the bridge, white rapids smash over three
+    rocks on the way down to the lake. A roar (a rushing sound) gets louder as you get close. At camp 3: "Gooseberry
+    Falls roars, right beside you."
+  - The pizza joint is a must: after the first fight, the path past the pizza joint stays shut until you go in ("The
+    smell of pizza pulls you back"). Inside, the first time: "It's still the 1980s in here."
+  - Dancers at every DJ set: when Brudda Blaine's track drops, they come out of the woods one by one with a sparkle and
+    dance to the beat around the fire, under colored lights sweeping the ground. Camp 1: two fairies, an elf, a fox, a
+    rabbit, an owl. Camp 2: a fairy, a gnome, an elf, a raccoon, a rabbit, an owl. Camp 3: three fairies, two elves, a
+    gnome, a fox, a raccoon, a rabbit. The fairies glow and loop round the fire in the air. Tap A on a dancer to look.
+  - The tent at camp 1, worse: it falls down ("It doesn't go very well"); you try again, a pole springs loose and flies
+    off into the lake, and the tent falls on you ("You're all tangled up in it"); you wriggle out, pitch it a third time,
+    it stays up for a moment, then a gust of wind takes it end over end into Lake Superior ("It doesn't go well at
+    all"). You fish it out, soaked, and sleep in the soggy heap ("Badly"). In the morning you wring it out.
+  - The fights, one between each camp (two in all), on their own screen like Pokémon Red: the enemy top right, you
+    bottom left, a bar for each, and a move each turn from two; then the enemy goes. Only your tick's gifts can kill it:
+    - The regular tick: "Drain life" (bite, take its life, heal) or "Latch on" (latch onto an animal nearby and use it
+      as a weapon, by mind control: a fish from the lake in the first fight, a porcupine in the second; not two turns in
+      a row).
+    - The human-blood tick: "Lyme disease" (a spell; each one burns blood sugar, and when it runs low your vision blurs
+      and you can't cast) or "Honeybun" (from your N.E.R.D. album case; your blood sugar comes back up).
+    - The dog-blood tick: "Dodge" (its attack misses, and you get an opening) or "Point" (with an opening, a shot rings
+      out right where you point; without one, it only grazes). Hard to hit: some attacks just miss.
+    - The first fight: a big gull lands on the path between camps 1 and 2 ("It looks at you like lunch"). The second: a
+      black bear, fresh from fishing for salmon at the falls, between camps 2 and 3. Knocked out, you get back up and the
+      fight goes on. Win, and "You killed the gull" (a few feathers are left on the path).
+  - The climb up Palisade Head: now a long paved road, twice as long, with three gentle bends instead of switchbacks,
+    through giant trees like redwoods (huge red trunks with flared roots, rising out of view), ferns on the ground, and
+    sunlight slanting down through the trees. Still 400 feet, with the counter.
+  - Unchanged, as you said: how Brudda Blaine looks.
+  - Guesses, labeled on the end screen: how the tent goes wrong; who dances, and how; the fish; how the falls, rapids
+    and salmon look; the fights (their own screen, a move each turn), the gull and the bear, your moves, and all the
+    numbers; the road through the giant trees. A test hook for checks: `?at=fight1`, `fight2` or `climb` starts level 2
+    part way along.
 
 ## Open questions
 
-- Asked 2026-10-16: how should Brudda Blaine look? (For now: sunglasses, a sharp haircut, a black jacket, a gold chain,
-  red headphones. A guess.)
+- Asked 2026-10-16: what should the two enemies be, in place of the guesses (a big gull, then a black bear)?
+- Not asked yet: "in-between each camp" was read as two fights (between camps 1 and 2, and 2 and 3). One before the
+  first camp too? Fights on their own screen like Pokémon Red, or right on the map? (Built on their own screen, a guess;
+  said in the reply that it can change.) The moves and numbers, too easy or too hard? Which other spells for the
+  human-blood tick?
+- Not checked, and not used: any facts about the arcade game you named for the climb's vibe; the sketch uses only your
+  words ("redwoods", fewer turns, longer).
+- Answered 2026-10-16: Brudda Blaine looks perfect.
 - Not asked yet: at the camps, should there be something to do (pitch the tent yourself, say), or is it a scene to
   watch and listen to? Is the apartment on the North Shore now? (Level 1's window still shows Lake Michigan, from the
   first story.) The weed from Milwaukee: used in your words, "a cigarette from a weed".
@@ -296,7 +354,8 @@ Every session reads this first and updates it last.
 - Answered 2026-10-15: the honeybuns are a stash, kept in the spider's N.E.R.D. album case.
 - Fights: like Pokémon Red (their own screen, a move each turn from a short list), or
   right on the map, dodging as you go? (Asked 2026-10-14, twice, no rush. Asked again 2026-10-15,
-  now that your list is done. Not asked 2026-10-16. It decides how the coffee roaster, now level 3, gets built.)
+  now that your list is done. Not asked 2026-10-16. It decides how the coffee roaster, now level 3, gets built.
+  2026-10-16: your fights between the camps were built on their own screen, like Pokémon Red, as a guess.)
 - Is the apartment where the story starts now, in place of the sunroom of the Lake Michigan
   home? The view outside is still the lawn, beach and lake, a guess. (Mentioned 2026-10-14,
   not asked.)
@@ -368,3 +427,6 @@ Every session reads this first and updates it last.
   the first: the ticks in the web, and the whole North Shore phase. Moved the ticks and built
   level 2 in sketch 2, same link, with a "Skip to level 2" button. Replied on issue #1 with what's in it, and one
   question: how should Brudda Blaine look?
+- 2026-10-16: three messages from you on issue #1 within about 13 minutes, answered together a couple of hours later
+  (the computer the workshop runs on was asleep): Brudda Blaine looks perfect, and eight changes to level 2. Built all
+  eight in sketch 2, same link. Replied on issue #1 with what changed, and one question: what should the two enemies be?
