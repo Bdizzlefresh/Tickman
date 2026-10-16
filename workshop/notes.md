@@ -74,6 +74,19 @@ Every session reads this first and updates it last.
   pointer; a more spooky disco beat for the regular tick; a shoegaze house beat for the human tick.
 - 2026-10-15, issue #1: wrapping a bug in silk is quick taps on A to spin the silk (your answer to taps or circles).
 - 2026-10-15, issue #1: make the music more house-like, each style more upbeat and fun.
+- 2026-10-16, issue #1: have the ticks in the web, not the tunnel.
+- 2026-10-16, issue #1: the next phase, after leaving the first one under the mat: a pathway outside in the style of
+  Pokémon Red, set on the North Shore of Lake Superior.
+  - This is where all three get their mounts: the regular tick attaches to a naked mole rat, the human-blood tick
+    rides the tangerine vespa, the dog-blood tick gets the zoomies and moves even faster than it already does.
+  - The goal is simple: camp at 3 locations on the shores of Lake Superior, in a tent. At one, you smoke a cigarette
+    from a weed you got in Milwaukee, and the tent doesn't go very well. The second is next to a pizza joint with the
+    setting of a pizza restaurant stuck in the 1980s. The third is at a waterfall called Gooseberry Falls.
+  - At the start of this phase you get a companion who rides with you on a bicycle the entire phase: Brudda Blaine,
+    a very attractive DJ who plays underground hip hop tracks every time you camp.
+  - After the last camp, a final climb, 400 feet up to an overlook called Palisade Head. At the top, a beautiful cut
+    scene of Lake Superior. In the distance, the deer, still holding on to Isabella, going away from you. You're
+    inspired once again to go on with your journey, to face the first boss, the apathetic coffee roaster.
 
 ## What you've decided
 
@@ -110,6 +123,13 @@ Every session reads this first and updates it last.
   spookier disco beat for the regular tick, a shoegaze house beat for the human-blood tick.
 - All three beats more house-like, more upbeat and fun. (2026-10-15; built.)
 - Your list (the music, then the album case, then the mini game) is all built, as of 2026-10-15.
+- The three ticks are in the web, not the tunnel. (2026-10-16; built.)
+- The story's order (changed 2026-10-16): after the apartment comes the North Shore of Lake Superior, and that's where
+  the mounts come (before, they came after the coffee roaster). Then the coffee roaster, the first boss. The levels
+  now: 1, the apartment; 2, the North Shore; 3, the coffee roaster; 4, the second boss (the crumbling American middle
+  class and high rent gouging); 5, the cornfield by the woods.
+- Level 2, the North Shore, as you wrote it above: the mounts, Brudda Blaine, the three camps, the climb up Palisade
+  Head, and the view of the deer taking Isabella away. (2026-10-16; built.)
 - Everything else is yours to decide.
 
 ## What's been built
@@ -210,9 +230,57 @@ Every session reads this first and updates it last.
     the same loudness as before.
   - Guesses, labeled on the end screen: how the wrapping works (how fast to tap, how hard each bug wriggles, how a
     wrapped bug looks), and the beats.
+- 2026-10-16, sketch 2 changed (`gh-pages`, commit 67c6860), from your two messages:
+  - The three ticks now sit side by side in the silk of the web (the flat sheet at the mouth of it), with strands of
+    silk across them, not in the tunnel. The words say they're caught in your web.
+  - Level 2, the North Shore, added after level 1. The end of level 1 has an "On to level 2" button; the first screen
+    has "Skip to level 2" (it asks which tick you ate); the link with `?level=2` at the end goes straight there.
+  - You crawl out from under the mat at the apartment door, onto a path along the shore: woods of spruce and birch
+    above, grass, the path, a pebble beach and flat dark rock, then the lake. A sign by the path.
+  - Your mount waits up the path: for the regular tick, a naked mole rat poking out of its burrow (you attach yourself
+    to it); for the human-blood tick, the miniature tangerine vespa, parked (drawn as a little scooter; you jump on);
+    for the dog-blood tick, the zoomies hit as you reach open trail (dust and speed lines). Each is faster than walking;
+    the zoomies fastest.
+  - Then Brudda Blaine rolls up on his bicycle (a bike bell rings) and follows right behind you the whole level. A very
+    attractive DJ: sunglasses that twinkle now and then, a sharp haircut, a black jacket over a white tee, a gold
+    chain, red headphones round his neck.
+  - Three camps, each at nightfall: the screen goes dark round a campfire, the tent goes up, Brudda Blaine sets up his
+    decks (two turntables on a crate, his bike parked by them) and drops a track. You can walk round the fire; tap A on
+    the tent to sleep, and in the morning you pack up and ride on (your beat comes back).
+    - Camp 1, on the shore: you smoke a cigarette rolled from the weed you got in Milwaukee (smoke curls up), then
+      pitch the tent: it goes up, wobbles, and falls into a heap. "It doesn't go very well." You sleep in the heap.
+    - Camp 2, on the shore next to the pizza joint stuck in the 1980s: a shingled roof with a pink neon PIZZA sign, a
+      red and white awning, checkered curtains. You can walk inside: a black and white checkered floor, red vinyl
+      booths, tables with checkered cloths, two arcade games blinking, a jukebox lit up in neon, the counter with
+      pizzas under the lamp, a neon PIZZA sign on wood paneling. Its neon glows all night.
+    - Camp 3, up beside Gooseberry Falls: a river coming down out of the woods over the falls in steps, a wooden
+      footbridge, then down into the lake. "You can hear the falls."
+  - Brudda Blaine's three tracks, all original, in the spirit of underground hip hop, no words: a scratch drops each
+    one in, with the crackle of a record. Camp 1: hazy and heavy (84 beats a minute, A minor, a warbly electric piano,
+    a round upright bass). Camp 2: an 80s drum machine feel (94, E minor, a bouncy synth bass, bright synth stabs, a
+    cowbell). Camp 3: mellow and jazzy (88, C major, a rimshot, a shaker, a walking bass, a breathy flute).
+  - Then the trail up Palisade Head: switchbacks up red rock, little trees growing out of it, the cliff edge and the
+    lake on the right, and a counter as you climb, up to 400 feet.
+  - At the top, the cut scene: letterboxed like a film, the lake to the horizon under a low sun, the North Shore's
+    wooded hills running off into the distance, you and Brudda Blaine on the cliff edge looking out, and far down the
+    shore the deer, still holding on to Isabella, going away. Quiet music swells (slow chords, soft bells, the lake),
+    then your beat drops back in when you're inspired again. Next: the coffee roaster.
+  - Guesses, labeled on the level 2 end screen: the whole map, the door and mat, how the mounts look and how fast they
+    go, how Brudda Blaine and his bicycle look, the camps, his three tracks, the pizza joint inside and out, how the
+    falls look, the trail, and the view from the top. Facts about the real places aren't used; only your words (and
+    your 400 feet).
 
 ## Open questions
 
+- Asked 2026-10-16: how should Brudda Blaine look? (For now: sunglasses, a sharp haircut, a black jacket, a gold chain,
+  red headphones. A guess.)
+- Not asked yet: at the camps, should there be something to do (pitch the tent yourself, say), or is it a scene to
+  watch and listen to? Is the apartment on the North Shore now? (Level 1's window still shows Lake Michigan, from the
+  first story.) The weed from Milwaukee: used in your words, "a cigarette from a weed".
+- Not checked yet, and not used: any facts about Gooseberry Falls or Palisade Head (the sketch only uses your words).
+  Check before saying anything about them.
+- Answered 2026-10-16, in your words "ride the tangerine vespa": the vespa is ridden, so it's drawn as a scooter (still
+  a guess at how it looks).
 - Answered 2026-10-15: the mini game is quick taps on A to spin the silk.
 - Not asked yet: are the wrapped bugs eaten right away, or kept on the web as a stash (like the honeybuns), say to
   heal in a fight later? Is the tapping too hard or too easy?
@@ -228,7 +296,7 @@ Every session reads this first and updates it last.
 - Answered 2026-10-15: the honeybuns are a stash, kept in the spider's N.E.R.D. album case.
 - Fights: like Pokémon Red (their own screen, a move each turn from a short list), or
   right on the map, dodging as you go? (Asked 2026-10-14, twice, no rush. Asked again 2026-10-15,
-  now that your list is done: it decides how level 2 and the coffee roaster get built.)
+  now that your list is done. Not asked 2026-10-16. It decides how the coffee roaster, now level 3, gets built.)
 - Is the apartment where the story starts now, in place of the sunroom of the Lake Michigan
   home? The view outside is still the lawn, beach and lake, a guess. (Mentioned 2026-10-14,
   not asked.)
@@ -238,7 +306,7 @@ Every session reads this first and updates it last.
   from near Frankfurt, not Austrian, and co-founded the house label Running Back (sources: Mixmag's
   feature "Gerd Janson: The craft", and his artist bios). If you meant someone Austrian, the music can
   follow them instead.
-- Not asked yet: the miniature tangerine vespa, a scooter or a wasp? Who placed the three
+- Not asked yet: who placed the three
   ticks in the web? What does the spider eat in its ordinary days? Who is Phil in the story,
   and does he come back? Does the honeybun work at once, or take a moment? Which other
   spells besides shooting Lyme disease?
@@ -296,3 +364,7 @@ Every session reads this first and updates it last.
   and fun. Built the silk-wrapping mini game and reworked all three beats in sketch 2, same link. Replied on issue #1
   with how to play it and what changed in the music, said your list is all done, and asked one question before
   level 2: fights on their own screen like Pokémon Red, or on the map?
+- 2026-10-16: two messages from you on issue #1, about an hour and a half apart, answered together, a few hours after
+  the first: the ticks in the web, and the whole North Shore phase. Moved the ticks and built
+  level 2 in sketch 2, same link, with a "Skip to level 2" button. Replied on issue #1 with what's in it, and one
+  question: how should Brudda Blaine look?
