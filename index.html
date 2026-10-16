@@ -34,6 +34,12 @@ canvas { display:block; width:100%; height:auto; image-rendering:pixelated; imag
   transition:width 1.6s ease-out, background-color 1.6s; }
 #sugar.low b { animation:low 0.9s ease-in-out infinite; }
 @keyframes low { 50% { opacity:.35; } }
+#screen.wrapping #hud { max-width:calc(100% - 112px); }
+#silk { position:absolute; right:6px; top:6px; min-width:88px; background:rgba(43,33,24,.85); color:#fff3d0;
+  font-size:11px; line-height:1.2; padding:4px 7px 6px; border-radius:8px; pointer-events:none; }
+#silk i { display:block; height:7px; margin-top:3px; background:#4a3a2c; border-radius:4px; overflow:hidden; }
+#silk b { display:block; height:100%; width:30%; background:#f4efe0; border-radius:4px; }
+#silk.slip b { background:#e0a24a; }
 #box { position:absolute; left:5px; right:5px; bottom:5px; min-height:36%; background:#fbf7ec; color:var(--ink);
   border:4px double var(--ink); border-radius:6px; padding:8px 12px 14px; font-size:16px; line-height:1.38;
   cursor:pointer; }
@@ -87,6 +93,7 @@ a { color:var(--accent); }
     <canvas id="c" width="160" height="144"></canvas>
     <div id="hud" hidden></div>
     <div id="sugar" hidden><span id="sugarText">Blood sugar: low</span><i><b id="sugarBar"></b></i></div>
+    <div id="silk" hidden><span>Silk</span><i><b id="silkBar"></b></i></div>
     <div id="fade"></div>
     <div id="box" hidden><p id="text"></p><div id="choices" hidden></div><span id="more" hidden>&#9660;</span></div>
   </div>
@@ -123,7 +130,8 @@ a { color:var(--accent); }
         boss, the crumbling American middle class and high rent gouging.</li>
       <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
     </ol>
-    <p class="small">Guesses in this sketch: the bugs, the futon's colors, the rest of the apartment, the view outside, how Phil,
+    <p class="small">Guesses in this sketch: the bugs, how the wrapping works (how fast to tap, how hard each bug wriggles,
+      how a wrapped bug looks), the futon's colors, the rest of the apartment, the view outside, how Phil,
       Isabella, the ticks and the deer look (the red bandanas too), how she blows the kiss, how the deer take her, how
       the album case looks (one case, in a new spot each time), the sound when it opens, and the three beats (all
       original, in the styles you named).</p>
@@ -594,30 +602,42 @@ const NOTE = { D3: 146.83, F3: 174.61, G3: 196, A3: 220, Bb3: 233.08, D4: 293.66
 
 // ---- the house music: original, a different beat for each tick (the styles are guesses at what you named).
 // It kicks in when the spider sets out after Isabella, so the quiet life on the web comes first.
-//   the dog-blood tick (the pointer): a warm house groove with a disco feel, the first mix
-//   the regular tick: a spooky disco beat, in a minor key: an octave bass, a trembling organ, an eerie wavering lead
-//   the human-blood tick: a shoegaze house beat: a hazy wall of wavering chords, washed in echo, a softer kick ----
+// All three are house, upbeat: a kick on every beat with a little swing, claps, an open hat on every offbeat,
+// a chord a bar, and a fill into every eight bars.
+//   the dog-blood tick (the pointer): bright piano house: bouncy piano chords, congas, a cowbell, a bell tune
+//   the regular tick: spooky disco house, in a minor key: an octave bass, a creepy bouncing arpeggio over a
+//     trembling organ, an eerie wavering lead, tom rolls
+//   the human-blood tick: shoegaze house: a hazy wall of chords that pumps with the kick, a shimmering line of
+//     high notes, a bent guitar-like line, all washed in echo ----
 const MUSIC_VOL = 0.3, METER = new URLSearchParams(location.search).has('meter');
 const STYLES = {
-  dog: { name: 'pointer', bpm: 122, per: 2, chords: [  // two chords, two bars each: Dm9, then G13
-    { pad: [174.61, 220, 261.63, 329.63], lead: [440, 523.25, 587.33, 523.25, 440],
-      bass: { r: 73.42, o: 146.83, f: 110, s: 130.81 } },
-    { pad: [174.61, 220, 246.94, 329.63], lead: [493.88, 587.33, 659.25, 587.33, 493.88],
-      bass: { r: 98, o: 196, f: 146.83, s: 174.61 } }] },
-  regular: { name: 'spooky disco', bpm: 120, per: 2, verb: 0.3, room: 1.8, chords: [  // Dm, Bb, Gm, then a dark A7
-    { pad: [174.61, 220, 293.66, 349.23], lead: [440, 587.33, 523.25], bass: { r: 73.42, o: 146.83 } },
-    { pad: [174.61, 233.08, 293.66, 349.23], lead: [698.46, 587.33, 466.16], bass: { r: 58.27, o: 116.54 } },
-    { pad: [196, 233.08, 293.66, 392], lead: [587.33, 466.16, 392], bass: { r: 49, o: 98 } },
-    { pad: [220, 277.18, 329.63, 392], lead: [554.37, 466.16, 440], bass: { r: 55, o: 110 } }] },
-  human: { name: 'shoegaze house', bpm: 116, per: 2, verb: 0.7, room: 3.2, chords: [  // Fmaj7, Am9, Cmaj9, G6
-    { pad: [174.61, 220, 261.63, 329.63], lead: [659.25, 523.25, 440], bass: { r: 87.31, o: 174.61, f: 130.81 } },
-    { pad: [196, 246.94, 261.63, 329.63], lead: [659.25, 493.88, 523.25], bass: { r: 55, o: 110, f: 82.41 } },
-    { pad: [164.81, 196, 246.94, 293.66], lead: [587.33, 493.88, 392], bass: { r: 65.41, o: 130.81, f: 98 } },
-    { pad: [196, 246.94, 293.66, 329.63], lead: [587.33, 493.88, 659.25], bass: { r: 49, o: 98, f: 73.42 } }] },
+  dog: { name: 'pointer', bpm: 124, swing: 0.14, verb: 0.16, room: 1.2, gain: 1, chords: [  // Dm9, G13, Bbmaj7, C6
+    { pad: [174.61, 220, 261.63, 329.63], keys: [349.23, 440, 523.25, 659.25], lead: [440, 523.25, 587.33, 523.25, 440],
+      bass: { r: 73.42, o: 146.83, f: 110 } },
+    { pad: [174.61, 220, 246.94, 329.63], keys: [349.23, 440, 493.88, 659.25], lead: [493.88, 587.33, 659.25, 587.33, 493.88],
+      bass: { r: 98, o: 196, f: 146.83 } },
+    { pad: [174.61, 220, 233.08, 293.66], keys: [349.23, 440, 466.16, 587.33], lead: [587.33, 698.46, 587.33, 523.25, 440],
+      bass: { r: 58.27, o: 116.54, f: 87.31 } },
+    { pad: [164.81, 196, 220, 261.63], keys: [329.63, 392, 440, 523.25], lead: [523.25, 659.25, 587.33, 523.25, 440],
+      bass: { r: 65.41, o: 130.81, f: 98 } }] },
+  regular: { name: 'spooky disco', bpm: 124, swing: 0.1, verb: 0.3, room: 1.8, gain: 1.03, chords: [  // Dm, Bb, Gm, a dark A7
+    { pad: [174.61, 220, 293.66, 349.23], arp: [293.66, 349.23, 440, 587.33], lead: [440, 587.33, 523.25], bass: { r: 73.42, o: 146.83 } },
+    { pad: [174.61, 233.08, 293.66, 349.23], arp: [293.66, 349.23, 466.16, 587.33], lead: [698.46, 587.33, 466.16], bass: { r: 58.27, o: 116.54 } },
+    { pad: [196, 233.08, 293.66, 392], arp: [293.66, 392, 466.16, 587.33], lead: [587.33, 466.16, 392], bass: { r: 49, o: 98 } },
+    { pad: [220, 277.18, 329.63, 392], arp: [277.18, 329.63, 440, 554.37], lead: [554.37, 466.16, 440], bass: { r: 55, o: 110 } }] },
+  human: { name: 'shoegaze house', bpm: 122, swing: 0.08, verb: 0.6, room: 3.2, gain: 1.13, chords: [  // Fmaj7, Am9, Cmaj9, G6
+    { pad: [174.61, 220, 261.63, 329.63], arp: [698.46, 880, 1046.5, 1318.51], lead: [659.25, 523.25, 440], bass: { r: 87.31, o: 174.61, f: 130.81 } },
+    { pad: [196, 246.94, 261.63, 329.63], arp: [659.25, 783.99, 987.77, 1046.5], lead: [659.25, 493.88, 523.25], bass: { r: 55, o: 110, f: 82.41 } },
+    { pad: [164.81, 196, 246.94, 293.66], arp: [659.25, 783.99, 987.77, 1174.66], lead: [587.33, 493.88, 392], bass: { r: 65.41, o: 130.81, f: 98 } },
+    { pad: [196, 246.94, 293.66, 329.63], arp: [587.33, 783.99, 987.77, 1318.51], lead: [587.33, 493.88, 659.25], bass: { r: 49, o: 98, f: 73.42 } }] },
 };
-const BASSLINE = [[0, 'r', 1], [3, 'r', 1], [6, 'o', 1], [8, 'r', 2], [11, 'f', 1], [14, 's', 2]];
-const GAZE_BASS = [[0, 'r', 4], [6, 'r', 2], [8, 'f', 3], [12, 'r', 2], [14, 'o', 2]];
-const STABS = [2, 7, 10], LEAD_AT = [0, 3, 6, 10, 12], GLIDE_AT = [0, 6, 10], GLIDE_LEN = [6, 4, 6];
+const PIANO_AT = [0, 3, 6, 10, 13];  // the house piano: chords struck around the beat
+const POINT_BASS = [[2, 'r', 1.5], [6, 'r', 1], [7, 'o', 1], [10, 'r', 1.5], [14, 'f', 1], [15, 'o', 1]];
+const CONGAS = [[3, 330], [7, 220], [8, 220], [11, 330], [14, 220]];
+const GAZE_BASS = [[2, 'r', 1.5], [6, 'r', 1.5], [10, 'r', 1.5], [13, 'f', 1], [14, 'o', 1.5]];
+const ARP = [0, 1, 2, 3, 2, 1, 2, 3], SPARKLE = [3, 1, 2, 0, 2, 3, 1, 2], TOMS = [220, 185, 156, 131];
+const LEAD_AT = [0, 3, 6, 10, 12], GLIDE_AT = [0, 6, 10], GLIDE_LEN = [6, 4, 6];
+const musicLevel = () => MUSIC_VOL * ((mus && mus.style.gain) || 1);
 let musicOn = false, mus = null, noise = null;
 const rooms = {};
 function makeNoise() {
@@ -644,12 +664,12 @@ function musicStop() {
   setTimeout(() => out.disconnect(), 1500);
   mus = null;
 }
-function musicVolume() { if (mus) mus.out.gain.setTargetAtTime(muted ? 0 : MUSIC_VOL, ac.currentTime, 0.08); }
+function musicVolume() { if (mus) mus.out.gain.setTargetAtTime(muted ? 0 : musicLevel(), ac.currentTime, 0.08); }
 function musicBegin() {
   if (!ac || mus || !musicOn) return;
   makeNoise();
   const style = STYLES[choice] || STYLES.dog;
-  const out = ac.createGain(); out.gain.value = muted ? 0 : MUSIC_VOL;
+  const out = ac.createGain(); out.gain.value = muted ? 0 : MUSIC_VOL * style.gain;
   const comp = ac.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 3;
   out.connect(comp); comp.connect(ac.destination);
   const pump = ac.createGain(); pump.connect(out);  // the chords and the bass dip under each kick
@@ -667,53 +687,71 @@ function musicTick() {
   if (!mus) return;
   const now = ac.currentTime;
   if (mus.next < now - 0.2) mus.next = now + 0.05;  // the page slept: pick the beat back up
-  while (mus.next < now + 0.15) { if (!muted) musicStep(mus.step, mus.next); mus.step++; mus.next += mus.six; }
+  while (mus.next < now + 0.15) {
+    const late = mus.step % 2 ? mus.six * (mus.style.swing || 0) : 0;  // the swing: every other sixteenth, a touch late
+    if (!muted) musicStep(mus.step, mus.next + late);
+    mus.step++; mus.next += mus.six;
+  }
 }
 function musicStep(n, t) {
-  const S = mus.style, bar = Math.floor(n / 16), s = n % 16, ch = S.chords[Math.floor(bar / S.per) % S.chords.length];
-  if (S === STYLES.regular) spookyStep(ch, bar, s, t, mus.six);
-  else if (S === STYLES.human) gazeStep(ch, bar, s, t, mus.six);
-  else warmStep(ch, bar, s, t, mus.six);
+  const S = mus.style, bar = Math.floor(n / 16), s = n % 16, ch = S.chords[Math.max(0, bar - 1) % S.chords.length];
+  const phrase = (bar - 1) % 8;  // eight bars to a phrase, after the first bar
+  if (S === STYLES.regular) spookyStep(ch, bar, s, t, mus.six, phrase);
+  else if (S === STYLES.human) gazeStep(ch, bar, s, t, mus.six, phrase);
+  else pointerStep(ch, bar, s, t, mus.six, phrase);
 }
-function warmStep(ch, bar, s, t, six) {  // the pointer's mix (the dog-blood tick), as it was
-  if (s === 0) pad(ch.pad, t, six * 16, bar === 0);
-  if (STABS.includes(s)) stab(ch.pad, t, bar === 0 ? 0.5 : 1);
-  if (bar === 0) { if (s === 8) riser(t, six * 8); return; }  // the first bar: just the chords, opening up
-  if (s % 4 === 0) { kick(t); duck(t); }                       // then the beat kicks in
+function pointerStep(ch, bar, s, t, six, phrase) {  // the pointer (the dog-blood tick): bright piano house
+  if (s === 0) pad(ch.pad, t, six * 16, bar === 0, 0.022);
+  if (bar === 0) {                                       // the first bar: just the piano and chords, opening up
+    if (s === 0 || s === 6 || s === 12) piano(ch.keys, t, 0.6);
+    if (s === 8) riser(t, six * 8);
+    return;
+  }
+  if (s % 4 === 0) { kick(t); duck(t); }                 // then the beat kicks in
   if (s === 4 || s === 12) clap(t);
-  if (s % 4 === 2) hat(t, 0.12, 0.14);        // an open hat on the offbeat
-  else if (s % 2 === 1) hat(t, 0.03, 0.045);  // a light shaker between
-  for (const [at, k, len] of BASSLINE) if (at === s) bass(ch.bass[k], t, len * six);
-  const i = LEAD_AT.indexOf(s);                // a little tune, every other four bars
-  if (i >= 0 && bar % 2 === 1 && (bar - 1) % 8 >= 4) bell(ch.lead[i], t);
+  if (s % 4 === 2) hat(t, 0.12, 0.13);                   // an open hat on the offbeat
+  else if (s % 2 === 1) hat(t, 0.03, 0.05);              // a swung shaker between
+  if (PIANO_AT.includes(s)) piano(ch.keys, t, s === 0 ? 1 : 0.8);
+  for (const [at, k, len] of POINT_BASS) if (at === s) bass(ch.bass[k], t, len * six);
+  for (const [at, f] of CONGAS) if (at === s) conga(f, t);
+  if (s === 14 && bar % 2 === 0) cowbell(t);
+  const i = LEAD_AT.indexOf(s);                          // a bell tune, in the back half of each eight bars
+  if (i >= 0 && phrase >= 4) bell(ch.lead[i], t);
+  if (phrase === 7) { if (s === 8) riser(t, six * 8); if (s >= 12) clap(t, 0.55 + (s - 12) * 0.15); }  // a fill
 }
-function spookyStep(ch, bar, s, t, six) {  // the regular tick: spooky disco
+function spookyStep(ch, bar, s, t, six, phrase) {  // the regular tick: spooky disco house
   if (s === 0) organ(ch.pad, t, six * 16, bar === 0);
-  if (bar === 0) { if (s === 8) riser(t, six * 8); return; }
+  if (bar === 0) { if (s === 8) riser(t, six * 8); if (s >= 8) arp(ch.arp[ARP[s % 8]], t, six * 1.4, 0.4); return; }
   if (s % 4 === 0) { kick(t); duck(t); }
   if (s === 4 || s === 12) clap(t);
   if (s % 4 === 2) hat(t, 0.16, 0.13);        // the disco open hat, on every offbeat
-  else hat(t, 0.025, 0.03);                   // and a tight tick between
+  else hat(t, 0.025, 0.035);                  // and a tight tick between
   if (s % 2 === 0) bass(s % 4 === 0 ? ch.bass.r : ch.bass.o, t, six * 1.5, 0.26);  // the octave bass, bouncing
-  if ((bar - 1) % 8 >= 4 && (s === 0 || s === 8))  // an eerie, wavering lead, every other four bars
+  arp(ch.arp[ARP[s % 8]], t, six * 1.4, s % 4 === 0 ? 1 : 0.7);                  // a creepy arpeggio, bouncing
+  if (phrase >= 4 && (s === 0 || s === 8))   // an eerie, wavering lead, in the back half of each eight bars
     theremin(ch.lead[s ? 1 : 0], ch.lead[s ? 2 : 1], t, six * 7.5);
+  if (phrase === 7) { if (s === 8) riser(t, six * 8); if (s >= 12) tom(TOMS[s - 12], t); }  // a tom roll, into the next eight
 }
-function gazeStep(ch, bar, s, t, six) {  // the human-blood tick: shoegaze house, hazy and blurred
-  if (s === 0 && bar % 2 === 0) haze(ch.pad, t, six * 32, bar === 0);  // each chord rings for two bars
+function gazeStep(ch, bar, s, t, six, phrase) {  // the human-blood tick: shoegaze house, hazy but upbeat
+  if (s === 0) haze(ch.pad, t, six * 16, bar === 0);
   if (bar === 0) { if (s === 8) riser(t, six * 8); return; }
-  if (s % 4 === 0) { kick(t, 0.6); duck(t, 0.7); }  // a softer kick
-  if (s === 4 || s === 12) snare(t);                 // a snare, drowned in echo
-  if (s % 2 === 1) hat(t, 0.06, 0.03, 0.6);          // a soft shaker
-  for (const [at, k, len] of GAZE_BASS) if (at === s) bass(ch.bass[k], t, len * six, 0.26, 420);
-  const i = GLIDE_AT.indexOf(s);                      // a hazy guitar line, every other four bars
-  if (i >= 0 && (bar - 1) % 8 >= 4) glide(ch.lead[i], t, six * GLIDE_LEN[i]);
+  if (s % 4 === 0) { kick(t, 0.85); duck(t, 0.35); }   // a firm kick, and the haze pumps with it
+  if (s === 4 || s === 12) { clap(t, 0.8); snare(t); }  // a clap, and a snare drowned in echo
+  if (s % 4 === 2) hat(t, 0.1, 0.11, 0.4);              // an open hat on the offbeat
+  else if (s % 2 === 1) hat(t, 0.03, 0.04, 0.3);        // a soft shaker between
+  for (const [at, k, len] of GAZE_BASS) if (at === s) bass(ch.bass[k], t, len * six, 0.28, 600);
+  sparkle(ch.arp[SPARKLE[s % 8]], t, s % 4 === 0 ? 1 : 0.65);  // a shimmering line of high notes
+  const i = GLIDE_AT.indexOf(s);                         // a hazy guitar line, in the back half of each eight bars
+  if (i >= 0 && phrase >= 4) glide(ch.lead[i], t, six * GLIDE_LEN[i]);
+  if (phrase === 7) { if (s === 8) riser(t, six * 8); if (s >= 12) snare(t, 0.6 + (s - 12) * 0.2); }  // a snare roll
 }
 function kick(t, v = 0.9, dest) {
   const o = ac.createOscillator(), g = ac.createGain();
-  o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(48, t + 0.09);
+  o.frequency.setValueAtTime(160, t); o.frequency.exponentialRampToValueAtTime(50, t + 0.09);
   g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.004);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.36);
   o.connect(g); g.connect(dest || mus.out); o.start(t); o.stop(t + 0.4);
+  noiseHit(t, 'highpass', 3500, 0.7, v * 0.1, 0.012, 0, dest || mus.out);  // a click, so it punches through
 }
 function duck(t, depth = 0.45) { const p = mus.pump.gain; p.setValueAtTime(depth, t); p.linearRampToValueAtTime(1, t + 0.24); }
 function noiseHit(t, type, freq, q, peak, d, wet = 0, dest) {
@@ -725,15 +763,66 @@ function noiseHit(t, type, freq, q, peak, d, wet = 0, dest) {
   s.start(t, Math.random() * 0.5); s.stop(t + d + 0.02);
 }
 function hat(t, d, v, wet = 0) { noiseHit(t, 'highpass', 7500, 0.7, v, d, wet); }
-function snare(t) {
-  noiseHit(t, 'bandpass', 1800, 0.8, 0.2, 0.18, 1);
+function snare(t, v = 1) {
+  noiseHit(t, 'bandpass', 1800, 0.8, 0.2 * v, 0.18, 1);
   const o = ac.createOscillator(), g = ac.createGain();
   o.frequency.setValueAtTime(220, t); o.frequency.exponentialRampToValueAtTime(160, t + 0.08);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.12, t + 0.003);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.12 * v, t + 0.003);
   g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
   o.connect(g); g.connect(mus.out); send(g, 0.8); o.start(t); o.stop(t + 0.15);
 }
-function clap(t) { for (const k of [0, 0.011, 0.022]) noiseHit(t + k, 'bandpass', 1400, 1.2, 0.3, k ? 0.16 : 0.02); }
+function clap(t, v = 1) { for (const k of [0, 0.011, 0.022]) noiseHit(t + k, 'bandpass', 1400, 1.2, 0.3 * v, k ? 0.16 : 0.02, 0.15); }
+function conga(f, t, v = 0.13) {  // a hand drum, tuned
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.frequency.setValueAtTime(f * 1.4, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.025);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.003);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+  o.connect(g); g.connect(mus.out); o.start(t); o.stop(t + 0.22);
+}
+function cowbell(t, v = 0.04) {
+  const bp = ac.createBiquadFilter(), g = ac.createGain();
+  bp.type = 'bandpass'; bp.frequency.value = 800; bp.Q.value = 3;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.002);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+  for (const f of [540, 800]) { const o = ac.createOscillator(); o.type = 'square'; o.frequency.value = f; o.connect(bp); o.start(t); o.stop(t + 0.32); }
+  bp.connect(g); g.connect(mus.out); send(g, 0.3);
+}
+function tom(f, t, v = 0.3) {
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.frequency.setValueAtTime(f * 1.6, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.05);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.004);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
+  o.connect(g); g.connect(mus.out); send(g, 0.5); o.start(t); o.stop(t + 0.35);
+}
+const PIANO_PARTS = [[1, 1, 'triangle'], [2, 0.55, 'sine'], [3, 0.25, 'sine'], [4.02, 0.12, 'sine']];
+function piano(freqs, t, v = 1) {  // a bright house piano chord, struck
+  const lp = ac.createBiquadFilter(), g = ac.createGain(), len = 0.45;
+  lp.type = 'lowpass'; lp.frequency.setValueAtTime(5000, t); lp.frequency.exponentialRampToValueAtTime(1200, t + len);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.03 * v, t + 0.004);
+  g.gain.exponentialRampToValueAtTime(0.009 * v, t + 0.14); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+  lp.connect(g); g.connect(mus.pump); send(g, 0.5);
+  for (const f of freqs) for (const [m, a, type] of PIANO_PARTS) {
+    const o = ac.createOscillator(), og = ac.createGain(); o.type = type; o.frequency.value = f * m; og.gain.value = a;
+    o.connect(og); og.connect(lp); o.start(t); o.stop(t + len + 0.05);
+  }
+}
+function arp(f, t, d, v = 1) {  // a short, plucky note (the spooky arpeggio)
+  const o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  o.type = 'square'; o.frequency.value = f;
+  lp.type = 'lowpass'; lp.Q.value = 4; lp.frequency.setValueAtTime(2600, t); lp.frequency.exponentialRampToValueAtTime(500, t + d);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.035 * v, t + 0.004);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  o.connect(lp); lp.connect(g); g.connect(mus.pump); send(g, 0.35);
+  o.start(t); o.stop(t + d + 0.02);
+}
+function sparkle(f, t, v = 1) {  // a bright, bell-ish pluck, washed in echo (the shoegaze)
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.type = 'triangle'; o.frequency.value = f;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.022 * v, t + 0.003);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.28);
+  o.connect(g); g.connect(mus.pump); send(g, 1);
+  o.start(t); o.stop(t + 0.3);
+}
 function riser(t, d) {
   const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
   s.buffer = noise; s.loop = true; f.type = 'bandpass'; f.Q.value = 2;
@@ -749,26 +838,18 @@ function bass(f, t, len, peak = 0.32, cut = 900) {
   o.connect(lp); lp.connect(g); sub.connect(sg); sg.connect(g); g.connect(mus.pump);
   o.start(t); sub.start(t); o.stop(t + len + 0.2); sub.stop(t + len + 0.2);
 }
-function pad(freqs, t, dur, opening) {
+function pad(freqs, t, dur, opening, lvl = 0.035) {
   const lp = ac.createBiquadFilter(), g = ac.createGain();
   lp.type = 'lowpass'; lp.Q.value = 0.8;
   if (opening) { lp.frequency.setValueAtTime(250, t); lp.frequency.exponentialRampToValueAtTime(1600, t + dur); }
   else lp.frequency.value = 1100;
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.035, t + 0.3);
-  g.gain.setValueAtTime(0.035, t + dur - 0.2); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.1);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(lvl, t + 0.3);
+  g.gain.setValueAtTime(lvl, t + dur - 0.2); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.1);
   lp.connect(g); g.connect(mus.pump);
   for (const f of freqs) for (const det of [-6, 6]) {
     const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = det;
     o.connect(lp); o.start(t); o.stop(t + dur + 0.15);
   }
-}
-function stab(freqs, t, v) {
-  const lp = ac.createBiquadFilter(), g = ac.createGain();
-  lp.type = 'lowpass'; lp.frequency.setValueAtTime(2600, t); lp.frequency.exponentialRampToValueAtTime(700, t + 0.25);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.06 * v, t + 0.006);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
-  lp.connect(g); g.connect(mus.pump);
-  for (const f of freqs) { const o = ac.createOscillator(); o.type = 'triangle'; o.frequency.value = f * 2; o.connect(lp); o.start(t); o.stop(t + 0.35); }
 }
 function bell(f, t) {  // a soft, bell-like note
   const o = ac.createOscillator(), o2 = ac.createOscillator(), g2 = ac.createGain(), g = ac.createGain();
@@ -783,8 +864,8 @@ function organ(freqs, t, dur, opening) {  // a dark organ, trembling (the spooky
   lp.type = 'lowpass'; lp.Q.value = 0.7;
   if (opening) { lp.frequency.setValueAtTime(300, t); lp.frequency.exponentialRampToValueAtTime(1500, t + dur); }
   else lp.frequency.value = 1500;
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05, t + 0.06);
-  g.gain.setValueAtTime(0.05, t + dur - 0.12); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.05);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.035, t + 0.06);
+  g.gain.setValueAtTime(0.035, t + dur - 0.12); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.05);
   lfo.frequency.value = 6; lg.gain.value = 0.3; lfo.connect(lg); lg.connect(trem.gain);
   lp.connect(g); g.connect(trem); trem.connect(mus.pump); send(trem, 0.4);
   for (const f of freqs) {
@@ -844,7 +925,7 @@ function caseSting() {
   makeNoise(); stings++;
   const t0 = ac.currentTime + 0.03, e = 60 / 104 / 4;  // sixteenth notes, at 104 beats a minute
   const out = ac.createGain(); out.gain.value = 0.5; out.connect(ac.destination);
-  if (mus) { mus.out.gain.setTargetAtTime(MUSIC_VOL * 0.25, t0, 0.05); setTimeout(musicVolume, e * 14 * 1000); }  // the beat steps back
+  if (mus) { mus.out.gain.setTargetAtTime(musicLevel() * 0.25, t0, 0.05); setTimeout(musicVolume, e * 14 * 1000); }  // the beat steps back
   for (const s of [0, 3, 8]) kick(t0 + s * e, 0.8, out);
   for (const s of [4, 12]) noiseHit(t0 + s * e, 'bandpass', 1600, 1, 0.35, 0.12, 0, out);
   for (let s = 1; s < 14; s += 2) noiseHit(t0 + s * e, 'highpass', 8000, 0.7, 0.05, 0.03, 0, out);
@@ -869,6 +950,13 @@ let phase = 'title', lock = 0, time = 0, choice = null, exitOpen = false, ticksI
 let gnats = [], deer = [];  // gnats: the bugs on the web, each a random kind
 const BUGS = ['gnat', 'fly', 'mosquito', 'moth', 'ladybug', 'beetle', 'firefly'];
 let lastBug = null;
+// wrapping a bug in silk: walk into it, then tap A fast. Each tap spins more silk; the bug wriggles it loose.
+// Fill the silk and it's wrapped up tight; let it run out and the bug wriggles free and lands somewhere else.
+// Bigger bugs wriggle harder. (How fast to tap, and how hard each kind wriggles, are guesses.)
+const GRIP = { gnat: 0.1, mosquito: 0.13, fly: 0.16, firefly: 0.16, ladybug: 0.19, moth: 0.22, beetle: 0.26 };
+const SPIN = 0.1, SILK_START = 0.3;
+const SILK_NOTES = [293.66, 329.63, 369.99, 440, 493.88, 587.33, 659.25, 739.99, 880];  // each tap a step higher
+let wrap = null, bundles = [];  // the bug being wrapped; the bugs already wrapped up on the web
 const seen = new Set();
 const P = { tx: 1, ty: 1, nx: 1, ny: 1, t: 0, moving: false, facing: 'right', anim: 0, stepTime: STEP };
 const isa = { x: 8, y: 11, visible: true, alarm: false, path: [], walkT: 0, kiss: false, spook: -9 };
@@ -914,8 +1002,9 @@ const tickAt = (x, y) => ticksIn ? ORDER.find(k => k !== choice && TICKS[k].x ==
 function walkable(x, y) {
   const ch = tile(x, y);
   if (ch === 'D') return exitOpen;
-  return 'HTKS.o'.includes(ch) && !tickAt(x, y) && !isPhil(x, y) && !isCase(x, y);
+  return 'HTKS.o'.includes(ch) && !tickAt(x, y) && !isPhil(x, y) && !isCase(x, y) && bugAt(x, y) < 0;
 }
+const bugAt = (x, y) => phase === 'gnats' ? gnats.findIndex(g => g.x === x && g.y === y) : -1;
 
 // ---- time-based helpers for the little scenes ----
 const wait = s => new Promise(res => timers.push({ t: s, res }));
@@ -993,31 +1082,67 @@ async function intro() {
   await panTo(camAt(phil.x * TS + 16, phil.y * TS + 16), 1.1);
   await say(["Phil is here. He's large, and he's angry.", { t: PHIL_LINE, fx: philYells }]);
   await panTo(playerCam(), 1.0); camMode = 'follow';
-  await say(["A spider's life: wait on your web for something to land, then eat it.",
-             'Go out to the silk at the mouth of your web, and catch three bugs.']);
-  phase = 'gnats'; gnatT = 0.8; hud('Catch bugs on your web: 0 of 3'); lock--;
+  await say(["A spider's life: wait on your web for something to land, then wrap it up in silk.",
+             'Go out to the silk at the mouth of your web, and wrap up three bugs.',
+             'Walk into a bug, then tap A fast to spin silk around it, before it wriggles free.']);
+  phase = 'gnats'; gnatT = 0.8; hud('Wrap three bugs in silk: 0 of 3'); lock--;
 }
 function philYells() { phil.mad = 1.1; pluck(NOTE.D3, 0.22); pluck(NOTE.F3, 0.16, 0.12); }
+function freeSilk() {  // spots on the silk where a bug can land: not too near you, not on another bug or a wrapped one
+  return SHEET.filter(([x, y]) => Math.abs(x - P.tx) + Math.abs(y - P.ty) >= 2 && Math.abs(x - P.nx) + Math.abs(y - P.ny) >= 2 &&
+    !gnats.some(g => g.x === x && g.y === y) && !bundles.some(b => b.x === x && b.y === y));
+}
 function spawnGnat() {
-  const free = SHEET.filter(([x, y]) => Math.abs(x - P.tx) + Math.abs(y - P.ty) >= 2 && !gnats.some(g => g.x === x && g.y === y));
+  const free = freeSilk();
   if (!free.length) return;
   const [x, y] = free[Math.floor(Math.random() * free.length)];
   const kinds = BUGS.filter(k => k !== lastBug && !gnats.some(g => g.kind === k));
   lastBug = kinds[Math.floor(Math.random() * kinds.length)];
   gnats.push({ x, y, ph: Math.random() * 6, born: time, kind: lastBug });
 }
-function eatGnat(i) {
-  const kind = gnats[i].kind;
-  gnats.splice(i, 1); gnatsEaten++;
-  pluck(NOTE.A4, 0.16); pluck(NOTE.D5, 0.1, 0.07);
-  hud('Caught a ' + kind + ': ' + gnatsEaten + ' of 3');
+function startWrap(i) {
+  if (wrap || phase !== 'gnats' || box.active) return;
+  const g = gnats[i]; g.held = true;
+  wrap = { g, silk: SILK_START, spun: -9, t0: time };
+  $('screen').classList.add('wrapping'); $('silk').hidden = false; silkMeter();
+  hud('Wrap the ' + g.kind + ': tap A fast!');
+  pluck(NOTE.D4, 0.14);
+}
+function silkMeter() {
+  $('silkBar').style.width = Math.round(clamp(wrap ? wrap.silk : 0, 0, 1) * 100) + '%';
+  $('silk').classList.toggle('slip', !!wrap && wrap.silk < 0.2);
+}
+function spinSilk() {  // one tap: a turn of silk around the bug
+  wrap.silk = Math.min(1, wrap.silk + SPIN); wrap.spun = time;
+  pluck(SILK_NOTES[clamp(Math.floor(wrap.silk * SILK_NOTES.length), 0, SILK_NOTES.length - 1)], 0.1);
+  silkMeter();
+  if (wrap.silk >= 1) wrapped();
+}
+function endWrap() { wrap = null; $('screen').classList.remove('wrapping'); $('silk').hidden = true; }
+function wrapped() {  // wrapped up tight, and left hanging on the web
+  const g = wrap.g; endWrap();
+  gnats.splice(gnats.indexOf(g), 1); gnatsEaten++;
+  bundles.push({ x: g.x, y: g.y, kind: g.kind, ph: g.ph, t0: time });
+  pluck(NOTE.A4, 0.16); pluck(NOTE.D5, 0.12, 0.08); pluck(587.33 * 1.5, 0.08, 0.16);
+  hud('Wrapped a ' + g.kind + ': ' + gnatsEaten + ' of 3');
+  gnatT = Math.max(gnatT, 0.6);
   if (gnatsEaten >= 3) later();
 }
+function wriggleFree() {  // too slow: the bug wriggles loose, and lands somewhere else on the web
+  const g = wrap.g; endWrap();
+  g.held = false;
+  const free = freeSilk();
+  if (free.length) { g.from = [g.x, g.y]; g.flew = time; [g.x, g.y] = free[Math.floor(Math.random() * free.length)]; }
+  pluck(NOTE.A3, 0.14); pluck(NOTE.F3, 0.12, 0.1);
+  hud('The ' + g.kind + ' wriggled free! Walk into it, and tap faster');
+}
 async function later() {
-  phase = 'later'; lock++; hud(null);
-  await say(['Three bugs. You are full.', 'A good day in the web.']);
+  phase = 'later'; lock++;
+  await wait(0.6);
+  hud(null);
+  await say(['Three bugs, wrapped up tight in silk.', 'You eat well. You are full. A good day in the web.']);
   await fadeTo(1, 0.9);
-  gnats = []; ticksIn = true;
+  gnats = []; bundles = []; ticksIn = true;
   Object.assign(P, { tx: 1, ty: 1, nx: 1, ny: 1, moving: false, t: 0, facing: 'right' });
   [cam.x, cam.y] = playerCam();
   await say(['Later.']);
@@ -1135,16 +1260,18 @@ async function tryAnother() {
 
 // ---- moving and looking ----
 function arrive() {
-  const gi = gnats.findIndex(g => g.x === P.tx && g.y === P.ty);
-  if (gi >= 0 && phase === 'gnats') eatGnat(gi);
+  const gi = bugAt(P.tx, P.ty);
+  if (gi >= 0) startWrap(gi);
   if (phase === 'window' && P.ty === 8) capture();
   else if (phase === 'exit' && tile(P.tx, P.ty) === 'D') finish();
 }
 function interact() {
   const [dx, dy] = DIRS[P.facing], fx = P.tx + dx, fy = P.ty + dy;
-  const gi = gnats.findIndex(g => g.x === fx && g.y === fy);
-  if (gi >= 0 && phase === 'gnats') { eatGnat(gi); return; }
+  const gi = bugAt(fx, fy);
+  if (gi >= 0) { startWrap(gi); return; }
   if (isPhil(fx, fy)) { say([{ t: PHIL_LINE, fx: philYells }]); return; }
+  const wb = bundles.find(b => b.x === fx && b.y === fy) || bundles.find(b => b.x === P.tx && b.y === P.ty);
+  if (wb) { say(['A ' + wb.kind + ', wrapped up tight in silk.']); return; }
   if (isCase(fx, fy)) {
     if (phase === 'low') { eatBun(); return; }
     openCase();
@@ -1179,7 +1306,7 @@ function interact() {
       break;
   }
 }
-const canMove = () => !box.active && lock === 0 && !fade.tween && fade.v < 0.5 &&
+const canMove = () => !box.active && !wrap && lock === 0 && !fade.tween && fade.v < 0.5 &&
   !['title', 'intro', 'later', 'capture', 'eating', 'done'].includes(phase);
 
 function updatePlayer(dt) {
@@ -1193,6 +1320,7 @@ function updatePlayer(dt) {
       P.facing = d;
       const [dx, dy] = DIRS[d];
       if (walkable(P.tx + dx, P.ty + dy)) { P.nx = P.tx + dx; P.ny = P.ty + dy; P.t = 0; P.moving = true; }
+      else { const gi = bugAt(P.tx + dx, P.ty + dy); if (gi >= 0) startWrap(gi); }  // walk into a bug: start wrapping
     }
   }
 }
@@ -1223,7 +1351,10 @@ function update(dt) {
     fade.v = f.from + (f.to - f.from) * k; $('fade').style.opacity = fade.v;
     if (k >= 1) { fade.tween = null; f.res(); }
   }
-  if (phase === 'gnats' && !box.active) {
+  if (wrap) {  // the bug wriggles, working the silk loose
+    wrap.silk -= GRIP[wrap.g.kind] * dt; silkMeter();
+    if (wrap.silk <= 0) wriggleFree();
+  } else if (phase === 'gnats' && !box.active) {
     gnatT -= dt;
     if (gnatT <= 0) { if (gnats.length < 2) spawnGnat(); gnatT = 2.2; }
   }
@@ -1367,6 +1498,48 @@ function drawBug(kind, x, y, up, hue) {
       f(-2, up, 2, 1, hue(0)); f(3, up, 2, 1, hue(3));
   }
 }
+// wrapping: the bug held on the silk, wriggling, as turns of silk wind round it (how it looks is a guess)
+const WRAP_ROWS = [4, 1, 6, 2, 7, 0, 5, 3, 8], WRAP_HALF = [1, 2, 3, 3, 3, 3, 3, 2, 1];
+function drawWrapping(g, cx, cy, hue) {
+  const loose = 1 - wrap.silk, shake = Math.round(Math.sin(time * 38 + g.ph) * (0.6 + loose * 1.8));
+  const bx = g.x * TS + 6 - cx + shake, by = g.y * TS + 6 - cy;
+  const [ppx, ppy] = ppos();
+  line(ctx, Math.round(ppx) + 8 - cx, Math.round(ppy) + 8 - cy, bx + 1, by + 1, 'rgba(250,247,238,.85)');  // the thread
+  drawBug(g.kind, bx, by, Math.floor(time * 30) % 2 ? -1 : 0, hue);  // its wings beating fast: it's struggling
+  const turns = Math.ceil(wrap.silk * WRAP_ROWS.length);
+  for (let i = 0; i < turns; i++) {
+    const j = WRAP_ROWS[i], hw = WRAP_HALF[j], y = by - 3 + j;
+    ctx.fillStyle = '#b9ae98'; ctx.fillRect(bx + 1 - hw - 1, y, 1, 1); ctx.fillRect(bx + 1 + hw + 1, y, 1, 1);
+    ctx.fillStyle = j % 2 ? '#f6f2e8' : '#e4ddcc'; ctx.fillRect(bx + 1 - hw, y, hw * 2 + 1, 1);
+  }
+  const k = (time - wrap.spun) / 0.2;  // a spark, running round the bug with each tap
+  if (k >= 0 && k < 1) {
+    const a = k * Math.PI * 2;
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(Math.round(bx + 1 + Math.cos(a) * 6), Math.round(by + 1 + Math.sin(a) * 6), 2, 1);
+  }
+}
+// a bug wrapped up tight, hanging on the web, a rainbow wing tip still poking out (how it looks is a guess)
+const BUNDLE_HALF = [1, 2, 2, 2, 2, 2, 1];
+function drawBundle(b, cx, cy) {
+  const sway = Math.round(Math.sin(time * 1.6 + b.ph) * 0.8);
+  const x = b.x * TS + 7 - cx + sway, y = b.y * TS + 7 - cy;
+  ctx.fillStyle = 'rgba(250,247,238,.9)'; ctx.fillRect(b.x * TS + 7 - cx, y - 7, 1, 4);  // the thread it hangs from
+  ctx.fillStyle = 'rgba(43,33,24,.25)'; ctx.fillRect(x - 2, y + 5, 6, 1);
+  BUNDLE_HALF.forEach((hw, j) => {
+    ctx.fillStyle = '#9f937c'; ctx.fillRect(x - hw - 1, y - 3 + j, hw * 2 + 3, 1);
+    ctx.fillStyle = '#f6f2e8'; ctx.fillRect(x - hw, y - 3 + j, hw * 2 + 1, 1);
+    ctx.fillStyle = '#d6cfbd'; ctx.fillRect(x - 1 + (j % 3), y - 3 + j, 1, 1);  // the turns of silk
+  });
+  ctx.fillStyle = '#9f937c'; ctx.fillRect(x - 1, y - 4, 3, 1); ctx.fillRect(x - 1, y + 4, 3, 1);
+  const hue = RAINBOW[(Math.floor(time * 4 + b.ph * 3)) % RAINBOW.length];
+  ctx.fillStyle = hue; ctx.fillRect(x + 3, y - 1, 2, 1); ctx.fillRect(x + 4, y, 1, 1);
+  const k = (time - b.t0) / 0.45;  // a little burst, the moment it's wrapped
+  if (k < 1) {
+    ctx.globalAlpha = 1 - k; ctx.fillStyle = '#ffffff';
+    for (const [dx, dy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) ctx.fillRect(Math.round(x + dx * (4 + k * 5)), Math.round(y + dy * (4 + k * 5)), 1, 1);
+    ctx.globalAlpha = 1;
+  }
+}
 function draw() {
   const cx = cam.x, cy = cam.y;
   ctx.drawImage(base, cx, cy, VW, VH, 0, 0, VW, VH);
@@ -1394,11 +1567,17 @@ function draw() {
   }
   // the bugs: a random kind each time, all with rainbow wings, a rainbow trail, and a little twirl
   // (a guess at "randomized insects", kept "a little gay")
+  for (const b of bundles) list.push([b.y * TS, () => drawBundle(b, cx, cy)]);
   for (const g of gnats) list.push([g.y * TS, () => {
-    const at = t => [g.x * TS + 6 + Math.round(Math.sin(t * 5 + g.ph) * 4) - cx,
-                     g.y * TS + 6 + Math.round(Math.sin(t * 10 + g.ph * 2) * 2) - cy];
-    const [gx, gy] = at(time);
     const hue = k => RAINBOW[(Math.floor(time * 8 + g.ph * 3) + k) % RAINBOW.length];
+    if (wrap && wrap.g === g) { drawWrapping(g, cx, cy, hue); return; }
+    const home = t => {  // where it hovers; after it wriggles free, it flies across to its new spot
+      const k = g.from ? clamp((t - g.flew) / 0.45, 0, 1) : 1, e = ease(k);
+      return k < 1 ? [g.from[0] + (g.x - g.from[0]) * e, g.from[1] + (g.y - g.from[1]) * e] : [g.x, g.y];
+    };
+    const at = t => { const [hx, hy] = home(t);
+      return [Math.round(hx * TS + 6 + Math.sin(t * 5 + g.ph) * 4) - cx, Math.round(hy * TS + 6 + Math.sin(t * 10 + g.ph * 2) * 2) - cy]; };
+    const [gx, gy] = at(time);
     for (let k = 4; k >= 1; k--) {  // a little rainbow trail
       const [tx, ty] = at(time - k * 0.09);
       ctx.globalAlpha = 0.85 - k * 0.15; ctx.fillStyle = RAINBOW[(k + 5) % RAINBOW.length]; ctx.fillRect(tx + 1, ty + 1, 1, 1);
@@ -1457,6 +1636,7 @@ const curDir = () => padDir || held[held.length - 1] || null;
 function pressA() {
   audio();
   if (phase === 'title') return;
+  if (wrap) { spinSilk(); return; }
   if (box.active) { boxA(); return; }
   if (lock || P.moving || fade.tween || phase === 'done') return;
   interact();
@@ -1531,6 +1711,8 @@ window.__sketch = {
   get player() { return { x: P.tx, y: P.ty, facing: P.facing, moving: P.moving }; },
   get text() { return box.active ? box.full : null; }, get asking() { return !!box.ask; },
   get onWeb() { return gnats.map(g => ({ x: g.x, y: g.y, kind: g.kind })); },
+  get wrap() { return wrap ? { x: wrap.g.x, y: wrap.g.y, kind: wrap.g.kind, silk: wrap.silk } : null; },
+  get wrapped() { return bundles.map(b => ({ x: b.x, y: b.y, kind: b.kind })); },
   get isabella() { return { x: isa.x, y: isa.y, visible: isa.visible }; },
   get busy() { return lock > 0 || !!fade.tween || !!pan; },
   get ended() { return !$('end').hidden; },
