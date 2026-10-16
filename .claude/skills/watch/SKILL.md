@@ -50,7 +50,7 @@ blocked steps).
 > Work in `~/workspace/2026-tickman` (run `git pull` on `main` first).
 >
 > Read, in order: `CLAUDE.md` (all of it, especially The surprise, Rules for every
-> conversation, Early sessions, Pacing, and Tone), `WORKSHOP.md`, `workshop/notes.md`,
+> conversation, Building, Pacing, and Tone), `WORKSHOP.md`, `workshop/notes.md`,
 > and `~/workspace/.tickman-private/background.md`. Follow its "Rules for every
 > conversation" and "Register" sections; the rest is taste only (never quote it, commit
 > it, or bring up anything in it he hasn't said himself). The current register is
@@ -69,8 +69,10 @@ blocked steps).
 >    a command line (your commands show in Blaine's terminal): write it to
 >    `~/workspace/2026-tickman/.workshop-reply.md`, then
 >    `gh issue comment <n> -R Bdizzlefresh/Tickman --body-file ~/workspace/2026-tickman/.workshop-reply.md`.
-> 2. Early sessions are fast and light: a prompt and a short reply, at most one small
->    change to the sketch, no big builds, no new pages unless he asks.
+> 2. Follow his lead (see "Building" in `CLAUDE.md`): build what he asks for, bigger
+>    builds and new pages included. If it's more than one reply can hold, build what you
+>    can, queue the rest in `workshop/notes.md`, and ask which comes first. Check with him
+>    before building anything he didn't ask for.
 > 3. If he says "slower", "pause", "just talk", or "stop", honor it at once: acknowledge
 >    briefly, build nothing, and note it in `workshop/notes.md`.
 > 4. If you change the sketch: plain HTML, CSS and JS on the `gh-pages` branch; check it

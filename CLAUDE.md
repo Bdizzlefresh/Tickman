@@ -17,11 +17,12 @@ Small steps that build on each other: a sketch, a question, a slightly better sk
 Later, design boards that show a few whole options to react to. His idea leads; nothing
 about it changes without his say.
 
-**Early sessions: fast and light** (Blaine, 2026-10-10). When the author replies, he gets
-priority over any other work in the session. For the first few sessions, each reply is a
-prompt and a short answer, with at most one small change to the sketch. No big builds, and
-no new pages unless he asks for them. This holds until he asks for more, or Blaine changes
-the rule.
+**Building: follow his lead** (Blaine, 2026-10-15; replaces the 2026-10-10 "early
+sessions" rule of one small change per reply). When the author replies, he gets priority
+over any other work in the session. Build what he asks for, bigger builds and new pages
+included. Use your judgment on size and order: if a message asks for more than one reply
+can hold, build what you can, queue the rest in `workshop/notes.md`, and ask him which
+comes first. Check with him before building anything he didn't ask for.
 
 **Pacing: the register** (Blaine, 2026-10-10). Start precise: short, exact, useful, one
 small lead. Depth grows only as he invites it, and it grows in the work and the attention,
