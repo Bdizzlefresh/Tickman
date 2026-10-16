@@ -194,8 +194,8 @@ a { color:var(--accent); }
     </ol>
     <p class="small">Guesses in level 2: the whole map (the path, the woods, the rocky shore, where things sit); the
       apartment door and its mat; how the naked mole rat, the vespa (drawn as a scooter) and the zoomies look, and how
-      fast each goes; how Brudda Blaine's bicycle looks; the camps (the fire, his decks); how the tent goes wrong at the
-      first camp; his three tracks (all original, in the spirit of underground hip hop); who dances, and how; the pizza
+      fast each goes; how Brudda Blaine's bicycle looks; the camps (the fire, his decks); at the first camp, how the
+      branch of weed from Milwaukee looks, the huge cigarette, the smoke and the haze, and how the tent goes wrong; his three tracks (all original, in the spirit of underground hip hop); who dances, and how; the pizza
       joint, inside and out; the fish in the lake; how the falls, the rapids and the salmon look; the fights (their own
       screen, like Pokémon Red, a move each turn), your moves, and all the numbers; how the Gales of November look (a
       storm cloud with a face, blowing) and what they do; how the Edmund Fitzgerald looks (a made-up look, not drawn from
@@ -1945,7 +1945,11 @@ const MOUNT = { x: 10, y: 5 };
 const MOUNT_STEP = { molerat: 0.1, vespa: 0.085, zoomies: 0.065 };  // how fast each goes, a tile at a time (a guess)
 const CLIMB_FOOT = 65, CLIMB_TOP = 3, CLIMB_FEET = 400;
 let camps = 0, night = null, vista = null, matWiggle = -9, bruddaSparkle = -9, built2 = false, fromPanel = 'title';
-const smoke = { t0: -9 };  // the cigarette, at the first camp
+// the first camp: the weed you got in Milwaukee, a whole branch of it; one huge cigarette; smoke over everything, and
+// a haze that lasts till morning (how it looks is a guess). Brudda Blaine's line is yours, word for word.
+const smoke = { t0: -999, branch: -999, haze: false };
+const BRANCH_LINE = 'Brudda Blaine: "lets smoke the whole branch brosef!"';
+const SMOKE_FOR = 60;  // how long the huge cigarette burns: on through the tent, into the night
 const gust = { t0: -9 }, pole = { t0: -9 };  // at the first camp: the wind that takes the tent, the pole that springs loose
 let pizzaVisited = false;  // you have to go in the pizza joint before you can ride on past it
 let fishJumps = [], fishT = 0, salmonJumps = [], salmonT = 0;  // fish jumping in the lake; salmon leaping up the falls
@@ -2916,7 +2920,7 @@ async function level2(k) {
   for (const id of ['end', 'end2', 'pick', 'title']) $(id).hidden = true;
   closeBox(); box.resolve = null; box.ask = null;
   level = 2; useArea('route');
-  lock = 1; phase = 'l2intro'; vista = null; night = null; camps = 0; smoke.t0 = -9; hud(null);
+  lock = 1; phase = 'l2intro'; vista = null; night = null; camps = 0; Object.assign(smoke, { t0: -999, branch: -999, haze: false }); hud(null);
   battle = null; panels(false); pizzaVisited = false; FOES.forEach(F => { F.beaten = false; });
   gust.t0 = pole.t0 = dance.t0 = -9; dance.camp = -1; fishJumps = []; salmonJumps = [];
   CAMPS.forEach(C => Object.assign(C, { done: false, lit: false, tent: 'none', tentT0: -9 }));
@@ -2984,10 +2988,16 @@ async function camp(i) {
   camMode = 'follow'; [cam.x, cam.y] = playerCam();
   await fadeTo(0, 0.9);
   await say(CAMP_WORDS[i]);
-  if (i === 0) {  // the tent does not go well. At all.
-    smoke.t0 = time;
-    await say(['You smoke a cigarette, rolled from the weed you got in Milwaukee.']);
-    await wait(1.2);
+  if (i === 0) {  // the weed from Milwaukee, the whole branch; then the tent does not go well. At all.
+    smoke.branch = time; rustle();
+    await say(['You pull out the weed you got in Milwaukee. A whole branch of it.']);
+    bruddaSparkle = time;
+    await say([BRANCH_LINE]);
+    smoke.branch = -999; smoke.t0 = time; smoke.haze = true; whoosh(0.9, 0.03);
+    await say(['So you do. You roll the whole branch into one huge cigarette.', 'And you smoke it. All of it.']);
+    await wait(1.6);
+    await say(['Smoke rolls out over the whole camp. Everything goes hazy.']);
+    await wait(0.6);
     await say(['Then you pitch the tent.']);
     C.tent = 'flop'; C.tentT0 = time;
     await wait(2.0); flop(); await wait(0.8);
@@ -3028,7 +3038,7 @@ async function sleep() {
   const C = night, i = CAMPS.indexOf(C); phase = 'sleep'; lock++; hud(null);
   await say([i === 0 ? 'You crawl into the soggy heap of tent, and sleep anyway. Badly.' : 'You crawl into the tent, and sleep.']);
   await fadeTo(1, 1.0);
-  musicStop(); B.playing = false; dance.camp = -1;
+  musicStop(); B.playing = false; dance.camp = -1; smoke.haze = false; smoke.t0 = -999;
   night = null; C.done = true; C.lit = false; C.tent = 'packed'; camps++;
   Object.assign(P, { tx: C.cx + 4, ty: 5, nx: C.cx + 4, ny: 5, moving: false, t: 0, facing: 'right' }); P.side = 1;
   B.mode = 'follow'; bruddaPlace(C.cx + 3, 5);
@@ -3465,6 +3475,7 @@ function interact2() {
   const [dx, dy] = DIRS[P.facing], fx = P.tx + dx, fy = P.ty + dy, ch = tile(fx, fy);
   if (B.here && B.mode !== 'off' && fx === B.tx && fy === B.ty) {
     bruddaSparkle = time;
+    if (night === CAMPS[0]) { say([BRANCH_LINE]); return; }
     say([B.playing ? 'Brudda Blaine, on the decks. The track plays on.' : 'Brudda Blaine, riding along on his bicycle.']);
     return;
   }
@@ -3669,16 +3680,45 @@ function draw2(cx, cy) {
     }
     ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
   }
-  // the cigarette, at the first camp: an ember, and smoke curling up
-  if (time - smoke.t0 < 10 && !P.hidden) {
-    const k = time - smoke.t0, out = Math.min(1, 10 - k);
-    const sx = Math.round(ppx) - cx + (P.side > 0 ? 13 : 2), sy = Math.round(ppy) - cy + 6;
-    for (let i = 0; i < 9; i++) {
-      const a = (time * 0.45 + i / 9) % 1, w = 1 + Math.round(a * 2);
-      ctx.globalAlpha = 0.85 * (1 - a) * out; ctx.fillStyle = '#ece8e0';
-      ctx.fillRect(Math.round(sx + Math.sin(a * 7 + i) * (1 + a * 5)), Math.round(sy - 2 - a * 24), w, w);
+  // the first camp: the whole branch of weed from Milwaukee; then one huge cigarette, and smoke billowing up off it,
+  // and off Brudda Blaine too, out over the whole camp; smoke rings; a haze over everything till morning
+  if (time - smoke.branch < 30 && !P.hidden) drawBranch(Math.round(ppx) - cx + (P.side > 0 ? 13 : -9), Math.round(ppy) - cy - 4);
+  if (time - smoke.t0 < SMOKE_FOR) {
+    const k = time - smoke.t0, out = clamp(SMOKE_FOR - k, 0, 1), dir = P.side > 0 ? 1 : -1;
+    const puffs = (x0, y0, n, big) => {
+      for (let i = 0; i < n; i++) {
+        const a = (time * 0.3 + i / n) % 1, r = Math.round((1 + a * 6) * big);
+        ctx.globalAlpha = 0.5 * (1 - a) * out * clamp(k / 1.5, 0, 1);
+        disc(ctx, Math.round(x0 + Math.sin(a * 5 + i * 1.7) * (2 + a * 16) + a * 14), Math.round(y0 - 2 - a * 56 * big), Math.max(1, r), i % 3 ? '#e8e4dc' : '#d4cfe0');
+      }
+      ctx.globalAlpha = 1;
+    };
+    if (!P.hidden) {
+      const sx = Math.round(ppx) - cx + (dir > 0 ? 11 : 4), sy = Math.round(ppy) - cy + 8;
+      ctx.globalAlpha = out;  // the huge cigarette: rolled paper, thicker toward the lit end
+      for (let i = 0; i < 10; i++) { ctx.fillStyle = i % 4 === 3 ? '#e2dccf' : '#f6f2ea'; ctx.fillRect(sx + dir * i, sy - Math.floor(i / 3), 1, 2 + Math.floor(i / 3)); }
+      ctx.fillStyle = Math.floor(time * 3) % 2 ? '#ff7a2a' : '#ffb04a'; ctx.fillRect(sx + dir * 10, sy - 3, 1, 4);
+      ctx.fillStyle = '#ffd36a'; ctx.fillRect(sx + dir * 10, sy - 2, 1, 2);
+      ctx.globalAlpha = 1;
+      puffs(sx + dir * 10, sy - 3, 16, 1);
+      const rk = (time - smoke.t0) % 2.6 / 2.6;  // a smoke ring, now and then
+      if (k > 2 && rk < 0.9) {
+        const r = 2 + Math.round(rk * 7), x0 = sx + dir * 10 + Math.round(rk * 8), y0 = sy - 8 - Math.round(rk * 34);
+        ctx.globalAlpha = 0.7 * (1 - rk) * out; ctx.fillStyle = '#f4f1ea';
+        for (let j = 0; j < 14; j++) { const a = j / 14 * Math.PI * 2; ctx.fillRect(Math.round(x0 + Math.cos(a) * r), Math.round(y0 + Math.sin(a) * r * 0.6), 1, 1); }
+        ctx.globalAlpha = 1;
+      }
     }
-    ctx.globalAlpha = out; ctx.fillStyle = Math.floor(time * 3) % 2 ? '#ff7a2a' : '#ffb04a'; ctx.fillRect(sx, sy, 2, 1);
+    if (B.here && B.mode === 'decks') { const [bx, by] = bruddaAt(); puffs(Math.round(bx) - cx + 9, Math.round(by) - cy + 6, 9, 0.8); }
+  }
+  if (smoke.haze && night === CAMPS[0]) {  // the haze: pale, slow, drifting bands
+    const h = clamp((time - smoke.t0) / 4, 0, 1);
+    ctx.fillStyle = '#ddd6e6';
+    ctx.globalAlpha = 0.16 * h; ctx.fillRect(0, 0, VW, VH);
+    for (let j = 0; j < 7; j++) {
+      const y = Math.round(((j * 27 + time * 5) % (VH + 24)) - 12 + Math.sin(time * 0.7 + j) * 4);
+      ctx.globalAlpha = 0.1 * h; ctx.fillRect(0, y, VW, 5 + (j % 3) * 2);
+    }
     ctx.globalAlpha = 1;
   }
   if (B.playing && night) {  // music notes, floating up off the decks
@@ -3698,6 +3738,18 @@ function draw2(cx, cy) {
     sparkleAt(Math.round(bx) - cx + ox, Math.round(by) - cy + oy, ((time % 7) - 6) / 0.9);
   }
 }
+function drawBranch(x, y) {  // a whole branch of weed: a stem, leaves of long thin fingers, a few buds (a guess)
+  line(ctx, x, y + 14, x + 6, y + 2, '#6a5a2a'); line(ctx, x + 1, y + 14, x + 7, y + 2, '#5a4a22');
+  for (const [lx, ly, s] of [[x + 2, y + 10, 0.8], [x + 4, y + 6, 1], [x + 7, y + 2, 0.9]]) {
+    for (const [a, len] of [[-2.6, 3], [-2.1, 4], [-1.57, 5], [-1.05, 4], [-0.55, 3]]) {
+      const L = Math.round(len * s);
+      line(ctx, lx, ly, Math.round(lx + Math.cos(a) * L), Math.round(ly + Math.sin(a) * L), '#4f9a3c');
+    }
+    px(ctx, lx, ly - 1, '#9ad070'); px(ctx, lx + 1, ly, '#9ad070');
+  }
+  px(ctx, x + 6, y + 1, '#c8e08a'); px(ctx, x + 7, y + 1, '#c8e08a');
+}
+function rustle() { if (!ac || muted) return; makeNoise(); for (const d of [0, 0.12, 0.22]) noiseHit(ac.currentTime + d, 'highpass', 3000, 0.7, 0.04, 0.08, 0, master); }
 function drawWaterLife(cx, cy) {  // fish jumping in the lake, and salmon leaping up the falls (how they look is a guess)
   for (const f of fishJumps) {
     const t = time - f.t0, p = t / f.dur, x1 = f.x + f.dir * 12;
