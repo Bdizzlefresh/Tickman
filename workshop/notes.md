@@ -72,6 +72,8 @@ Every session reads this first and updates it last.
 - 2026-10-15, issue #1: the N.E.R.D. album case is randomized throughout the apartment.
 - 2026-10-15, issue #1: have each house beat change with the tick you choose. The current mix is great for the
   pointer; a more spooky disco beat for the regular tick; a shoegaze house beat for the human tick.
+- 2026-10-15, issue #1: wrapping a bug in silk is quick taps on A to spin the silk (your answer to taps or circles).
+- 2026-10-15, issue #1: make the music more house-like, each style more upbeat and fun.
 
 ## What you've decided
 
@@ -99,13 +101,15 @@ Every session reads this first and updates it last.
   springs up. The case is randomized throughout the apartment. (2026-10-15; built.)
 - The deer are intimidating, like a gang (the Bloods or the Crips). (2026-10-15; built with red bandanas, a guess.)
 - The bugs on the web are random insects, still gay (rainbow). The ticks look scarier. (2026-10-15.)
-- Catching bugs becomes a mini game: wrap them up in the web, not just eat them. (2026-10-15; not
-  built yet.)
+- Catching bugs becomes a mini game: wrap them up in the web, not just eat them. Quick taps on A spin the silk.
+  (2026-10-15; built.)
 - Music: house, in the vein of the musician you named. It kicks in when the spider sets out after
   Isabella, so the quiet life on the web comes first. (2026-10-15; built.) Real recordings can't go in
   the game, so it's original music in that style; same for the sound when the album case opens.
 - A different beat for each tick (2026-10-15; built): the first mix for the pointer (the dog-blood tick), a
   spookier disco beat for the regular tick, a shoegaze house beat for the human-blood tick.
+- All three beats more house-like, more upbeat and fun. (2026-10-15; built.)
+- Your list (the music, then the album case, then the mini game) is all built, as of 2026-10-15.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -190,11 +194,28 @@ Every session reads this first and updates it last.
     a snare drowned in echo, a bent guitar-like line). The three play at about the same loudness.
   - Guesses, labeled on the end screen: how the deer look and the red; one case, and how it looks; the sound when it
     opens; the three beats.
+- 2026-10-15, sketch 2 changed (`gh-pages`, commit aa1612a), from your two messages:
+  - Wrapping bugs in silk, the mini game: walk into a bug on the web (you can't walk onto one any more), then tap A
+    fast. A silk meter shows; each tap winds more silk round the bug (with a rising note), and the bug wriggles it
+    loose all the while. Fill the meter and the bug is wrapped up tight in a little cocoon, left hanging on the web
+    with a rainbow wing tip poking out. Let it run out and the bug wriggles free and flies to another spot on the web.
+    Bigger bugs wriggle harder, from easiest to hardest: gnat, mosquito, fly and firefly, ladybug, moth, beetle. Wrap
+    three and the spider eats, full, and the day ends as before. Tap A on a wrapped bug to look at it.
+  - The music, more house and more upbeat, all original: faster (the pointer and the spooky disco at 124 beats a
+    minute, the shoegaze at 122), a little swing on the in-between beats, a chord a bar, and a drum fill into every
+    eight bars. The pointer: bouncy house piano chords, congas, a cowbell, the bell tune, over four chords (D minor 9,
+    G13, B-flat major 7, C6). The spooky disco: a creepy run of notes bouncing up and down over a quieter trembling
+    organ, the octave bass, the wavering lead, tom rolls. The shoegaze: a firmer kick that makes the haze pump, a clap
+    with the drowned snare, a shimmer of high notes washed in echo, the bent guitar-like line. The three play at about
+    the same loudness as before.
+  - Guesses, labeled on the end screen: how the wrapping works (how fast to tap, how hard each bug wriggles, how a
+    wrapped bug looks), and the beats.
 
 ## Open questions
 
-- The mini game, next in your order: should wrapping a bug be quick taps on A to spin the silk before it wriggles
-  free, or walking circles around it? (Asked 2026-10-15.)
+- Answered 2026-10-15: the mini game is quick taps on A to spin the silk.
+- Not asked yet: are the wrapped bugs eaten right away, or kept on the web as a stash (like the honeybuns), say to
+  heal in a fight later? Is the tapping too hard or too easy?
 - The deer's color: red bandanas are a guess; blue if you'd rather. (Said 2026-10-15.) Also a guess: one album case,
   not several.
 - Answered 2026-10-15: the N.E.R.D. album case is randomized throughout the apartment.
@@ -206,8 +227,8 @@ Every session reads this first and updates it last.
   2026-10-15 that they're guesses. Isabella as a hippy: you kept it and changed her hair to brown.)
 - Answered 2026-10-15: the honeybuns are a stash, kept in the spider's N.E.R.D. album case.
 - Fights: like Pokémon Red (their own screen, a move each turn from a short list), or
-  right on the map, dodging as you go? (Asked 2026-10-14, twice, no rush. Not asked again in
-  the latest reply.)
+  right on the map, dodging as you go? (Asked 2026-10-14, twice, no rush. Asked again 2026-10-15,
+  now that your list is done: it decides how level 2 and the coffee roaster get built.)
 - Is the apartment where the story starts now, in place of the sunroom of the Lake Michigan
   home? The view outside is still the lawn, beach and lake, a guess. (Mentioned 2026-10-14,
   not asked.)
@@ -271,3 +292,7 @@ Every session reads this first and updates it last.
 - 2026-10-15: one message from you on issue #1 with three things: the deer like a gang, the album case randomized
   through the apartment, and a beat for each tick. Made all three in sketch 2, same link. Replied on issue #1 with
   what changed, and one question before the mini game: taps, or circles?
+- 2026-10-15: two messages from you on issue #1: quick taps on A to spin the silk, and the music more house, upbeat
+  and fun. Built the silk-wrapping mini game and reworked all three beats in sketch 2, same link. Replied on issue #1
+  with how to play it and what changed in the music, said your list is all done, and asked one question before
+  level 2: fights on their own screen like Pokémon Red, or on the map?
