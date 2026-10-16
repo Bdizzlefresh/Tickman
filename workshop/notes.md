@@ -96,6 +96,12 @@ Every session reads this first and updates it last.
   - Make Gooseberry Falls more violent rapids.
   - Add an enemy in between each camp that must be killed by each unique tick ability.
   - Make the climb up Palisade Head look more like a "cruising usa redwoods vibe", with fewer turns, but longer.
+- 2026-10-16, issue #1, two messages about 4 minutes apart:
+  - Change the gull to a representation of "the Gails of November" (your spelling) by Gordon Lightfoot, and the bear to
+    the Edmund Fitzgerald.
+  - For the pointer: when using point, make a hunter come out and shoot.
+  - Really emphasize the cigarette from the weed in Milwaukee. Make Blaine (Brudda Blaine) say "lets smoke the whole
+    branch brosef!"
 
 ## What you've decided
 
@@ -145,6 +151,11 @@ Every session reads this first and updates it last.
   a must; fairies, elves and animals dance at every DJ set; the tent goes even worse at the first camp; Gooseberry Falls
   is violent rapids; an enemy between each camp, killed only by your tick's own gifts; the climb is a long road through
   giant redwoods, with few turns.
+- The two enemies in level 2 (2026-10-16; built): the Gales of November (in place of the gull), then the Edmund Fitzgerald
+  (in place of the bear).
+- The pointer's "Point": a hunter comes out and shoots. (2026-10-16; built.)
+- Camp 1: the weed from Milwaukee, really emphasized, and Brudda Blaine's line, "lets smoke the whole branch brosef!"
+  (2026-10-16; built, his line word for word.)
 - Everything else is yours to decide.
 
 ## What's been built
@@ -321,10 +332,36 @@ Every session reads this first and updates it last.
     and salmon look; the fights (their own screen, a move each turn), the gull and the bear, your moves, and all the
     numbers; the road through the giant trees. A test hook for checks: `?at=fight1`, `fight2` or `climb` starts level 2
     part way along.
+- 2026-10-16, sketch 2 changed (`gh-pages`, commits b3e2242, 3b6953f, 4a65deb), from your two messages:
+  - The first fight is the Gales of November (spelled "Gales" in the game, the word for a strong wind). On the shore, as
+    you ride toward it, the day goes dark, sleet blows sideways, whitecaps race across the lake, and the wind howls,
+    louder as you get close. Over the path hangs a storm cloud with cold, narrow eyes under an angry brow, sleet falling
+    out of it. In the fight: a dark sky, low clouds racing, the lake heaving, gusts streaming from its mouth at you,
+    sleet, now and then lightning. Its attacks: a gust, sleet, a wave over the rocks. Beat it: "You killed the Gales of
+    November. The wind dies down. The sky clears." (The sky turns blue.)
+  - The second fight is the Edmund Fitzgerald: a huge ship out on the lake beside the path, her name along the hull,
+    smoke off the stack. Her horn blasts when you meet her. Its attacks: its horn, its wake up the shore, bearing down
+    on you. Beat it and she sinks below the water: "The Edmund Fitzgerald sinks into Lake Superior."
+  - The regular tick's "Latch on": still a fish against the gale (flung into the storm); against the ship, a gull (it
+    dives at the ship), since a porcupine can't reach a ship. That swap is a guess; said so in the reply.
+  - The pointer's "Point": a hunter in a blaze orange cap and vest, a canvas coat and boots, walks in from the left,
+    raises his shotgun, aims at the mark where you point, and fires (a flash, the line of the shot, a bang), then walks
+    off. With an opening, a clean hit; without one, he only grazes it.
+  - Camp 1: you pull out the weed you got in Milwaukee, a whole branch of it (leaves and buds). Brudda Blaine says
+    "lets smoke the whole branch brosef!" (tap A on him that night to hear it again). You roll the whole branch into one
+    huge cigarette and smoke it, all of it. Smoke billows off you and off him, smoke rings drift up, and a haze hangs over
+    the camp till morning. Then the tent goes as badly as before.
+  - Guesses, labeled on the end screen: how the gale and the ship look and what they do (the ship's look is made up,
+    not drawn from the real ship), the gull at the ship, the hunter and how he looks, and the branch, the cigarette, the
+    smoke and the haze. Nothing in the game is quoted from the song.
 
 ## Open questions
 
-- Asked 2026-10-16: what should the two enemies be, in place of the guesses (a big gull, then a black bear)?
+- Asked 2026-10-16 (second reply that day): should the gale stay out over the lake and come back for the Edmund
+  Fitzgerald fight, or is it gone once you beat it?
+- Not checked, and not used: any facts about Gordon Lightfoot's song or the real Edmund Fitzgerald (the sketch uses only
+  your words and a made-up look). Check before saying anything about them.
+- Answered 2026-10-16: the two enemies are the Gales of November and the Edmund Fitzgerald.
 - Not asked yet: "in-between each camp" was read as two fights (between camps 1 and 2, and 2 and 3). One before the
   first camp too? Fights on their own screen like Pokémon Red, or right on the map? (Built on their own screen, a guess;
   said in the reply that it can change.) The moves and numbers, too easy or too hard? Which other spells for the
@@ -430,3 +467,7 @@ Every session reads this first and updates it last.
 - 2026-10-16: three messages from you on issue #1 within about 13 minutes, answered together a couple of hours later
   (the computer the workshop runs on was asleep): Brudda Blaine looks perfect, and eight changes to level 2. Built all
   eight in sketch 2, same link. Replied on issue #1 with what changed, and one question: what should the two enemies be?
+- 2026-10-16: two messages from you on issue #1, about 4 minutes apart: the Gales of November and the Edmund Fitzgerald as
+  the two enemies, a hunter for the pointer's point, and the weed from Milwaukee emphasized with Brudda Blaine's line.
+  Built all of it in sketch 2, same link. Replied on issue #1 with what changed, and one question: should the gale come
+  back for the Edmund Fitzgerald fight?
