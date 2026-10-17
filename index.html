@@ -195,7 +195,8 @@ a { color:var(--accent); }
     <p class="small">Guesses in level 2: the whole map (the path, the woods, the rocky shore, where things sit); the
       apartment door and its mat; how the naked mole rat, the vespa (drawn as a scooter) and the zoomies look, and how
       fast each goes; how Brudda Blaine's bicycle looks; the camps (the fire, his decks); at the first camp, how the
-      branch of weed from Milwaukee looks, the huge cigarette, the smoke and the haze, and how the tent goes wrong; his three tracks (all original, in the spirit of underground hip hop); who dances, and how; the pizza
+      branch of weed from Milwaukee looks, the huge cigarette, the smoke and the haze; the two trees, the tarp, the rain,
+      the math, and how it all goes wrong; his three tracks (all original, in the spirit of underground hip hop); who dances, and how; the pizza
       joint, inside and out; the fish in the lake; how the falls, the rapids and the salmon look; the fights (their own
       screen, like Pokémon Red, a move each turn), your moves, and all the numbers; how the Gales of November look (a
       storm cloud with a face, blowing) and what they do; how the Edmund Fitzgerald looks (a made-up look, not drawn from
@@ -1934,12 +1935,13 @@ function draw() {
 // ---- level 2: the North Shore of Lake Superior ----
 // Out from under the mat, a path along the shore, seen from above like Pokemon Red. Your mount (a naked mole rat,
 // the tangerine vespa, or the zoomies); Brudda Blaine rides along on his bicycle the whole way; you camp three
-// times (the weed from Milwaukee and the tent, the pizza joint stuck in the 1980s, Gooseberry Falls), and he plays
-// a track each time; then the climb up Palisade Head, and the view from the top. (The map, and how everything
-// looks and sounds, are guesses.)
+// times (the weed from Milwaukee and the tarp in the rain, the pizza joint stuck in the 1980s, Gooseberry Falls), and
+// he plays a track each time (a surprise: nothing says he will); then the climb up Palisade Head, and the view from the
+// top. (The map, and how everything looks and sounds, are guesses.)
 // =====================================================================================================
 // each camp, along one row: the tent (two tiles), a gap, the fire ring, a gap, Brudda Blaine's decks (he stands
-// behind them), his bicycle. The first two are on the shore; the third is up beside Gooseberry Falls.
+// behind them), his bicycle. The first two are on the shore; the third is up beside Gooseberry Falls. At the first,
+// in place of the tent: two trees, and the tarp between them.
 const CAMPS = [{ cx: 21, cy: 7 }, { cx: 45, cy: 7 }, { cx: 64, cy: 3 }];
 const MOUNT = { x: 10, y: 5 };
 const MOUNT_STEP = { molerat: 0.1, vespa: 0.085, zoomies: 0.065 };  // how fast each goes, a tile at a time (a guess)
@@ -1950,7 +1952,10 @@ let camps = 0, night = null, vista = null, matWiggle = -9, bruddaSparkle = -9, b
 const smoke = { t0: -999, branch: -999, haze: false };
 const BRANCH_LINE = 'Brudda Blaine: "lets smoke the whole branch brosef!"';
 const SMOKE_FOR = 60;  // how long the huge cigarette burns: on through the tent, into the night
-const gust = { t0: -9 }, pole = { t0: -9 };  // at the first camp: the wind that takes the tent, the pole that springs loose
+// then the shelter: a tarp, to tie up between two trees as a lean-to, to keep off the rain. Three tries, and the math
+// goes wrong each time, because of the weed (the trees, the tarp, the rain, and the math are guesses)
+const tarp = { math: null, mathT0: -9, soaked: false, under: false };  // math: the sum in your head now (a thought bubble)
+const rain = { on: false, heavy: false, level: 0 };
 let pizzaVisited = false;  // you have to go in the pizza joint before you can ride on past it
 let fishJumps = [], fishT = 0, salmonJumps = [], salmonT = 0;  // fish jumping in the lake; salmon leaping up the falls
 const dance = { t0: -9, camp: -1 };  // when Brudda Blaine's track drops, and at which camp
@@ -2468,7 +2473,7 @@ function drawDecks(x, y, spin) {  // two turntables and a mixer, on a wooden cra
   }
   f(7, 3, 2, 3, '#6a6a72'); px(ctx, x + 7, y + 4, '#f2c94c');
 }
-// the tent: a little A-frame, green; at the first camp it does not go very well (how it looks is a guess)
+// the tent at the second and third camps: a little A-frame, green (how it looks is a guess)
 function fillTri(ax, ay, bx, by, cx0, cy0, c) {  // a filled triangle, pixel by pixel
   const x0 = Math.floor(Math.min(ax, bx, cx0)), x1 = Math.ceil(Math.max(ax, bx, cx0));
   const y0 = Math.floor(Math.min(ay, by, cy0)), y1 = Math.ceil(Math.max(ay, by, cy0));
@@ -2480,73 +2485,184 @@ function fillTri(ax, ay, bx, by, cx0, cy0, c) {  // a filled triangle, pixel by 
     if (w0 >= 0 && w1 >= 0 && w2 >= 0) ctx.fillRect(xx, yy, 1, 1);
   }
 }
-function tentHeap(x, y, wide, soggy) {  // a heap of tent, a pole sticking out; soggy: soaked, dripping, in a puddle
-  const TG = soggy ? '#225a4c' : '#2f7f6a', TD = soggy ? '#173f35' : '#22604f', TL = soggy ? '#357e6c' : '#46a088';
-  if (soggy) { ctx.globalAlpha = 0.55; disc(ctx, x + 16, y - 1, 15, '#3b6f9a'); ctx.globalAlpha = 1; ctx.fillStyle = '#3b6f9a'; ctx.fillRect(x + 1, y - 2, 30, 3); }
-  else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(x + 2, y - 2, 28 + wide, 3); }
-  ctx.fillStyle = TD; ctx.fillRect(x + 3, y - 6, 26 + wide, 5); ctx.fillRect(x + 6, y - 8, 9, 2); ctx.fillRect(x + 18, y - 7, 8, 1);
-  ctx.fillStyle = TG; ctx.fillRect(x + 4, y - 6, 10, 2); ctx.fillRect(x + 17, y - 5, 9, 2); ctx.fillRect(x + 7, y - 8, 6, 1);
-  ctx.fillStyle = TL; ctx.fillRect(x + 8, y - 7, 3, 1);
-  line(ctx, x + 9, y - 5, x + 3, y - 11, '#9aa1a8');
-  if (!soggy) line(ctx, x + 20, y - 6, x + 27, y - 15, '#9aa1a8');
-  if (soggy) for (let i = 0; i < 4; i++) {  // drips
-    const k = (time * 0.9 + i * 0.27) % 1;
-    ctx.globalAlpha = 1 - k; ctx.fillStyle = '#9fd0ee'; ctx.fillRect(x + 5 + i * 7, y - 5 + Math.round(k * 6), 1, 2); ctx.globalAlpha = 1;
-  }
-}
 function drawTent(x, y, C) {  // x, y: the bottom-left of a 32-wide spot
   const k = time - C.tentT0, TG = '#2f7f6a', TD = '#22604f', TL = '#46a088', DOOR = '#173f34';
-  let h = 18, sway = 0;
   if (C.tent === 'packed' || C.tent === 'none') return;
-  if (C.tent === 'soggy') { tentHeap(x, y, 0, true); return; }
-  if (C.tent === 'tangle') {  // the tent fell on you: a heap, with you wriggling under it, a leg poking out
-    tentHeap(x, y, 16, false);
-    const w = Math.round(Math.sin(time * 16) * 1.5), lx = x + 40;
-    ctx.fillStyle = TD; ctx.fillRect(lx - 7 + w, y - 11, 14, 6); ctx.fillStyle = TG; ctx.fillRect(lx - 5 + w, y - 12, 9, 2);
-    ctx.fillStyle = TL; ctx.fillRect(lx - 3 + w, y - 12, 3, 1);
-    if (Math.floor(time * 3) % 2) { ctx.fillStyle = '#2b1d14'; ctx.fillRect(lx + 7, y - 7 - (Math.floor(time * 9) % 2), 3, 1); ctx.fillRect(lx + 9, y - 8, 1, 1); }
-    return;
-  }
-  if (C.tent === 'gust' || C.tent === 'swim') {  // the wind takes it, end over end, into the lake; then it floats
-    const t = C.tent === 'swim' ? 1 : clamp(k / 1.6, 0, 1);
-    const sx = x + 16 + 56 * t + Math.sin(t * Math.PI * 3) * 4, sy = y - 8 + 47 * t - Math.sin(t * Math.PI) * 34;
-    const a = C.tent === 'swim' ? 0.5 + Math.sin(time * 2) * 0.12 : t * Math.PI * 3.5;
-    const bob = C.tent === 'swim' ? Math.round(Math.sin(time * 2.4)) : 0;
-    const pt = (dx, dy) => [sx + dx * Math.cos(a) - dy * Math.sin(a), sy + bob + dx * Math.sin(a) + dy * Math.cos(a)];
-    const [ax, ay] = pt(0, -9), [bx, by] = pt(-12, 7), [cx0, cy0] = pt(12, 7), [mx, my] = pt(0, 7);
-    fillTri(ax, ay, bx, by, mx, my, TG); fillTri(ax, ay, mx, my, cx0, cy0, TD);
-    if (C.tent === 'swim') {  // half sunk: the lake covers its lower part, with ripples
-      ctx.fillStyle = '#285d88'; ctx.fillRect(Math.round(sx) - 16, Math.round(sy) + 3 + bob, 32, 9);
-      const r = 10 + ((time * 6) % 8);
-      ctx.globalAlpha = 0.6; ctx.fillStyle = '#d8e8ee';
-      ctx.fillRect(Math.round(sx - r), Math.round(sy) + 3, Math.round(r * 2), 1); ctx.globalAlpha = 1;
-    }
-    return;
-  }
-  if (C.tent === 'rise') h = Math.max(1, Math.round(18 * ease(clamp(k / 1.2, 0, 1))));
-  if (C.tent === 'snap') {  // it goes halfway up, a pole springs loose, it sways
-    if (k < 1.0) h = Math.max(1, Math.round(12 * ease(clamp(k / 1.0, 0, 1))));
-    else { h = 12; sway = Math.round(Math.sin((k - 1.0) * 18) * 3); }
-  }
-  if (C.tent === 'flop') {
-    if (k < 1.2) h = Math.max(1, Math.round(16 * ease(clamp(k / 1.2, 0, 1))));
-    else if (k < 2.0) { h = 16; sway = Math.round(Math.sin((k - 1.2) * 14) * 2); }
-    else h = Math.max(3, Math.round(16 * (1 - clamp((k - 2.0) / 0.35, 0, 1))));
-  }
-  if (C.tent === 'heap' || (C.tent === 'flop' && k >= 2.35)) { tentHeap(x, y, 0, false); return; }
+  const h = C.tent === 'rise' ? Math.max(1, Math.round(18 * ease(clamp(k / 1.2, 0, 1)))) : 18;
   ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(x + 2, y - 2, 28, 3);
   const top = y - 1 - h, cxm = x + 16;
   for (let j = 0; j < h; j++) {  // the front of the tent, row by row from the top
-    const hw = Math.round(1 + (j / Math.max(1, h - 1)) * 13), s = Math.round(sway * (1 - j / h));
-    ctx.fillStyle = TG; ctx.fillRect(cxm - hw + s, top + j, hw, 1);
-    ctx.fillStyle = TD; ctx.fillRect(cxm + s, top + j, hw, 1);
+    const hw = Math.round(1 + (j / Math.max(1, h - 1)) * 13);
+    ctx.fillStyle = TG; ctx.fillRect(cxm - hw, top + j, hw, 1);
+    ctx.fillStyle = TD; ctx.fillRect(cxm, top + j, hw, 1);
   }
-  ctx.fillStyle = TL; for (let j = 1; j < h; j++) { const hw = Math.round(1 + (j / Math.max(1, h - 1)) * 13); ctx.fillRect(cxm - hw + Math.round(sway * (1 - j / h)), top + j, 1, 1); }
+  ctx.fillStyle = TL; for (let j = 1; j < h; j++) { const hw = Math.round(1 + (j / Math.max(1, h - 1)) * 13); ctx.fillRect(cxm - hw, top + j, 1, 1); }
   if (h >= 10) {  // the door, and its zip
-    for (let j = 0; j < 9; j++) { const hw = Math.round(j * 0.5); ctx.fillStyle = DOOR; ctx.fillRect(cxm - hw + sway, y - 10 + j, hw * 2 + 1, 1); }
-    ctx.fillStyle = '#c9b06a'; ctx.fillRect(cxm + sway, y - 10, 1, 9);
+    for (let j = 0; j < 9; j++) { const hw = Math.round(j * 0.5); ctx.fillStyle = DOOR; ctx.fillRect(cxm - hw, y - 10 + j, hw * 2 + 1, 1); }
+    ctx.fillStyle = '#c9b06a'; ctx.fillRect(cxm, y - 10, 1, 9);
   }
-  line(ctx, cxm + sway, top, x + 1, y - 1, 'rgba(230,230,220,.6)'); line(ctx, cxm + sway, top, x + 30, y - 1, 'rgba(230,230,220,.6)');
+  line(ctx, cxm, top, x + 1, y - 1, 'rgba(230,230,220,.6)'); line(ctx, cxm, top, x + 30, y - 1, 'rgba(230,230,220,.6)');
+}
+// ---- the first camp: two trees by the shore, a spruce and a birch, and the tarp between them. It goes up as a
+// lean-to: a rope tied from tree to tree, the tarp hanging off it and sloping down to the ground in front. Three
+// tries, three bits of bad math (how it all looks is a guess). x, y: the bottom-left of the 32-wide spot. ----
+const TARP = '#2f6fb8', TARP_HI = '#5a95d6', TARP_DK = '#1f4f88', ROPE = '#d9c9a0', GROM = '#e4e8ec';
+const TREE_L = 2, TREE_R = 29, TIE_Y = 14;  // where the two trunks stand in the spot; how high the ropes are tied
+function drawCampTrees(x, y) {
+  const sx = x + TREE_L, bx = x + TREE_R;
+  ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(sx - 4, y - 1, 10, 2); ctx.fillRect(bx - 4, y - 1, 10, 2);
+  ctx.fillStyle = '#4a3020'; ctx.fillRect(sx - 1, y - 18, 3, 18); ctx.fillStyle = '#5e3e2a'; ctx.fillRect(sx - 1, y - 18, 1, 18);  // the spruce
+  for (let j = 0; j < 20; j++) {
+    const hw = Math.min(7, Math.floor((j % 5) * 0.7 + j * 0.3) + 1), yy = y - 37 + j;
+    ctx.fillStyle = j % 5 === 4 ? '#0f2c1c' : '#18402a'; ctx.fillRect(sx - hw, yy, hw * 2 + 1, 1);
+    ctx.fillStyle = '#27603b'; ctx.fillRect(sx - hw, yy, Math.max(1, hw - 1), 1);
+  }
+  ctx.fillStyle = '#efece4'; ctx.fillRect(bx - 1, y - 24, 3, 24);  // the birch: a white trunk with dark marks, a round crown
+  ctx.fillStyle = '#2a2a2a'; for (const [dy, o, w] of [[3, 0, 2], [7, 1, 2], [11, 0, 1], [16, 1, 2], [20, 0, 2]]) ctx.fillRect(bx - 1 + o, y - dy, w, 1);
+  disc(ctx, bx, y - 29, 7, '#5f9a4f'); disc(ctx, bx - 2, y - 31, 4, '#7fb069'); disc(ctx, bx + 3, y - 27, 3, '#4f8a42');
+}
+function quad(a, b, c, d, col) { fillTri(a[0], a[1], b[0], b[1], c[0], c[1], col); fillTri(a[0], a[1], c[0], c[1], d[0], d[1], col); }
+function tarpSheet(tl, tr, br, bl, sag = 0) {  // the tarp, by its corners; sag: how far the middle of the top edge dips
+  const r = p => [Math.round(p[0]), Math.round(p[1])];
+  const mt = [(tl[0] + tr[0]) / 2, (tl[1] + tr[1]) / 2 + sag], mb = [(bl[0] + br[0]) / 2, (bl[1] + br[1]) / 2];
+  quad(tl, mt, mb, bl, TARP); quad(mt, tr, br, mb, TARP);
+  const [a, m, b, c, d] = [tl, mt, tr, br, bl].map(r);
+  line(ctx, a[0], a[1], m[0], m[1], TARP_HI); line(ctx, m[0], m[1], b[0], b[1], TARP_HI);   // the top edge, catching the light
+  line(ctx, d[0], d[1], c[0], c[1], TARP_DK);                                               // the bottom edge, on the ground
+  for (const f of [0.33, 0.67]) {                                                           // two creases, from the folds
+    const t = [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f + sag * (1 - Math.abs(f - 0.5) * 2)];
+    const u = [d[0] + (c[0] - d[0]) * f, d[1]];
+    if (Math.abs(u[1] - t[1]) > 2) line(ctx, Math.round(t[0]), Math.round(t[1]) + 1, Math.round(u[0]), u[1] - 1, TARP_DK);
+  }
+  for (const p of [a, b, c, d]) px(ctx, p[0], p[1], GROM);                                  // the grommets, at the corners
+}
+function tarpHeap(x, y, soggy) {  // the tarp in a heap on the ground; soggy: soaked, in a puddle, dripping
+  if (soggy) { ctx.globalAlpha = 0.5; disc(ctx, x + 16, y - 1, 14, '#3b6f9a'); ctx.globalAlpha = 1; }
+  else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(x + 4, y - 2, 25, 3); }
+  ctx.fillStyle = soggy ? '#173f6e' : TARP_DK; ctx.fillRect(x + 5, y - 6, 23, 5); ctx.fillRect(x + 8, y - 8, 8, 2); ctx.fillRect(x + 18, y - 7, 7, 1);
+  ctx.fillStyle = soggy ? '#245a96' : TARP; ctx.fillRect(x + 6, y - 6, 9, 2); ctx.fillRect(x + 17, y - 5, 9, 2); ctx.fillRect(x + 9, y - 8, 6, 1);
+  ctx.fillStyle = TARP_HI; ctx.fillRect(x + 10, y - 7, 3, 1);
+  px(ctx, x + 6, y - 5, GROM); px(ctx, x + 26, y - 4, GROM);
+  line(ctx, x + 26, y - 4, x + 33, y - 2, ROPE);                                            // a rope, trailing off
+  if (soggy) for (let i = 0; i < 4; i++) {                                                  // drips
+    const k = (time * 0.9 + i * 0.27) % 1;
+    ctx.globalAlpha = 1 - k; ctx.fillStyle = '#9fd0ee'; ctx.fillRect(x + 7 + i * 6, y - 5 + Math.round(k * 6), 1, 2); ctx.globalAlpha = 1;
+  }
+}
+function drawTarp(x, y, C) {
+  const k = time - C.tentT0, s = C.tent, top = y - TIE_Y;
+  const L = x + TREE_L + 2, R = x + TREE_R - 2;  // where the top corners tie on, by each trunk
+  const tieL = () => line(ctx, x + TREE_L, top, L, top, ROPE), tieR = () => line(ctx, R, top, x + TREE_R, top, ROPE);
+  const dangle = () => { line(ctx, x + TREE_L + 1, top, x + TREE_L + 3, top + 7, ROPE); line(ctx, x + TREE_R - 1, top, x + TREE_R - 3, top + 6, ROPE); };
+  const full = (h, sag) => tarpSheet([L, y - 1 - h], [R, y - 1 - h], [x + TREE_R + 1, y - 1], [x + TREE_L - 1, y - 1], sag);
+  if (s === 'none' || s === 'packed') return;
+  if (s === 'tarpRoll') {  // rolled up on the ground, and a coil of rope
+    ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(x + 9, y - 1, 16, 2);
+    ctx.fillStyle = TARP_DK; ctx.fillRect(x + 9, y - 5, 14, 4); ctx.fillStyle = TARP; ctx.fillRect(x + 9, y - 5, 14, 2);
+    ctx.fillStyle = TARP_HI; ctx.fillRect(x + 10, y - 5, 12, 1);
+    disc(ctx, x + 25, y - 3, 2, ROPE); px(ctx, x + 25, y - 3, '#a8986e');
+    return;
+  }
+  if (s === 'tarpShort') {  // the first try: tied to one tree, it doesn't reach the other; it strains, slips, and drops
+    const open = ease(clamp(k / 1.2, 0, 1)), strain = k > 1.2 && k < 2.4 ? Math.sin((k - 1.2) * 16) * 1.5 : 0;
+    const drop = clamp((k - 2.4) / 0.45, 0, 1);
+    if (drop >= 1) { tarpHeap(x, y, false); return; }
+    const w = Math.max(1, 14 * open + strain), dy = drop * 11;
+    const tr = [L + w, top + 2 + dy * 0.9];
+    tarpSheet([L, top + dy], tr, [L + w + 1, y - 1], [L - 3, y - 1]);
+    if (!drop) tieL();
+    const rx = Math.round(tr[0]), ry = Math.round(tr[1]);  // its rope, reaching for the other tree, and falling short
+    line(ctx, rx, ry, rx + 6, ry + 1, ROPE); line(ctx, rx + 6, ry + 1, rx + 7, ry + 6, ROPE);
+    return;
+  }
+  if (s === 'tarpSpin' || s === 'tarpWrapped') {  // the second try: 360 degrees, all the way round the tree
+    const t = s === 'tarpWrapped' ? 1 : clamp(k / 2.0, 0, 1), tx = x + TREE_L, wrapped = Math.round(16 * t);
+    for (let j = 0; j < wrapped; j++) { ctx.fillStyle = [TARP_DK, TARP, TARP_HI][j % 3]; ctx.fillRect(tx - 2, y - 1 - j, 5, 1); }
+    if (t < 1) {  // the loose end, whipping round and round the trunk
+      const a = t * Math.PI * 8, len = 3 + 15 * (1 - t), ex = tx + 0.5 + Math.cos(a) * len, yb = y - 2 - wrapped;
+      quad([tx + 0.5, yb - 6], [ex, yb - 5 + Math.sin(a) * 2], [ex, yb + 1 + Math.sin(a) * 2], [tx + 0.5, yb], Math.sin(a) < 0 ? TARP_DK : TARP);
+    } else { line(ctx, tx + 2, y - 16, tx + 6, y - 9, ROPE); px(ctx, tx + 2, y - 15, GROM); }  // a rope end, dangling
+    return;
+  }
+  if (s === 'tarpRise') { full(Math.max(1, Math.round(13 * ease(clamp(k / 1.2, 0, 1)))), 0); if (k >= 1.2) { tieL(); tieR(); } return; }
+  if (s === 'tarpUp') { full(13, 0); tieL(); tieR(); return; }
+  if (s === 'tarpSag') {  // the third try, y = x squared: a bowl. It catches the rain, and the middle sags lower and lower
+    const f = clamp(k / 3.0, 0, 1), sag = Math.round(2 + 7 * f), mx = Math.round((L + R) / 2), my = top + sag;
+    full(13, sag); tieL(); tieR();
+    if (f > 0.4) disc(ctx, mx, my + 3, Math.round(1 + 3 * f), TARP_DK);  // the weight of it, bulging
+    const pw = Math.round(2 + 8 * f);                                      // the pool of rain in the bowl
+    ctx.fillStyle = '#7fb0e0'; ctx.fillRect(mx - pw, my - 1, pw * 2, 2); ctx.fillStyle = '#b8d8f4'; ctx.fillRect(mx - pw + 2, my - 2, Math.max(1, pw * 2 - 4), 1);
+    return;
+  }
+  if (s === 'tarpDump') {  // it dumps all of it, then comes down
+    const c = clamp((k - 0.35) / 0.5, 0, 1);
+    if (c < 1) full(Math.max(1, Math.round(13 * (1 - c))), Math.round(9 * (1 - c))); else tarpHeap(x, y, true);
+    if (k < 0.9) {  // the water, pouring out of the bowl
+      const mx = Math.round((L + R) / 2) + 3, fall = Math.round(clamp(k / 0.2, 0, 1) * 13);
+      ctx.fillStyle = '#9fd0ee'; ctx.fillRect(mx - 3, top + 9, 6, fall); ctx.fillStyle = '#e8f4f8'; ctx.fillRect(mx - 1, top + 9, 2, fall);
+      splash(mx, y - 1, k / 0.9, 1.6);
+    }
+    return;
+  }
+  if (s === 'tarpHeap') { tarpHeap(x, y, false); line(ctx, x + TREE_L + 1, top, x + TREE_L + 3, top + 7, ROPE); return; }
+  if (s === 'tarpSoggy') {
+    tarpHeap(x, y, true); dangle();
+    if (P.hidden) {  // you, under it, wriggling
+      const w = Math.round(Math.sin(time * 16) * 1.5);
+      ctx.fillStyle = '#173f6e'; ctx.fillRect(x + 17 + w, y - 10, 10, 5); ctx.fillStyle = '#245a96'; ctx.fillRect(x + 19 + w, y - 11, 6, 2);
+    }
+  }
+}
+// the math in your head, in a thought bubble over you: it wobbles (it's the weed)
+const MATH_FONT = {
+  '0': ['XXX', 'X.X', 'X.X', 'X.X', 'XXX'], '1': ['.X.', 'XX.', '.X.', '.X.', 'XXX'], '2': ['XX.', '..X', '.X.', 'X..', 'XXX'],
+  '3': ['XX.', '..X', '.X.', '..X', 'XX.'], '4': ['X.X', 'X.X', 'XXX', '..X', '..X'], '5': ['XXX', 'X..', 'XX.', '..X', 'XX.'],
+  '6': ['.XX', 'X..', 'XXX', 'X.X', 'XXX'], '8': ['XXX', 'X.X', 'XXX', 'X.X', 'XXX'], '9': ['XXX', 'X.X', 'XXX', '..X', 'XX.'],
+  '>': ['X..', '.X.', '..X', '.X.', 'X..'], '=': ['...', 'XXX', '...', 'XXX', '...'], ' ': ['.', '.', '.', '.', '.'],
+  'y': ['...', 'X.X', 'XXX', '..X', 'XX.'], 'x': ['...', 'X.X', '.X.', 'X.X', '...'], '°': ['.X.', 'X.X', '.X.', '...', '...'],
+  '²': ['XX', '.X', 'X.', 'XX', '..'],
+};
+const mathWidth = s => [...s].reduce((w, ch) => w + MATH_FONT[ch][0].length + 1, -1);
+function drawMath(sx, sy) {  // sx, sy: you, on screen (the top-left of your tile)
+  const k = time - tarp.mathT0;
+  const s = tarp.math === 'reach' ? '8 > 10' : tarp.math === 'angle' ? ['45°', '90°', '360°'][Math.min(2, Math.floor(k / 1.1))] : 'y = x²';
+  const graph = tarp.math === 'curve', w = mathWidth(s) + (graph ? 15 : 0) + 8, h = 13, sway = Math.round(Math.sin(time * 1.3) * 2);
+  const bx = clamp(Math.round(sx + 8 - w / 2) + sway, 2, VW - w - 2), by = sy - 25;
+  ctx.globalAlpha = clamp(k / 0.3, 0, 1);
+  ctx.fillStyle = '#a89ec0'; ctx.fillRect(bx + 1, by - 1, w - 2, h + 2); ctx.fillRect(bx - 1, by + 1, w + 2, h - 2);
+  ctx.fillStyle = '#f6f3ee'; ctx.fillRect(bx + 1, by, w - 2, h); ctx.fillRect(bx, by + 1, w, h - 2);
+  disc(ctx, sx + 9, by + h + 3, 2, '#a89ec0'); disc(ctx, sx + 9, by + h + 3, 1, '#f6f3ee');      // little puffs, down to you
+  ctx.fillStyle = '#a89ec0'; ctx.fillRect(sx + 9, by + h + 7, 2, 2);
+  let ox = bx + 4;
+  [...s].forEach((ch, i) => {  // each figure bobs on its own, and the colors drift
+    const g = MATH_FONT[ch], bob = Math.round(Math.sin(time * 4 + i * 1.3) * 1.2);
+    ctx.fillStyle = (Math.floor(time * 2) + i) % 3 ? '#4a2f7a' : '#9a3fa8';
+    g.forEach((row, j) => { for (let a = 0; a < row.length; a++) if (row[a] === 'X') ctx.fillRect(ox + a, by + 4 + j + bob, 1, 1); });
+    ox += g[0].length + 1;
+  });
+  if (graph) {  // a little sketch of the curve: a bowl
+    const gx = ox + 3, gy = by + 2;
+    ctx.fillStyle = '#b8b0cc'; ctx.fillRect(gx, gy + 8, 11, 1); ctx.fillRect(gx + 5, gy, 1, 9);
+    ctx.fillStyle = TARP; for (let i = -5; i <= 5; i++) ctx.fillRect(gx + 5 + i, gy + 8 - Math.round(i * i / 3.6), 1, 1);
+  }
+  ctx.globalAlpha = 1;
+}
+function drawRain() {  // rain, slanting down over everything; heavier after the second try
+  const n = Math.round(80 * rain.level);
+  ctx.fillStyle = 'rgba(178,200,236,.6)';
+  for (let i = 0; i < n; i++) {
+    const sp = 170 + (i % 5) * 22, m = (v, q) => ((v % q) + q) % q;
+    const x = Math.round(m(i * 41.3 - time * sp * 0.22, VW + 12) - 6), y = Math.round(m(i * 67.7 + time * sp, VH + 12) - 6);
+    ctx.fillRect(x, y, 1, 3); ctx.fillRect(x - 1, y + 3, 1, 1);
+  }
+}
+function creak() {  // a rope pulled tight, creaking
+  if (!ac || muted) return;
+  const t = ac.currentTime, o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  o.type = 'sawtooth'; o.frequency.setValueAtTime(140, t); o.frequency.linearRampToValueAtTime(92, t + 0.5);
+  lp.type = 'lowpass'; lp.frequency.value = 700;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05, t + 0.05); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
+  o.connect(lp); lp.connect(g); g.connect(master); o.start(t); o.stop(t + 0.6);
 }
 function drawFlames(x, y) {  // x, y: the fire ring tile's top-left
   const fl = k => Math.sin(time * 13 + k) * 0.5 + Math.sin(time * 7.3 + k * 2) * 0.5;
@@ -2777,6 +2893,7 @@ function walkable2(x, y) {
   if (!P.mount && x > MOUNT.x) return false;  // get your ride first
   if (FOES.some(F => !F.beaten && x >= F.x)) return false;  // an enemy blocks the way, until it's killed
   if (!pizzaVisited && x > PIZZA_PAST) return false;        // you have to go in the pizza joint first
+  if (y === CAMPS[0].cy && (x === CAMPS[0].cx || x === CAMPS[0].cx + 1)) return false;  // the two trees at the first camp
   if (night) {  // at night, you stay by the fire
     const C = night;
     if (Math.abs(x - (C.cx + 3)) > 5) return false;
@@ -2812,6 +2929,8 @@ function routeHud() {  // what to do next, on the shore
 function update2(dt) {
   if (B.mode === 'actor') { updateActor(B, dt); B.side = B.face; if (B.path.length) B.crank += dt * 10; }
   else if (B.mode === 'follow' && P.moving) B.crank += dt * 2.2 / P.stepTime;
+  const rt = rain.on ? (rain.heavy ? 1 : 0.55) : 0;  // the rain at the first camp comes on slowly, and gets heavier
+  rain.level += (rt - rain.level) * Math.min(1, dt * 1.2);
   updateWater(dt);
   roarUpdate();
 }
@@ -2839,7 +2958,7 @@ function updateWater(dt) {  // fish jump in the lake; salmon leap up the falls, 
   }
   salmonJumps = salmonJumps.filter(s => time - s.t0 < s.dur + 0.45 && area === 'route');
 }
-let roar = null, howl = null;  // the roar of the falls, louder as you get close; the howl of the gale
+let roar = null, howl = null, rainSnd = null;  // the roar of the falls, louder as you get close; the howl of the gale; rain
 function roarUpdate() {
   if (!ac) return;
   if (!roar) {
@@ -2869,6 +2988,14 @@ function roarUpdate() {
     else if (!battle) h = galeNear() * 1.1;
   }
   if (Math.abs(h - howl.level) > 0.004) { howl.level = h; howl.g.gain.setTargetAtTime(h, ac.currentTime, 0.3); }
+  if (!rainSnd) {  // the rain at the first camp: a soft hiss
+    const s = ac.createBufferSource(), hp = ac.createBiquadFilter(), g = ac.createGain();
+    s.buffer = noise; s.loop = true; hp.type = 'highpass'; hp.frequency.value = 900; g.gain.value = 0;
+    s.connect(hp); hp.connect(g); g.connect(master); s.start();
+    rainSnd = { g, level: 0 };
+  }
+  const rv = !muted && level === 2 && !vista && !battle ? rain.level * 0.1 : 0;
+  if (Math.abs(rv - rainSnd.level) > 0.003) { rainSnd.level = rv; rainSnd.g.gain.setTargetAtTime(rv, ac.currentTime, 0.4); }
 }
 function galeNear() {  // how close you are to the Gales of November, on the shore: 0 far off, 1 right there
   const G = FOES[0];
@@ -2922,9 +3049,10 @@ async function level2(k) {
   level = 2; useArea('route');
   lock = 1; phase = 'l2intro'; vista = null; night = null; camps = 0; Object.assign(smoke, { t0: -999, branch: -999, haze: false }); hud(null);
   battle = null; panels(false); pizzaVisited = false; FOES.forEach(F => { F.beaten = false; });
-  gust.t0 = pole.t0 = dance.t0 = -9; dance.camp = -1; fishJumps = []; salmonJumps = [];
+  dance.t0 = -9; dance.camp = -1; fishJumps = []; salmonJumps = [];
+  Object.assign(tarp, { math: null, mathT0: -9, soaked: false, under: false }); Object.assign(rain, { on: false, heavy: false, level: 0 });
   CAMPS.forEach(C => Object.assign(C, { done: false, lit: false, tent: 'none', tentT0: -9 }));
-  Object.assign(B, { here: false, mode: 'off', playing: false, path: [] });
+  Object.assign(B, { here: false, mode: 'off', playing: false, decks: false, path: [] });
   P.mount = null; P.stepTime = choice === 'dog' ? 0.11 : STEP; blur(false); P.hidden = true; P.side = 1;
   sugarMeter(choice === 'human' ? 'steady' : null);
   Object.assign(P, { tx: 3, ty: 4, nx: 3, ny: 4, moving: false, t: 0, facing: 'down' });
@@ -2940,8 +3068,8 @@ async function level2(k) {
              'The goal is simple: camp at three spots along the shore, in your tent.']);
   hud(choice === 'dog' ? 'Follow the path, to the right' : 'Your ride is up the path: tap A on it');
   phase = 'trail'; lock = 0;
-  const at = { fight1: [1, 30], fight2: [2, 53], climb: [3, 84] }[new URLSearchParams(location.search).get('at')];
-  if (at) {  // for checks: start part way along (?at=fight1, fight2 or climb)
+  const at = { camp1: [0, 19], fight1: [1, 30], fight2: [2, 53], climb: [3, 84] }[new URLSearchParams(location.search).get('at')];
+  if (at) {  // for checks: start part way along (?at=camp1, fight1, fight2 or climb)
     const [n, x] = at;
     setMount({ regular: 'molerat', human: 'vespa', dog: 'zoomies' }[choice]);
     Object.assign(B, { here: true, mode: 'follow' }); bruddaPlace(x - 1, 5);
@@ -2949,6 +3077,7 @@ async function level2(k) {
     CAMPS.forEach((C, i) => { if (i < n) Object.assign(C, { done: true, tent: 'packed' }); });
     Object.assign(P, { tx: x, ty: 5, nx: x, ny: 5 }); [cam.x, cam.y] = playerCam(); phase = 'route'; hud(routeHud());
     if (n === 3) toClimb();
+    if (n === 0) camp(0);
   }
 }
 async function mountUp() {
@@ -2969,8 +3098,8 @@ async function mountUp() {
   bikeBell();
   await walkTo(B, [[P.tx - 1, P.ty]], 6);
   B.mode = 'follow'; bruddaPlace(P.tx - 1, P.ty); bruddaSparkle = time;
-  await say(['Someone rolls up behind you on a bicycle.', 'Brudda Blaine: a DJ, and a very attractive one.',
-             'He rides with you, the whole way. Every time you camp, he plays a track.']);
+  // nothing here about his sets: at each camp he just does it, as a surprise
+  await say(['Someone rolls up behind you on a bicycle.', 'Brudda Blaine. Very attractive.', 'He rides with you, the whole way.']);
   hud('Camp at three spots along the shore: 0 of 3'); phase = 'route'; lock--;
 }
 const CAMP_WORDS = [
@@ -2984,11 +3113,11 @@ async function camp(i) {
   musicStop();
   night = C; C.lit = true; C.tent = 'none';
   Object.assign(P, { tx: C.cx + 2, ty: C.cy, nx: C.cx + 2, ny: C.cy, moving: false, t: 0, facing: 'right' }); P.side = 1;
-  B.mode = 'decks'; bruddaPlace(C.cx + 5, C.cy - 1); B.playing = false;
+  B.mode = 'decks'; bruddaPlace(C.cx + 5, C.cy - 1); B.playing = false; B.decks = false;
   camMode = 'follow'; [cam.x, cam.y] = playerCam();
   await fadeTo(0, 0.9);
   await say(CAMP_WORDS[i]);
-  if (i === 0) {  // the weed from Milwaukee, the whole branch; then the tent does not go well. At all.
+  if (i === 0) {  // the weed from Milwaukee, the whole branch; then the tarp, in the rain, and the math goes horribly wrong
     smoke.branch = time; rustle();
     await say(['You pull out the weed you got in Milwaukee. A whole branch of it.']);
     bruddaSparkle = time;
@@ -2998,26 +3127,47 @@ async function camp(i) {
     await wait(1.6);
     await say(['Smoke rolls out over the whole camp. Everything goes hazy.']);
     await wait(0.6);
-    await say(['Then you pitch the tent.']);
-    C.tent = 'flop'; C.tentT0 = time;
-    await wait(2.0); flop(); await wait(0.8);
-    C.tent = 'heap';
-    await say(["It doesn't go very well."]);
-    await say(['You try again.']);
-    C.tent = 'snap'; C.tentT0 = time;
-    await wait(1.0); pole.t0 = time; boing(); await wait(0.7);
-    C.tent = 'tangle'; P.hidden = true; flop();
-    await say(['A pole springs loose. The tent falls on you.', "You're all tangled up in it."]);
-    P.hidden = false; C.tent = 'heap';
-    await say(['You wriggle out.', 'One more try.']);
-    C.tent = 'rise'; C.tentT0 = time;
-    await wait(1.3); C.tent = 'up';
-    await say(['It stays up. For a moment.']);
-    C.tent = 'gust'; C.tentT0 = time; gust.t0 = time; whoosh();
-    await wait(1.6); splashSound(); C.tent = 'swim'; await wait(0.6);
-    await say(['A gust of wind takes it, end over end, into Lake Superior.', "It doesn't go well at all."]);
-    await fadeTo(1, 0.5); C.tent = 'soggy'; await fadeTo(0, 0.5);
-    await say(["You fish it out. It's soaked through."]);
+    rain.on = true;
+    await wait(1.2);
+    await say(['Clouds roll in off the lake. It starts to rain.']);
+    C.tent = 'tarpRoll'; rustle(); P.facing = 'left'; P.side = -1;
+    await say(['No tent tonight: a tarp.', "You'll tie it up between two trees, as a lean-to, to keep off the rain."]);
+    // the first try: how long it has to be
+    tarp.math = 'reach'; tarp.mathT0 = time;
+    await say(['First, the math.', 'The tarp is 8 feet across. The trees are 10 feet apart.', '8 is more than 10. Easy.']);
+    tarp.math = null;
+    C.tent = 'tarpShort'; C.tentT0 = time; creak();
+    await wait(1.3); creak(); await wait(1.1); whoosh(0.35, 0.05); await wait(0.5); flop();
+    C.tent = 'tarpHeap';
+    await say(["It doesn't reach. It slips off the tree.", "It doesn't go very well."]);
+    // the second try: the angle
+    tarp.math = 'angle'; tarp.mathT0 = time;
+    await say(['Again. For the rain to run off, it needs an angle.', '45 degrees. No, 90. No: 360. All the way round.']);
+    tarp.math = null;
+    C.tent = 'tarpSpin'; C.tentT0 = time; whoosh(1.8, 0.06);
+    await wait(2.1); C.tent = 'tarpWrapped'; rain.heavy = true;
+    await say(['You wrap it all the way round the tree.', 'The rain comes down harder. Right on you.']);
+    // the third try: a curve
+    C.tent = 'tarpHeap'; rustle();
+    await say(['You unwind it. One more try.']);
+    tarp.math = 'curve'; tarp.mathT0 = time;
+    await say(['This time, a curve, so the rain runs off.', 'You work it out: y = x².']);
+    tarp.math = null;
+    C.tent = 'tarpRise'; C.tentT0 = time; creak();
+    await wait(1.4); C.tent = 'tarpUp';
+    await say(['It goes up. It holds!']);
+    tarp.under = true; await stepTo(C.cx + 1, 'left');
+    await say(['You crawl under it, out of the rain.', 'Dry. For a moment.']);
+    C.tent = 'tarpSag'; C.tentT0 = time; creak();
+    await wait(1.4);
+    await say(['y = x² is a bowl.', 'It catches every drop. The middle sags lower, and lower...']);
+    C.tent = 'tarpDump'; C.tentT0 = time; splashSound(0.4);
+    await wait(0.4); flop(); await wait(0.5);
+    C.tent = 'tarpSoggy'; P.hidden = true; tarp.soaked = true;
+    await say(['...and dumps all of it on you. Then the whole tarp comes down on top of you.', "It doesn't go well at all."]);
+    P.hidden = false;
+    await stepTo(C.cx + 2, 'right'); P.facing = 'left'; P.side = -1; tarp.under = false;
+    await say(['You wriggle out, soaked through.', 'The weed from Milwaukee did the math.']);
   } else {
     await say(['You pitch the tent.']);
     C.tent = 'rise'; C.tentT0 = time;
@@ -3025,20 +3175,31 @@ async function camp(i) {
     C.tent = 'up';
     await say([i === 1 ? 'Its neon glows all night.' : 'Gooseberry Falls roars, right beside you.']);
   }
+  // his sets come as a surprise: nothing said about them before the first one
+  B.decks = true; bruddaSparkle = time;
+  if (i === 0) await say(['Then Brudda Blaine sets up two turntables on a crate.']);
   B.playing = true; musicStart(HIP[i]); dance.t0 = time; dance.camp = i;
-  await say([i === 0 ? 'Brudda Blaine sets up his decks, and drops a track: underground hip hop.'
-                     : 'Brudda Blaine sets up his decks, and drops another track.']);
+  await say([i === 0 ? 'He drops a track: underground hip hop.' : 'Brudda Blaine sets up his decks, and drops another track.']);
   await wait(1.2);
   await say([i === 0 ? 'Out of the woods come fairies, elves and animals. They dance.'
                      : 'The fairies, elves and animals come out of the woods again. They dance.']);
-  hud(i === 0 ? 'Night. Tap A on the soggy tent to sleep' : 'Night. Tap A on the tent to sleep');
+  hud(i === 0 ? 'Night. Tap A on the soggy tarp to sleep' : 'Night. Tap A on the tent to sleep');
   phase = 'night'; lock--;
+}
+function stepTo(x, facing) {  // in a scene: one step along the row, to x
+  return new Promise(res => {
+    P.facing = facing; P.side = facing === 'left' ? -1 : 1;
+    Object.assign(P, { nx: x, ny: P.ty, t: 0, moving: true });
+    const done = () => { if (P.moving) wait(0.03).then(done); else res(); };
+    done();
+  });
 }
 async function sleep() {
   const C = night, i = CAMPS.indexOf(C); phase = 'sleep'; lock++; hud(null);
-  await say([i === 0 ? 'You crawl into the soggy heap of tent, and sleep anyway. Badly.' : 'You crawl into the tent, and sleep.']);
+  await say([i === 0 ? 'You crawl under the soggy heap of tarp, in the rain, and sleep anyway. Badly.' : 'You crawl into the tent, and sleep.']);
   await fadeTo(1, 1.0);
-  musicStop(); B.playing = false; dance.camp = -1; smoke.haze = false; smoke.t0 = -999;
+  musicStop(); B.playing = false; B.decks = false; dance.camp = -1; smoke.haze = false; smoke.t0 = -999;
+  Object.assign(rain, { on: false, heavy: false, level: 0 }); tarp.soaked = false;
   night = null; C.done = true; C.lit = false; C.tent = 'packed'; camps++;
   Object.assign(P, { tx: C.cx + 4, ty: 5, nx: C.cx + 4, ny: 5, moving: false, t: 0, facing: 'right' }); P.side = 1;
   B.mode = 'follow'; bruddaPlace(C.cx + 3, 5);
@@ -3046,7 +3207,7 @@ async function sleep() {
   await wait(0.6);
   await fadeTo(0, 1.0);
   musicStart();  // back on the road, and your beat comes back
-  await say(camps === 1 ? ['Morning. You wring out the tent, and ride on.']
+  await say(camps === 1 ? ['Morning. The rain has stopped.', 'You wring out the tarp, and ride on.']
           : camps < 3 ? ['Morning. You pack up the tent, and ride on.']
                       : ['Morning. You pack up the tent.', 'One last climb: 400 feet, up Palisade Head.']);
   hud(routeHud());
@@ -3413,7 +3574,7 @@ function drawBattle() {
     }
   }
 }
-// ---- level 2: sounds for the fights, the tent, the falls ----
+// ---- level 2: sounds for the fights, the camps, the falls ----
 function battleSting() { if (!ac || muted) return; [392, 523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(master, 'square', f, ac.currentTime + i * 0.06, 0.09, 0.035, 2200)); }
 function whoosh(d = 1.2, v = 0.12) {
   if (!ac || muted) return; makeNoise();
@@ -3433,14 +3594,6 @@ function horn(d = 1.3, v = 0.07) {  // a ship's horn: two low notes together, lo
   for (const f of [87.31, 110]) { const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.connect(lp); o.start(t); o.stop(t + d + 0.05); }
 }
 function splashSound(v = 0.25) { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTime, 'lowpass', 1400, 0.7, v, 0.5, 0, master); tone(master, 'sine', 180, ac.currentTime, 0.15, v * 0.4); }
-function boing() {
-  if (!ac || muted) return;
-  const t = ac.currentTime, o = ac.createOscillator(), vib = ac.createOscillator(), vg = ac.createGain(), g = ac.createGain();
-  o.frequency.setValueAtTime(220, t); o.frequency.exponentialRampToValueAtTime(440, t + 0.4);
-  vib.frequency.value = 22; vg.gain.value = 40; vib.connect(vg); vg.connect(o.frequency);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.08, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.5);
-  o.connect(g); g.connect(master); o.start(t); vib.start(t); o.stop(t + 0.55); vib.stop(t + 0.55);
-}
 function sfx(kind, dur) {
   if (!ac || muted) return; makeNoise();
   const t = ac.currentTime, T = (a, f, d, v, type = 'sine', cut) => tone(master, type, f, t + a, d, v, cut);
@@ -3489,6 +3642,11 @@ function interact2() {
       if (fy === N.cy && fx === N.cx + 5) { say(['His decks, on a crate. The record spins.']); return; }
       if (fy === N.cy && fx === N.cx + 6) { say(['His bicycle.']); return; }
       if (ch === 'F') { say(['The fire crackles.']); return; }
+    }
+    const C0 = CAMPS[0];
+    if (fy === C0.cy && (fx === C0.cx || fx === C0.cx + 1)) {
+      say([C0.done ? 'Two trees. Last night your tarp hung between them. Sort of.' : 'Two trees, by the shore.']);
+      return;
     }
     const C = CAMPS.find(c => fx === c.cx + 3 && fy === c.cy);
     if (ch === 'F') { say([C && C.done ? "Last night's fire, still smoking." : 'A ring of stones, for a campfire.']); return; }
@@ -3583,10 +3741,12 @@ function draw2(cx, cy) {
       if (fX < -80 || fX > VW + 80) continue;
       if (C.lit) list.push([row + 2, () => drawFlames(fX, fY)]);
       else if (C.done) list.push([row + 2, () => wisp(fX + 7, fY + 8, 4, 12, '#b8b2a8')]);
-      // the tent, flying off or floating in the lake, is drawn over the dark, so you can see it go
-      (C.tent === 'gust' || C.tent === 'swim' ? late : list).push([row + 3, () => drawTent(C.cx * TS - cx, row + TS - cy - 1, C)]);
+      if (C === CAMPS[0]) {  // the first camp: two trees, and the tarp between them
+        list.push([row + 3, () => drawCampTrees(C.cx * TS - cx, row + TS - cy - 1)]);
+        list.push([row + 3.5, () => drawTarp(C.cx * TS - cx, row + TS - cy - 1, C)]);
+      } else list.push([row + 3, () => drawTent(C.cx * TS - cx, row + TS - cy - 1, C)]);
       if (night === C) {
-        list.push([row + 4, () => drawDecks((C.cx + 5) * TS - cx, row - cy, time * 6)]);
+        if (B.decks) list.push([row + 4, () => drawDecks((C.cx + 5) * TS - cx, row - cy, time * 6)]);
         list.push([row + 1, () => drawBike((C.cx + 6) * TS + 8 - 11 - cx, row + TS - 27 - cy, false, 0, false)]);
         for (const d of dancersAt(C)) {  // they come out of the woods, one by one, with a little sparkle (lit by the party)
           const X = (d.x * TS + 8) - cx, Y = (d.y * TS + 14) - cy, k = time - d.at;
@@ -3655,21 +3815,6 @@ function draw2(cx, cy) {
   }
   late.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
   if (night && dance.camp === CAMPS.indexOf(night) && B.playing) drawFairies(night, cx, cy);
-  if (time - pole.t0 < 1.8 && area === 'route') {  // the tent pole, springing loose and flying off
-    const k = (time - pole.t0) / 1.8, C = CAMPS[0];
-    const x = C.cx * TS + 16 + k * 70 - cx, y = C.cy * TS - 4 - Math.sin(k * Math.PI) * 50 + k * 30 - cy, a = k * 14;
-    line(ctx, Math.round(x - Math.cos(a) * 6), Math.round(y - Math.sin(a) * 6), Math.round(x + Math.cos(a) * 6), Math.round(y + Math.sin(a) * 6), '#c9cfd4');
-    if (k > 0.85) splash(C.cx * TS + 16 + 70 - cx, C.cy * TS + 26 - cy, (k - 0.85) / 0.15, 0.6);
-  }
-  if (time - gust.t0 < 2.4 && area === 'route') {  // the gust of wind, across the screen
-    const k = (time - gust.t0) / 2.4;
-    for (let i = 0; i < 9; i++) {
-      const x = ((time - gust.t0) * 220 + i * 47) % (VW + 60) - 30, y = 8 + i * 15 + Math.round(Math.sin(time * 5 + i) * 3);
-      ctx.globalAlpha = 0.55 * Math.sin(k * Math.PI); ctx.fillStyle = '#f4f8fa';
-      ctx.fillRect(Math.round(x), y, 14 + (i % 3) * 6, 1); ctx.fillRect(Math.round(x) + 6, y + 2, 8, 1);
-    }
-    ctx.globalAlpha = 1;
-  }
   if (area === 'climb') {  // sunlight, slanting down through the giant trees
     ctx.globalCompositeOperation = 'lighter';
     for (let i = 0; i < 3; i++) {
@@ -3695,7 +3840,7 @@ function draw2(cx, cy) {
     };
     if (!P.hidden) {
       const sx = Math.round(ppx) - cx + (dir > 0 ? 11 : 4), sy = Math.round(ppy) - cy + 8;
-      ctx.globalAlpha = out;  // the huge cigarette: rolled paper, thicker toward the lit end
+      ctx.globalAlpha = tarp.under ? 0 : out;  // the huge cigarette: rolled paper, thicker toward the lit end (hidden under the tarp)
       for (let i = 0; i < 10; i++) { ctx.fillStyle = i % 4 === 3 ? '#e2dccf' : '#f6f2ea'; ctx.fillRect(sx + dir * i, sy - Math.floor(i / 3), 1, 2 + Math.floor(i / 3)); }
       ctx.fillStyle = Math.floor(time * 3) % 2 ? '#ff7a2a' : '#ffb04a'; ctx.fillRect(sx + dir * 10, sy - 3, 1, 4);
       ctx.fillStyle = '#ffd36a'; ctx.fillRect(sx + dir * 10, sy - 2, 1, 2);
@@ -3721,6 +3866,16 @@ function draw2(cx, cy) {
     }
     ctx.globalAlpha = 1;
   }
+  if (area === 'route' && rain.level > 0.01) drawRain();
+  if (tarp.soaked && night === CAMPS[0] && !P.hidden) {  // soaked through: dripping
+    for (let i = 0; i < 3; i++) {
+      const k = (time * 1.2 + i / 3) % 1;
+      ctx.globalAlpha = 1 - k; ctx.fillStyle = '#9fd0ee';
+      ctx.fillRect(Math.round(ppx) - cx + 3 + i * 5, Math.round(ppy) - cy + 12 + Math.round(k * 5), 1, 2);
+    }
+    ctx.globalAlpha = 1;
+  }
+  if (tarp.math && !P.hidden) drawMath(Math.round(ppx) - cx, Math.round(ppy) - cy);
   if (B.playing && night) {  // music notes, floating up off the decks
     const dX = (night.cx + 5) * TS - cx, dY = night.cy * TS - cy;
     for (let i = 0; i < 3; i++) {
@@ -4027,6 +4182,8 @@ window.__sketch = {
   get dancers() { return night ? dancersAt(night).filter(d => time > d.at).length : 0; },
   get fish() { return fishJumps.length; }, get salmon() { return salmonJumps.length; },
   get roar() { return roar ? roar.level : null; }, get blurred() { return !!cv.style.filter; },
+  get rain() { return rain.level; }, get math() { return tarp.math; }, get soaked() { return tarp.soaked; },
+  get decks() { return !!B.decks; },
 };
 })();
 </script>
