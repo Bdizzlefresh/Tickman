@@ -102,6 +102,11 @@ Every session reads this first and updates it last.
   - For the pointer: when using point, make a hunter come out and shoot.
   - Really emphasize the cigarette from the weed in Milwaukee. Make Blaine (Brudda Blaine) say "lets smoke the whole
     branch brosef!"
+- 2026-10-16 (evening), issue #1, three messages within about 3 minutes:
+  - The gale is gone after the fight.
+  - When Brudda Blaine arrives, don't say he'll play a DJ set at each camp. Just have him do it, as a surprise.
+  - Make the first tent, the one that goes horribly wrong, a lean-to style tarp you try to tie up between trees to keep
+    off the rain. Have it fail "mathematically", because of the Milwaukee weed that was smoked.
 
 ## What you've decided
 
@@ -148,7 +153,8 @@ Every session reads this first and updates it last.
 - Brudda Blaine's look is right: sunglasses, a sharp haircut, a black jacket over a white tee, a gold chain, red
   headphones. (2026-10-16.)
 - In level 2 (2026-10-16; all built): fish jump in the lake and salmon leap up the falls; going into the pizza joint is
-  a must; fairies, elves and animals dance at every DJ set; the tent goes even worse at the first camp; Gooseberry Falls
+  a must; fairies, elves and animals dance at every DJ set; the tent goes even worse at the first camp (that tent is now
+  a tarp, see below); Gooseberry Falls
   is violent rapids; an enemy between each camp, killed only by your tick's own gifts; the climb is a long road through
   giant redwoods, with few turns.
 - The two enemies in level 2 (2026-10-16; built): the Gales of November (in place of the gull), then the Edmund Fitzgerald
@@ -156,6 +162,13 @@ Every session reads this first and updates it last.
 - The pointer's "Point": a hunter comes out and shoots. (2026-10-16; built.)
 - Camp 1: the weed from Milwaukee, really emphasized, and Brudda Blaine's line, "lets smoke the whole branch brosef!"
   (2026-10-16; built, his line word for word.)
+- The Gales of November are gone once you beat them; they don't come back for the Edmund Fitzgerald. (2026-10-16; that's
+  how it already worked.)
+- Brudda Blaine's DJ sets are a surprise: nothing is said about them when he arrives; at each camp he just does it.
+  (2026-10-16; built.)
+- Camp 1's shelter is a tarp, not a tent: a lean-to you try to tie up between two trees to keep off the rain, and it goes
+  horribly wrong because the math, done high on the Milwaukee weed, is wrong. (2026-10-16; built. The three bits of math
+  are guesses.)
 - Everything else is yours to decide.
 
 ## What's been built
@@ -354,11 +367,36 @@ Every session reads this first and updates it last.
   - Guesses, labeled on the end screen: how the gale and the ship look and what they do (the ship's look is made up,
     not drawn from the real ship), the gull at the ship, the hunter and how he looks, and the branch, the cigarette, the
     smoke and the haze. Nothing in the game is quoted from the song.
+- 2026-10-16 (evening), sketch 2 changed (`gh-pages`, commit a3baa7d), from your three messages:
+  - The gale: unchanged; once you beat it, it's gone.
+  - Brudda Blaine's arrival now says only: "Someone rolls up behind you on a bicycle." "Brudda Blaine. Very attractive."
+    "He rides with you, the whole way." Nothing about DJing (the words "a DJ" came out too, so the decks are a real
+    surprise; easy to put back). His decks no longer sit at camp waiting for him: at camp 1, after the tarp, "Then
+    Brudda Blaine sets up two turntables on a crate." The decks appear, and "He drops a track: underground hip hop." At
+    camps 2 and 3 the decks appear as he sets them up.
+  - Camp 1, after the smoking: two trees now stand at the camp by the shore (a spruce and a birch; they stay there after).
+    Clouds roll in and it starts to rain (soft rain on screen, a soft hiss of rain, until morning). "No tent tonight: a
+    tarp." A blue tarp, to tie between the two trees as a lean-to. Three tries; each time the math floats over your head
+    in a thought bubble, wobbling and shifting color:
+    - "8 > 10": "The tarp is 8 feet across. The trees are 10 feet apart. 8 is more than 10. Easy." Tied to the spruce, it
+      stretches toward the birch, its rope falls short, it strains, slips off, and drops in a heap. "It doesn't reach."
+    - "45°", then "90°", then "360°": "All the way round." It whips round and round the spruce until the trunk is wrapped
+      up in tarp (like a bug in silk). The rain comes down harder.
+    - "y = x²" with a little drawing of the curve: it goes up between both trees and holds. You crawl under it. "Dry. For
+      a moment." But y = x² is a bowl: the middle sags, fills with rain, dumps all of it on you, and the whole tarp comes
+      down on top of you (you wriggle under it). "It doesn't go well at all."
+    - You wriggle out, soaked through and dripping. "The weed from Milwaukee did the math."
+  - Then the DJ set and the dancers, as before, in the rain. You sleep under the soggy heap of tarp. "Morning. The rain has
+    stopped. You wring out the tarp, and ride on."
+  - Gone: the old tent at camp 1 (falling down, the pole, the gust into the lake).
+  - Guesses, labeled on the end screen: the two trees, the tarp, the rain, the math, and how it all goes wrong. A test
+    hook for checks: `?at=camp1` starts level 2 right at the first camp.
 
 ## Open questions
 
-- Asked 2026-10-16 (second reply that day): should the gale stay out over the lake and come back for the Edmund
-  Fitzgerald fight, or is it gone once you beat it?
+- Asked 2026-10-16 (evening): is the tarp's math what you meant by "mathematically" (8 > 10, then 360 degrees, then
+  y = x²)? Different math, or a different way for it to fail?
+- Answered 2026-10-16: the gale is gone once you beat it.
 - Not checked, and not used: any facts about Gordon Lightfoot's song or the real Edmund Fitzgerald (the sketch uses only
   your words and a made-up look). Check before saying anything about them.
 - Answered 2026-10-16: the two enemies are the Gales of November and the Edmund Fitzgerald.
@@ -471,3 +509,7 @@ Every session reads this first and updates it last.
   the two enemies, a hunter for the pointer's point, and the weed from Milwaukee emphasized with Brudda Blaine's line.
   Built all of it in sketch 2, same link. Replied on issue #1 with what changed, and one question: should the gale come
   back for the Edmund Fitzgerald fight?
+- 2026-10-16 (evening): three messages from you on issue #1 within about 3 minutes: the gale is gone after the fight;
+  Brudda Blaine's sets as a surprise; and the first tent as a lean-to tarp that fails mathematically, because of the
+  weed. Built the last two in sketch 2, same link (the gale already worked that way). Replied on issue #1 with what
+  changed, and one question: is the math what you meant?
