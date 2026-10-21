@@ -242,7 +242,7 @@ a { color:var(--accent); }
     <p class="small">Guesses in level 3: the salmon ride (how it looks, the signs on the bank); the bridge over the bay
       (in the evening), the row of buildings, how the club looks and bounces, the way down the bridge and along the road,
       and the music heard from outside; the club, and both maze floors (the crowd as the walls, the bar, the booths, the
-      railing); how Shawn, Karill and the promoters look; what Shawn says; the dance floor after the blackout (your dancing, the confetti); the club music (original Latin house, with
+      railing); how Shawn, Karill and the promoters look; what Shawn says (all but your two lines); the dance floor after the blackout (your dancing, the confetti); the club music (original Latin house, with
       drops, and voices chanting "¡Baila!", "¡Oye!" and "¡Ey!", made by the game itself); the cab and the bridge, and
       the driver's Spanish; Akumal, and its maze;
       the music there (original, a guitar); how Brudda Blaine looks on foot, and his yell; the restaurant; the
@@ -4523,7 +4523,11 @@ const PLAYA = [
   'wwwwwwwwwwwy',
 ];
 const CLUB_AT = { x: 4, y: 0 }, PLAYA_DOOR = { x: 5, y: 1 };  // the club: its top-left tile (3 wide, 2 tall), and its door
-const KARILL ={ x: 13, y: 2 }, PROMOS = [{ x: 12, y: 2, k: 0 }, { x: 14, y: 2, k: 1 }], SHAWN = { x: 9, y: 0 };
+// Shawn, once you've given him the glass: tap A on him, and he says the next thing (the first is yours, word for word)
+const SHAWN_SAYS = ['Shawn: "The girls love me because I\'m American."', 'Shawn: "Is this the line for the bathroom?"',
+  'Shawn: "I tipped the DJ in quarters. He knows who I am now."', 'Shawn: "I\'m a god to these people. I said that already. Still true."',
+  'Shawn: "This is my club. I don\'t own it. But it\'s mine."', 'Shawn Farley, on the long booth, with his two glasses.'];
+const KARILL = { x: 13, y: 2 }, PROMOS = [{ x: 12, y: 2, k: 0 }, { x: 14, y: 2, k: 1 }], SHAWN = { x: 9, y: 0 };
 const BRAYDON = { x: 15, y: 1 }, ROCK_FROM = { x: 3, y: 10 };
 let built3 = false, scene3 = null;
 const NEVER = -1e9;  // a moment that hasn't happened
@@ -5988,7 +5992,7 @@ function interact3() {
     return;
   }
   if (area === 'club2') {
-    if (fx === SHAWN.x && fy === SHAWN.y) { if (!L3.shawn) shawnScene(); else say(L3.shawnSaid++ % 2 ? ['Shawn Farley, on the long booth, with his two glasses.'] : ['Shawn: "Is this the line for the bathroom?"']); return; }
+    if (fx === SHAWN.x && fy === SHAWN.y) { if (!L3.shawn) shawnScene(); else say([SHAWN_SAYS[L3.shawnSaid++ % SHAWN_SAYS.length]]); return; }
     const words = { c: 'The crowd, dancing. No way through.', b: 'A long booth, in red velvet.', S: 'A long booth, in red velvet.',
       '=': 'The railing. Down below: the dance floor.', '#': 'A wall, with neon on it.', D: 'Stairs, going down.', U: 'The stairs you came up.' }[ch];
     if (words) say([words]);
@@ -6158,7 +6162,7 @@ async function shawnScene() {
   await say(['Shawn Farley, sitting on a long booth.', 'He is throwing up into his glass.']);
   L3.shawn = true; clink();
   await say(['You give him another empty glass.', 'He looks at you for a long time.',
-    'Shawn: "Thanks, tiny bartender. That last glass kept filling up by itself."']);
+    'Shawn: "Thanks, tiny bartender. That last glass kept filling up by itself."', 'Shawn: "I am a rapper. I\'m a god to these people."']);
   hud(clubHud()); phase = 'club'; lock--;
 }
 async function lookDown() {
