@@ -271,8 +271,7 @@ a { color:var(--accent); }
     <p id="end4Text"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>On the road again, to Yellowstone: elk, mountains, coyotes (and photographers), and Old Faithful, which almost
-        goes, and almost goes, then explodes, with IzzyKat riding it.</li>
+      <li>Old Faithful (separate, you said): it almost goes, and almost goes, then explodes, with IzzyKat riding it.</li>
       <li>Reno: a motel, a maze of canals, the old strip, a casino, Sierra Nevada Pale Ales, craps, and Jim.</li>
     </ol>
     <p class="small">Guesses in level 4 so far: how the oil fields look (the oil rigs drawn as nodding pumps, with drilling
@@ -285,7 +284,9 @@ a { color:var(--accent); }
       door; the gummies in a thought bubble, and the haze; the pointer's nose and the scent; the regular tick up a stalk
       of dune grass, and what it feels as warm (Brudda Blaine, then a rock in the sun); the rings of "Pss, pss, pss", and
       who comes; the rock, and the beetle under it; Brudda Blaine's yell by the river; the purr; and the close-up of her
-      under the U-Haul. The words not in your story are guesses too.</p>
+      under the U-Haul. On the road to Yellowstone: how it all looks and sounds (the park sign, the mountains and their
+      snow, the pines, the elk, the bull and his bugle, the coyotes, the photographers and their long lenses, the clicks,
+      the steam, and Old Faithful's cone and sign). The words not in your story are guesses too.</p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -6131,6 +6132,7 @@ function update3(dt) {
   if (S && S.kind === 'field') updateField(dt);  // level 4: whack-a-prairie-dog
   if (S && (S.kind === 'search' || S.kind === 'under')) updateSearch(dt);  // and the search for IzzyKat
   if (S && S.kind === 'dogtown') updateDogTown();  // the long view of the prairie dog town
+  if (S && S.kind === 'drive' && S.pack) updateYS();  // Yellowstone: the photographers, clicking
 }
 
 // ---- level 3: the scenes ----
@@ -6459,10 +6461,14 @@ const JUMP3 = {
 // The final chapter: you, Brudda Blaine and IzzyKat, West in the U-Haul. Through the oil fields (large oil rigs, close
 // and far), past bison, and two horses, one black, one brown, having a slight battle; to Badlands National Park. You
 // park the U-Haul by the river, where sand-like mounds slide down into it and it bends in an S. Then whack-a-prairie-dog,
-// and IzzyKat gets out (both below). Next, from your story: Yellowstone. (How it all looks is a guess.)
+// and IzzyKat gets out, and back on the road to Yellowstone (all below). Next, from your story: Old Faithful, which is
+// separate. (How it all looks is a guess.)
 const DRIVE_SKY = { oil: [[150, 190, 226], [238, 226, 198]], bison: [[138, 186, 228], [232, 230, 204]],
-  horses: [[132, 180, 226], [238, 224, 194]], badlands: [[120, 172, 224], [246, 214, 178]] };
-const DRIVE_FIELD = { oil: ['#b9a96a', '#a8985a'], bison: ['#a9b06c', '#98a05c'], horses: ['#b4a868', '#a49858'], badlands: ['#c4a874', '#b49464'] };
+  horses: [[132, 180, 226], [238, 224, 194]], badlands: [[120, 172, 224], [246, 214, 178]],
+  park: [[112, 166, 222], [226, 234, 240]], elk: [[118, 170, 224], [230, 234, 236]], peaks: [[96, 152, 220], [222, 232, 244]],
+  coyote: [[118, 170, 224], [228, 234, 238]], basin: [[128, 168, 214], [220, 230, 238]] };
+const DRIVE_FIELD = { oil: ['#b9a96a', '#a8985a'], bison: ['#a9b06c', '#98a05c'], horses: ['#b4a868', '#a49858'], badlands: ['#c4a874', '#b49464'],
+  park: ['#94a05a', '#84904a'], elk: ['#aaa862', '#9a9852'], peaks: ['#7e9050', '#6e8040'], coyote: ['#a8a462', '#989452'], basin: ['#b4ad84', '#a49d74'] };
 const BANDS = ['#ecdcc4', '#dcae80', '#c47c58', '#e8cca8', '#b86c4c', '#f0e4d0', '#d0966a'];  // the badlands' stripes
 function pumpjack(x, y, s, ph) {  // a large oil rig, nodding: x, y the middle of its base on the ground; s its size; facing left
   const S = v => Math.round(v * s), top = y - S(26);
@@ -6517,7 +6523,8 @@ function drawDrive() {
   gradient(0, HZ, DRIVE_SKY[seg][0], DRIVE_SKY[seg][1]);
   ctx.fillStyle = 'rgba(255,255,255,.8)';  // clouds, drifting by slowly
   for (let i = 0; i < 4; i++) { const x = Math.round(wrapX(i * 53 + d * 0.04, VW + 40) - 20), y = 6 + (i * 11) % 22; ctx.fillRect(x, y, 16, 3); ctx.fillRect(x + 4, y - 2, 8, 2); }
-  for (let x = 0; x < VW; x++) {  // far off: low hills, or the badlands, striped
+  if (YS_SEGS.has(seg)) ysFar(seg, d, HZ);  // Yellowstone: mountains, snow on the peaks, pines
+  else for (let x = 0; x < VW; x++) {  // far off: low hills, or the badlands, striped
     const wx = x - d * 0.15;
     if (seg === 'badlands') {
       const h = Math.round(10 + Math.abs(Math.sin(wx * 0.07)) * 12 + Math.abs(Math.sin(wx * 0.23)) * 6);
@@ -6550,12 +6557,13 @@ function drawDrive() {
     }
     const x = at(S.signAt);
     if (x > -60 && x < VW + 60) { ctx.fillStyle = '#5a3a22'; ctx.fillRect(x - 20, 58, 2, 16); ctx.fillRect(x + 18, 58, 2, 16); signBoard(ctx, 'BADLANDS', x, 52, '#5a3a22', '#f4efe6', '#3a2414'); signBoard(ctx, 'NATIONAL PARK', x, 62, '#5a3a22', '#f4efe6', '#3a2414'); }
-  }
+  } else if (YS_SEGS.has(seg)) ysField(S, seg, d, HZ, RD, at);
   ctx.fillStyle = '#4a4a50'; ctx.fillRect(0, RD, VW, 12);  // the road, its lines going by
   ctx.fillStyle = '#e8e4da'; ctx.fillRect(0, RD, VW, 1); ctx.fillRect(0, RD + 11, VW, 1);
   ctx.fillStyle = '#e8c84a'; for (let i = 0; i < 9; i++) ctx.fillRect(Math.round(wrapX(i * 20 + d, VW + 20) - 10), RD + 6, 9, 1);
   const bob = S.v > 3 && Math.floor(time * 9) % 2 ? 1 : 0;
   uHaul(50, RD - 24 - bob);  // you three: Brudda Blaine driving, you, and IzzyKat in the window
+  if (YS_SEGS.has(seg)) { ysNear(S, seg, d, RD); return; }  // Yellowstone: a meadow in front, no fences
   ctx.fillStyle = '#7a8a46'; ctx.fillRect(0, RD + 12, VW, VH - RD - 12);  // the near verge: grass, fence posts flying by
   for (let i = 0; i < 7; i++) { const x = Math.round(wrapX(i * 26 + d * 1.6, VW + 26) - 13); ctx.fillStyle = '#6a4a2a'; ctx.fillRect(x, RD + 14, 2, 8); ctx.fillStyle = '#8a8a8a'; ctx.fillRect(x - 13, RD + 16, 26, 1); }
 }
@@ -7269,6 +7277,7 @@ async function searchIzzy() {
   await say(['Under the U-Haul: IzzyKat.', 'Purring, as if nothing happened.']);
   await wait(1.2);
   purr.on = false; musicStart();
+  await yellowstone();  // then back on the road, to Yellowstone
   finish4();
 }
 async function sniffWay() {  // the pointer: nose to the ground; the scent leads to a rock, and you point
@@ -7539,13 +7548,255 @@ function purrBreath(v = 0.09) {  // one breath of a purr: a soft, low rumble, fl
   s.connect(lp); lp.connect(am); am.connect(g); g.connect(master);
   s.start(t, Math.random() * 0.5); lfo.start(t); s.stop(t + 1.15); lfo.stop(t + 1.15);
 }
+// ---- level 4: back on the road, to Yellowstone. A scene you watch (your answer), up to Old Faithful (separate, you
+// said). The drive, seen from the side as before: the park sign; elk by the road, and a bull bugling (real: bulls bugle
+// to call to the cows and to challenge other bulls, from the National Park Service's page on Yellowstone's elk);
+// mountains; coyotes, and photographers annoyingly following them as if they're wolves ("those idiots"); then the
+// steam, and Old Faithful. How it all looks and sounds is a guess. ----
+const YS_SEGS = new Set(['park', 'elk', 'peaks', 'coyote', 'basin']);
+function ysFar(seg, d, HZ) {  // far off: mountains, snow on the peaks; closer mountains on the way through; pines
+  const tri = u => 1 - 2 * Math.abs(u - Math.floor(u) - 0.5);  // a zigzag, 0 to 1: sharp peaks
+  const H = wx => 9 + 17 * tri(wx / 61 + 0.3) + 8 * tri(wx / 27 + 0.1) + 2.5 * tri(wx / 9);
+  for (let x = 0; x < VW; x++) {
+    const wx = x - d * 0.05, h = H(wx), lit = H(wx + 1) >= h, top = Math.round(HZ - 6 - h);
+    ctx.fillStyle = lit ? '#7c8699' : '#5f697d'; ctx.fillRect(x, top, 1, HZ - top);
+    if (h > 20) { ctx.fillStyle = lit ? '#f2f4f8' : '#c9d1de'; ctx.fillRect(x, top, 1, Math.round((h - 20) * 0.7) + 1); }
+  }
+  if (seg === 'peaks') {  // the mountains, close: bigger, darker, more snow
+    const N = wx => 6 + 26 * tri(wx / 47 + 0.6) + 8 * tri(wx / 19) + 2 * tri(wx / 7);
+    for (let x = 0; x < VW; x++) {
+      const wx = x - d * 0.18, h = N(wx), lit = N(wx + 1) >= h, top = Math.round(HZ - 2 - h);
+      ctx.fillStyle = lit ? '#5c6676' : '#475162'; ctx.fillRect(x, top, 1, HZ - top);
+      if (h > 22) { ctx.fillStyle = lit ? '#f4f6fa' : '#c4ccd8'; ctx.fillRect(x, top, 1, Math.round((h - 22) * 0.8) + 1); }
+    }
+  }
+  for (let x = 0; x < VW; x++) {  // a ridge of pines along the horizon, a tree every few pixels
+    const wx = x - d * 0.25, i = Math.floor(wx / 4), lx = wx - i * 4, th = 4 + ((i * 7919) % 5 + 5) % 5;
+    const top = Math.round(HZ - 1 - Math.max(0, th - Math.abs(lx - 2) * 2));
+    ctx.fillStyle = seg === 'basin' ? '#3a5442' : '#2c4634'; ctx.fillRect(x, top, 1, HZ - top);
+  }
+}
+function pineSide(x, base, h) {  // a pine, from the side: x its middle, base where it meets the ground, h its height
+  ctx.fillStyle = '#4a3020'; ctx.fillRect(x, base - 2, 1, 2);
+  for (let j = 0; j < h - 2; j++) {
+    const w = Math.round((j / (h - 2)) * h * 0.26) + (j % 3 === 2 ? 1 : 0);
+    ctx.fillStyle = j % 3 === 2 ? '#1e3a28' : '#2a4a32'; ctx.fillRect(x - w, base - h + j, w * 2 + 1, 1);
+  }
+}
+function steam(x, y, h, n, k = 1) {  // steam: puffs rising, drifting, fading
+  for (let j = 0; j < n; j++) {
+    const p = (time * 0.35 + j / n) % 1, r = Math.max(1, Math.round((1 + p * 4) * k));
+    ctx.globalAlpha = 0.8 * (1 - p);
+    disc(ctx, Math.round(x + Math.sin(p * 4 + j) * 2 * k + p * 6 * k), Math.round(y - p * h), r, '#ffffff');
+  }
+  ctx.globalAlpha = 1;
+}
+function elkFar(x, y, flip, graze) {  // an elk cow, a little way off: x, y where her feet are (16 by 13)
+  const q = painter(x - 8, y - 13, 16, flip);
+  q.r(4, 5, 10, 4, '#b07c4c'); q.r(4, 5, 10, 1, '#c48e5a'); q.r(12, 5, 3, 4, '#ecdcb4');   // the body, the pale rump
+  if (graze) { q.r(2, 6, 3, 4, '#5a3a22'); q.r(0, 9, 3, 2, '#7a5232'); }                     // head down, to the grass
+  else { q.r(2, 2, 3, 5, '#5a3a22'); q.r(0, 1, 4, 2, '#7a5232'); q.p(3, 0, '#7a5232'); q.p(2, 1, '#0c0806'); }  // head up; an ear, an eye
+  for (const lx of [4, 6, 11, 13]) q.r(lx, 9, 1, 4, '#4a3020');                               // legs
+}
+function elk(x, y, flip, pose) {  // a bull elk, from the side, facing left unless flip: x, y where his feet are.
+  const q = painter(x - 12, y - 24, 24, flip), coat = '#b07c4c', mane = '#5a3a22', head = '#7a5232', ant = '#e0d2b0', antD = '#a89870';
+  q.r(8, 11, 13, 7, coat); q.r(8, 11, 13, 1, '#c48e5a'); q.r(9, 17, 11, 1, '#8a5a36');  // the body, its belly
+  q.r(18, 11, 4, 6, '#ecdcb4'); q.p(21, 11, '#c8b088');                                  // the pale rump, a little tail
+  for (const lx of [9, 11, 17, 19]) q.r(lx, 18, 1, 6, '#4a3020');                        // legs
+  if (pose === 'bugle') {  // neck stretched out and up, muzzle to the sky, antlers laid back
+    q.r(5, 6, 5, 8, mane); q.r(7, 9, 3, 4, mane); q.r(2, 3, 4, 4, head); q.r(1, 0, 2, 4, mane);
+    q.p(0, 2, '#2a1a10'); q.p(3, 3, '#0c0806');                                            // the open mouth; an eye
+    q.l(5, 3, 15, -1, antD); q.l(9, 2, 9, -2, antD); q.l(12, 1, 12, -3, antD);             // the far antler
+    q.l(4, 2, 14, -2, ant); q.l(6, 1, 6, -4, ant); q.l(9, 0, 9, -5, ant); q.l(12, -1, 12, -5, ant); q.l(14, -2, 17, -3, ant);
+    const b = time - (scene3.bugle || 0);  // his breath, puffing up into the cold air
+    for (let j = 0; j < 4; j++) {
+      const p = (b * 0.9 + j * 0.25) % 1;
+      ctx.globalAlpha = 0.6 * (1 - p); q.d(Math.round(-1 - p * 6), Math.round(-1 - p * 9), Math.max(1, Math.round(p * 3)), '#f6f6f2');
+    }
+    ctx.globalAlpha = 1;
+  } else {  // standing tall, head up
+    q.r(5, 6, 5, 9, mane); q.r(7, 10, 3, 3, mane); q.r(1, 4, 5, 3, head); q.r(0, 5, 2, 2, mane);
+    q.p(0, 5, '#1a120c'); q.p(4, 4, '#0c0806'); q.p(6, 3, head); q.p(7, 2, head);           // nose, eye, ear
+    q.l(6, 3, 10, -2, antD); q.l(10, -2, 14, -7, antD); q.l(9, -1, 7, -4, antD); q.l(12, -4, 11, -8, antD);  // the far antler
+    q.l(5, 3, 9, -2, ant); q.l(9, -2, 13, -8, ant); q.l(6, 1, 3, 0, ant); q.l(7, 0, 4, -3, ant);
+    q.l(9, -2, 7, -6, ant); q.l(11, -5, 10, -9, ant); q.l(13, -8, 15, -10, ant);
+  }
+}
+function coyote(x, y, flip, trot, k) {  // a coyote, from the side, facing left unless flip: x, y where its feet are
+  const q = painter(x - 9, y - 11, 18, flip), C = '#a8927a', D = '#7a6a5a', L = '#e0d2bc';
+  const b = trot ? Math.floor(k * 8) % 2 : 0, f = trot ? Math.floor(k * 8) % 2 : 0;
+  q.r(5, 3 - b, 8, 4, C); q.r(5, 3 - b, 8, 1, D); q.r(6, 6 - b, 6, 1, L);              // the body: a darker back, a pale belly
+  q.r(2, 1 - b, 4, 4, C); q.r(0, 3 - b, 3, 2, C); q.p(0, 3 - b, '#1a1410');            // the head, the long snout, the nose
+  q.p(3, -b, D); q.p(3, -1 - b, D); q.p(5, -b, D); q.p(5, -1 - b, D);                  // pointed ears
+  q.p(3, 2 - b, '#1a1410'); q.r(1, 5 - b, 2, 1, L);                                     // an eye; a pale throat
+  q.r(13, 4 - b, 2, 2, D); q.r(14, 5 - b, 2, 2, D); q.r(15, 7 - b, 2, 2, D); q.p(16, 9 - b, '#1a1410');  // the bushy tail, held low, black at the tip
+  for (const [lx, s] of [[5, 0], [7, 1], [10, 0], [12, 1]]) q.r(lx - (f === s ? 1 : 0), 7 - b, 1, 4 + b, '#8a7a66');
+}
+const SHOOTERS = [{ hat: '#a89a6a', vest: '#7e7a4e', skin: '#e2b48e' }, { hat: '#5a6a4a', vest: '#8a7a56', skin: '#c8906a' },
+  { hat: '#c8b88a', vest: '#6e7454', skin: '#f0c4a0' }, { hat: '#3a3a3a', vest: '#9a8a5e', skin: '#d8a47c' }];
+function shooter(x, y, c, walk, crouch) {  // a photographer with a long lens, from the side, facing left: x, y the feet
+  const q = painter(x - 12, y - 18, 20, false), f = walk != null ? Math.floor(walk * 8) % 2 : 0, o = crouch ? 4 : -f;
+  q.r(0, 4 + o, 8, 3, '#e8e4d8'); q.r(0, 4 + o, 1, 3, '#1e1e24'); q.r(3, 4 + o, 1, 3, '#2a2a30'); q.p(1, 5 + o, '#6a8ab0');  // the long lens
+  q.r(8, 3 + o, 3, 4, '#1e1e24');                                                                     // the camera
+  q.r(10, o, 5, 2, c.hat); q.r(9, 2 + o, 7, 1, c.hat); q.r(11, 3 + o, 4, 4, c.skin); q.p(11, 4 + o, '#1e1e24');  // a hat; the face, at the camera
+  q.r(4, 7 + o, 7, 1, '#d8d0b8');                                                                     // an arm, holding up the lens
+  q.r(11, 7 + o, 5, 6, '#d8d0b8'); q.r(11, 7 + o, 2, 6, c.vest); q.r(14, 7 + o, 2, 6, c.vest);        // a vest full of pockets
+  q.p(11, 9 + o, '#4a4630'); q.p(15, 10 + o, '#4a4630'); q.p(12, 11 + o, '#4a4630');
+  if (crouch) { q.r(9, 15, 7, 2, '#5a5446'); q.r(8, 17, 3, 1, '#3a2a1a'); q.r(15, 17, 2, 1, '#3a2a1a'); }  // down on one knee
+  else {  // creeping along, on tiptoe
+    q.r(11 - f, 13 - f, 2, 4 + f, '#5a5446'); q.r(14 + f, 13 - f, 2, 4 + f, '#5a5446');
+    q.r(10 - f, 17, 3, 1, '#3a2a1a'); q.r(14 + f, 17, 3, 1, '#3a2a1a');
+  }
+}
+function geyserCone(x, y) {  // Old Faithful's cone: a mound of pale rock, steaming. x, y the middle of its base
+  for (let j = -3; j <= 3; j++) { const w = Math.round(34 * Math.sqrt(1 - (j / 3.5) ** 2)); ctx.fillStyle = '#e4e0d2'; ctx.fillRect(x - w, y + j, w * 2, 1); }  // pale rock around it
+  ctx.fillStyle = '#c8864a'; ctx.fillRect(x - 28, y + 1, 9, 1); ctx.fillRect(x + 18, y, 10, 1); ctx.fillRect(x - 22, y + 2, 5, 1);  // runoff, streaked orange
+  ctx.fillStyle = '#d8a860'; ctx.fillRect(x + 22, y + 2, 6, 1); ctx.fillRect(x - 31, y, 4, 1);
+  for (let j = 0; j < 10; j++) {  // the cone, lumpy, shaded on the right
+    const w = Math.round(20 - j * 1.6 - (j > 6 ? (j - 6) * 1.5 : 0)), sh = Math.round(w * 0.35);
+    ctx.fillStyle = '#9a968a'; ctx.fillRect(x - w - 1, y - j - 1, w * 2 + 2, 1);
+    ctx.fillStyle = j % 2 ? '#f0ede4' : '#dedad0'; ctx.fillRect(x - w, y - j, w * 2 - sh, 1);
+    ctx.fillStyle = '#c4c0b4'; ctx.fillRect(x + w - sh, y - j, sh, 1);
+  }
+  ctx.fillStyle = '#5a564c'; ctx.fillRect(x - 2, y - 10, 4, 1);  // the vent
+  steam(x, y - 10, 40, 8, 1.6);
+}
+const packX = p => p.from != null ? p.x0 - (time - p.from) * 22 : p.x0;  // the coyote in front: where it is now
+function ysField(S, seg, d, HZ, RD, at) {  // on the far side of the road
+  if (seg === 'park' || seg === 'peaks' || seg === 'coyote') {  // pines
+    const n = seg === 'peaks' ? 9 : seg === 'park' ? 6 : 3;
+    for (let i = 0; i < n; i++) { const x = Math.round(wrapX(i * (180 / n) + 7 + d * 0.55, VW + 40) - 20); pineSide(x, HZ + 10 + (i % 3) * 3, seg === 'peaks' ? 14 + (i % 3) * 4 : 10 + (i % 3) * 3); }
+  }
+  if (seg === 'park' && S.signAt != null) {  // the park sign, going by
+    const x = at(S.signAt);
+    if (x > -60 && x < VW + 60) { ctx.fillStyle = '#5a3a22'; ctx.fillRect(x - 24, 58, 2, 16); ctx.fillRect(x + 22, 58, 2, 16); signBoard(ctx, 'YELLOWSTONE', x, 52, '#5a3a22', '#f4efe6', '#3a2414'); signBoard(ctx, 'NATIONAL PARK', x, 62, '#5a3a22', '#f4efe6', '#3a2414'); }
+  }
+  if (seg === 'elk') for (const b of S.herd) {  // elk, grazing, now and then looking up
+    const x = at(b.wx, b.k); if (x > -20 && x < VW + 20) elkFar(x, b.y, b.flip, (time + b.wx) % 5 < 3.5);
+  }
+  if (seg === 'basin') {  // steam, rising out of the ground; then Old Faithful's cone
+    for (let i = 0; i < 4; i++) { const x = Math.round(wrapX(i * 47 + 11 + d * 0.35, VW + 40) - 20); steam(x, HZ + 3 + (i % 3) * 3, 20, 5, 0.8); }
+    const x = at(S.coneAt); if (x > -40 && x < VW + 40) geyserCone(x, 72);
+  }
+}
+function ysNear(S, seg, d, RD) {  // in front of the road: a meadow (or, by Old Faithful, pale ground)
+  const y0 = RD + 12, basin = seg === 'basin';
+  ctx.fillStyle = basin ? '#c4be9e' : '#8e9a50'; ctx.fillRect(0, y0, VW, VH - y0);
+  for (let i = 0; i < 16; i++) {
+    const x = Math.round(wrapX(i * 23 + d * 1.6, VW + 20) - 10), y = y0 + 4 + (i * 13) % (VH - y0 - 8);
+    if (basin) { ctx.fillStyle = i % 3 ? '#b4ae8e' : '#c8864a'; ctx.fillRect(x, y, 6, 1); }
+    else for (let k = 0; k < 3; k++) line(ctx, x + k, y + 3, x + k * 2 - 1, y, k % 2 ? '#a8a84a' : '#7a8a3a');
+  }
+  if (seg === 'elk') {  // a bull, right by the road; he lifts his head and bugles
+    const x = Math.round(S.bull + d * 1.6), b = S.bugle != null ? time - S.bugle : -1;
+    if (x > -30 && x < VW + 30) elk(x, 124, true, b >= 0 && b < 2.6 ? 'bugle' : 'up');
+  }
+  if (seg === 'coyote' && S.pack) {  // two coyotes, trotting along; photographers creeping after them, lenses up
+    const p = S.pack, X = Math.round(packX(p) + (S.dist - S.stopAt) * 1.6), look = p.look != null, trot = p.from != null;
+    const who = [{ y: 118, f: () => coyote(X, 118, look, trot, time) }, { y: 124, f: () => coyote(X + 13, 124, look, trot, time + 0.3) }];
+    for (let i = 0; i < 4; i++) {
+      const x = X + 42 + i * 16, y = i % 2 ? 126 : 120, c = SHOOTERS[i];
+      who.push({ y, f: () => shooter(x, y, c, trot ? time + i * 0.3 : null, look && time - p.look > 0.3 + i * 0.12) });
+    }
+    who.sort((a, b) => a.y - b.y).forEach(w => w.f());
+    for (const m of p.marks) {  // CLICK, and a glint off the lens
+      const x = X + 42 + m.i * 16, y = m.i % 2 ? 126 : 120;
+      signText(ctx, 'CLICK', x - 9, y - 27, '#2a2a30'); signText(ctx, 'CLICK', x - 10, y - 28, '#ffffff');
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(x - 13, y - 10, 3, 1); ctx.fillRect(x - 12, y - 11, 1, 3);
+    }
+  }
+  if (basin) {  // the sign, by the road
+    const x = Math.round(S.fSign + d * 1.6);
+    if (x > -60 && x < VW + 60) { ctx.fillStyle = '#5a3a22'; ctx.fillRect(x - 18, 100, 2, 14); ctx.fillRect(x + 16, 100, 2, 14); signBoard(ctx, 'OLD FAITHFUL', x, 98, '#5a3a22', '#f4efe6', '#3a2414'); }
+  }
+}
+function updateYS() {  // the photographers, clicking away, a few at a time
+  const p = scene3.pack;
+  if (p.look != null && time >= p.clickAt) {
+    shutter(); p.marks.push({ i: (p.n * 3) % 4, t: time }); p.n++;
+    p.clickAt = time + (p.n % 6 === 5 ? 1.3 : 0.16 + Math.random() * 0.22);
+  }
+  while (p.marks.length && time - p.marks[0].t > 0.4) p.marks.shift();
+}
+function shutter() {  // a camera's shutter: two quick clicks
+  if (!ac || muted) return; makeNoise(); const t = ac.currentTime;
+  noiseHit(t, 'highpass', 3500, 0.7, 0.02, 0.025, 0, master); noiseHit(t + 0.06, 'highpass', 2800, 0.7, 0.015, 0.03, 0, master);
+}
+function bugle() {  // a bull elk's bugle: low, rising to a high whistle, then a few grunts (a guess at the sound)
+  if (!ac || muted) return;
+  const t = ac.currentTime + 0.02, o = ac.createOscillator(), g = ac.createGain(), vib = ac.createOscillator(), vg = ac.createGain(), lp = ac.createBiquadFilter();
+  o.type = 'triangle'; lp.type = 'lowpass'; lp.frequency.value = 2200;
+  o.frequency.setValueAtTime(300, t); o.frequency.exponentialRampToValueAtTime(850, t + 0.35); o.frequency.exponentialRampToValueAtTime(1400, t + 0.7);
+  o.frequency.setValueAtTime(1400, t + 1.5); o.frequency.exponentialRampToValueAtTime(1050, t + 1.8); o.frequency.exponentialRampToValueAtTime(380, t + 2.0);
+  vib.frequency.value = 7; vg.gain.value = 16; vib.connect(vg); vg.connect(o.frequency);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.015, t + 0.3); g.gain.exponentialRampToValueAtTime(0.03, t + 0.7);
+  g.gain.setValueAtTime(0.03, t + 1.5); g.gain.exponentialRampToValueAtTime(0.0001, t + 2.05);
+  o.connect(lp); lp.connect(g); g.connect(master); o.start(t); vib.start(t); o.stop(t + 2.1); vib.stop(t + 2.1);
+  for (const dt of [2.3, 2.6, 2.9]) tone(master, 'sawtooth', 110, t + dt, 0.12, 0.02, 500);  // grunts
+}
+async function yellowstone() {
+  phase = 'cut';
+  await fadeTo(1, 0.8);
+  scene3 = { kind: 'drive', t0: time, seg: 'park', dist: 0, v: 38, vGoal: 38, signAt: null };
+  await fadeTo(0, 0.8);
+  await wait(0.8);
+  await say(['Back on the road, to Yellowstone.']);
+  Object.assign(scene3, { signAt: -70 - scene3.dist, brakeTo: scene3.dist + 97 });  // the park sign comes up; you slow, and stop by it
+  await wait(3.4);
+  await say(['Yellowstone National Park.']);
+  scene3.brakeTo = null; scene3.vGoal = 38;
+  await wait(1.4);
+  await fadeTo(1, 0.6);  // elk
+  const stopE = 160;
+  Object.assign(scene3, { seg: 'elk', dist: 0, v: 38, vGoal: 38, brakeTo: stopE, bull: 34 - stopE * 1.6, bugle: null,
+    herd: [[100, 1, 70, false], [40, 0.75, 62, true], [14 - stopE, 1, 70, false], [128 - stopE, 1, 72, true], [146 - 120, 0.75, 62, false],
+      [30 - 120, 0.75, 61, true], [-40 - 120, 0.75, 63, false]].map(([wx, k, y, flip]) => ({ wx, k, y, flip })) });
+  await fadeTo(0, 0.6);
+  await wait(3.4);
+  await say(['Elk, grazing by the road.']);
+  await wait(0.6);
+  scene3.bugle = time; bugle();  // the bull lifts his head, and bugles
+  await wait(3.4);
+  scene3.brakeTo = null; scene3.vGoal = 38;
+  await wait(1.6);
+  await fadeTo(1, 0.6);  // mountains
+  Object.assign(scene3, { seg: 'peaks', dist: 0, v: 38, vGoal: 38, brakeTo: null, bugle: null });
+  await fadeTo(0, 0.6);
+  await wait(1.6);
+  await say(['Mountains.']);
+  await wait(2.4);
+  await fadeTo(1, 0.6);  // coyotes, and photographers
+  const stopC = 150;
+  Object.assign(scene3, { seg: 'coyote', dist: 0, v: 38, vGoal: 38, brakeTo: stopC, stopAt: stopC, pack: null });
+  await fadeTo(0, 0.6);
+  await wait(3.0);
+  const p = scene3.pack = { x0: 186, from: time, look: null, clickAt: 0, n: 0, marks: [] };  // they come trotting in
+  await wait(5.6);
+  Object.assign(p, { x0: packX(p), from: null, look: time, clickAt: time + 0.5 });  // the coyotes stop and look back; click, click
+  await wait(0.8);
+  await say(['Coyotes.', "And photographers, annoyingly following them as if they're wolves."]);
+  Object.assign(p, { look: null, from: time });  // the coyotes trot on, and the photographers creep after them
+  await wait(2.4);
+  await say(['Those idiots.']);
+  scene3.brakeTo = null; scene3.vGoal = 38;
+  await wait(2.2);
+  await fadeTo(1, 0.6);  // Old Faithful
+  const stopF = 170;
+  Object.assign(scene3, { seg: 'basin', dist: 0, v: 38, vGoal: 38, brakeTo: stopF, coneAt: 26 - stopF, fSign: 126 - stopF * 1.6, pack: null });
+  await fadeTo(0, 0.6);
+  await wait(4.0);
+  await say(['Old Faithful.']);
+  await wait(0.8);
+}
 function finish4() {
   phase = 'done4'; lock = 0; hud(null);  // (the last scene stays on screen, behind)
   $('end4Text').textContent = 'You drove West in the U-Haul with Brudda Blaine and IzzyKat, through the oil fields, past bison ' +
     'and two horses having a slight battle, to Badlands National Park, and parked by the river. Then a long view across a ' +
     'prairie dog town, and whack-a-prairie-dog, in the big field of red clay: twelve whacked, and the prairie dogs had enough. Back at the U-Haul, the door was left ' +
     'open, and IzzyKat was gone. You searched, under a rock and by the river, and decided she was gone. Then, a purr: she ' +
-    'was under the U-Haul, as if nothing happened. Next, from your story: on the road again, to Yellowstone.';
+    'was under the U-Haul, as if nothing happened. Then back on the road, to Yellowstone: elk by the road, and a bull ' +
+    'bugling; mountains; coyotes, and photographers annoyingly following them as if they\'re wolves (those idiots); and ' +
+    'Old Faithful. Next, from your story: Old Faithful itself, which is separate.';
   $('end4').hidden = false;
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
@@ -7555,6 +7806,7 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   badlands: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); badlands(); },
   town: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; musicStart(); dogTown().then(prairie); },
   search: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; phase = 'cut'; musicStart(); searchIzzy(); },
+  yellowstone: () => { scene3 = { kind: 'drive', t0: time, seg: 'park', dist: 0, v: 38, vGoal: 38 }; phase = 'cut'; musicStart(); yellowstone().then(finish4); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
