@@ -174,7 +174,7 @@ Every session reads this first and updates it last.
     At the end, when you've decided she's gone, you go back to the U-Haul and she's hiding under it, purring, acting as if
     nothing happened. In reality she left, ate a prairie dog, and developed fighting skills like a prairie dog's. You don't
     know this until the final boss, where IzzyKat is vital for the victory.
-  - Then back on the road, to Yosemite (your word; see the open questions): elk, mountains, coyotes (with photographers
+  - Then back on the road, to Yosemite (your word; you changed it to Yellowstone, below): elk, mountains, coyotes (with photographers
     annoyingly following them as if they're wolves, "those idiots"), and Old Faithful. Brudda Blaine and the tick get out
     to see it, and it almost plays with them: it almost goes once, almost goes twice, takes a couple more, and finally goes
     off and explodes in a fantastic fashion. IzzyKat was riding the final explosion; she plops down in front of you, wet,
@@ -199,6 +199,8 @@ Every session reads this first and updates it last.
 - 2026-10-21 (afternoon), issue #1, two messages: during the bridge scene, make the building before the club a strip club,
   and make it so you "peer in" and see a groom to be getting a lap dance, incredibly uncomfortable. The groom to be is named
   Patrick.
+- 2026-10-21 (afternoon), issue #1: Yellowstone, not Yosemite ("My mistake"). Jim at the craps table is last in this scene;
+  the prairie dog mini game is first.
 
 ## What you've decided
 
@@ -290,6 +292,9 @@ Every session reads this first and updates it last.
   sack in the redwoods; see the open questions.)
 - After the shot with Karill: the haze, a blackout, the dance floor and Brudda Blaine's line, then a blackout to the taxi
   (2026-10-21; built).
+- Old Faithful is in Yellowstone, in the game too (2026-10-21).
+- The order for the rest of level 4 (2026-10-21): whack-a-prairie-dog first, Jim at the craps table last. (The rest, in
+  between, in your story's order: a guess.) Whack-a-prairie-dog is built.
 - Blaine's gift: you said yes (2026-10-21). It's switched on in the sketch; talk about it lives in its own conversation on
   GitHub.
 - Everything else is yours to decide.
@@ -681,25 +686,60 @@ Every session reads this first and updates it last.
   uncomfortable." "He doesn't know where to put his hands." Tap A on its front to peer in again. Guesses: how it all looks,
   the banner, and the last line.
 
-## Next to build (queued, in your order)
+- 2026-10-21 (afternoon), sketch 2 changed (`gh-pages`, commit b82cbbf), from your answer: whack-a-prairie-dog.
+  - After you park by the river: "Past the dune grass: a big, sandy field, red like clay, and full of holes." "Prairie
+    dogs." "Whack-a-prairie-dog." The field from above: red clay, sandy patches, cracks, dune grass all around, and nine
+    holes in three rows, each in a mound of clay. Brudda Blaine stands at the edge and hops when you whack one.
+  - Prairie dogs pop up out of the holes, stand up tall, and duck back down (the dirt twitches just before). Hop from hole
+    to hole with the arrows (a ring shows where you are), and tap A. Whack twelve to win ("Whacked: 3 of 12" at the top).
+    It speeds up as you go: less time up, and two at once after the first few.
+  - Each tick its own way:
+    - The regular tick: tap A on one to latch on ("LATCHED ON"). Mind control (pink eyes, pink rings), and it's your
+      weapon: tap A to whack the others with it ("BONK!"). After four whacks it's dizzy, and you toss it back into a hole;
+      latch onto another. Quick hops.
+    - The human-blood tick: tap A to shoot Lyme disease (the sickly green orb; it turns them green). Every spell burns
+      blood sugar (the meter shows it); after six, you're low: your vision blurs, your hops slow, and you can't cast. Your
+      N.E.R.D. album case sits just left of the middle row (it glints when you're low): hop to it and tap A to eat a
+      honeybun (it opens, and the music springs up). While you're steady, a pink shimmer shows over the hole where the next
+      one will pop up.
+    - The dog-blood tick: a hunter in blaze orange walks in and waits at the edge of the field ("A hunter, in blaze orange,
+      waits at the edge of the field."). Tap A to point (a front leg up): a prairie dog you point at freezes (a red "!"),
+      the hunter aims and fires, and it's hit (sooty). Point at an empty hole and he only hits dirt. The quickest hops.
+  - The jump-yip, twice a game (at four and at eight whacked): one stretches up, arms in the air, and calls ("WEE-OO!");
+    then the next, and the next, out across the town, like the wave at a stadium. They're all up for a moment: a chance
+    for quick whacks. (Real prairie dogs do this: see the open questions for the source.)
+  - At twelve: "All of them pop up at once, and look at you." They all duck: "The prairie dogs have had enough. They stay
+    down." "Brudda Blaine cheers." Then the level 4 end screen ("Next, from your story: IzzyKat gets out of the U-Haul.").
+    Its list now says Yellowstone.
+  - Guesses, labeled on the end screen: all of it but your words (the field, the holes, how the prairie dogs look, how
+    each tick whacks, the jump-yip waves, twelve to win, the ending, the timing). Links straight to the field, one per
+    tick: `?level=4&tick=regular&at=field` (or `human`, or `dog`).
 
-1. Whack-a-prairie-dog, in the big sandy field of red clay, with your tick's gifts part of it.
-2. IzzyKat gets out of the U-Haul; the gummies; the search (each tick its own way), under a rock, by the river, and at last
+## Next to build (queued, in your order: Jim last)
+
+1. IzzyKat gets out of the U-Haul; the gummies; the search (each tick its own way), under a rock, by the river, and at last
    under the U-Haul, purring.
-3. Back on the road: elk, mountains, coyotes and the photographers; Old Faithful almost going, then exploding, with
-   IzzyKat riding it.
-4. Reno: the motel, the canal maze, the old strip, the casino, the Sierra Nevada Pale Ales, craps, and Jim strolling in.
-5. The fight with Jim, where IzzyKat's super kitty powers (from the prairie dog and the coyote) win it.
+2. Back on the road, to Yellowstone: elk, mountains, coyotes and the photographers; Old Faithful almost going, then
+   exploding, with IzzyKat riding it.
+3. Reno: the motel, the canal maze, the old strip, the casino, the Sierra Nevada Pale Ales, craps, and Jim strolling in.
+4. The fight with Jim, where IzzyKat's super kitty powers (from the prairie dog and the coyote) win it.
 
 ## Open questions
 
-- Asked 2026-10-21 (afternoon): which comes first, whack-a-prairie-dog, or something further along, like Jim at the craps
-  table?
-- Asked 2026-10-21 (afternoon): Old Faithful is in Yellowstone, not Yosemite (checked: the National Park Service's page on
-  Old Faithful, nps.gov/yell, "Old Faithful is one of nearly 500 geysers in Yellowstone"). Yellowstone in the game, or keep
-  Yosemite?
-- Not asked yet: is the egg sack gone, now that Jim is the final boss, or part of the fight? How do the ticks' gifts help in
-  whack-a-prairie-dog? How does the fight with Jim go (like Pokémon Red, or at the craps table)?
+- Asked 2026-10-21 (afternoon): the search for IzzyKat, a little game you play (like the club maze), or a scene you watch?
+- Said 2026-10-21 (afternoon): how whack-a-prairie-dog plays is a guess (each tick's way, twelve to win, the speed); too
+  easy, too hard, or the wrong feel?
+- The jump-yip, checked 2026-10-21 and told you: black-tailed prairie dogs stretch up, throw their arms in the air and call
+  "wee-oo", and it spreads through the town like the wave at a stadium. Sources: the Royal Society's news release "Prairie
+  dogs test neighbours' alertness with jumping display" (8 January 2014), on the study by James Hare and colleagues in
+  Proceedings of the Royal Society B, "Catch the wave: prairie dogs assess neighbours' awareness using contagious
+  displays"; and Scientific American's blog post "Catch the Wave: Decoding the Prairie Dog's Contagious Jump-Yips".
+- Answered 2026-10-21 (afternoon): whack-a-prairie-dog first, Jim at the craps table last.
+- Answered 2026-10-21 (afternoon): Yellowstone (checked before: the National Park Service's page on Old Faithful,
+  nps.gov/yell, "Old Faithful is one of nearly 500 geysers in Yellowstone").
+- Not asked yet: is the egg sack gone, now that Jim is the final boss, or part of the fight? How does the fight with Jim go
+  (like Pokémon Red, or at the craps table)? (How the ticks' gifts work in whack-a-prairie-dog: built as guesses,
+  2026-10-21.)
 
 - Answered 2026-10-21 (afternoon): yes, you'll take Blaine's gift. It's switched on; any of it can be taken out at any
   time.
@@ -867,3 +907,7 @@ Every session reads this first and updates it last.
   of level 4 (the drive to the Badlands, parking by the river), the dance floor, Shawn's lines, and the strip club; queued the rest of the final chapter (see "Next to build"). Switched
   Blaine's gift on, and opened issue #2 for it (all talk about the gift goes there). Replied on issue #1 with what changed,
   links straight to it, the fact about Old Faithful, and two questions: Yellowstone or Yosemite, and which comes first?
+- 2026-10-21 (afternoon): one message from you on issue #1: Yellowstone, and the order (whack-a-prairie-dog first, Jim last).
+  Built whack-a-prairie-dog in sketch 2, same link, and put Yellowstone on the end screen. Replied on issue #1 (comment
+  6323318820) with how each tick plays it, the real jump-yip, a link per tick straight to the field, and one question: the
+  search for IzzyKat, a game you play or a scene you watch?
