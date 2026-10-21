@@ -97,7 +97,7 @@ a { color:var(--accent); }
 <body>
 <div id="app">
   <div id="top">
-    <span id="badge">Tickman &middot; sketch 2 &middot; levels 1, 2 and 3<br>a sketch to react to, not the game</span>
+    <span id="badge">Tickman &middot; sketch 2 &middot; levels 1 to 3, and the start of 4<br>a sketch to react to, not the game</span>
     <button id="mute" aria-label="Sound on or off" title="Sound">&#9834;</button>
   </div>
   <div id="screen">
@@ -128,11 +128,11 @@ a { color:var(--accent); }
 <div id="title" class="panel">
   <div class="card">
     <h1>Tickman</h1>
-    <div class="sub">Level 1: the apartment &middot; Level 2: the North Shore &middot; Level 3: Mexico</div>
+    <div class="sub">Level 1: the apartment &middot; Level 2: the North Shore &middot; Level 3: Mexico &middot; Level 4: West (just begun)</div>
     <p>A sketch from your story, to react to. It's not the game. Anything your story didn't say is a guess.</p>
     <p><b>How to play:</b> move with the arrows under the screen. Tap <b>A</b> to look at things, and to read on.</p>
     <div class="btns"><button class="btn" id="start">Start</button></div>
-    <div class="btns"><button class="btn alt" id="skip">Skip to level 2</button><button class="btn alt" id="skip3">Skip to level 3</button></div>
+    <div class="btns"><button class="btn alt" id="skip">Skip to level 2</button><button class="btn alt" id="skip3">Skip to level 3</button><button class="btn alt" id="skip4">Skip to level 4</button></div>
   </div>
 </div>
 
@@ -160,10 +160,10 @@ a { color:var(--accent); }
         joint, the climb up Palisade Head, and the fall. <i>(Level 2, in this sketch.)</i></li>
       <li>Mexico: a salmon down the Mississippi, the club maze in Playa del Carmen, the cab, Akumal, and back up to
         Lake Itasca. <i>(Level 3, in this sketch.)</i></li>
-      <li>West, in the U-Haul: the final chapter.</li>
+      <li>West, in the U-Haul, the final chapter: you, Brudda Blaine and IzzyKat. The Badlands, Old Faithful, and Reno,
+        where Isabella is held. <i>(Level 4, just begun in this sketch.)</i></li>
     </ol>
-    <p class="small">The only boss left: an iteration of the egg sack, more than likely in the redwoods, not in a
-      cornfield. The other bosses are gone.</p>
+    <p class="small">The final boss: Jim, a long, white-haired man, at a craps table in Reno.</p>
     <p class="small">Guesses in this sketch: the bugs, how the wrapping works (how fast to tap, how hard each bug wriggles,
       how a wrapped bug looks), the futon's colors, the rest of the apartment, the view outside, how Phil,
       Isabella, the ticks and the deer look (the red bandanas too), how she blows the kiss, how the deer take her, how
@@ -192,10 +192,10 @@ a { color:var(--accent); }
         joint, the climb up Palisade Head, and the fall. <i>(Level 2, in this sketch.)</i></li>
       <li>Mexico: a salmon down the Mississippi, the club maze in Playa del Carmen, the cab, Akumal, and back up to
         Lake Itasca. <i>(Level 3, in this sketch.)</i></li>
-      <li>West, in the U-Haul: the final chapter.</li>
+      <li>West, in the U-Haul, the final chapter: you, Brudda Blaine and IzzyKat. The Badlands, Old Faithful, and Reno,
+        where Isabella is held. <i>(Level 4, just begun in this sketch.)</i></li>
     </ol>
-    <p class="small">The only boss left: an iteration of the egg sack, more than likely in the redwoods, not in a
-      cornfield. The other bosses are gone.</p>
+    <p class="small">The final boss: Jim, a long, white-haired man, at a craps table in Reno.</p>
     <p class="small">Guesses in level 2: the whole map (the path, the woods, the rocky shore, where things sit); the
       apartment door and its mat; how the naked mole rat, the vespa (drawn as a scooter) and the zoomies look, and how
       fast each goes; how Brudda Blaine's bicycle looks; the camps (the fire, his decks); at the first camp, how the
@@ -235,10 +235,10 @@ a { color:var(--accent); }
         joint, the climb up Palisade Head, and the fall. <i>(Level 2, in this sketch.)</i></li>
       <li>Mexico: a salmon down the Mississippi, the club maze in Playa del Carmen, the cab, Akumal, and back up to
         Lake Itasca. <i>(Level 3, in this sketch.)</i></li>
-      <li>West, in the U-Haul: the final chapter.</li>
+      <li>West, in the U-Haul, the final chapter: you, Brudda Blaine and IzzyKat. The Badlands, Old Faithful, and Reno,
+        where Isabella is held. <i>(Level 4, just begun in this sketch.)</i></li>
     </ol>
-    <p class="small">The only boss left: an iteration of the egg sack, more than likely in the redwoods, not in a
-      cornfield. The other bosses are gone.</p>
+    <p class="small">The final boss: Jim, a long, white-haired man, at a craps table in Reno.</p>
     <p class="small">Guesses in level 3: the salmon ride (how it looks, the signs on the bank); the bridge over the bay
       (in the evening), the row of buildings, how the club looks and bounces, the way down the bridge and along the road,
       and the music heard from outside; the club, and both maze floors (the crowd as the walls, the bar, the booths, the
@@ -251,11 +251,42 @@ a { color:var(--accent); }
       turtles (drawn as sea turtles); Shawn on the beach chair, the mosquitoes, and their whine; Lake Itasca, and the U-Haul (orange and white, no logo); how the tortoiseshell
       cat looks (her patches, her eyes, her tail), and the close-up of her in the window.</p>
     <div class="btns">
-      <button class="btn" id="again3">Play level 3 again</button>
+      <button class="btn" id="next3">On to level 4</button>
+    </div>
+    <div class="btns">
+      <button class="btn alt" id="again3">Play level 3 again</button>
     </div>
     <div class="btns">
       <button class="btn alt" id="another3">Try another tick</button>
       <button class="btn alt" id="over3">Start over</button>
+    </div>
+    <p class="small">What's right, and what's wrong? Reply to GitHub's email, or write on
+      <a href="https://github.com/Bdizzlefresh/Tickman/issues/1" target="_blank" rel="noopener">GitHub</a>.</p>
+  </div>
+</div>
+
+<div id="end4" class="panel" hidden>
+  <div class="card">
+    <h2>Level 4, so far</h2>
+    <p id="end4Text"></p>
+    <p><b>Still to come in level 4, from your story:</b></p>
+    <ol>
+      <li>Whack-a-prairie-dog, in a big sandy field of red clay, with your tick's gifts.</li>
+      <li>IzzyKat gets out of the U-Haul. The gummies. Searching for her (each tick its own way), under a rock, by the
+        river, and at last under the U-Haul, purring.</li>
+      <li>On the road again: elk, mountains, coyotes (and photographers), and Old Faithful, which almost goes, and almost
+        goes, then explodes, with IzzyKat riding it.</li>
+      <li>Reno: a motel, a maze of canals, the old strip, a casino, Sierra Nevada Pale Ales, craps, and Jim.</li>
+    </ol>
+    <p class="small">Guesses in level 4 so far: how the oil fields look (the oil rigs drawn as nodding pumps, with drilling
+      towers far off), the bison, the horses and their battle, the badlands, the park sign, the river, the mounds, the
+      U-Haul from above, and IzzyKat's new colors.</p>
+    <div class="btns">
+      <button class="btn" id="again4">Play level 4 again</button>
+    </div>
+    <div class="btns">
+      <button class="btn alt" id="another4">Try another tick</button>
+      <button class="btn alt" id="over4">Start over</button>
     </div>
     <p class="small">What's right, and what's wrong? Reply to GitHub's email, or write on
       <a href="https://github.com/Bdizzlefresh/Tickman/issues/1" target="_blank" rel="noopener">GitHub</a>.</p>
@@ -1652,7 +1683,7 @@ function interact() {
 }
 const canMove = () => !box.active && !wrap && lock === 0 && !fade.tween && fade.v < 0.5 &&
   !['title', 'intro', 'later', 'capture', 'eating', 'done', 'l2intro', 'mounting', 'camp', 'sleep', 'warp', 'vista', 'done2',
-    'fightin', 'battle', 'l3intro', 'cut', 'scene', 'push', 'done3'].includes(phase);
+    'fightin', 'battle', 'l3intro', 'cut', 'scene', 'push', 'done3', 'done4'].includes(phase);
 
 function updatePlayer(dt) {
   if (P.moving) {
@@ -1712,7 +1743,7 @@ function update(dt) {
   }
   updatePlayer(dt);
   if (level === 2) update2(dt);
-  if (level === 3) update3(dt);
+  if (level === 3 || level === 4) update3(dt);  // (level 4, so far: the drive West)
   extras.update(dt);
   updateActor(isa, dt);
   for (const d of deer) updateActor(d, dt);
@@ -3111,7 +3142,7 @@ async function level2(k) {
   if (k) choice = k;
   if (!choice) choice = 'dog';
   buildLevel2();
-  for (const id of ['end', 'end2', 'end3', 'pick', 'title']) $(id).hidden = true;
+  for (const id of ['end', 'end2', 'end3', 'end4', 'pick', 'title']) $(id).hidden = true;
   closeBox(); box.resolve = null; box.ask = null;
   level = 2; useArea('route'); scene3 = null; P.blaine = false; talker = null;
   lock = 1; phase = 'l2intro'; vista = null; night = null; camps = 0; Object.assign(smoke, { t0: -999, branch: -999, haze: false }); hud(null);
@@ -5645,7 +5676,8 @@ function drawBay() {
 }
 // inside the U-Haul: a tortoiseshell cat, looking out the window at you, waiting. Close up, through the cab's side
 // window, with the far window and the pines of Lake Itasca behind her. (How she looks is a guess.)
-const TORTIE = { K: '#1c1714', k: '#4a3222', O: '#d0702c', o: '#eaa862', E: '#e2b43a', P: '#0c0a08', W: '#ffffff',
+const TORTIE = { K: '#1c1714', k: '#3a2a1e', O: '#a37b54', o: '#c9a67c',  // IzzyKat: black, and light brown (not much orange)
+  E: '#e2b43a', P: '#0c0a08', W: '#ffffff',
   N: '#b8645c', I: '#c98a80', m: '#2a1a12' };
 const CAT_FACE = [
   '....#..............#....',
@@ -5675,14 +5707,14 @@ const CAT_FACE = [
   '..####m#m######m#m####..',
 ];
 let catFur = null;
-function tortieFur() {  // her coat: black and orange in patches, flecked through (made once, the same every time)
+function tortieFur() {  // her coat: mostly black, light brown in patches, flecked through (made once, the same every time)
   const W = CAT_FACE[0].length, H = CAT_FACE.length, r = rng(77), blobs = [];
-  for (let i = 0; i < 12; i++) blobs.push({ x: r() * W, y: 4 + r() * (H - 4), rad: 1.5 + r() * 2.5, c: r() < 0.5 ? 'O' : 'K' });
+  for (let i = 0; i < 12; i++) blobs.push({ x: r() * W, y: 4 + r() * (H - 4), rad: 1.5 + r() * 2.5, c: r() < 0.35 ? 'O' : 'K' });
   catFur = [];
   for (let j = 0; j < H; j++) {
     const row = [];
     for (let i = 0; i < W; i++) {
-      let c = i < W / 2 ? 'K' : 'O';  // darker on one side of her face, orange on the other
+      let c = i < W * 0.6 ? 'K' : 'O';  // black on most of her face, light brown on the other side
       for (const b of blobs) if (Math.hypot(i - b.x, (j - b.y) * 1.2) < b.rad) c = b.c;
       if (i >= 11 && i <= 12 && j >= 4 && j <= 11) c = 'o';  // a blaze down her nose
       const f = r(); if (f < 0.14) c = c === 'K' ? 'k' : 'o';
@@ -5739,7 +5771,7 @@ function drawCatScene() {
 }
 function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
-  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene })[scene3.kind]();
+  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -6013,7 +6045,7 @@ function update3(dt) {
     if (R.x <= 0.001 && !P.moving) rockDone();
   }
   const S = scene3;
-  if (S && (S.kind === 'ride' || S.kind === 'cab')) {
+  if (S && (S.kind === 'ride' || S.kind === 'cab' || S.kind === 'drive' || S.kind === 'arrive')) {
     if (S.vGoal != null) S.v += clamp(S.vGoal - S.v, -dt * 30, dt * 30);
     if (S.brakeTo != null) S.v = Math.min(S.v, Math.sqrt(2 * 20 * Math.max(0, S.brakeTo - S.dist)));
     S.dist += S.v * dt;
@@ -6025,7 +6057,7 @@ async function level3(k) {
   if (k) choice = k;
   if (!choice) choice = 'dog';
   buildLevel3();
-  for (const id of ['end', 'end2', 'end3', 'pick', 'title']) $(id).hidden = true;
+  for (const id of ['end', 'end2', 'end3', 'end4', 'pick', 'title']) $(id).hidden = true;
   closeBox(); box.resolve = null; box.ask = null;
   level = 3; useArea('club1');
   lock = 1; phase = 'l3intro'; vista = null; night = null; battle = null; panels(false); hud(null);
@@ -6284,7 +6316,7 @@ async function catInWindow() {  // inside the U-Haul, close up: the cat in the w
   if (!musicOn) musicStart();
   await fadeTo(0, 0.8);
   await wait(1.6);
-  await say(['Inside the U-Haul, a tortoiseshell cat is looking out the window at you.', 'Waiting.']);
+  await say(['Inside the U-Haul, IzzyKat, a tortoiseshell cat, is looking out the window at you.', 'Waiting.']);
   await wait(1.4);
   await say(['The final chapter.']);
   await fadeTo(1, 1.0);
@@ -6294,7 +6326,7 @@ function finish3() {
   phase = 'done3'; scene3 = null; lock = 0; hud(null);
   $('end3Text').textContent = 'You fell off Palisade Head with Brudda Blaine, rode a salmon down the Mississippi to Playa del Carmen, ' +
     'crossed the bridge over the bay to the bouncing club, found Shawn and Karill in the club maze, woke up in Akumal as Brudda ' +
-    'Blaine, found Braydon, left Shawn to the mosquitoes, and rode back up to Lake Itasca, where a tortoiseshell cat waits in the ' +
+    'Blaine, found Braydon, left Shawn to the mosquitoes, and rode back up to Lake Itasca, where IzzyKat, a tortoiseshell cat, waits in the ' +
     'U-Haul. The deer still have Isabella. Next: the final chapter, West, in the U-Haul.';
   $('end3').hidden = false;
 }
@@ -6321,6 +6353,232 @@ const JUMP3 = {
   cat: () => catInWindow(),
 };
 
+// ---- level 4: West, in the U-Haul (just begun) ----
+// The final chapter: you, Brudda Blaine and IzzyKat, West in the U-Haul. Through the oil fields (large oil rigs, close
+// and far), past bison, and two horses, one black, one brown, having a slight battle; to Badlands National Park. You
+// park the U-Haul by the river, where sand-like mounds slide down into it and it bends in an S. Next, from your story:
+// whack-a-prairie-dog. (How it all looks is a guess.)
+const DRIVE_SKY = { oil: [[150, 190, 226], [238, 226, 198]], bison: [[138, 186, 228], [232, 230, 204]],
+  horses: [[132, 180, 226], [238, 224, 194]], badlands: [[120, 172, 224], [246, 214, 178]] };
+const DRIVE_FIELD = { oil: ['#b9a96a', '#a8985a'], bison: ['#a9b06c', '#98a05c'], horses: ['#b4a868', '#a49858'], badlands: ['#c4a874', '#b49464'] };
+const BANDS = ['#ecdcc4', '#dcae80', '#c47c58', '#e8cca8', '#b86c4c', '#f0e4d0', '#d0966a'];  // the badlands' stripes
+function pumpjack(x, y, s, ph) {  // a large oil rig, nodding: x, y the middle of its base on the ground; s its size; facing left
+  const S = v => Math.round(v * s), top = y - S(26);
+  ctx.fillStyle = '#3a3a40'; ctx.fillRect(x - S(24), y - Math.max(1, S(3)), S(46), Math.max(1, S(3)));  // the base
+  line(ctx, x - S(7), y - S(3), x, top, '#55555e'); line(ctx, x + S(7), y - S(3), x, top, '#55555e');  // its A-frame
+  if (s > 0.6) line(ctx, x - S(4), y - S(12), x + S(4), y - S(12), '#55555e');
+  const a = Math.sin(ph) * 0.3, L1 = S(23), L2 = S(17);
+  const hx = Math.round(x - Math.cos(a) * L1), hy = Math.round(top + Math.sin(a) * L1);  // the head end (it nods)
+  const bx = Math.round(x + Math.cos(a) * L2), by = Math.round(top - Math.sin(a) * L2);
+  line(ctx, hx, hy, bx, by, '#c4482a'); if (s > 0.5) line(ctx, hx, hy + 1, bx, by + 1, '#9a3420');      // the beam
+  ctx.fillStyle = '#c4482a'; ctx.fillRect(hx - S(3), hy - S(3), Math.max(1, S(4)), Math.max(2, S(10)));  // the horse head
+  line(ctx, hx - S(2), hy + S(7), hx - S(2), y - S(3), '#a8a8b0');                                     // the rod, down the well
+  const cx = x + S(15), cy = y - S(8), ca = ph + Math.PI / 2, kx = Math.round(cx + Math.cos(ca) * S(6)), ky = Math.round(cy + Math.sin(ca) * S(6));
+  ctx.fillStyle = '#3a3a40'; ctx.fillRect(cx - S(3), cy - S(2), Math.max(1, S(6)), Math.max(1, S(7)));  // the gearbox
+  line(ctx, kx, ky, bx, by, '#7a7a84'); disc(ctx, kx, ky, Math.max(1, S(3)), '#2a2a30');               // the arm, the weight
+}
+function derrick(x, y, h) {  // a drilling rig, far off: a lattice tower
+  const w = Math.round(h * 0.2);
+  line(ctx, x - w, y, x, y - h, '#6a6a74'); line(ctx, x + w, y, x, y - h, '#6a6a74');
+  for (let k = 0.2; k < 0.85; k += 0.2) { const a = Math.round(w * (1 - k)), b = Math.round(w * (1 - k - 0.2)); line(ctx, x - a, Math.round(y - h * k), x + b, Math.round(y - h * (k + 0.2)), '#7a7a84'); }
+  px(ctx, x, y - h - 1, '#e8503a');
+}
+function bison(x, y, flip, graze, k) {  // a bison, from the side, facing left unless flip: x, y where its feet are (22 by 14)
+  const q = painter(x - 11, y - 14, 22, flip), hd = graze ? 3 : 0, bob = graze ? Math.round(Math.sin(k * 3)) : 0;
+  q.r(9, 3, 11, 7, '#5a3a24'); q.r(9, 3, 11, 1, '#6a4a30'); q.r(19, 4, 1, 5, '#3a2416');   // the back half; the tail
+  q.r(3, 0, 9, 10, '#3a2416'); q.r(4, -1, 6, 2, '#3a2416'); q.r(5, 0, 5, 1, '#4a3020');        // the hump, shaggy
+  q.r(0, 3 + hd + bob, 5, 5, '#2a1a10'); q.p(1, 2 + hd + bob, '#e8e0d0'); q.p(1, 5 + hd + bob, '#0c0806');  // the head, a horn, an eye
+  q.r(1, 8 + hd + bob, 2, 2, '#2a1a10');                                                     // the beard
+  for (const lx of [4, 8, 13, 17]) q.r(lx, 10, 2, 4, '#2a1a10');                            // legs
+}
+const HORSE = { black: ['#1c1a1e', '#2e2b32', '#0c0b0e'], brown: ['#7a4a26', '#94603a', '#4a2a14'] };
+function horse(x, y, flip, coat, rear, k) {  // a horse, from the side, facing left unless flip: x, y where its feet are
+  const [c, hi, dk] = HORSE[coat], q = painter(x - 12, y - 18, 24, flip);
+  if (!rear) {
+    q.r(6, 7, 14, 6, c); q.r(6, 7, 14, 1, hi);                       // the body
+    q.r(3, 2, 4, 7, c); q.r(5, 4, 3, 4, c); q.r(0, 1, 5, 4, c);       // the neck, the head
+    q.r(4, 1, 3, 6, dk); q.p(1, 2, '#f0e8dc');                        // the mane; an eye
+    for (const [lx, sw] of [[6, 0], [9, 1], [15, 0], [18, 1]]) q.r(lx + (sw && Math.floor(k * 4) % 2 ? 1 : 0), 13, 2, 5, c);  // legs, pawing
+    q.r(20, 8, 2, 6, dk); q.r(21, 13, 2, 2, dk);                      // the tail
+  } else {  // up on its hind legs, front hooves striking out
+    q.r(14, 6, 7, 7, c); q.r(9, 3, 7, 7, c); q.r(7, 1, 5, 5, c);     // the body, rising to the front
+    q.r(5, -4, 4, 6, c); q.r(2, -6, 5, 4, c); q.r(7, -5, 2, 6, dk); q.p(3, -5, '#f0e8dc');  // the neck, head up; the mane
+    const strike = Math.floor(k * 6) % 2;
+    q.r(3, 5 + strike, 4, 2, c); q.r(2, 3 + strike, 2, 3, c);         // a front leg, striking
+    q.r(6, 7 - strike, 3, 2, c); q.r(5, 8 - strike, 2, 3, c);         // the other
+    q.r(15, 13, 2, 5, c); q.r(19, 12, 2, 6, c);                       // hind legs, planted
+    q.r(21, 7, 2, 7, dk);                                             // the tail
+  }
+}
+function drawDrive() {
+  const S = scene3, t = time - S.t0, d = S.dist, seg = S.seg, HZ = 50, RD = 78;
+  gradient(0, HZ, DRIVE_SKY[seg][0], DRIVE_SKY[seg][1]);
+  ctx.fillStyle = 'rgba(255,255,255,.8)';  // clouds, drifting by slowly
+  for (let i = 0; i < 4; i++) { const x = Math.round(wrapX(i * 53 + d * 0.04, VW + 40) - 20), y = 6 + (i * 11) % 22; ctx.fillRect(x, y, 16, 3); ctx.fillRect(x + 4, y - 2, 8, 2); }
+  for (let x = 0; x < VW; x++) {  // far off: low hills, or the badlands, striped
+    const wx = x - d * 0.15;
+    if (seg === 'badlands') {
+      const h = Math.round(10 + Math.abs(Math.sin(wx * 0.07)) * 12 + Math.abs(Math.sin(wx * 0.23)) * 6);
+      for (let y = HZ - h; y < HZ; y++) { ctx.fillStyle = BANDS[wrapX(Math.floor((y + Math.sin(wx * 0.05) * 2) / 3), BANDS.length)]; ctx.fillRect(x, y, 1, 1); }
+    } else { const top = Math.round(HZ - 5 - Math.sin(wx * 0.03) * 3 - Math.sin(wx * 0.11) * 1.5); ctx.fillStyle = '#8a9a7a'; ctx.fillRect(x, top, 1, HZ - top); }
+  }
+  const [f1, f2] = DRIVE_FIELD[seg];
+  ctx.fillStyle = f1; ctx.fillRect(0, HZ, VW, RD - HZ);
+  ctx.fillStyle = f2; for (let i = 0; i < 30; i++) { const y = HZ + 2 + (i * 7) % (RD - HZ - 2), x = Math.round(wrapX(i * 37 + d * (0.4 + (y - HZ) / 40), VW + 10) - 5); ctx.fillRect(x, y, 4 + i % 3, 1); }
+  const at = (wx, k = 1) => Math.round(wx + d * k);  // where something on the ground is, on screen, as you drive past
+  if (seg === 'oil') {
+    for (let i = 0; i < 6; i++) { const x = Math.round(wrapX(i * 47 + d * 0.22, VW + 60) - 30); derrick(x, HZ + 1, 16 + (i * 7) % 12); }
+    for (let i = 0; i < 5; i++) { const x = Math.round(wrapX(i * 61 + 20 + d * 0.3, VW + 60) - 30); pumpjack(x, HZ + 4, 0.35, time * 2.2 + i); }
+    for (let i = 0; i < 4; i++) { const x = Math.round(wrapX(i * 83 + 10 + d * 0.55, VW + 80) - 40); pumpjack(x, HZ + 14, 0.6, time * 2 + i * 1.7); }
+    for (const wx of S.rigs) { const x = at(wx); if (x > -40 && x < VW + 40) pumpjack(x, RD - 2, 1, time * 1.8 + wx); }
+  } else if (seg === 'bison') {
+    for (const b of S.herd) { const x = at(b.wx, b.k); if (x > -20 && x < VW + 20) bison(x, b.y, b.flip, (time + b.wx) % 5 < 3.5, time + b.wx); }
+  } else if (seg === 'horses') {
+    const x = at(S.horseAt), k = (t % 2.6) / 2.6;
+    const r1 = k > 0.15 && k < 0.5, r2 = k > 0.4 && k < 0.8;  // they take turns going up at each other
+    horse(x - 11, 70, true, 'black', r1, time); horse(x + 11, 70, false, 'brown', r2, time + 0.5);
+    for (const [on, hx] of [[r1, x - 6], [r2, x + 6]]) if (!on) { ctx.fillStyle = 'rgba(220,200,160,.5)'; ctx.fillRect(hx - 3 + Math.floor(time * 6) % 3, 69, 3, 1); }  // a little dust
+  } else if (seg === 'badlands') {
+    for (let i = 0; i < 3; i++) {  // closer, bigger buttes, striped
+      const cx = Math.round(wrapX(i * 70 + 30 + d * 0.45, VW + 80) - 40);
+      for (let x = cx - 18; x < cx + 18; x++) {
+        const h = Math.round(Math.max(0, 22 - Math.abs(x - cx) * 0.9 + Math.sin(x * 0.9) * 1.5));
+        for (let y = HZ + 6 - h; y < HZ + 6; y++) { ctx.fillStyle = BANDS[wrapX(Math.floor(y / 2) + i, BANDS.length)]; ctx.fillRect(x, y, 1, 1); }
+      }
+    }
+    const x = at(S.signAt);
+    if (x > -60 && x < VW + 60) { ctx.fillStyle = '#5a3a22'; ctx.fillRect(x - 20, 58, 2, 16); ctx.fillRect(x + 18, 58, 2, 16); signBoard(ctx, 'BADLANDS', x, 52, '#5a3a22', '#f4efe6', '#3a2414'); signBoard(ctx, 'NATIONAL PARK', x, 62, '#5a3a22', '#f4efe6', '#3a2414'); }
+  }
+  ctx.fillStyle = '#4a4a50'; ctx.fillRect(0, RD, VW, 12);  // the road, its lines going by
+  ctx.fillStyle = '#e8e4da'; ctx.fillRect(0, RD, VW, 1); ctx.fillRect(0, RD + 11, VW, 1);
+  ctx.fillStyle = '#e8c84a'; for (let i = 0; i < 9; i++) ctx.fillRect(Math.round(wrapX(i * 20 + d, VW + 20) - 10), RD + 6, 9, 1);
+  const bob = S.v > 3 && Math.floor(time * 9) % 2 ? 1 : 0;
+  uHaul(50, RD - 24 - bob);  // you three: Brudda Blaine driving, you, and IzzyKat in the window
+  ctx.fillStyle = '#7a8a46'; ctx.fillRect(0, RD + 12, VW, VH - RD - 12);  // the near verge: grass, fence posts flying by
+  for (let i = 0; i < 7; i++) { const x = Math.round(wrapX(i * 26 + d * 1.6, VW + 26) - 13); ctx.fillStyle = '#6a4a2a'; ctx.fillRect(x, RD + 14, 2, 8); ctx.fillStyle = '#8a8a8a'; ctx.fillRect(x - 13, RD + 16, 26, 1); }
+}
+// at the river, in the Badlands, from above: red clay, striped mounds sliding down into the river, which bends in an S
+let riverCanvas = null;
+const riverX = y => 112 + Math.round(Math.sin(y * 0.045 + 0.4) * 24);  // the middle of the river, row by row
+function paintRiver() {
+  riverCanvas = document.createElement('canvas'); riverCanvas.width = VW; riverCanvas.height = VH;
+  const g = riverCanvas.getContext('2d'), r = rng(404);
+  g.fillStyle = '#b8643e'; g.fillRect(0, 0, VW, VH);
+  for (let i = 0; i < 260; i++) px(g, Math.floor(r() * VW), Math.floor(r() * VH), ['#a8562e', '#c87850', '#b06040'][i % 3]);
+  for (const [mx, my, rad, side] of [[86, 14, 13, 0], [140, 30, 12, 1], [90, 62, 14, 0], [148, 86, 13, 1], [80, 112, 12, 0], [138, 132, 12, 1], [26, 24, 10, 2], [20, 120, 11, 2]]) {
+    for (let y = -rad; y <= rad; y++) { const w = Math.round(Math.sqrt(rad * rad - y * y) * 1.25); g.fillStyle = 'rgba(70,30,14,.35)'; g.fillRect(mx - w + 3, my + y + 3, w * 2, 1); }  // its shadow
+    for (let k = rad; k > 0; k -= 2) {  // a mound: rings of stripes, stacked up like a cone, its edge slumping into the water
+      const c = BANDS[(rad - k) / 2 % BANDS.length | 0], up = Math.round((rad - k) * 0.35);
+      for (let y = -k; y <= k; y++) { const w = Math.round(Math.sqrt(k * k - y * y) * 1.25); g.fillStyle = c; g.fillRect(mx - w - up, my + y - up, w * 2, 1); }
+    }
+  }
+  for (let y = 0; y < VH; y++) {  // the river, bending in an S; sandy edges
+    const cx = riverX(y);
+    g.fillStyle = '#e2c89a'; g.fillRect(cx - 12, y, 24, 1);
+    g.fillStyle = '#6a8a7a'; g.fillRect(cx - 9, y, 18, 1);
+    g.fillStyle = '#7a9a86'; g.fillRect(cx - 5, y, 8, 1);
+  }
+  for (let i = 0; i < 40; i++) {  // dune grass, in tufts
+    const x = Math.floor(r() * 70), y = Math.floor(r() * VH);
+    for (let k = 0; k < 3; k++) line(g, x + k, y + 3, x + k * 2 - 1, y, k % 2 ? '#a8a84a' : '#8a9a3a');
+  }
+  g.fillStyle = '#9a5434'; for (let x = 0; x < 64; x++) g.fillRect(x, 70 + Math.round(Math.sin(x * 0.1)), 1, 9);  // the track in
+}
+function uHaulTop(x, y) {  // the U-Haul, from above, facing right: x, y the top-left of 50 by 18
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+  f(2, 3, 50, 16, 'rgba(0,0,0,.25)');
+  f(0, 0, 36, 18, '#f4f1ea'); f(0, 0, 36, 2, '#e8782a'); f(0, 16, 36, 2, '#e8782a'); f(35, 0, 1, 18, '#c8c4bc');  // the box
+  f(37, 2, 13, 14, '#f4f1ea'); f(44, 3, 4, 12, '#3c5a6e'); f(45, 4, 1, 4, '#8fb0c4'); f(37, 2, 13, 2, '#e8782a');  // the cab, the windshield
+  f(48, 1, 2, 2, '#2a2a2e'); f(48, 15, 2, 2, '#2a2a2e');                                                        // mirrors
+}
+function drawArrive() {
+  const S = scene3, d = S.dist;
+  if (!riverCanvas) paintRiver();
+  ctx.drawImage(riverCanvas, 0, 0);
+  ctx.fillStyle = 'rgba(255,255,255,.45)';  // the river, flowing
+  for (let i = 0; i < 14; i++) { const y = Math.round(wrapX(i * 11 + time * 14, VH)); ctx.fillRect(riverX(y) - 3 + (i % 3) * 2, y, 3, 1); }
+  const x = Math.round(-54 + d), y = 66;  // the U-Haul drives in along the track, and parks by the river
+  uHaulTop(x, y);
+  if (S.outT) {  // the doors open: Brudda Blaine, and you, step out (IzzyKat stays in the cab)
+    const k = clamp((time - S.outT) / 0.8, 0, 1);
+    drawBlaine(x + 38, y + 18 + Math.round(k * 6), 'down', k < 1 ? 1 + Math.floor(time * 8) % 2 : 0);
+    drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], x + 20, y + 20 + Math.round(k * 6), ROT.down, false, k < 1 ? Math.floor(time * 8) % 2 : 0);
+  }
+}
+async function level4(k) {
+  if (k) choice = k;
+  if (!choice) choice = 'dog';
+  for (const id of ['end', 'end2', 'end3', 'end4', 'pick', 'title']) $(id).hidden = true;
+  closeBox(); box.resolve = null; box.ask = null;
+  level = 4; lock = 1; phase = 'cut'; vista = null; night = null; battle = null; panels(false); hud(null);
+  Object.assign(B, { here: false, mode: 'off', playing: false, decks: false, path: [] });
+  Object.assign(smoke, { t0: -999, branch: -999, haze: false }); Object.assign(rain, { on: false, heavy: false, level: 0 });
+  P.mount = null; P.blaine = false; blur(false); P.hidden = true; sugarMeter(null); L3.bl = null;
+  fade.tween = null; fade.v = 1; $('fade').style.opacity = 1;
+  musicStop(); scene3 = null;
+  const jump = JUMP4[new URLSearchParams(location.search).get('at')];  // for checks: start part way along
+  if (jump) { jump(); return; }
+  driveWest();
+}
+async function driveWest() {
+  phase = 'cut';
+  scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [-30, -150, -260, -400, -520] };
+  musicStart();
+  await fadeTo(0, 1.0);
+  await say(['The final chapter.', 'West, in the U-Haul: you, Brudda Blaine, and IzzyKat.']);
+  await wait(1.2);
+  await say(['Oil fields. Large oil rigs, close and far.']);
+  await wait(2.5);
+  await fadeTo(1, 0.6);
+  Object.assign(scene3, { seg: 'bison', dist: 0, herd: [-20, -70, -95, -160, -230, -260].map((wx, i) => ({ wx, k: i % 2 ? 0.75 : 1, y: i % 2 ? 64 : 74, flip: i === 2 })) });
+  await fadeTo(0, 0.6);
+  await wait(1.0);
+  await say(['Bison, right by the road.']);
+  await wait(2.2);
+  await horses();
+}
+async function horses() {
+  await fadeTo(1, 0.6);
+  const stop = 150; Object.assign(scene3, { seg: 'horses', dist: 0, v: 38, vGoal: 38, brakeTo: stop, horseAt: 24 - stop });
+  await fadeTo(0, 0.6);
+  await wait(3.2);
+  await say(['Two horses, one black, one brown, having a slight battle.']);
+  await wait(2.4);
+  scene3.brakeTo = null; scene3.vGoal = 38;
+  await wait(1.6);
+  await badlands();
+}
+async function badlands() {
+  await fadeTo(1, 0.6);
+  const stop = 170; Object.assign(scene3, { seg: 'badlands', dist: 0, v: 38, vGoal: 38, brakeTo: null, signAt: 30 - stop });
+  await fadeTo(0, 0.6);
+  await wait(3.8);
+  await say(['Badlands National Park.']);
+  await wait(0.6);
+  await fadeTo(1, 0.8);
+  scene3 = { kind: 'arrive', t0: time, dist: 0, v: 26, vGoal: 26, brakeTo: 84, outT: 0 };
+  await fadeTo(0, 0.8);
+  await wait(3.6);
+  await say(['You park the U-Haul by the river.', 'Sand-like mounds slide down into it, and the river bends in an S.']);
+  scene3.outT = time; thump(0.05);
+  await wait(1.2);
+  await say(['The ground is red, like clay.']);
+  await wait(0.6);
+  finish4();
+}
+function finish4() {
+  phase = 'done4'; lock = 0; hud(null);  // (the river stays on screen, behind)
+  $('end4Text').textContent = 'You drove West in the U-Haul with Brudda Blaine and IzzyKat, through the oil fields, past bison ' +
+    'and two horses having a slight battle, to Badlands National Park, and parked by the river. Next, from your story: ' +
+    'whack-a-prairie-dog.';
+  $('end4').hidden = false;
+}
+const JUMP4 = {  // for checks: ?level=4&at=...
+  bison: () => { driveWest(); },
+  horses: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); horses(); },
+  badlands: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); badlands(); },
+};
+
 // ---- input: the pad, the A button, and the keyboard ----
 const held = []; let padDir = null;
 const curDir = () => padDir || held[held.length - 1] || null;
@@ -6330,7 +6588,7 @@ function pressA() {
   if (wrap) { spinSilk(); return; }
   if (box.active) { boxA(); return; }
   if (phase === 'push' && !lock) { pushRock(); return; }  // level 3: helping push the boulder
-  if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2' || phase === 'done3') return;
+  if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2' || phase === 'done3' || phase === 'done4') return;
   interact();
 }
 const KEYDIR = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' };
@@ -6380,12 +6638,12 @@ $('over').addEventListener('click', () => { location.href = location.pathname; }
 let pickLevel = 2;
 function showPick(from, lv = 2) {
   fromPanel = from; pickLevel = lv; $(from).hidden = true; $('pick').hidden = false;
-  $('pickTitle').textContent = lv === 3 ? 'Level 3: Mexico' : 'Level 2: the North Shore';
+  $('pickTitle').textContent = { 2: 'Level 2: the North Shore', 3: 'Level 3: Mexico', 4: 'Level 4: West' }[lv];
 }
 $('next').addEventListener('click', e => { e.currentTarget.blur(); audio(); level2(); });
 $('skip').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('title'); });
 for (const b of document.querySelectorAll('#pick [data-tick]'))
-  b.addEventListener('click', e => { e.currentTarget.blur(); audio(); (pickLevel === 3 ? level3 : level2)(b.dataset.tick); });
+  b.addEventListener('click', e => { e.currentTarget.blur(); audio(); ({ 2: level2, 3: level3, 4: level4 })[pickLevel](b.dataset.tick); });
 $('pickBack').addEventListener('click', e => { e.currentTarget.blur(); $('pick').hidden = true; $(fromPanel).hidden = false; });
 $('again2').addEventListener('click', e => { e.currentTarget.blur(); audio(); level2(); });
 $('another2').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('end2', 2); });
@@ -6395,6 +6653,11 @@ $('next2').addEventListener('click', e => { e.currentTarget.blur(); audio(); lev
 $('again3').addEventListener('click', e => { e.currentTarget.blur(); audio(); level3(); });
 $('another3').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('end3', 3); });
 $('over3').addEventListener('click', () => { location.href = location.pathname; });
+$('skip4').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('title', 4); });
+$('next3').addEventListener('click', e => { e.currentTarget.blur(); audio(); level4(); });
+$('again4').addEventListener('click', e => { e.currentTarget.blur(); audio(); level4(); });
+$('another4').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('end4', 4); });
+$('over4').addEventListener('click', () => { location.href = location.pathname; });
 const muteBtn = $('mute');
 muteBtn.classList.toggle('off', muted);
 muteBtn.addEventListener('click', () => {
@@ -6712,6 +6975,7 @@ placeCase();
   const q = new URLSearchParams(location.search), lv = q.get('level');
   if (lv === '2') { if (TICKS[q.get('tick')]) level2(q.get('tick')); else showPick('title', 2); }
   if (lv === '3') { if (TICKS[q.get('tick')]) level3(q.get('tick')); else showPick('title', 3); }
+  if (lv === '4') { if (TICKS[q.get('tick')]) level4(q.get('tick')); else showPick('title', 4); }
 }
 let last = performance.now();
 function frame(now) {
@@ -6763,7 +7027,7 @@ window.__sketch = {
   get scene() { return scene3 ? scene3.kind + (scene3.seg ? ':' + scene3.seg : '') : null; },
   get l3() { return { shawn: L3.shawn, karillSeen: L3.karillSeen, karill: L3.karill, restaurant: L3.restaurant, found: L3.found,
     rock: L3.rock.x, rockDone: L3.rock.done, yells: L3.yells, steps: L3.steps, blaine: !!P.blaine }; },
-  get ended3() { return !$('end3').hidden; },
+  get ended3() { return !$('end3').hidden; }, get ended4() { return !$('end4').hidden; },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
   get vistaState() { return vista ? { flag: !!vista.flag, latch: !!vista.latch, ride: !!vista.ride, fall: !!vista.fall, splash: !!vista.splash,
