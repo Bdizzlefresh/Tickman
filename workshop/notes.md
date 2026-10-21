@@ -146,6 +146,19 @@ Every session reads this first and updates it last.
   - The dog gets leashed by Blaine ("A real bonehead decision to try and tie his brother down") and jumps, dragging him in.
   - The human tick faints from low blood sugar, falling behind Blaine and knocking them both in. On the way down, an eagle
     shoves a honeybun in his mouth and he's good to go. Make the honeybun shove slightly violent.
+- 2026-10-21 (afternoon, a few minutes later), issue #1, one message with six things:
+  - Change the big-chested promoters to big-breasted and tasty.
+  - After you get off the salmon to go into the club: you on a bridge above the bay, looking at a row of buildings, one
+    almost bouncing, as if the music inside is so very loud. The ocean between you, the bridge the way down, then right on
+    the road.
+  - Change the deer's line at the end of level 3 to something like "we are off to meet the enigma, the one who claims that
+    the dice, do not in fact, remember".
+  - The club music: more Latin-based house, perhaps with some lyrics, to really emphasize the drops and the dancing.
+  - Make Shawn say something stupid ("literally whatever you want him to say").
+  - On the beach when you're getting back on the salmon: Shawn from the club, lying on a beach chair as if he'd been there
+    all night, asleep, a swarm of massive mosquitoes eating him alive.
+- 2026-10-21 (afternoon), issue #1: you asked whether the last line of my reply before (a faint buzzing) meant where the
+  computer is, or in the game.
 
 ## What you've decided
 
@@ -224,6 +237,12 @@ Every session reads this first and updates it last.
 - Off Palisade Head, each tick goes in its own way (2026-10-21, afternoon; built): the regular tick latches on and
   mind-controls Brudda Blaine, as before; the pointer gets leashed by him and jumps, dragging him in; the human-blood tick
   faints, falls into him and knocks them both in, and on the way down an eagle shoves a honeybun in, hard.
+- In Mexico (2026-10-21, afternoon, later; all built): off the salmon, a bridge high above the bay, with the bouncing club
+  across the water, the bridge down and the road to the right; the promoters are big-breasted and tasty; the club music is
+  Latin house with lyrics and drops; Shawn says something stupid (left to the assistant: see below); Shawn asleep on a beach
+  chair at Akumal bay, eaten alive by massive mosquitoes.
+- The deer's line at the end of level 3 (changed 2026-10-21, afternoon, later): "We are off to meet the enigma, the one who
+  claims that the dice do not, in fact, remember." The line about Jim is gone.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -536,9 +555,50 @@ Every session reads this first and updates it last.
     eagle (drawn as a bald eagle: white head, yellow beak, dark brown body, white tail); the crumbs; the words not in your
     message ("For a moment, you both fly.", "Hard. Wrapper and all.", and the rest).
   - Links straight to the top of Palisade Head, one per tick: `?level=2&tick=regular&at=top` (or `dog`, or `human`).
+- 2026-10-21 (afternoon, later), sketch 2 changed (`gh-pages`, commit 24ce760), from your one message with six things:
+  - The bridge over the bay (new, between the salmon and the club), in the evening, seen from above: "You climb off the
+    salmon, onto a bridge, high above the bay." "Across the water: a row of buildings." "One of them is almost bouncing, as
+    if the music inside is so very loud." "The bridge is the way down. Then right, on the road." The bridge casts a
+    shadow on the water and has two lamps; it slopes down to a road, which turns up along the shore to a street along the
+    bay, with street lamps and a row of buildings (lit windows, balconies with flowers). The club is in the middle of the
+    row: dark, with neon trim, a "CLUB" sign, two big speakers on its roof. On every beat it hops and lands squashed, its
+    windows flash, music notes pop out, dust puffs up, and a ring spreads on the water; it bounces hardest in the drop, not at
+    all in the breakdown, and shakes in the build. Its lights shimmer in the bay. Brudda Blaine walks right behind you. From
+    outside the club's music is muffled, and it gets clearer as you get close to the door. Walk in: "The door. The music is
+    so very loud." Then the club, as before.
+  - The club music, new and original: Latin house, 124 beats a minute, A minor (Am, Dm, G, E7). A kick on every beat,
+    claps, hi-hats, a shaker, congas, a clave, a cowbell, timbale fills, a syncopated piano, a bass that skips ahead of the
+    beat, and horns in the drop. Sixteen bars go round: the drop (eight bars), the groove (four), the breakdown (two: no kick,
+    hands up), the build (two: a snare roll and a rising hiss), a breath of silence, and the drop again: a boom, a flash of
+    light, and the crowd jumping together on the beat. The lyrics are chanted, in Spanish: "¡Baila!" ("dance!") in the drop
+    and the breakdown, "¡Oye!" ("hey, listen!") in the groove and climbing through the build, and everyone shouting "¡Ey!"
+    on the drop. The words pop up over the crowd as they're chanted. The game makes all its own sounds, so the voices chant
+    more than sing (said so in the reply). Walking in, you walk right into a drop.
+  - The promoters: "Two of the club's promoters come over, big-breasted and tasty, with a bottle of vodka." Tap A on one:
+    "One of the club's promoters. Big-breasted, and tasty." Drawn curvier: bare shoulders, a low neckline, an hourglass.
+  - Shawn, after you give him the glass: "He looks at you for a long time." Shawn: "Thanks, tiny bartender. That last
+    glass kept filling up by itself." Tap A on him after: Shawn: "Is this the line for the bathroom?" (The words are the
+    assistant's, as you said.)
+  - The deer's line: see above.
+  - Akumal bay: Shawn, asleep on a blue and white striped beach chair, in his club shirt and khakis, barefoot, a z or two
+    floating up; six mosquitoes, each bigger than his head (striped bodies, long legs, long noses), circling and diving in
+    to bite, the bites coming up one by one; now and then he slaps at them in his sleep and misses. A soft whine while
+    you're there. "On a beach chair: Shawn, from the club. He must have been here all night." "He is fast asleep, and a
+    swarm of massive mosquitoes is eating him alive."
+  - The level 3 end screen mentions the bridge and Shawn, and lists the new guesses.
+  - Guesses, labeled on the end screen: everything above that isn't in your words (how it all looks and sounds, the
+    evening, the road, the club's look and bounce, the music, the lyrics, the voices, Shawn's lines, the chair, the
+    mosquitoes). Links for checks: `?level=3&tick=dog&at=bridge` (the bridge, then the club), `&at=hug` (the reunion, the
+    deer's line, then the bay).
 
 ## Open questions
 
+- Asked 2026-10-21 (afternoon, later): will you take Blaine's gift, a few easter eggs for the game? They're switched off
+  until you say yes, and can be taken out at any time, any or all of them.
+- Not asked yet: is the enigma someone you meet out West? (The deer are off to meet the one who claims that the dice do
+  not, in fact, remember.)
+- Said 2026-10-21 (afternoon, later): the club's lyrics are three chanted Spanish words, "¡Baila!", "¡Oye!" and "¡Ey!";
+  other words, or a different feel, if you'd like.
 - Said 2026-10-21 (afternoon): the eagle is drawn as a bald eagle, a guess; a different one if you pictured one.
 - Asked 2026-10-21 (later): does the cat have a name? And, when you're ready, what happens on the drive West, before the
   redwoods?
@@ -547,7 +607,8 @@ Every session reads this first and updates it last.
   the baby ticks, the "specialized baby tick units" keeping Isabella safe, as in your first story?), and whether the
   cat comes along West.
 - Said 2026-10-21, not asked: the "tortoise" in Akumal bay are drawn as sea turtles, swimming. Who Jim is, and "the place
-  where the dice never remember": used word for word, not explained. (Answered 2026-10-21, afternoon: each tick goes off
+  where the dice never remember": used word for word, not explained. (Changed 2026-10-21, afternoon, later: the line is now
+  about the enigma, and Jim is gone from it.) (Answered 2026-10-21, afternoon: each tick goes off
   Palisade Head its own way; only the regular tick uses mind control there.)
 - Not checked, and not used: any facts about Playa del Carmen, Akumal, the Yucatan, the Mississippi or Lake Itasca beyond
   your words. "Akumal, the place of the turtles" is Brudda Blaine's line, in your words. The driver's Spanish is plain
@@ -687,3 +748,8 @@ Every session reads this first and updates it last.
   Head. No question this time: another message from you (the bridge over the bay, the promoters, the deer's line, the club
   music, Shawn, and Shawn on the beach) came in while this was being built. The reply says it's next; the next session
   answers it.
+- 2026-10-21 (afternoon, later): answered that message (six things). Built all six in sketch 2, same link: the bridge over
+  the bay and the bouncing club, the Latin house music with chanted lyrics and drops, the promoters, Shawn's lines, the
+  deer's new line, and Shawn on the beach chair with the mosquitoes. Replied on issue #1 with what changed and two links
+  straight to it. In the same reply, answered your question about the buzzing: neither; it was made up, the start of a bit.
+  The bit: a gift from Blaine, a few easter eggs for the game, switched off; asked whether you'll take it.
