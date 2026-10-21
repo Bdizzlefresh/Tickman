@@ -242,7 +242,7 @@ a { color:var(--accent); }
     <p class="small">Guesses in level 3: the salmon ride (how it looks, the signs on the bank); the bridge over the bay
       (in the evening), the row of buildings, how the club looks and bounces, the way down the bridge and along the road,
       and the music heard from outside; the club, and both maze floors (the crowd as the walls, the bar, the booths, the
-      railing); how Shawn, Karill and the promoters look; what Shawn says (all but your two lines); the dance floor after the blackout (your dancing, the confetti); the club music (original Latin house, with
+      railing); how Shawn, Karill and the promoters look; what Shawn says (all but your two lines); the dance floor after the blackout (your dancing, the confetti); the strip club, and Patrick's lap dance (how it all looks, and "He doesn't know where to put his hands."); the club music (original Latin house, with
       drops, and voices chanting "¡Baila!", "¡Oye!" and "¡Ey!", made by the game itself); the cab and the bridge, and
       the driver's Spanish; Akumal, and its maze;
       the music there (original, a guitar); how Brudda Blaine looks on foot, and his yell; the restaurant; the
@@ -4531,7 +4531,7 @@ const KARILL = { x: 13, y: 2 }, PROMOS = [{ x: 12, y: 2, k: 0 }, { x: 14, y: 2, 
 const BRAYDON = { x: 15, y: 1 }, ROCK_FROM = { x: 3, y: 10 };
 let built3 = false, scene3 = null;
 const NEVER = -1e9;  // a moment that hasn't happened
-const L3 = { dance: false, shawn: false, shawnSaid: 0, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
+const L3 = { peeked: false, dance: false, shawn: false, shawnSaid: 0, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
   steps: 0, yells: 0, yellT: NEVER, restaurant: false, rock: { x: 3, goal: 3, met: false, done: false },
   locals: [], found: false, bl: null, said: NEVER };
 
@@ -4919,7 +4919,7 @@ function paintTownWhole() {
   for (const wx of [X + 3, X + 19]) { g.fillStyle = '#2d3f52'; g.fillRect(wx, Y + 21, 9, 7); g.fillStyle = '#8a5a2a'; g.fillRect(wx, Y + 28, 9, 1); }
 }
 // ---- painting the bridge over the bay, in the evening (how it all looks is a guess) ----
-const PLAYA_BLDG = [[0, 2], [2, 1], [3, 1], [7, 2], [9, 1], [10, 2]];  // the row of buildings: first column, how wide
+const PLAYA_BLDG = [[0, 2], [2, 1], [3, 1], [9, 1], [10, 2]];  // the row of buildings: first column, how wide (7-8: the strip club)
 const DECK_H = [8, 8, 8, 8, 8, 8, 6, 4, 2, 0];  // how high the bridge is over the water, column by column (down to the road)
 function playaWater(g, x, y, tx, ty) {
   const deep = ty >= 6;
@@ -4977,6 +4977,7 @@ function paintPlayaWhole() {
     g.fillStyle = '#3a3a40'; g.fillRect(lx, 2 * TS + 7, 1, 5);
     disc(g, lx, 2 * TS + 6, 3, 'rgba(255,220,140,.3)'); px(g, lx, 2 * TS + 6, '#fff2c0');
   }
+  paintStripClub(g);
   // the row of buildings along the bay: flat roofs, then their fronts, lit up for the evening
   for (const [c0, w] of PLAYA_BLDG) {
     const X = c0 * TS, W = w * TS, [c, d] = HOUSE_COLS[(c0 * 5 + 1) % HOUSE_COLS.length], r = rng(c0 * 41 + 9);
@@ -5773,9 +5774,70 @@ function drawCatScene() {
   }
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, 9); ctx.fillRect(0, VH - 9, VW, 9);
 }
+// the strip club, right before the club on the street (cols 7 and 8): you peer in, and see a groom to be, Patrick,
+// getting a lap dance, incredibly uncomfortable. A close-up through its window. (How it all looks is a guess.)
+const STRIP = { x: 7, w: 2 };
+function paintStripClub(g) {  // its front: dark, blacked-out windows glowing pink, a neon sign
+  const X = STRIP.x * TS, W = STRIP.w * TS;
+  g.fillStyle = '#2a1830'; g.fillRect(X, 0, W, 16); g.fillStyle = '#3a2442'; g.fillRect(X, 0, W, 1); g.fillRect(X, 14, W, 2);  // a flat roof
+  g.fillStyle = '#1e1226'; g.fillRect(X, 16, W, 16); g.fillStyle = '#ff4fa8'; g.fillRect(X, 16, W, 1); g.fillRect(X, 31, W, 1);
+  g.fillStyle = '#0c0812'; g.fillRect(X + 2, 17, W - 4, 7); signText(g, 'GIRLS', X + 6, 18, '#ff8ad0');  // the sign
+  for (const wx of [X + 3, X + 22]) { g.fillStyle = '#3a0a2a'; g.fillRect(wx, 25, 7, 5); g.fillStyle = 'rgba(255,79,168,.45)'; g.fillRect(wx + 1, 26, 5, 3); }  // windows
+  g.fillStyle = '#0c0812'; g.fillRect(X + 13, 24, 6, 8); g.fillStyle = '#c8102e'; g.fillRect(X + 12, 31, 8, 1);  // the door, a red rope
+}
+function drawPeek() {  // through the window: the back wall, the banner, Patrick on a chair, the dancer in front of him
+  const t = time - scene3.t0, f = (x, y, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
+  gradient(14, 96, [74, 18, 52], [36, 10, 30]);
+  for (let i = 0; i < 3; i++) {  // stage lights, pink and purple
+    const x = 40 + i * 40 + Math.sin(t * 1.3 + i) * 10, gr = ctx.createRadialGradient(x, 30, 1, x, 30, 26);
+    gr.addColorStop(0, i % 2 ? 'rgba(160,90,255,.35)' : 'rgba(255,79,168,.35)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = gr; ctx.fillRect(x - 26, 4, 52, 52);
+  }
+  signBoard(ctx, 'CONGRATS PATRICK', 80, 22, '#f4efe6', '#c8102e', '#8a6a3a');  // a banner on the back wall
+  const sh = Math.floor(t * 14) % 2 ? 1 : 0;  // Patrick: trembling
+  f(56, 66, 48, 4, '#3a2a22'); f(58, 70, 3, 26, '#2a1e18'); f(99, 70, 3, 26, '#2a1e18');  // the chair
+  f(66 + sh, 52, 28, 22, '#f4f1ea'); f(78 + sh, 52, 4, 16, '#2a3a6a');                   // his shirt, a loosened tie
+  for (let i = 0; i < 18; i++) f(68 + sh + i, 53 + i, 3, 2, '#e8d8a8');                    // a sash, groom to be
+  f(70 + sh, 32, 20, 20, '#f0c8a0'); f(70 + sh, 30, 20, 5, '#5a3a20'); f(70 + sh, 30, 3, 9, '#5a3a20');  // his head, his hair
+  const look = Math.sin(t * 5) > 0 ? 1 : -1;  // eyes wide, darting
+  for (const ex of [74, 82]) { f(ex + sh, 38, 5, 5, '#ffffff'); f(ex + sh + 2 + look, 39, 2, 2, '#1a1410'); }
+  f(75 + sh, 46, 10, 2, '#ffffff'); f(75 + sh, 45, 10, 1, '#8a3a2a'); f(75 + sh, 48, 10, 1, '#8a3a2a');  // a clenched grin
+  f(69 + sh, 40, 1, 3, '#e0a888'); f(90 + sh, 40, 1, 3, '#e0a888');
+  const up = Math.floor(t * 1.5) % 2;  // his hands, up, then out: he doesn't know where to put them
+  f(56 + sh, up ? 36 : 50, 10, 4, '#f4f1ea'); f(52 + sh, up ? 33 : 49, 5, 5, '#f0c8a0');
+  f(94 + sh, up ? 36 : 50, 10, 4, '#f4f1ea'); f(103 + sh, up ? 33 : 49, 5, 5, '#f0c8a0');
+  for (let i = 0; i < 4; i++) {  // sweat, flying off him
+    const k = (t * 1.4 + i * 0.25) % 1, side = i % 2 ? 1 : -1;
+    ctx.globalAlpha = 1 - k; f(80 + side * (10 + k * 14), 34 - k * 6 + k * k * 18, 2, 3, '#bfe6ff'); ctx.globalAlpha = 1;
+  }
+  const sway = Math.sin(t * 3.2) * 6, dx = 80 + sway;  // the dancer, her back to you, swaying
+  f(dx - 7, 46, 14, 26, '#1a1210');                                    // long dark hair, down her back
+  f(dx - 8, 60, 16, 22, '#d9a07a'); f(dx - 8, 64, 16, 2, '#ff8ad0');   // her back, the strap of her top
+  for (let i = 0; i < 6; i++) f(dx - 7 + i * 3, 64, 1, 2, '#ffffff');  // sparkles on it
+  f(dx - 10 + sway * 0.3, 80, 20, 8, '#ff8ad0'); f(dx - 10 + sway * 0.3, 80, 20, 1, '#ffd0ea');  // sparkly bottoms
+  f(dx - 8, 88, 6, 8, '#d9a07a'); f(dx + 2, 88, 6, 8, '#d9a07a');      // legs
+  // the window frame around it all, half-drawn blinds at the top
+  ctx.fillStyle = '#1e1226'; ctx.fillRect(0, 0, 20, VH); ctx.fillRect(140, 0, 20, VH); ctx.fillRect(0, 0, VW, 14); ctx.fillRect(0, 96, VW, VH - 96);
+  for (let y = 14; y < 19; y += 3) { f(20, y, 120, 2, '#c8b8a8'); f(20, y + 2, 120, 1, '#8a7a6a'); }
+  ctx.fillStyle = '#ff4fa8'; ctx.fillRect(18, 12, 124, 2); ctx.fillRect(18, 96, 124, 2); ctx.fillRect(18, 12, 2, 86); ctx.fillRect(140, 12, 2, 86);
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, 9); ctx.fillRect(0, VH - 9, VW, 9);
+}
+async function peekIn() {
+  L3.peeked = true; lock++; phase = 'scene'; hud(null); P.facing = 'up';
+  await say(['A strip club, right before the club.', 'You peer in.']);
+  await fadeTo(1, 0.4);
+  scene3 = { kind: 'peek', t0: time };
+  await fadeTo(0, 0.4);
+  await wait(0.9);
+  await say(['A groom to be, Patrick, is getting a lap dance.', 'He is incredibly uncomfortable.', "He doesn't know where to put his hands."]);
+  await wait(0.4);
+  await fadeTo(1, 0.4);
+  scene3 = null;
+  await fadeTo(0, 0.4);
+  hud('Into the bouncing building'); phase = 'playa'; lock--;
+}
 function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
-  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive })[scene3.kind]();
+  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -5944,6 +6006,7 @@ function arrive3() {
   const ch = tile(P.tx, P.ty);
   if (area === 'playa' && phase === 'playa') {
     if (ch === 'K') { inTheDoor(); return; }
+    if (ch === 's' && !L3.peeked && (P.tx === 7 || P.tx === 8)) { peekIn(); return; }
     if (ch === 's') hud('Into the bouncing building');
     return;
   }
@@ -5985,6 +6048,7 @@ function interact3() {
     const b = L3.bl;
     if (b && Math.round(b.x) === fx && Math.round(b.y) === fy) { say(['Brudda Blaine, right behind you.']); return; }
     const on = tile(P.tx, P.ty), high = on === '=' || on === 'd';
+    if (ch === 'h' && fx >= STRIP.x && fx < STRIP.x + STRIP.w) { if (fy === 1 && L3.peeked) peekIn(); else say(['A strip club, right before the club.']); return; }
     const words = { w: high ? 'The bay, a long way down.' : 'The bay.', h: 'A row of buildings along the bay, lit up for the evening.',
       C: "The building that's almost bouncing. The music inside is so very loud.", K: 'The door. The music is so very loud.',
       y: 'Sand, and palms.', '#': 'The bridge, back the way you came.' }[ch];
@@ -6070,7 +6134,7 @@ async function level3(k) {
   closeBox(); box.resolve = null; box.ask = null;
   level = 3; useArea('club1');
   lock = 1; phase = 'l3intro'; vista = null; night = null; battle = null; panels(false); hud(null);
-  Object.assign(L3, { dance: false, shawn: false, shawnSaid: 0, floor2: false, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
+  Object.assign(L3, { peeked: false, dance: false, shawn: false, shawnSaid: 0, floor2: false, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
     steps: 0, yells: 0, yellT: NEVER, restaurant: false, found: false, bl: null, said: NEVER });
   Object.assign(L3.rock, { x: ROCK_FROM.x, goal: ROCK_FROM.x, met: false, done: false });
   L3.locals = [{ kind: 0, dx: -1, min: 1 }, { kind: 1, dx: 0, min: 2 }, { kind: 2, dx: 1, min: 3 }]
