@@ -280,7 +280,8 @@ a { color:var(--accent); }
       U-Haul from above, and IzzyKat's new colors. In whack-a-prairie-dog: the field, the nine holes, how the prairie
       dogs look, how each tick whacks (the regular tick latching on and using one as a weapon; Lyme disease, blood sugar
       and the honeybun, and sensing the next one; the pointer's point, the freeze, and the hunter), the jump-yip waves,
-      twelve to win, the ending, and all the timing. In the search for IzzyKat: how it all looks and sounds; the open
+      twelve to win, the ending, and all the timing. The long view of the prairie dog town: how it looks (the mounds, near and far, how the prairie dogs pop up, the
+      one that pops up right in front at the end), the chirps, and how long it lasts. In the search for IzzyKat: how it all looks and sounds; the open
       door; the gummies in a thought bubble, and the haze; the pointer's nose and the scent; the regular tick up a stalk
       of dune grass, and what it feels as warm (Brudda Blaine, then a rock in the sun); the rings of "Pss, pss, pss", and
       who comes; the rock, and the beetle under it; Brudda Blaine's yell by the river; the purr; and the close-up of her
@@ -5841,7 +5842,7 @@ async function peekIn() {
 }
 function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
-  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder })[scene3.kind]();
+  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -6129,6 +6130,7 @@ function update3(dt) {
   }
   if (S && S.kind === 'field') updateField(dt);  // level 4: whack-a-prairie-dog
   if (S && (S.kind === 'search' || S.kind === 'under')) updateSearch(dt);  // and the search for IzzyKat
+  if (S && S.kind === 'dogtown') updateDogTown();  // the long view of the prairie dog town
 }
 
 // ---- level 3: the scenes ----
@@ -6664,7 +6666,108 @@ async function badlands() {
   await wait(1.2);
   await say(['The ground is red, like clay.']);
   await wait(0.6);
+  await dogTown();
   await prairie();
+}
+
+// ---- level 4: a long view of a prairie dog town, between parking by the river and whack-a-prairie-dog (your ask).
+// A wide landscape, seen from the side, letterboxed like a film; the view pans slowly across it. Prairie dogs pop up
+// out of their mounds and duck back down, near and far, all over the town. At the end, one pops up right in front,
+// and looks at you. Then into the field. (How it all looks and sounds is a guess.) ----
+const TOWN_W = 480, TOWN_PAN = 9, TOWN_HZ = 56;  // how wide the view is; how long the pan takes; the horizon
+const TOWN_ROWS = [0.04, 0.12, 0.22, 0.34, 0.48, 0.64, 0.82, 1];  // rows of mounds, far to near (1: the nearest)
+let townMounds = null;
+function buildTown() {  // where the mounds are, row by row, and when each prairie dog pops up (the same every time)
+  const r = rng(919); townMounds = [];
+  for (const d of TOWN_ROWS) {
+    const par = 0.25 + 0.75 * d, span = VW + (TOWN_W - VW) * par, gap = 18 + 56 * d;
+    for (let wx = -10 + r() * gap; wx < span + 10; wx += gap * (0.7 + r() * 0.6))
+      townMounds.push({ d, par, wx, y: Math.round(TOWN_HZ + 3 + Math.pow(d, 1.5) * 64), s: 0.2 + 0.8 * d,
+        per: 2.4 + r() * 3, ph: r() * 6, up: 0.6 + r() * 1.8, n: -1 });
+  }
+}
+function dogUp(m) {  // how far up it is: 0 down in its hole, 1 standing up tall
+  const c = (time + m.ph) % m.per;
+  return c < 0.15 ? c / 0.15 : c < m.up ? 1 : c < m.up + 0.15 ? 1 - (c - m.up) / 0.15 : 0;
+}
+function townCam() { const S = scene3; return ease(clamp((time - S.t0 - 0.4) / TOWN_PAN, 0, 1)) * (TOWN_W - VW); }
+async function dogTown() {
+  await fadeTo(1, 0.8);
+  if (!townMounds) buildTown();
+  scene3 = { kind: 'dogtown', t0: time, star: null, chirpAt: 0 };
+  await fadeTo(0, 0.8);
+  await wait(TOWN_PAN + 0.4);
+  scene3.star = time; chirp(0.03);  // one pops up, right in front, and looks at you
+  await wait(2.2);
+}
+function updateDogTown() {  // a chirp now and then, as the near ones pop up
+  const S = scene3, cam = townCam();
+  for (const m of townMounds) {
+    if (m.d < 0.6) continue;
+    const n = Math.floor((time + m.ph) / m.per), x = m.wx - cam * m.par;
+    if (n !== m.n) { if (m.n >= 0 && x > 0 && x < VW && time >= S.chirpAt) { chirp(0.006 + m.d * 0.01); S.chirpAt = time + 0.35; } m.n = n; }
+  }
+}
+function drawTownDog(x, base, s, h) {  // a prairie dog popping up out of its hole, at size s (1: as in the field)
+  if (h <= 0) return;
+  if (s >= 0.99) {  // the nearest: the same as in the field
+    ctx.save(); ctx.beginPath(); ctx.rect(x - 6, base - 16, 12, 16); ctx.clip();
+    drawGrid(PD, PD_PAL, x - 5, Math.round(base - 15 * h), false); ctx.restore(); return;
+  }
+  const H = Math.max(2, Math.round(15 * s)), W = Math.max(2, Math.round(9 * s)), v = Math.max(1, Math.round(H * h)), top = base - v, x0 = Math.round(x - W / 2);
+  ctx.fillStyle = '#b98a56'; ctx.fillRect(x0, top, W, v);
+  ctx.fillStyle = '#7a5432'; ctx.fillRect(x0, top, W, 1);
+  if (W >= 4 && v > H * 0.5) { ctx.fillStyle = '#e6cc98'; ctx.fillRect(x0 + Math.floor(W / 4), Math.round(top + H * 0.5), Math.ceil(W / 2), Math.round(v - H * 0.5)); }
+  if (s >= 0.45 && v > H * 0.3) { ctx.fillStyle = '#1a120c'; ctx.fillRect(x0 + 1, top + Math.max(1, Math.round(H * 0.15)), 1, 1); ctx.fillRect(x0 + W - 2, top + Math.max(1, Math.round(H * 0.15)), 1, 1); }
+}
+function drawDogTown() {
+  const S = scene3, cam = townCam(), HZ = TOWN_HZ, BOT = VH - 12;
+  if (!townMounds) buildTown();
+  gradient(12, HZ, [120, 172, 224], [246, 214, 178]);  // the sky
+  ctx.fillStyle = 'rgba(255,255,255,.8)';
+  for (let i = 0; i < 5; i++) { const x = Math.round(wrapX(i * 71 - cam * 0.05, VW + 40) - 20), y = 18 + (i * 13) % 20; ctx.fillRect(x, y, 18, 3); ctx.fillRect(x + 5, y - 2, 8, 2); }
+  for (let x = 0; x < VW; x++) {  // the badlands, far off, striped
+    const wx = x + cam * 0.12, h = Math.round(8 + Math.abs(Math.sin(wx * 0.06)) * 10 + Math.abs(Math.sin(wx * 0.21)) * 5);
+    for (let y = HZ - h; y < HZ; y++) { ctx.fillStyle = BANDS[wrapX(Math.floor((y + Math.sin(wx * 0.05) * 2) / 3), BANDS.length)]; ctx.fillRect(x, y, 1, 1); }
+  }
+  gradient(HZ, BOT, [206, 158, 116], [184, 100, 62]);  // the plain: red clay, hazier far off
+  for (const d of TOWN_ROWS) {  // row by row, far to near: dune grass, then the mounds and their prairie dogs
+    const par = 0.25 + 0.75 * d, y = Math.round(HZ + 3 + Math.pow(d, 1.5) * 64), s = 0.2 + 0.8 * d;
+    for (let i = 0; i < 9; i++) {
+      const x = Math.round(wrapX(i * 37 + d * 50 - cam * par, VW + 20) - 10), hh = Math.max(1, Math.round(5 * s));
+      for (let k = 0; k < 3; k++) line(ctx, x + k, y + 1, x + k * 2 - 1, y + 1 - hh, ['#a8a84a', '#8a9a3a', '#b8b65a'][k]);
+    }
+    for (const m of townMounds) {
+      if (m.d !== d) continue;
+      const x = Math.round(m.wx - cam * par); if (x < -20 || x > VW + 20) continue;
+      const mw = Math.max(2, Math.round(13 * s)), mh = Math.max(1, Math.round(4 * s));
+      for (let j = 0; j <= mh; j++) { const w = Math.round(mw * Math.sqrt(1 - (j / (mh + 0.5)) ** 2)); ctx.fillStyle = j > mh * 0.5 ? '#dc9a6a' : '#cc8456'; ctx.fillRect(x - w, y - j, w * 2, 1); }
+      const hw = Math.max(1, Math.round(4 * s)); ctx.fillStyle = '#2a120a'; ctx.fillRect(x - hw, y - mh, hw * 2, Math.max(1, Math.round(s * 1.5)));
+      drawTownDog(x, y - mh + 1, s, dogUp(m));
+    }
+  }
+  // right in front, at the end: one pops up and looks at you (twice the size), blinking
+  const fx = 104, fy = BOT - 2;
+  for (let j = 0; j <= 7; j++) { const w = Math.round(26 * Math.sqrt(1 - (j / 7.5) ** 2)); ctx.fillStyle = j > 3 ? '#dc9a6a' : '#cc8456'; ctx.fillRect(fx - w, fy - j, w * 2, 1); }
+  ctx.fillStyle = '#2a120a'; ctx.fillRect(fx - 9, fy - 7, 18, 3);
+  if (S.star != null) {
+    const k = clamp((time - S.star) / 0.25, 0, 1), blink = (time - S.star) % 1.6 > 1.45, pal = blink ? Object.assign({}, PD_PAL, { e: '#b98a56' }) : PD_PAL;
+    ctx.save(); ctx.beginPath(); ctx.rect(fx - 12, fy - 40, 24, 34); ctx.clip();
+    PD.forEach((row, j) => { for (let i = 0; i < row.length; i++) { const c = pal[row[i]]; if (!c) continue; ctx.fillStyle = c; ctx.fillRect(fx - 10 + i * 2, Math.round(fy - 6 - 30 * k) + j * 2, 2, 2); } });
+    ctx.restore();
+  }
+  for (let i = 0; i < 7; i++) {  // dune grass, close up, going by
+    const x = Math.round(wrapX(i * 31 - cam * 1.3, VW + 30) - 15);
+    for (let k = 0; k < 5; k++) line(ctx, x + k, BOT, x + k * 3 - 6, BOT - 12 + Math.abs(k - 2) * 2, ['#a8a84a', '#8a9a3a', '#b8b65a', '#7a8a34', '#9aa448'][k]);
+  }
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, 12); ctx.fillRect(0, BOT, VW, 12);  // letterboxed, like a film
+}
+function chirp(v = 0.012) {  // a prairie dog's chirp: short, high
+  if (!ac || muted) return;
+  const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  o.type = 'triangle'; o.frequency.setValueAtTime(1800, t); o.frequency.exponentialRampToValueAtTime(2600, t + 0.05); o.frequency.exponentialRampToValueAtTime(1700, t + 0.12);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.16);
 }
 
 // ---- level 4: whack-a-prairie-dog. A big sandy field, red like clay, dune grass around it; nine holes, and prairie dogs
@@ -7439,8 +7542,8 @@ function purrBreath(v = 0.09) {  // one breath of a purr: a soft, low rumble, fl
 function finish4() {
   phase = 'done4'; lock = 0; hud(null);  // (the last scene stays on screen, behind)
   $('end4Text').textContent = 'You drove West in the U-Haul with Brudda Blaine and IzzyKat, through the oil fields, past bison ' +
-    'and two horses having a slight battle, to Badlands National Park, and parked by the river. Then whack-a-prairie-dog, ' +
-    'in the big field of red clay: twelve whacked, and the prairie dogs had enough. Back at the U-Haul, the door was left ' +
+    'and two horses having a slight battle, to Badlands National Park, and parked by the river. Then a long view across a ' +
+    'prairie dog town, and whack-a-prairie-dog, in the big field of red clay: twelve whacked, and the prairie dogs had enough. Back at the U-Haul, the door was left ' +
     'open, and IzzyKat was gone. You searched, under a rock and by the river, and decided she was gone. Then, a purr: she ' +
     'was under the U-Haul, as if nothing happened. Next, from your story: on the road again, to Yellowstone.';
   $('end4').hidden = false;
@@ -7450,6 +7553,7 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   bison: () => { driveWest(); },
   horses: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); horses(); },
   badlands: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); badlands(); },
+  town: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; musicStart(); dogTown().then(prairie); },
   search: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; phase = 'cut'; musicStart(); searchIzzy(); },
 };
 
