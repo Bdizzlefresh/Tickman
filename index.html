@@ -97,7 +97,7 @@ a { color:var(--accent); }
 <body>
 <div id="app">
   <div id="top">
-    <span id="badge">Tickman &middot; sketch 2 &middot; levels 1 and 2<br>a sketch to react to, not the game</span>
+    <span id="badge">Tickman &middot; sketch 2 &middot; levels 1, 2 and 3<br>a sketch to react to, not the game</span>
     <button id="mute" aria-label="Sound on or off" title="Sound">&#9834;</button>
   </div>
   <div id="screen">
@@ -128,16 +128,17 @@ a { color:var(--accent); }
 <div id="title" class="panel">
   <div class="card">
     <h1>Tickman</h1>
-    <div class="sub">Level 1: the apartment &middot; Level 2: the North Shore</div>
+    <div class="sub">Level 1: the apartment &middot; Level 2: the North Shore &middot; Level 3: Mexico</div>
     <p>A sketch from your story, to react to. It's not the game. Anything your story didn't say is a guess.</p>
     <p><b>How to play:</b> move with the arrows under the screen. Tap <b>A</b> to look at things, and to read on.</p>
-    <div class="btns"><button class="btn" id="start">Start</button><button class="btn alt" id="skip">Skip to level 2</button></div>
+    <div class="btns"><button class="btn" id="start">Start</button></div>
+    <div class="btns"><button class="btn alt" id="skip">Skip to level 2</button><button class="btn alt" id="skip3">Skip to level 3</button></div>
   </div>
 </div>
 
 <div id="pick" class="panel" hidden>
   <div class="card">
-    <h2>Level 2: the North Shore</h2>
+    <h2 id="pickTitle">Level 2: the North Shore</h2>
     <p>Which tick did you eat?</p>
     <div class="pickbtns">
       <button class="btn" data-tick="regular">The regular tick</button>
@@ -155,13 +156,14 @@ a { color:var(--accent); }
     <p><b>The levels, from your story:</b></p>
     <ol>
       <li>The apartment: a spider's life, Phil, three ticks, Isabella taken. <i>(Level 1, in this sketch.)</i></li>
-      <li>The North Shore of Lake Superior: your mount (a naked mole rat, the tangerine vespa, or the zoomies),
-        Brudda Blaine, three camps, a fight between each, and the climb up Palisade Head. <i>(Level 2, in this
-        sketch.)</i></li>
-      <li>The coffee roaster, the first boss.</li>
-      <li>The second boss: the crumbling American middle class and high rent gouging.</li>
-      <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
+      <li>The North Shore of Lake Superior: your mount, Brudda Blaine, three camps, a fight between each, the pizza
+        joint, the climb up Palisade Head, and the fall. <i>(Level 2, in this sketch.)</i></li>
+      <li>Mexico: a salmon down the Mississippi, the club maze in Playa del Carmen, the cab, Akumal, and back up to
+        Lake Itasca. <i>(Level 3, in this sketch.)</i></li>
+      <li>West, in the U-Haul: the final chapter.</li>
     </ol>
+    <p class="small">Not placed yet: the coffee roaster (the first boss); the second boss (the crumbling American
+      middle class and high rent gouging); the cornfield by the woods (waves of deer, the great charge, the egg sack).</p>
     <p class="small">Guesses in this sketch: the bugs, how the wrapping works (how fast to tap, how hard each bug wriggles,
       how a wrapped bug looks), the futon's colors, the rest of the apartment, the view outside, how Phil,
       Isabella, the ticks and the deer look (the red bandanas too), how she blows the kiss, how the deer take her, how
@@ -187,11 +189,13 @@ a { color:var(--accent); }
     <ol>
       <li>The apartment: a spider's life, Phil, three ticks, Isabella taken. <i>(Level 1, in this sketch.)</i></li>
       <li>The North Shore of Lake Superior: your mount, Brudda Blaine, three camps, a fight between each, the pizza
-        joint, and the climb up Palisade Head. <i>(Level 2, in this sketch.)</i></li>
-      <li>The coffee roaster, the first boss.</li>
-      <li>The second boss: the crumbling American middle class and high rent gouging.</li>
-      <li>The cornfield by the woods: waves of deer, the great charge, and the egg sack.</li>
+        joint, the climb up Palisade Head, and the fall. <i>(Level 2, in this sketch.)</i></li>
+      <li>Mexico: a salmon down the Mississippi, the club maze in Playa del Carmen, the cab, Akumal, and back up to
+        Lake Itasca. <i>(Level 3, in this sketch.)</i></li>
+      <li>West, in the U-Haul: the final chapter.</li>
     </ol>
+    <p class="small">Not placed yet: the coffee roaster (the first boss); the second boss (the crumbling American
+      middle class and high rent gouging); the cornfield by the woods (waves of deer, the great charge, the egg sack).</p>
     <p class="small">Guesses in level 2: the whole map (the path, the woods, the rocky shore, where things sit); the
       apartment door and its mat; how the naked mole rat, the vespa (drawn as a scooter) and the zoomies look, and how
       fast each goes; how Brudda Blaine's bicycle looks; the camps (the fire, his decks); at the first camp, how the
@@ -201,13 +205,51 @@ a { color:var(--accent); }
       screen, like Pokémon Red, a move each turn), your moves, and all the numbers; how the Gales of November look (a
       storm cloud with a face, blowing) and what they do; how the Edmund Fitzgerald looks (a made-up look, not drawn from
       the real ship) and what it does; the gull you latch onto at the ship; the hunter, and how he looks; the
-      road up through giant trees; and the view from the top.</p>
+      road up through giant trees; the view from the top; the stoner talk at the falls (the words); the Mexican flag,
+      the mariachi music (original); and how the flight off Palisade Head goes, and the fall.</p>
     <div class="btns">
-      <button class="btn" id="again2">Ride level 2 again</button>
+      <button class="btn" id="next2">On to level 3</button>
+    </div>
+    <div class="btns">
+      <button class="btn alt" id="again2">Ride level 2 again</button>
     </div>
     <div class="btns">
       <button class="btn alt" id="another2">Try another tick</button>
       <button class="btn alt" id="over2">Start over</button>
+    </div>
+    <p class="small">What's right, and what's wrong? Reply to GitHub's email, or write on
+      <a href="https://github.com/Bdizzlefresh/Tickman/issues/1" target="_blank" rel="noopener">GitHub</a>.</p>
+  </div>
+</div>
+
+<div id="end3" class="panel" hidden>
+  <div class="card">
+    <h2>Level 3 done</h2>
+    <p id="end3Text"></p>
+    <p><b>The levels, from your story:</b></p>
+    <ol>
+      <li>The apartment: a spider's life, Phil, three ticks, Isabella taken. <i>(Level 1, in this sketch.)</i></li>
+      <li>The North Shore of Lake Superior: your mount, Brudda Blaine, three camps, a fight between each, the pizza
+        joint, the climb up Palisade Head, and the fall. <i>(Level 2, in this sketch.)</i></li>
+      <li>Mexico: a salmon down the Mississippi, the club maze in Playa del Carmen, the cab, Akumal, and back up to
+        Lake Itasca. <i>(Level 3, in this sketch.)</i></li>
+      <li>West, in the U-Haul: the final chapter.</li>
+    </ol>
+    <p class="small">Not placed yet: the coffee roaster (the first boss); the second boss (the crumbling American
+      middle class and high rent gouging); the cornfield by the woods (waves of deer, the great charge, the egg sack).</p>
+    <p class="small">Guesses in level 3: the salmon ride (how it looks, the signs on the bank); the club, and both maze
+      floors (the crowd as the walls, the bar, the booths, the railing); how Shawn, Karill and the promoters look; the
+      club music (original, a reggaeton beat); the cab and the bridge, and the driver's Spanish; Akumal, and its maze;
+      the music there (original, a guitar); how Brudda Blaine looks on foot, and his yell; the restaurant; the
+      boulder, the locals and how the pushing works; the archway, the man on the roof, and Braydon with his beer; the
+      reunion and its music; the deer's instruments, and the mariachi music (original); the bay, the coral and the
+      turtles (drawn as sea turtles); Lake Itasca, and the U-Haul (orange and white, no logo).</p>
+    <div class="btns">
+      <button class="btn" id="again3">Play level 3 again</button>
+    </div>
+    <div class="btns">
+      <button class="btn alt" id="another3">Try another tick</button>
+      <button class="btn alt" id="over3">Start over</button>
     </div>
     <p class="small">What's right, and what's wrong? Reply to GitHub's email, or write on
       <a href="https://github.com/Bdizzlefresh/Tickman/issues/1" target="_blank" rel="noopener">GitHub</a>.</p>
@@ -759,7 +801,9 @@ function musicBegin() {
   const style = musicStyle || STYLES[choice] || STYLES.dog;
   const out = ac.createGain(); out.gain.value = muted ? 0 : MUSIC_VOL * style.gain;
   const comp = ac.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 3;
-  out.connect(comp); comp.connect(ac.destination);
+  if (style.cut) { const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = style.cut; out.connect(lp); lp.connect(comp); }
+  else out.connect(comp);
+  comp.connect(ac.destination);
   const pump = ac.createGain(); pump.connect(out);  // the chords and the bass dip under each kick
   let verb = null;
   if (style.verb) {
@@ -783,10 +827,14 @@ function musicTick() {
   }
 }
 function musicStep(n, t) {
-  const S = mus.style, bar = Math.floor(n / 16), s = n % 16, ch = S.chords[Math.max(0, bar - 1) % S.chords.length];
+  const S = mus.style, bar = Math.floor(n / 16), s = n % 16, ch = S.chords ? S.chords[Math.max(0, bar - 1) % S.chords.length] : null;
   const phrase = (bar - 1) % 8;  // eight bars to a phrase, after the first bar
   if (S.kind === 'hip') hipStep(S, ch, bar, s, t, mus.six);
   else if (S.kind === 'view') viewStep(S, n, t, mus.six);
+  else if (S.kind === 'mari') mariStep(S, n, t, mus.six);      // level 3: mariachi,
+  else if (S.kind === 'club') clubStep(S, n, t, mus.six);      // the club,
+  else if (S.kind === 'town') townStep(S, n, t, mus.six);      // Akumal,
+  else if (S.kind === 'reunion') reunionStep(S, n, t, mus.six);  // and finding Braydon
   else if (S === STYLES.regular) spookyStep(ch, bar, s, t, mus.six, phrase);
   else if (S === STYLES.human) gazeStep(ch, bar, s, t, mus.six, phrase);
   else pointerStep(ch, bar, s, t, mus.six, phrase);
@@ -1282,6 +1330,7 @@ function playerCam() { const [x, y] = ppos(); return camAt(x + 8, y + 8); }
 const tickAt = (x, y) => ticksIn ? ORDER.find(k => k !== choice && TICKS[k].x === x && TICKS[k].y === y) : undefined;
 function walkable(x, y) {
   if (level === 2) return walkable2(x, y);
+  if (level === 3) return walkable3(x, y);
   const ch = tile(x, y);
   if (ch === 'D') return exitOpen;
   return 'HTKS.o'.includes(ch) && !tickAt(x, y) && !isPhil(x, y) && !isCase(x, y) && bugAt(x, y) < 0;
@@ -1543,6 +1592,7 @@ async function tryAnother() {
 // ---- moving and looking ----
 function arrive() {
   if (level === 2) { arrive2(); return; }
+  if (level === 3) { arrive3(); return; }
   const gi = bugAt(P.tx, P.ty);
   if (gi >= 0) startWrap(gi);
   if (phase === 'window' && P.ty === 8) capture();
@@ -1550,6 +1600,7 @@ function arrive() {
 }
 function interact() {
   if (level === 2) { interact2(); return; }
+  if (level === 3) { interact3(); return; }
   const [dx, dy] = DIRS[P.facing], fx = P.tx + dx, fy = P.ty + dy;
   const gi = bugAt(fx, fy);
   if (gi >= 0) { startWrap(gi); return; }
@@ -1592,7 +1643,7 @@ function interact() {
 }
 const canMove = () => !box.active && !wrap && lock === 0 && !fade.tween && fade.v < 0.5 &&
   !['title', 'intro', 'later', 'capture', 'eating', 'done', 'l2intro', 'mounting', 'camp', 'sleep', 'warp', 'vista', 'done2',
-    'fightin', 'battle'].includes(phase);
+    'fightin', 'battle', 'l3intro', 'cut', 'scene', 'push', 'done3'].includes(phase);
 
 function updatePlayer(dt) {
   if (P.moving) {
@@ -1610,6 +1661,7 @@ function updatePlayer(dt) {
         P.nx = P.tx + dx; P.ny = P.ty + dy; P.t = 0; P.moving = true;
       }
       else if (level === 2) nudge2(P.tx + dx, P.ty + dy);  // level 2: say why you can't go that way, if there's a reason
+      else if (level === 3) bump3(P.tx + dx, P.ty + dy, d);
       else { const gi = bugAt(P.tx + dx, P.ty + dy); if (gi >= 0) startWrap(gi); }  // walk into a bug: start wrapping
     }
   }
@@ -1650,6 +1702,7 @@ function update(dt) {
   }
   updatePlayer(dt);
   if (level === 2) update2(dt);
+  if (level === 3) update3(dt);
   updateActor(isa, dt);
   for (const d of deer) updateActor(d, dt);
   if (pan) {
@@ -1834,6 +1887,7 @@ function drawBundle(b, cx, cy) {
 function draw() {
   if (vista) { drawVista(); return; }
   if (battle) { drawBattle(); return; }
+  if (scene3) { drawScene3(); return; }
   const cx = cam.x, cy = cam.y;
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ctx.drawImage(base, cx, cy, VW, VH, 0, 0, VW, VH);
@@ -1849,6 +1903,7 @@ function draw() {
       }
     }
   if (level === 2) { draw2(cx, cy); return; }
+  if (level === 3) { draw3(cx, cy); return; }
   // daylight under the door, once it is time to go
   if (exitOpen) {
     ctx.globalAlpha = 0.55 + 0.45 * Math.sin(time * 4);
@@ -3044,9 +3099,9 @@ async function level2(k) {
   if (k) choice = k;
   if (!choice) choice = 'dog';
   buildLevel2();
-  for (const id of ['end', 'end2', 'pick', 'title']) $(id).hidden = true;
+  for (const id of ['end', 'end2', 'end3', 'pick', 'title']) $(id).hidden = true;
   closeBox(); box.resolve = null; box.ask = null;
-  level = 2; useArea('route');
+  level = 2; useArea('route'); scene3 = null; P.blaine = false; talker = null;
   lock = 1; phase = 'l2intro'; vista = null; night = null; camps = 0; Object.assign(smoke, { t0: -999, branch: -999, haze: false }); hud(null);
   battle = null; panels(false); pizzaVisited = false; FOES.forEach(F => { F.beaten = false; });
   dance.t0 = -9; dance.camp = -1; fishJumps = []; salmonJumps = [];
@@ -3068,7 +3123,7 @@ async function level2(k) {
              'The goal is simple: camp at three spots along the shore, in your tent.']);
   hud(choice === 'dog' ? 'Follow the path, to the right' : 'Your ride is up the path: tap A on it');
   phase = 'trail'; lock = 0;
-  const at = { camp1: [0, 19], fight1: [1, 30], fight2: [2, 53], climb: [3, 84] }[new URLSearchParams(location.search).get('at')];
+  const at = { camp1: [0, 19], fight1: [1, 30], fight2: [2, 53], climb: [3, 84], camp3: [2, 62], top: [3, 84] }[new URLSearchParams(location.search).get('at')];
   if (at) {  // for checks: start part way along (?at=camp1, fight1, fight2 or climb)
     const [n, x] = at;
     setMount({ regular: 'molerat', human: 'vespa', dog: 'zoomies' }[choice]);
@@ -3076,8 +3131,12 @@ async function level2(k) {
     camps = n; pizzaVisited = n >= 2; FOES.forEach(F => { F.beaten = F.after < n; });
     CAMPS.forEach((C, i) => { if (i < n) Object.assign(C, { done: true, tent: 'packed' }); });
     Object.assign(P, { tx: x, ty: 5, nx: x, ny: 5 }); [cam.x, cam.y] = playerCam(); phase = 'route'; hud(routeHud());
-    if (n === 3) toClimb();
+    if (n === 3 && new URLSearchParams(location.search).get('at') === 'top') {  // (?at=top: straight to the view)
+      useArea('climb'); Object.assign(P, { tx: 7, ty: CLIMB_TOP, nx: 7, ny: CLIMB_TOP, moving: false }); bruddaPlace(7, CLIMB_TOP + 1);
+      [cam.x, cam.y] = playerCam(); overlook();
+    } else if (n === 3) toClimb();
     if (n === 0) camp(0);
+    if (n === 2 && new URLSearchParams(location.search).get('at') === 'camp3') { pizzaVisited = true; FOES[1].beaten = true; camp(2); }
   }
 }
 async function mountUp() {
@@ -3183,8 +3242,36 @@ async function camp(i) {
   await wait(1.2);
   await say([i === 0 ? 'Out of the woods come fairies, elves and animals. They dance.'
                      : 'The fairies, elves and animals come out of the woods again. They dance.']);
+  if (i === 2) await salmonTalk();  // at the falls: the animals and you, on riding salmon
   hud(i === 0 ? 'Night. Tap A on the soggy tarp to sleep' : 'Night. Tap A on the tent to sleep');
   phase = 'night'; lock--;
+}
+// at Gooseberry Falls, once Brudda Blaine starts playing: the animals and you talk about riding salmon, and how that
+// must be impossible, the way a bunch of stoners would: far out. (The words are guesses.)
+let talker = null;  // who's talking: a dancer's kind, 'you', 'all', or no one
+const SALMON_TALK = [
+  [null, 'Salmon keep leaping up the falls, in the firelight.'],
+  ['raccoon', 'Raccoon: "Whoa. Look at them go. Up a waterfall."'],
+  ['you', 'You: "What if you rode one?"'],
+  ['fox', 'Fox: "Ride a salmon? Impossible."'],
+  ['rabbit', 'Rabbit: "But is it, though?"'],
+  ['raccoon', 'Raccoon: "To the salmon, the falls aren\'t going up. The river\'s coming down."'],
+  ['fox', 'Fox: "So who\'s riding who?"'],
+  ['you', 'You: "Whoa."'],
+  ['rabbit', 'Rabbit: "Every river is just a salmon\'s road home, man."'],
+  ['fox', 'Fox: "But where would you even hold on?"'],
+  ['raccoon', 'Raccoon: "You don\'t hold on to the salmon. You hold on to the moment."'],
+  [null, 'A long pause.'],
+  ['all', 'Everyone: "Totally impossible."'],
+];
+async function salmonTalk() {
+  await say(SALMON_TALK.map(([who, t]) => ({ t, fx: () => { talker = who; } })));
+  talker = null;
+}
+function talkBubble(x, y) {  // a little speech bubble, dots going
+  ctx.fillStyle = '#2b2118'; ctx.fillRect(x - 1, y - 1, 11, 7); ctx.fillRect(x + 2, y + 6, 2, 2);
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(x, y, 9, 5); ctx.fillRect(x + 2, y + 5, 1, 1);
+  ctx.fillStyle = '#2b2118'; for (let i = 0; i <= Math.floor(time * 3) % 3; i++) ctx.fillRect(x + 2 + i * 2, y + 2, 1, 1);
 }
 function stepTo(x, facing) {  // in a scene: one step along the row, to x
   return new Promise(res => {
@@ -3235,13 +3322,31 @@ async function overlook() {
   await wait(3.5);
   await say(['Lake Superior, as far as you can see.']);
   await say(['In the distance: the deer, still holding on to Isabella.', 'They are going away from you.']);
-  await say([{ t: "You're inspired, once again, to go on with your journey.", fx: () => { musicStop(); musicStart(); } },
-             'Next: the first boss, the apathetic coffee roaster.']);
+  // mariachi music, drifting back across the water; one of them carries a Mexican flag
+  vista.flag = time; musicStop(); musicStart(MARIACHI_FAR);
+  await wait(2.4);
+  await say(['Mariachi music drifts back across the water.', 'One of the deer is carrying a Mexican flag.']);
+  await say(['You and Brudda Blaine: "It sounds like they\'re heading to Mexico..."']);
+  await say(["You're inspired, once again, to go on with your journey."]);
+  // you latch onto Brudda Blaine, and mind-control him into flying after them. It ends horribly.
+  vista.latch = time; whoosh(0.5, 0.04);
+  await wait(0.8);
+  await say(['You latch onto Brudda Blaine.', { t: 'Mind control: you make him fly after them.', fx: () => { vista.mind = time; } }]);
+  musicStop(); vista.ride = time; bikeBell();
+  await wait(VISTA_RIDE + 0.5);
+  await say(['For a moment, he flies.']);
+  await wait(0.7);
+  vista.fall = time; slideWhistle();
+  await wait(1.75);
+  vista.splash = time; splashSound(0.1);
+  await wait(1.4);
+  await say(['It ends horribly.', 'You and Brudda Blaine fall all the way down, into Lake Superior.']);
   await fadeTo(1, 1.0);
   vista = null; phase = 'done2';
   const how = { regular: 'rode a naked mole rat', human: 'rode the tangerine vespa', dog: 'ran with the zoomies' }[choice];
   $('end2Text').textContent = 'You ' + how + ' up the North Shore with Brudda Blaine, killed the Gales of November, ' +
-    'sank the Edmund Fitzgerald, camped three times, and climbed Palisade Head. The deer still have Isabella. Next: level 3, the coffee roaster.';
+    'sank the Edmund Fitzgerald, camped three times, climbed Palisade Head, and fell off it into Lake Superior. ' +
+    "The deer still have Isabella, and it sounds like they're heading to Mexico. Next: level 3.";
   $('end2').hidden = false;
 }
 
@@ -3815,6 +3920,11 @@ function draw2(cx, cy) {
   }
   late.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
   if (night && dance.camp === CAMPS.indexOf(night) && B.playing) drawFairies(night, cx, cy);
+  if (talker && night) {  // who's talking, at the falls
+    if (talker === 'you' || talker === 'all') talkBubble(Math.round(ppx) - cx + 3, Math.round(ppy) - cy - 9);
+    for (const d of dancersAt(night)) if ((talker === 'all' || d.kind === talker) && time > d.at)
+      talkBubble(Math.round(d.x * TS + 8 - cx) - 4, Math.round(d.y * TS + 14 - cy) - 21);
+  }
   if (area === 'climb') {  // sunlight, slanting down through the giant trees
     ctx.globalCompositeOperation = 'lighter';
     for (let i = 0; i < 3; i++) {
@@ -4021,6 +4131,15 @@ function paintVista() {
   for (let i = 0; i < 40; i++) { const x = 100 + Math.floor(r() * 60), y = edge(x) + 4 + Math.floor(r() * 50); g.fillStyle = ['#5e2a1c', '#9aa86a', '#c99a3a'][i % 3]; g.fillRect(x, y, i % 3 ? 1 : 4, 1); }
   spruce(g, 146, 64, 7); spruce(g, 136, 70, 12, true);
 }
+const VISTA_RIDE = 1.8;  // how long he takes to ride off the edge
+function mxFlag(x, y, k) {  // a little Mexican flag on a pole: green, white, red, an eagle in the middle (very small)
+  ctx.fillStyle = '#5a4a3a'; ctx.fillRect(x - 1, y, 1, 10);
+  for (let i = 0; i < 6; i++) {
+    const w = Math.round(Math.sin(k * 6 + i * 0.8) * 0.8);
+    ctx.fillStyle = i < 2 ? '#006847' : i < 4 ? '#ffffff' : '#ce1126'; ctx.fillRect(x + i, y + w, 1, 4);
+    if (i === 2) { ctx.fillStyle = '#8a5a2a'; ctx.fillRect(x + i, y + 1 + w, 2, 2); }
+  }
+}
 function drawVista() {
   if (!vistaCanvas) paintVista();
   const t = time - vista.t0;
@@ -4046,17 +4165,1401 @@ function drawVista() {
       ctx.fillStyle = '#7a4a28'; ctx.fillRect(x - 1, y - bob, 4, 2); px(ctx, x - 1, y + 2, '#46291a'); px(ctx, x + 2, y + 2, '#46291a');
       px(ctx, x + 3, y - 1 - bob, '#7a4a28'); px(ctx, x + 3, y - 2 - bob, '#d9c7a0'); px(ctx, x + 4, y - 3 - bob, '#d9c7a0');
       px(ctx, x + 2, y - 1 - bob, '#c8102e'); px(ctx, x - 2, y - bob, '#ffffff');
+      if (i === 5 && vista.flag) mxFlag(x + 1, y - 9 - bob, t);  // one of them carries a Mexican flag
     }
   }
-  // you and Brudda Blaine, on the edge, looking out
-  const flipV = true;
-  if (P.mount === 'molerat') { drawGrid(MOLE, MOLE_PAL, 108, 78, flipV); drawGrid(MINI, miniPal(), 112, 73, flipV); }
-  else if (P.mount === 'vespa') { drawVespa(106, 71, flipV, 0); drawGrid(MINI, miniPal(), 112, 69, flipV); }
-  else drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], 108, 70, ROT.left, false, 0);
-  drawBike(126, 59, flipV, 0.6, true);
+  // you and Brudda Blaine, on the edge, looking out. Then you latch onto him, and he rides off the edge after them,
+  // flapping his arms; hangs there a moment, like in an old cartoon; then down he goes, with you, smaller and smaller,
+  // into the lake (how it all looks is a guess)
+  const flipV = true, V = vista;
+  if (P.mount === 'molerat') drawGrid(MOLE, MOLE_PAL, 108, 78, flipV);
+  else if (P.mount === 'vespa') drawVespa(106, 71, flipV, 0);
+  const spot = P.mount === 'molerat' ? [112, 73] : P.mount === 'vespa' ? [112, 69] : [112, 74];
+  const hop = V.latch ? clamp((time - V.latch) / 0.6, 0, 1) : 0;
+  if (!V.latch) { if (P.mount) drawGrid(MINI, miniPal(), spot[0], spot[1], flipV); else drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], 108, 70, ROT.left, false, 0); }
+  const ride = V.ride ? clamp((time - V.ride) / VISTA_RIDE, 0, 1) : 0;
+  let bx = 126 - Math.round(ride * 62), by = 59, sc = 1;
+  if (V.fall) { const k = clamp((time - V.fall) / 1.7, 0, 1); by = 59 + Math.round(k * k * 42); sc = 1 - 0.72 * k; bx += Math.round(k * 4); }
+  const crank = 0.6 + (V.ride ? (time - V.ride) * (V.fall || ride < 1 ? 14 : 22) : 0);
+  if (!V.splash) {
+    ctx.save(); ctx.translate(bx + 11, by + 27); ctx.scale(sc, sc);
+    drawBike(-11, -27, flipV, crank, true);
+    if (V.ride) {  // flapping his arms, like wings
+      const q = painter(-11, -27, 22, flipV), fl = Math.sin(time * 26) > 0 ? -5 : 3;
+      q.l(10, 9, 3, 9 + fl, BB.JK); q.l(11, 9, 19, 9 + fl, BB.JK); q.p(3, 9 + fl, BB.SKIN); q.p(19, 9 + fl, BB.SKIN);
+    }
+    if (hop >= 1) drawGrid(MINI, miniPal(), -7, -33, flipV);  // you, latched on, on top of his head
+    ctx.restore();
+    if (hop < 1 && V.latch) drawGrid(MINI, miniPal(), Math.round(spot[0] + (130 - spot[0]) * hop), Math.round(spot[1] + (53 - spot[1]) * hop - Math.sin(hop * Math.PI) * 10), flipV);
+    if (V.mind && !V.fall) for (let i = 0; i < 3; i++) {  // mind control: rings, going out from you into him
+      const r = ((time - V.mind) * 14 + i * 5) % 15, hx = bx + 11 - 2, hy = by - 3;
+      ctx.globalAlpha = 0.7 * (1 - r / 15); ctx.fillStyle = i % 2 ? '#c86aff' : '#ff8ae0';
+      for (let j = 0; j < 16; j++) { const a = j / 16 * Math.PI * 2; ctx.fillRect(Math.round(hx + Math.cos(a) * r), Math.round(hy + Math.sin(a) * r * 0.7), 1, 1); }
+      ctx.globalAlpha = 1;
+    }
+    if (ride >= 1 && !V.fall && time - V.ride > VISTA_RIDE + 0.9) {  // a moment in the air: he looks down
+      ctx.fillStyle = '#2b2118'; ctx.fillRect(bx + 1, by - 13, 11, 7); ctx.fillStyle = '#ffffff'; ctx.fillRect(bx + 2, by - 12, 9, 5);
+      ctx.fillStyle = '#2b2118'; for (let i = 0; i < 3; i++) ctx.fillRect(bx + 4 + i * 2, by - 10, 1, 1);
+    }
+  } else splash(bx + 11, by + 27, (time - V.splash) / 0.9, 0.7);
   ctx.fillStyle = '#000'; const lb = Math.round(Math.min(1, t / 1.5) * 9);  // a letterbox, like a film
   ctx.fillRect(0, 0, VW, lb); ctx.fillRect(0, VH - lb, VW, lb);
 }
+
+// =====================================================================================================
+// ---- level 3: Mexico ----
+// Up out of Lake Superior, onto a salmon, all the way down the Mississippi, into the Gulf of Mexico, to Playa del
+// Carmen. The club is a maze: up the stairs to find Shawn Farley, a look down at Karill, a different way down to him,
+// a shot of vodka, and everything goes hazy. The cab, shaped like a minivan. Then Akumal, where you are Brudda
+// Blaine, looking for Braydon: past the closed restaurant, the boulder, and the archway at the end. Then you're
+// Braydon again: the reunion, the deer again, Akumal bay, and the salmon back up the Mississippi to Lake Itasca, where
+// a U-Haul is waiting. (The maps, how everything looks and sounds, and any words you didn't write are guesses.)
+// =====================================================================================================
+// the club, floor 1: c the crowd (a wall of people, dancing), B the bar, E the way in, U the stairs up, D the other
+// stairs. Two parts that don't meet: the way in to the stairs up; and the other stairs, up through the crowd to the
+// dance floor, where Karill is.
+const CLUB1 = [
+  '#U###################',
+  '#.........B.........#',
+  '#.ccccccc.B.....ccc.#',
+  '#...c...c.B.......c.#',
+  '#cc.c.ccc.Bcc.c.ccc.#',
+  '#.c.c.c...B...c.c...#',
+  '#.c.c.c.ccB.ccc.c.c.#',
+  '#.....c...B.c...c.c.#',
+  '#.ccccccc.B.c.ccc.c.#',
+  '#...c...c.B...c...c.#',
+  '#cc.c.c.c.B.ccc.cccc#',
+  '#...c.c...B.c...c...#',
+  '#.ccc.ccc.B.c.ccc.c.#',
+  '#...c.c...B.c.....c.#',
+  '#####E#############D#',
+];
+// floor 2: b a long booth along the back wall (S: where Shawn sits), = the railing, v the drop to the dance floor
+const CLUB2 = [
+  '#######bbSbb#######D#vv',
+  '#.....c.........c...=vv',
+  '#.ccc.c.c.ccccc.ccc.=vv',
+  '#...c.c.c...c...c...=vv',
+  '#.c.ccc.ccc.c.ccc.cc=vv',
+  '#.c.c...c.c.c.c.....=vv',
+  '#.c.c.ccc.c.c.ccc.c.=vv',
+  '#.c.......c.c...c.c.=vv',
+  '#cccccccccc.ccc.ccc.=vv',
+  '#.........c.c.c...c.=vv',
+  '#.ccccccc.c.c.ccc.c.=vv',
+  '#.c.........c.......=vv',
+  '#U###################vv',
+];
+// Akumal: . sandy streets, : the square, h and c houses and garden walls, R the restaurant (closed), G the road into
+// town, A the archway, M the building with the man on the roof, # the jungle round the town
+const TOWN = [
+  '############hhAAAMM',
+  '############hhAAAMM',
+  '#...........c:::::#',
+  '#.ccccccccc.c:::::#',
+  '#.c.......c.c:::::#',
+  '#.c.ccc.c.c.ccc.cc#',
+  '#.c.c...c.c...c...#',
+  '#.ccc.ccccccc.ccc.#',
+  '#...c.............#',
+  '#hh.hhRRhhhhhhhhhh#',
+  'G...........c.....#',
+  '#.....ccc.c.ccccc.#',
+  '#.....c.c.c.......#',
+  '#hhhh.c.c.cccccccc#',
+  '#hhhh.c.c.....c...#',
+  '#hhhh.c.ccccc.c.c.#',
+  '#hhhh.......c...c.#',
+  '###################',
+];
+const KARILL = { x: 13, y: 2 }, PROMOS = [{ x: 12, y: 2, k: 0 }, { x: 14, y: 2, k: 1 }], SHAWN = { x: 9, y: 0 };
+const BRAYDON = { x: 15, y: 1 }, ROCK_FROM = { x: 3, y: 10 };
+let built3 = false, scene3 = null;
+const NEVER = -1e9;  // a moment that hasn't happened
+const L3 = { shawn: false, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
+  steps: 0, yells: 0, yellT: NEVER, restaurant: false, rock: { x: 3, goal: 3, met: false, done: false },
+  locals: [], found: false, bl: null, said: NEVER };
+
+// ---- a tiny pixel alphabet for signs, 3 wide and 5 tall ----
+const SIGN_FONT = {
+  A: '.X.X.XXXXX.XX.X', B: 'XX.X.XXX.X.XXX.', C: '.XXX..X..X...XX', D: 'XX.X.XX.XX.XXX.', E: 'XXXX..XX.X..XXX',
+  F: 'XXXX..XX.X..X..', G: '.XXX..X.XX.X.XX', H: 'X.XX.XXXXX.XX.X', I: 'XXX.X..X..X.XXX', J: '..X..X..XX.X.X.',
+  K: 'X.XX.XXX.X.XX.X', L: 'X..X..X..X..XXX', M: 'X.XXXXXXXX.XX.X', N: 'XXXX.XX.XX.XX.X', O: '.X.X.XX.XX.X.X.',
+  P: 'XX.X.XXX.X..X..', Q: '.X.X.XX.XXX..XX', R: 'XX.X.XXX.X.XX.X', S: '.XXX...X...XXX.', T: 'XXX.X..X..X..X.',
+  U: 'X.XX.XX.XX.XXXX', V: 'X.XX.XX.XX.X.X.', W: 'X.XX.XXXXXXXX.X', X: 'X.XX.X.X.X.XX.X', Y: 'X.XX.X.X..X..X.',
+  Z: 'XXX..X.X.X..XXX', '-': '......XXX......',
+};
+function signWidth(s) { let w = -1; for (const ch of s) w += ch === ' ' ? 3 : ch === '!' || ch === '.' ? 2 : 4; return w; }
+function signText(g, s, x, y, c) {
+  g.fillStyle = c;
+  for (const ch0 of s) {
+    if (ch0 === ' ') { x += 3; continue; }
+    if (ch0 === '!' || ch0 === '.') { if (ch0 === '!') g.fillRect(x, y, 1, 3); g.fillRect(x, y + 4, 1, 1); x += 2; continue; }
+    const ch = ch0.normalize('NFD')[0], glyph = SIGN_FONT[ch];
+    if (ch !== ch0) g.fillRect(x + 2, y - 2, 1, 1);  // an accent
+    if (glyph) for (let i = 0; i < 15; i++) if (glyph[i] === 'X') g.fillRect(x + i % 3, y + Math.floor(i / 3), 1, 1);
+    x += 4;
+  }
+}
+function signBoard(g, s, cx, y, board, ink, edge) {  // a board with words on it, centered on cx
+  const w = signWidth(s), x = Math.round(cx - w / 2);
+  g.fillStyle = edge; g.fillRect(x - 3, y - 3, w + 6, 11);
+  g.fillStyle = board; g.fillRect(x - 2, y - 2, w + 4, 9);
+  signText(g, s, x, y, ink);
+}
+
+// ---- Brudda Blaine on foot, seen from above like Pokemon Red (how he looks follows his look on the bicycle) ----
+const BL_PAL = { H: BB.HAIR, S: BB.SKIN, s: BB.SKD, G: '#111111', g: '#9fd8ff', m: '#a5513f', R: BB.PH, J: BB.JK, j: BB.JKL,
+  T: BB.TEE, Y: BB.GOLD, N: BB.JEAN, n: BB.JEAN2, W: BB.SHOE };
+const BL_FRONT = [
+  '................', '.....HHHHHH.....', '....HHHHHHHH....', '....HSSSSSSH....', '....GGgGGGgG....', '....sSSSSSSs....',
+  '.....SSmmSS.....', '....RRSSSSRR....', '...jJJTYYTJJj...', '..JjJJTTTTJJjJ..', '..JjJ.TTTT.JjJ..', '..SS.JJJJJJ.SS..',
+  '.....NNNNNN.....'];
+const BL_BACK = [
+  '................', '.....HHHHHH.....', '....HHHHHHHH....', '....HHHHHHHH....', '....HHHHHHHH....', '....sHHHHHHs....',
+  '.....HHHHHH.....', '....RRRRRRRR....', '...jJJJJJJJJj...', '..JjJJJJJJJJjJ..', '..JjJJjJJjJJjJ..', '..SS.JJJJJJ.SS..',
+  '.....NNNNNN.....'];
+const BL_SIDE = [  // facing right
+  '................', '.....HHHHH......', '....HHHHHHH.....', '....HHHSSSSS....', '....HHHGGGGg....', '....HHsSSSSS....',
+  '.....HSSSSm.....', '......RRSS......', '.....JJJTYJ.....', '....JJjJTTJ.....', '....JJjJTTJ.....', '.....JSJJJJ.....',
+  '......NNNN......'];
+const BL_LEGS = {
+  front: [['.....NN..NN.....', '.....NN..NN.....', '.....WW..WW.....'], ['.....NN..NN.....', '.....WW..NN.....', '.........WW.....']],
+  side: [['......NN.N......', '......NN.NN.....', '......WW.WW.....'], ['.....NN...NN....', '....NN.....NN...', '....WW.....WW...']],
+};
+function drawBlaine(X, Y, facing, step) {  // step: 0 standing, 1 and 2 the two strides
+  const side = facing === 'left' || facing === 'right';
+  const top = facing === 'up' ? BL_BACK : side ? BL_SIDE : BL_FRONT;
+  let legs = BL_LEGS[side ? 'side' : 'front'][step ? 1 : 0];
+  if (!side && step === 2) legs = legs.map(r => [...r].reverse().join(''));
+  if (side && step === 2) legs = BL_LEGS.side[0];
+  ctx.fillStyle = 'rgba(0,0,0,.22)'; ctx.fillRect(X + 4, Y + 14, 8, 2);
+  drawGrid(top.concat(legs), BL_PAL, X, Y, facing === 'left');
+}
+// sitting, seen from the side, facing right (on the salmon): x, y the top-left of 14 by 18
+function drawBlaineSit(x, y, flip) {
+  const q = painter(x, y, 14, flip);
+  q.r(4, 1, 6, 6, BB.SKIN); q.r(4, 0, 6, 2, BB.HAIR); q.r(4, 2, 2, 3, BB.HAIR); q.r(5, -1, 4, 1, BB.HAIR);
+  q.r(7, 3, 4, 1, '#111'); q.p(9, 3, '#9fd8ff'); q.p(9, 5, '#a5513f'); q.p(5, 4, BB.SKD);
+  q.r(5, 7, 4, 1, BB.PH);
+  q.r(3, 8, 6, 6, BB.JK); q.r(7, 8, 2, 5, BB.TEE); q.p(7, 8, BB.GOLD); q.p(8, 9, BB.GOLD); q.r(4, 8, 1, 5, BB.JKL);
+  q.r(8, 10, 4, 2, BB.JK); q.p(12, 11, BB.SKIN); q.p(12, 12, BB.SKIN);
+  q.r(4, 14, 8, 2, BB.JEAN); q.r(10, 15, 2, 3, BB.JEAN2); q.r(10, 18, 3, 1, BB.SHOE);
+}
+
+// ---- the crowd: a wall of people, dancing to the beat (all guesses) ----
+const SKINS = ['#f2caa8', '#e9b48f', '#c98e62', '#a8714a', '#7a4e30'];
+const HAIRS = ['#2a1a10', '#5a3a20', '#d8b060', '#1a1a1a', '#8a4a2a', '#c04a8a'];
+const SHIRTS = ['#e8322a', '#2ac0e8', '#f2c94c', '#7ae82a', '#ff5fae', '#9a5ac0', '#f4f1ea', '#ff8a2a', '#3a3a5a'];
+function person(X, Y, skin, hair, shirt, arms, hop) {  // a dancer, 7 wide and 12 tall; X, Y the top-left
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X + a, Y + b - hop, w, h); };
+  f(1, 0, 5, 2, hair); f(1, 2, 5, 3, skin); f(1, 2, 5, 1, hair); f(2, 3, 1, 1, '#2a1d14'); f(4, 3, 1, 1, '#2a1d14');
+  f(1, 5, 5, 4, shirt);
+  if (arms === 2) { f(0, 0, 1, 5, skin); f(6, 0, 1, 5, skin); }
+  else if (arms === 1) { f(0, 0, 1, 5, skin); f(6, 5, 1, 3, shirt); f(6, 8, 1, 1, skin); }
+  else { f(0, 5, 1, 3, shirt); f(6, 5, 1, 3, shirt); f(0, 8, 1, 1, skin); f(6, 8, 1, 1, skin); }
+  f(2, 9, 1, 3 + hop, '#23232e'); f(4, 9, 1, 3 + hop, '#23232e');
+}
+const clubBeat = () => 60 / CLUB_STYLE.bpm;
+const wrapX = (x, w) => ((x % w) + w) % w;  // x, wrapped into 0..w (never negative)
+function crowdTile(X, Y, tx, ty) {
+  const r = rng(tx * 73 + ty * 151 + 7), b0 = Math.floor(time / clubBeat());
+  for (let k = 0; k < 2; k++) {
+    const skin = SKINS[Math.floor(r() * SKINS.length)], hair = HAIRS[Math.floor(r() * HAIRS.length)];
+    const shirt = SHIRTS[Math.floor(r() * SHIRTS.length)], b = b0 + Math.floor(r() * 4);
+    person(X + 1 + k * 7, Y + 3 - k, skin, hair, shirt, (Math.floor(b / 2) + k) % 3, b % 2 ? 0 : 1);
+  }
+}
+
+// ---- the people you find (how they look is a guess) ----
+// Shawn Farley, on the long booth, throwing up into his glass; after you give him another, it sits beside him
+function drawShawn(X, Y) {  // X, Y: the top-left of his spot on the booth
+  const k = (time % 2.4) / 2.4, retch = k > 0.5 && k < 0.8, bob = retch ? 1 : 0;
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X + a, Y + b, w, h); };
+  f(4, 12, 8, 4, '#c8b088'); f(4, 15, 3, 1, '#5a4030'); f(9, 15, 3, 1, '#5a4030');       // khakis, on the seat
+  f(4, 6, 8, 7, '#8ab4d8'); f(7, 6, 2, 7, '#6a94b8'); f(4, 6, 8, 1, '#a8cce8');           // a button-up shirt
+  f(5, 1 + bob, 6, 6, '#f0c8a0'); f(5, 0 + bob, 6, 2, '#6a4a2a'); f(5, 2 + bob, 1, 2, '#6a4a2a');   // his head, bowed
+  f(6, 5 + bob, 1, 1, '#2b1d14'); f(9, 5 + bob, 1, 1, '#2b1d14');
+  f(3, 7, 1, 5, '#8ab4d8'); f(12, 7, 1, 5, '#8ab4d8'); f(4, 11, 2, 1, '#f0c8a0'); f(10, 11, 2, 1, '#f0c8a0');
+  f(6, 9, 4, 5, 'rgba(225,240,255,.8)'); f(6, 12, 4, 2, '#a8b438'); f(6, 9, 1, 5, 'rgba(255,255,255,.9)');  // the glass
+  if (retch) for (let i = 0; i < 3; i++) f(7 + (i % 2), 7 + bob + i, 2, 1, i % 2 ? '#c8d050' : '#a8b438');
+  if (L3.shawn) { f(13, 10, 3, 4, 'rgba(225,240,255,.8)'); f(13, 10, 1, 4, 'rgba(255,255,255,.9)'); }  // another glass
+}
+// Karill, partying exceptionally hard: jumping, fists pumping, his shirt open; or waving up at you
+function drawKarill(X, Y) {  // X, Y: the top-left of his tile
+  const b = time / clubBeat(), n = Math.floor(b), ph = b % 1, wave = L3.wave;
+  const hop = wave ? Math.round(Math.abs(Math.sin(ph * Math.PI)) * 1) : Math.round(Math.abs(Math.sin(ph * Math.PI)) * 4);
+  const f = (a, c0, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X + a, Y + c0 - hop, w, h); };
+  ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(X + 4, Y + 15, 8, 1);
+  f(5, 11, 2, 4 + (hop ? 0 : 0), '#2a2a3a'); f(9, 11, 2, 4, '#2a2a3a'); f(4, 14, 3, 1, '#111'); f(9, 14, 3, 1, '#111');
+  f(4, 6, 8, 6, '#f4f1ea'); f(7, 6, 2, 5, '#e9b48f'); f(7, 9, 2, 1, '#d8a07a');                  // a white shirt, open
+  f(5, 0, 6, 6, '#e9b48f'); f(5, 0, 6, 1, '#e8d8a0'); f(5, 1, 1, 1, '#e8d8a0'); f(10, 1, 1, 1, '#e8d8a0');  // a blond buzz cut
+  f(6, 2, 1, 1, '#2b1d14'); f(9, 2, 1, 1, '#2b1d14'); f(6, 4, 4, 1, '#8a3a2a'); f(7, 4, 2, 1, '#f4f1ea');    // a big grin
+  if (wave) {  // one arm waving up at you
+    const w = Math.round(Math.sin(time * 10) * 2);
+    f(12, 1, 1, 6, '#f4f1ea'); f(12 + w, -2, 2, 3, '#e9b48f'); f(3, 6, 1, 5, '#f4f1ea'); f(3, 11, 1, 1, '#e9b48f');
+  } else {     // fists pumping, one then the other
+    const up = n % 2;
+    f(2, up ? -3 : 3, 2, 8, '#f4f1ea'); f(2, up ? -4 : 2, 2, 2, '#e9b48f');
+    f(12, up ? 3 : -3, 2, 8, '#f4f1ea'); f(12, up ? 2 : -4, 2, 2, '#e9b48f');
+    if (ph < 0.4) for (let i = 0; i < 3; i++) f([1, 14, 8][i] + (i ? 0 : 0), -2 - Math.round(ph * 8) - i, 1, 1, '#bfe6ff');  // sweat, flying
+  }
+}
+// the club's promoters: sparkly dresses, a bottle of vodka with a sparkler in it
+function drawPromoter(X, Y, k) {
+  const dress = k ? '#e8c860' : '#d4d4e4', dk = k ? '#b8963a' : '#9a9ab4', hair = k ? '#9a2a1a' : '#1a1410';
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X + a, Y + b, w, h); };
+  const sway = Math.round(Math.sin(time / clubBeat() * Math.PI) * 1);
+  ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(X + 4, Y + 15, 8, 1);
+  f(6, 13, 1, 2, '#e9b48f'); f(9, 13, 1, 2, '#e9b48f'); f(5, 15, 2, 1, '#c8102e'); f(9, 15, 2, 1, '#c8102e');
+  f(4 + sway, 5, 9, 4, dress); f(5 + sway, 9, 7, 4, dress); f(4 + sway, 5, 9, 1, dk); f(7 + sway, 7, 1, 1, dk);
+  f(4 + sway, 4, 9, 1, '#e9b48f');
+  f(5 + sway, -1, 7, 6, hair); f(6 + sway, 0, 5, 4, '#e9b48f'); f(7 + sway, 1, 1, 1, '#2b1d14'); f(9 + sway, 1, 1, 1, '#2b1d14');
+  f(8 + sway, 3, 1, 1, '#c8102e');
+  for (let i = 0; i < 3; i++) if ((Math.floor(time * 6) + i + k) % 3 === 0) f(5 + sway + i * 3, 6 + i * 2, 1, 1, '#ffffff');  // sparkle
+  if (time - L3.promo < 60) {  // the bottle, with a sparkler
+    const bx = X + (k ? 1 : 13), by = Y + 2;
+    ctx.fillStyle = '#e8f0f8'; ctx.fillRect(bx, by + 2, 2, 5); ctx.fillStyle = '#c8d4e0'; ctx.fillRect(bx, by, 2, 2);
+    ctx.fillStyle = '#7a8a9a'; ctx.fillRect(bx, by + 4, 2, 1);
+    for (let i = 0; i < 5; i++) {
+      const a = time * 9 + i * 1.3, r0 = 1 + ((time * 7 + i) % 3);
+      ctx.fillStyle = i % 2 ? '#fff6b0' : '#ffd04a'; ctx.fillRect(Math.round(bx + 1 + Math.cos(a) * r0), Math.round(by - 2 + Math.sin(a) * r0), 1, 1);
+    }
+  }
+}
+// the locals in Akumal, Maya, pushing the boulder (and cheering when it's done): a man in a white shirt and a straw
+// hat, a woman in a white embroidered dress, a young man in a red tee. Seen from the side, facing left.
+function drawLocal(L, X, Y) {  // X, Y: the top-left of the tile
+  const cheer = L.pose === 'cheer', hop = cheer ? Math.round(Math.abs(Math.sin(time * 7 + L.kind * 2)) * 2) : 0;
+  const lean = cheer ? 0 : 2, skin = ['#a8714a', '#b07a50', '#8a5a38'][L.kind];
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X + a, Y + b - hop, w, h); };
+  ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(X + 3, Y + 14, 9, 2);
+  if (L.kind === 1) {  // a long white dress, embroidered at the neck and the hem
+    f(5, 7, 6, 8, '#f8f6f0'); f(5, 13, 6, 1, '#d0302a'); f(6, 14, 1, 1, '#2a8a4a'); f(9, 14, 1, 1, '#3a62a8');
+    f(5, 7, 6, 1, '#d0302a'); f(7, 8, 1, 1, '#2a8a4a'); f(6, 15, 2, 1, '#3a2418');
+    f(6 - lean, 2, 5, 5, skin); f(6 - lean, 1, 6, 2, '#1a1410'); f(10 - lean, 1, 2, 3, '#1a1410');
+  } else {
+    f(6, 11, 2, 4, '#2a2a30'); f(9, 11, 2, 4, '#2a2a30'); f(5, 15, 3, 1, '#3a2418'); f(9, 15, 3, 1, '#3a2418');
+    f(5, 6, 6, 5, L.kind ? '#c8323a' : '#f4f1ea');
+    f(6 - lean, 1, 5, 5, skin); f(6 - lean, 1, 5, 1, '#1a1410');
+    if (L.kind === 0) { f(4 - lean, 0, 9, 1, '#d8b860'); f(6 - lean, -2, 5, 2, '#d8b860'); f(6 - lean, -1, 5, 1, '#a8883a'); }
+    else f(6 - lean, 0, 5, 2, '#1a1410');
+  }
+  f(6 - lean, 3, 1, 1, '#2b1d14');
+  if (cheer) { f(4, -1, 1, 7, skin); f(11, -1, 1, 7, skin); }
+  else { f(0, 7, 6, 1, skin); f(0, 9, 6, 1, skin); }  // arms out, pushing
+}
+// Braydon, under the archway: a beer, chugged; then pointing, and giggling
+function drawBraydon(X, Y) {
+  const k = (time % 3) / 3, chug = k < 0.5;
+  drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], X, Y, 2, false, Math.floor(time * 3) % 2);
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X + a, Y + b, w, h); };
+  if (chug) {  // the bottle tipped up, bubbles going up it
+    for (let i = 0; i < 6; i++) f(9 + i, 10 - i, 2, 2, i < 2 ? '#e8e0d0' : '#6a3a1a');
+    f(11, 8, 2, 1, '#f2c94c');
+    if (Math.floor(time * 8) % 2) f(12, 7, 1, 1, '#fff6d0');
+  } else {     // pointing at the man on the roof, the bottle in his other leg
+    f(12, 6, 4, 1, '#2b1d14'); f(15, 5, 1, 1, '#2b1d14');
+    f(1, 9, 2, 5, '#6a3a1a'); f(1, 8, 2, 1, '#e8e0d0');
+  }
+}
+// the man on the roof, peeing off it (seen from the side, facing left; how he looks is a guess)
+function drawRoofMan(X, Y) {  // X, Y: where his feet are
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X + a, Y + b, w, h); };
+  f(-2, -6, 2, 6, '#3a5a8a'); f(1, -6, 2, 6, '#3a5a8a');                  // shorts, legs
+  f(-2, -1, 2, 1, '#e9b48f'); f(1, -1, 2, 1, '#e9b48f');
+  f(-3, -13, 6, 7, '#f4f1ea');                                             // a white tank top
+  f(-2, -18, 5, 5, '#d8a07a'); f(-2, -19, 5, 2, '#2a1a10'); f(-2, -16, 1, 1, '#2b1d14');
+  f(-4, -10, 2, 2, '#d8a07a');                                             // his hands, out in front
+  for (let i = 0; i < 18; i++) {                                           // the stream, arcing down off the roof
+    const a = ((time * 2 + i / 18) % 1), sx = -5 - a * 22, sy = -8 + a * a * 30;
+    f(Math.round(sx), Math.round(sy), 1, 2, i % 3 ? '#f2d24a' : '#fff0a0');
+  }
+  if (Math.floor(time * 8) % 2) f(-28, 21, 3, 1, '#f2d24a');                // a little splash, on the square
+}
+
+// ---- painting the club ----
+function clubFloor(g, x, y, tx, ty) {
+  g.fillStyle = area === 'club2' ? '#211830' : '#1a1526'; g.fillRect(x, y, 16, 16);
+  g.fillStyle = 'rgba(255,255,255,.05)'; g.fillRect(x, y, 16, 1); g.fillRect(x, y, 1, 16);
+  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(x + 8, y + 1, 1, 15); g.fillRect(x + 1, y + 8, 15, 1);
+}
+function clubWall(g, x, y, tx, ty) {
+  g.fillStyle = '#2a1f3a'; g.fillRect(x, y, 16, 16);
+  speckle(g, x, y, tx * 7 + ty * 11, 7, ['#34284a', '#211a2e']);
+  const open = c => '.cBUDE'.includes(c);
+  if (open(tile(tx, ty + 1))) { g.fillStyle = '#ff4fa8'; g.fillRect(x, y + 13, 16, 1); g.fillStyle = 'rgba(255,79,168,.35)'; g.fillRect(x, y + 12, 16, 1); g.fillRect(x, y + 14, 16, 1); }
+  if (open(tile(tx, ty - 1))) { g.fillStyle = '#3fe0ff'; g.fillRect(x, y + 1, 16, 1); }
+}
+function barTile(g, x, y, tx, ty) {  // the long bar: a counter, bottles and glasses on it
+  g.fillStyle = '#4a2418'; g.fillRect(x, y, 16, 16);
+  g.fillStyle = '#7a3e28'; g.fillRect(x + 2, y, 12, 16); g.fillStyle = '#9a5436'; g.fillRect(x + 2, y, 1, 16); g.fillRect(x + 13, y, 1, 16);
+  const r = rng(tx * 3 + ty * 29);
+  for (let i = 0; i < 2; i++) {
+    const bx = x + 4 + Math.floor(r() * 7), by = y + 2 + i * 7, c = ['#2f7d3a', '#c8862a', '#d8e8f0', '#8a2a3a'][Math.floor(r() * 4)];
+    g.fillStyle = c; g.fillRect(bx, by, 2, 4); g.fillStyle = 'rgba(255,255,255,.5)'; g.fillRect(bx, by, 1, 2);
+    g.fillStyle = 'rgba(220,240,255,.7)'; g.fillRect(bx + 3, by + 2, 2, 2);
+  }
+}
+function stairs(g, x, y, up) {  // steps, lit along the edges; up: going up into the back wall
+  for (let j = 0; j < 16; j += 3) {
+    const k = up ? j / 16 : 1 - j / 16;
+    g.fillStyle = 'rgb(' + Math.round(60 + 70 * (1 - k)) + ',' + Math.round(50 + 50 * (1 - k)) + ',' + Math.round(80 + 70 * (1 - k)) + ')';
+    g.fillRect(x + 2, y + j, 12, 2); g.fillStyle = '#120c1c'; g.fillRect(x + 2, y + j + 2, 12, 1);
+  }
+  g.fillStyle = '#3fe0ff'; g.fillRect(x + 1, y, 1, 16); g.fillRect(x + 14, y, 1, 16);
+}
+function booth(g, x, y) {  // a long booth, red velvet, buttoned
+  g.fillStyle = '#4a0c18'; g.fillRect(x, y, 16, 8); g.fillStyle = '#6a1424'; g.fillRect(x, y + 1, 16, 6);
+  g.fillStyle = '#3a0812'; for (let i = 2; i < 16; i += 5) g.fillRect(x + i, y + 3, 1, 1);
+  g.fillStyle = '#8a1a2e'; g.fillRect(x, y + 8, 16, 7); g.fillStyle = '#a8283e'; g.fillRect(x, y + 8, 16, 1);
+  g.fillStyle = '#2a0610'; g.fillRect(x, y + 15, 16, 1);
+}
+function paintClub(ch, x, y, tx, ty) {
+  const g = bg;
+  switch (ch) {
+    case '#': clubWall(g, x, y, tx, ty); break;
+    case 'B': barTile(g, x, y, tx, ty); break;
+    case 'U': case 'D': clubFloor(g, x, y, tx, ty); stairs(g, x, y, ty === 0); break;
+    case 'E': clubFloor(g, x, y, tx, ty); g.fillStyle = 'rgba(255,220,150,.35)'; g.fillRect(x + 2, y, 12, 16); break;
+    case 'b': case 'S': booth(g, x, y); break;
+    case '=': clubFloor(g, x, y, tx, ty); g.fillStyle = '#0c0816'; g.fillRect(x + 12, y, 4, 16);
+      g.fillStyle = '#c8ccd8'; g.fillRect(x + 10, y, 2, 16); g.fillStyle = '#ffffff'; g.fillRect(x + 10, y, 1, 16);
+      g.fillStyle = '#8a8e9a'; for (let j = 2; j < 16; j += 7) g.fillRect(x + 9, y + j, 4, 2); break;
+    case 'v': g.fillStyle = '#0c0816'; g.fillRect(x, y, 16, 16); break;
+    default: clubFloor(g, x, y, tx, ty);
+  }
+}
+// ---- painting Akumal ----
+const HOUSE_COLS = [['#ef8fa8', '#d06a86'], ['#f2cf5a', '#d4ad3a'], ['#4fc0b6', '#34998f'], ['#f4efe6', '#d8d0c0'],
+  ['#e07a50', '#bb5c36'], ['#6a9ad8', '#4a78b4']];
+function sandSt(g, x, y, tx, ty) { g.fillStyle = '#dcc79c'; g.fillRect(x, y, 16, 16); speckle(g, x, y, tx * 17 + ty * 31, 9, ['#cdb486', '#e8d6ae', '#c4a878']); }
+function plazaTile(g, x, y) {
+  for (let j = 0; j < 16; j += 8) for (let i = 0; i < 16; i += 8) { g.fillStyle = ((i + j) / 8) % 2 ? '#c97a52' : '#b86c46'; g.fillRect(x + i, y + j, 8, 8); }
+  g.fillStyle = '#9a5436'; g.fillRect(x, y, 16, 1); g.fillRect(x, y, 1, 16); g.fillRect(x + 8, y, 1, 16); g.fillRect(x, y + 8, 16, 1);
+}
+function jungle(g, x, y, tx, ty) {
+  g.fillStyle = '#244a22'; g.fillRect(x, y, 16, 16);
+  const r = rng(tx * 13 + ty * 7 + 1);
+  for (let i = 0; i < 5; i++) disc(g, x + 2 + Math.floor(r() * 12), y + 2 + Math.floor(r() * 12), 3 + Math.floor(r() * 2), ['#2f6a2c', '#3a7a34', '#1d3e1b'][i % 3]);
+  speckle(g, x, y, tx * 5 + ty * 3, 4, ['#5a9a40', '#e05a9a']);
+}
+function house(g, x, y, tx, ty) {  // a house, seen from above and a little in front: its front if the street is below
+  const [c, d] = HOUSE_COLS[Math.floor(rng((tx >> 1) * 7 + ty * 3 + 2)() * HOUSE_COLS.length)];
+  const front = '.:'.includes(tile(tx, ty + 1)) || (ty === 1 && tx === 12) || tile(tx, ty + 1) === 'G';
+  if (!front) {  // a flat roof, a little parapet
+    g.fillStyle = '#e6ddcc'; g.fillRect(x, y, 16, 16); g.fillStyle = '#d2c8b4'; g.fillRect(x, y + 14, 16, 2);
+    g.fillStyle = '#f2ebde'; g.fillRect(x, y, 16, 1); g.fillRect(x, y, 1, 14); speckle(g, x, y, tx * 3 + ty * 17, 6, ['#d8cfbc', '#cfc5b0']);
+    g.fillStyle = c; g.fillRect(x, y + 15, 16, 1);
+    const r = rng(tx * 9 + ty * 23);
+    if (r() < 0.25) { disc(g, x + 8, y + 7, 3, '#2a2a2a'); g.fillStyle = '#4a4a4a'; g.fillRect(x + 6, y + 5, 2, 1); }  // a water tank
+    return;
+  }
+  g.fillStyle = '#e6ddcc'; g.fillRect(x, y, 16, 4); g.fillStyle = d; g.fillRect(x, y + 3, 16, 1);
+  g.fillStyle = c; g.fillRect(x, y + 4, 16, 12); g.fillStyle = d; g.fillRect(x, y + 15, 16, 1);
+  const r = rng(tx * 31 + ty * 7);
+  if (r() < 0.45) {  // a door, wooden, under a little arch
+    g.fillStyle = '#6a3e22'; g.fillRect(x + 5, y + 8, 6, 8); g.fillRect(x + 6, y + 7, 4, 1); g.fillStyle = '#8a5432'; g.fillRect(x + 6, y + 9, 1, 6);
+    g.fillStyle = '#f2c94c'; g.fillRect(x + 9, y + 12, 1, 1);
+  } else {           // a window, with bars
+    g.fillStyle = '#2d3f52'; g.fillRect(x + 4, y + 7, 8, 6); g.fillStyle = '#3a3a3a'; for (let i = 5; i < 12; i += 2) g.fillRect(x + i, y + 7, 1, 6);
+    g.fillStyle = d; g.fillRect(x + 3, y + 13, 10, 1);
+  }
+  if (r() < 0.35) for (let i = 0; i < 9; i++) px(g, x + Math.floor(r() * 16), y + 3 + Math.floor(r() * 5), i % 2 ? '#e0307a' : '#ff5fae');  // bougainvillea
+}
+function stoneWall(g, x, y, tx, ty) {  // a garden wall of stacked stones
+  sandSt(g, x, y, tx, ty);
+  const r = rng(tx * 11 + ty * 13);
+  g.fillStyle = 'rgba(0,0,0,.2)'; g.fillRect(x, y + 13, 16, 3);
+  for (let j = 2; j < 14; j += 4) for (let i = (j % 8 ? 0 : -3); i < 16; i += 6) {
+    g.fillStyle = ['#b8b0a0', '#a8a090', '#cfc8b8'][Math.floor(r() * 3)]; g.fillRect(x + Math.max(0, i), y + j, Math.min(5, 16 - Math.max(0, i)), 3);
+  }
+}
+function palm(g, x, y, seed) {  // a palm, seen from above: fronds in a star
+  const r = rng(seed);
+  g.fillStyle = 'rgba(0,0,0,.2)'; disc(g, x + 9, y + 10, 6, 'rgba(0,0,0,.18)');
+  for (let i = 0; i < 7; i++) {
+    const a = i / 7 * Math.PI * 2 + r(), L = 7;
+    line(g, x + 8, y + 8, Math.round(x + 8 + Math.cos(a) * L), Math.round(y + 8 + Math.sin(a) * L), i % 2 ? '#2f7a32' : '#3e9a3e');
+    px(g, Math.round(x + 8 + Math.cos(a) * (L - 2) + 1), Math.round(y + 8 + Math.sin(a) * (L - 2)), '#246024');
+  }
+  disc(g, x + 8, y + 8, 1, '#6a4a2a');
+}
+function paintTown(ch, x, y, tx, ty) {
+  const g = bg;
+  switch (ch) {
+    case '.': sandSt(g, x, y, tx, ty); break;
+    case ':': plazaTile(g, x, y); break;
+    case '#': jungle(g, x, y, tx, ty); break;
+    case 'G': jungle(g, x, y, tx, ty); g.fillStyle = '#d4bd90'; g.fillRect(x, y + 3, 16, 10); speckle(g, x, y + 3, tx + 99, 5, ['#c4a878']); break;
+    case 'h': house(g, x, y, tx, ty); break;
+    case 'c': {
+      const k = rng(tx * 57 + ty * 91 + 3)();
+      if (k < 0.55) house(g, x, y, tx, ty); else if (k < 0.78) stoneWall(g, x, y, tx, ty);
+      else { sandSt(g, x, y, tx, ty); palm(g, x, y, tx * 3 + ty * 5); }
+      break;
+    }
+    default: sandSt(g, x, y, tx, ty);  // R, A and M are painted whole, after
+  }
+}
+function paintTownWhole() {
+  const g = bg;
+  // the restaurant: huevos rancheros and watermelon juice; closed. A tiled roof, a striped awning, a sign on the front
+  let X = 6 * TS, Y = 9 * TS;
+  g.fillStyle = '#b8603a'; g.fillRect(X, Y, 32, 3); g.fillStyle = '#d0784a'; for (let i = 0; i < 32; i += 3) g.fillRect(X + i, Y, 2, 2);
+  for (let i = 0; i < 32; i += 4) { g.fillStyle = (i / 4) % 2 ? '#f4efe6' : '#e8782a'; g.fillRect(X + i, Y + 3, 4, 3); g.fillRect(X + i + 1, Y + 6, 2, 1); }
+  g.fillStyle = '#f2dc9a'; g.fillRect(X, Y + 7, 32, 9);
+  g.fillStyle = '#5a3a22'; g.fillRect(X + 13, Y + 14, 6, 2);
+  g.fillStyle = '#8a1a1a'; g.fillRect(X + 1, Y + 7, 30, 7); g.fillStyle = '#ffffff'; g.fillRect(X + 2, Y + 8, 28, 5);
+  signText(g, 'CERRADO', X + 3, Y + 8, '#c81e1e');
+  // the house beside the archway
+  X = 12 * TS; Y = 0;
+  g.fillStyle = '#e6ddcc'; g.fillRect(X, Y, 32, 6); g.fillStyle = '#d06a86'; g.fillRect(X, Y + 5, 32, 1);
+  g.fillStyle = '#ef8fa8'; g.fillRect(X, Y + 6, 32, 26); g.fillStyle = '#d06a86'; g.fillRect(X, Y + 31, 32, 1);
+  for (const wx of [X + 4, X + 20]) { g.fillStyle = '#2d3f52'; g.fillRect(wx, Y + 10, 8, 7); g.fillStyle = '#6a3e22'; g.fillRect(wx - 1, Y + 10, 1, 7); g.fillRect(wx + 8, Y + 10, 1, 7); }
+  g.fillStyle = '#6a3e22'; g.fillRect(X + 20, Y + 21, 7, 11); g.fillStyle = '#f2c94c'; g.fillRect(X + 25, Y + 26, 1, 1);
+  for (let i = 0; i < 14; i++) px(g, X + 1 + ((i * 7) % 30), Y + 5 + (i % 4), i % 2 ? '#e0307a' : '#ff5fae');
+  // the archway: through it, the bay; pillars and a band of painted tiles; bougainvillea over the top
+  X = 14 * TS;
+  g.fillStyle = '#9fd8f0'; g.fillRect(X + 10, Y + 6, 28, 12);
+  g.fillStyle = '#3fc0c8'; g.fillRect(X + 10, Y + 18, 28, 7); g.fillStyle = '#e8fbff'; g.fillRect(X + 13, Y + 21, 5, 1); g.fillRect(X + 26, Y + 19, 6, 1);
+  g.fillStyle = '#f0e2c0'; g.fillRect(X + 10, Y + 25, 28, 7);
+  const cream = '#f1e4c8';
+  g.fillStyle = cream; g.fillRect(X, Y, 48, 6); g.fillRect(X, Y, 10, 32); g.fillRect(X + 38, Y, 10, 32);
+  for (let i = 0; i <= 28; i++) {  // the curve of the arch
+    const k = (i - 14) / 14, h = Math.round(8 * (1 - Math.sqrt(Math.max(0, 1 - k * k))));
+    g.fillStyle = cream; g.fillRect(X + 10 + i, Y + 6, 1, h + 2);
+    g.fillStyle = '#c9a878'; g.fillRect(X + 10 + i, Y + 8 + h, 1, 1);
+  }
+  for (let i = 0; i < 48; i += 4) { g.fillStyle = (i / 4) % 2 ? '#2a5aa8' : '#f2c94c'; g.fillRect(X + i, Y + 1, 4, 3); g.fillStyle = '#ffffff'; g.fillRect(X + i + 1, Y + 2, 1, 1); }
+  for (const px0 of [X + 1, X + 39]) for (let j = 10; j < 30; j += 4) {
+    g.fillStyle = (j / 4) % 2 ? '#2a5aa8' : '#ffffff'; g.fillRect(px0 + 1, Y + j, 6, 3); g.fillStyle = '#f2c94c'; g.fillRect(px0 + 3, Y + j + 1, 2, 1);
+  }
+  g.fillStyle = '#c9a878'; g.fillRect(X + 9, Y + 6, 1, 26); g.fillRect(X + 38, Y + 6, 1, 26);
+  const rb = rng(77);
+  for (let i = 0; i < 40; i++) { const bx = i < 20 ? Math.floor(rb() * 16) : 32 + Math.floor(rb() * 16), by = Math.floor(rb() * (i % 3 ? 7 : 14)); px(g, X + bx, Y + by, ['#e0307a', '#ff5fae', '#b82060', '#3a8a3a'][i % 4]); }
+  // the building where the man is up on the roof
+  X = 17 * TS;
+  g.fillStyle = '#e8dcc0'; g.fillRect(X, Y, 32, 18); g.fillStyle = '#d4c6a4'; g.fillRect(X, Y + 15, 32, 3);
+  g.fillStyle = '#c8b890'; g.fillRect(X, Y, 32, 1); g.fillRect(X, Y, 1, 18); g.fillRect(X + 31, Y, 1, 18);
+  disc(g, X + 22, Y + 6, 3, '#2a2a2a');
+  g.fillStyle = '#e8b04a'; g.fillRect(X, Y + 18, 32, 14); g.fillStyle = '#c48e2e'; g.fillRect(X, Y + 18, 32, 1); g.fillRect(X, Y + 31, 32, 1);
+  for (const wx of [X + 3, X + 19]) { g.fillStyle = '#2d3f52'; g.fillRect(wx, Y + 21, 9, 7); g.fillStyle = '#8a5a2a'; g.fillRect(wx, Y + 28, 9, 1); }
+}
+function buildLevel3() {
+  if (built3) return; built3 = true;
+  makeArea('club1', CLUB1, paintClub);
+  makeArea('club2', CLUB2, paintClub);
+  makeArea('akumal', TOWN, paintTown, paintTownWhole);
+}
+
+// ---- level 3: the music (all original; the styles are guesses) ----
+//   mariachi: a ranchera waltz in G, in three: the guitarron on the one, the vihuela strumming on two and three, two
+//     trumpets in thirds on the tune, then violins take it. From far off (Palisade Head), it's softer, and muffled.
+//   the club in Playa del Carmen: a reggaeton beat, 98 beats a minute, in A minor
+//   Akumal: a nylon-string guitar, a shaker, a guiro on the fourth beat
+//   finding Braydon: slow guitar, a warm swell, a few bells
+const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+const MARIACHI = { name: 'mariachi', kind: 'mari', bpm: 152, swing: 0, verb: 0.25, room: 1.6, gain: 1.6 };
+const MARIACHI_FAR = { name: 'mariachi, far off', kind: 'mari', bpm: 152, swing: 0, verb: 0.6, room: 2.8, gain: 0.85, cut: 1400 };
+const CLUB_STYLE = { name: 'club', kind: 'club', bpm: 98, swing: 0, verb: 0.15, room: 1.2, gain: 1.05 };
+const TOWN_STYLE = { name: 'akumal', kind: 'town', bpm: 92, swing: 0.12, verb: 0.3, room: 1.8, gain: 1.8 };
+const REUNION_STYLE = { name: 'reunion', kind: 'reunion', bpm: 72, swing: 0, verb: 0.5, room: 3.0, gain: 2.2 };
+const MARI_BARS = [  // the tune, bar by bar: the chord, then [sixteenth, note, length]
+  ['G', [[0, 67, 4], [4, 71, 4], [8, 74, 4]]], ['G', [[0, 79, 8], [8, 78, 2], [10, 79, 2]]],
+  ['D7', [[0, 81, 4], [4, 78, 4], [8, 74, 4]]], ['D7', [[0, 72, 8], [8, 74, 4]]],
+  ['D7', [[0, 78, 4], [4, 76, 4], [8, 74, 4]]], ['D7', [[0, 72, 4], [4, 71, 4], [8, 69, 4]]],
+  ['G', [[0, 71, 4], [4, 74, 4], [8, 79, 4]]], ['G', [[0, 79, 10]]],
+  ['C', [[0, 76, 4], [4, 79, 4], [8, 76, 4]]], ['C', [[0, 72, 8], [8, 76, 4]]],
+  ['G', [[0, 74, 4], [4, 71, 4], [8, 74, 4]]], ['G', [[0, 79, 10]]],
+  ['D7', [[0, 78, 4], [4, 81, 4], [8, 78, 4]]], ['D7', [[0, 72, 4], [4, 76, 4], [8, 74, 4]]],
+  ['G', [[0, 71, 4], [4, 69, 4], [8, 71, 4]]], ['G', [[0, 67, 8], [8, 62, 4]]],
+];
+const MARI_CHORDS = { G: { bass: [43, 38], strum: [62, 67, 71, 74] }, D7: { bass: [38, 45], strum: [62, 66, 69, 72] },
+  C: { bass: [36, 43], strum: [60, 64, 67, 72] } };
+const G_MAJOR = [7, 9, 11, 0, 2, 4, 6];
+function thirdBelow(m) {  // the note a third under it, in G major
+  const i = G_MAJOR.indexOf(m % 12), pc = G_MAJOR[(i + 5) % 7];
+  let d = (m % 12 - pc + 12) % 12; if (!d) d = 12; return m - d;
+}
+function mariStep(S, n, t, six) {
+  const bar = Math.floor(n / 12), s = n % 12, B = MARI_BARS[bar % 16], ch = MARI_CHORDS[B[0]], violins = Math.floor(bar / 16) % 2;
+  if (s === 0) upright(mtof(ch.bass[bar % 2]), t, six * 3.5, 1.1);
+  if (s === 4 || s === 8) strum(ch.strum, t, s === 4 ? 1 : 0.85);
+  if (s === 10 && bar % 2) strum(ch.strum.slice(1), t, 0.45);
+  for (const [at, m, len] of B[1]) if (at === s) {
+    const d = six * len * 0.94;
+    if (!violins) { trumpet(mtof(m), t, d); trumpet(mtof(thirdBelow(m)), t, d, 0.75); }
+    else { violin(mtof(m), t, d); violin(mtof(thirdBelow(m)), t, d, 0.7); }
+  }
+  if (violins && s === 0 && bar % 4 === 0) { trumpet(mtof(ch.strum[3]), t, six * 1.6, 0.8); trumpet(mtof(ch.strum[2]), t, six * 1.6, 0.6); }
+}
+function trumpet(f, t, len, v = 1) {  // two bright brass voices, a little vibrato as the note holds
+  const o1 = ac.createOscillator(), o2 = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  const vib = ac.createOscillator(), vg = ac.createGain(), end = t + Math.max(0.08, len);
+  o1.type = o2.type = 'sawtooth'; o1.frequency.value = o2.frequency.value = f; o2.detune.value = 6;
+  vib.frequency.value = 5.5; vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(f * 0.007, t + 0.3);
+  vib.connect(vg); vg.connect(o1.frequency); vg.connect(o2.frequency);
+  lp.type = 'lowpass'; lp.Q.value = 1.4; lp.frequency.setValueAtTime(500, t); lp.frequency.exponentialRampToValueAtTime(3400, t + 0.035);
+  lp.frequency.exponentialRampToValueAtTime(2100, t + 0.25);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.034 * v, t + 0.025); g.gain.setValueAtTime(0.028 * v, end - 0.04);
+  g.gain.exponentialRampToValueAtTime(0.0001, end + 0.05);
+  o1.connect(lp); o2.connect(lp); lp.connect(g); g.connect(mus.out); send(g, 0.3);
+  for (const o of [o1, o2, vib]) { o.start(t); o.stop(end + 0.1); }
+}
+function violin(f, t, len, v = 1) {  // a bowed string: a slower start, a wider vibrato
+  const o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain(), vib = ac.createOscillator(), vg = ac.createGain();
+  const end = t + Math.max(0.1, len);
+  o.type = 'sawtooth'; o.frequency.value = f; vib.frequency.value = 6; vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(f * 0.01, t + 0.2);
+  vib.connect(vg); vg.connect(o.frequency);
+  lp.type = 'lowpass'; lp.frequency.value = 2600; lp.Q.value = 0.7;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.03 * v, t + 0.07); g.gain.setValueAtTime(0.026 * v, end - 0.05);
+  g.gain.exponentialRampToValueAtTime(0.0001, end + 0.08);
+  o.connect(lp); lp.connect(g); g.connect(mus.out); send(g, 0.45);
+  o.start(t); vib.start(t); o.stop(end + 0.1); vib.stop(end + 0.1);
+}
+function nylon(f, t, v = 1, len = 0.9) {  // a plucked guitar string
+  if (!notes.has(f)) notes.set(f, string(f));
+  const s = ac.createBufferSource(), g = ac.createGain(), lp = ac.createBiquadFilter();
+  s.buffer = notes.get(f); lp.type = 'lowpass'; lp.frequency.value = 2400;
+  g.gain.setValueAtTime(0.16 * v, t); g.gain.setTargetAtTime(0.0001, t + len, 0.08);
+  s.connect(lp); lp.connect(g); g.connect(mus.out); send(g, 0.3); s.start(t); s.stop(t + len + 0.5);
+}
+function strum(midis, t, v = 1) {  // the vihuela: a bright, quick strum, choked short
+  midis.forEach((m, i) => nylon(mtof(m), t + i * 0.012, 0.75 * v, 0.2));
+}
+const CLUB_CH = [{ bass: 55, keys: [220, 261.63, 329.63] }, { bass: 43.65, keys: [220, 261.63, 349.23] },
+  { bass: 65.41, keys: [196, 261.63, 329.63] }, { bass: 49, keys: [196, 246.94, 293.66] }];
+const CLUB_TUNE = [[0, 659.25], [3, 587.33], [6, 523.25], [8, 587.33], [10, 659.25], [12, 783.99], [14, 659.25]];
+function clubStep(S, n, t, six) {
+  const bar = Math.floor(n / 16), s = n % 16, ch = CLUB_CH[bar % 4];
+  if (s % 4 === 0) kick(t, 0.8);
+  if (s === 3 || s === 6 || s === 11 || s === 14) { snare(t, 0.5); noiseHit(t, 'bandpass', 2600, 2, 0.12, 0.04, 0.1); }
+  if (s % 2 === 0) hat(t, 0.025, 0.045);
+  for (const [at, len] of [[0, 3], [3, 3], [6, 2], [8, 3], [11, 3], [14, 2]]) if (at === s) synthBass(ch.bass * 2, t, six * len, 0.8);
+  if (s === 2 || s === 10) stab(ch.keys, t, 0.5);
+  if (bar % 4 >= 2) for (const [at, f] of CLUB_TUNE) if (at === s) marimba(f * (bar % 2 ? 1 : 0.75), t);
+}
+function marimba(f, t) { tone(mus.out, 'sine', f, t, 0.25, 0.05); tone(mus.out, 'triangle', f * 4, t, 0.05, 0.012); }
+const TOWN_CH = [[57, 64, 69, 72], [50, 57, 62, 65], [55, 62, 67, 71], [48, 55, 64, 67]];  // Am, Dm, G, C
+function townStep(S, n, t, six) {
+  const bar = Math.floor(n / 16), s = n % 16, ch = TOWN_CH[bar % 4];
+  if (s === 0 || s === 8) upright(mtof(ch[0] - 12), t, six * 6, 0.9);
+  if (s % 2 === 0) { const i = [0, 2, 1, 3, 2, 1, 3, 2][s / 2]; nylon(mtof(ch[i] + (s === 0 ? 0 : 12)), t, s % 4 ? 0.55 : 0.75); }
+  hat(t, 0.02, s % 4 === 2 ? 0.05 : 0.025, 0.2);
+  if (s === 12) for (let i = 0; i < 5; i++) noiseHit(t + i * 0.022, 'bandpass', 3200, 3, 0.06, 0.02, 0.1);  // the guiro
+}
+const REUNION_CH = [[62, 66, 69], [59, 62, 66], [55, 62, 67], [57, 61, 64]];  // D, Bm, G, A
+const REUNION_TUNE = [[[0, 78, 6], [6, 76, 2], [8, 74, 8]], [[0, 74, 4], [4, 76, 4], [8, 78, 8]],
+  [[0, 79, 6], [6, 78, 2], [8, 76, 8]], [[0, 76, 4], [4, 78, 4], [8, 81, 8]]];
+function reunionStep(S, n, t, six) {
+  const bar = Math.floor(n / 16), s = n % 16, i = bar % 4, ch = REUNION_CH[i];
+  if (s === 0) { pad(ch.map(mtof), t, six * 16, bar === 0, 0.022); swell(mtof(ch[0] - 12), t, six * 16); }
+  if (s % 2 === 0) nylon(mtof(ch[[0, 1, 2, 1][(s / 2) % 4]] + (s % 8 === 0 ? 0 : 12)), t, 0.5);
+  if (bar >= 1) for (const [at, m, len] of REUNION_TUNE[i]) if (at === s) bell(mtof(m), t, 0.05, six * len + 0.6, 0.7);
+}
+
+// ---- level 3: little sounds ----
+function slideWhistle() {  // falling a long way, like in an old cartoon
+  if (!ac || muted) return;
+  const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  o.frequency.setValueAtTime(1500, t); o.frequency.exponentialRampToValueAtTime(240, t + 1.75);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05, t + 0.05); g.gain.setValueAtTime(0.05, t + 1.6);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 1.8);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t + 1.85);
+}
+function yellSound() {  // "BRAYDON!", as loud as he can, echoing off the houses (a voice-like buzz, no words)
+  if (!ac || muted) return;
+  const t = ac.currentTime + 0.02, o = ac.createOscillator(), f1 = ac.createBiquadFilter(), f2 = ac.createBiquadFilter();
+  const g1 = ac.createGain(), g2 = ac.createGain(), out = ac.createGain(), echo = ac.createDelay(), fb = ac.createGain(), lp = ac.createBiquadFilter();
+  o.type = 'sawtooth';
+  o.frequency.setValueAtTime(190, t); o.frequency.linearRampToValueAtTime(265, t + 0.16); o.frequency.linearRampToValueAtTime(245, t + 0.4);
+  o.frequency.exponentialRampToValueAtTime(150, t + 0.8);
+  f1.type = f2.type = 'bandpass'; f1.Q.value = 5; f2.Q.value = 7;
+  f1.frequency.setValueAtTime(420, t); f1.frequency.linearRampToValueAtTime(660, t + 0.08); f1.frequency.setValueAtTime(660, t + 0.3);
+  f1.frequency.linearRampToValueAtTime(470, t + 0.42);
+  f2.frequency.setValueAtTime(1300, t); f2.frequency.linearRampToValueAtTime(1950, t + 0.12); f2.frequency.setValueAtTime(1950, t + 0.28);
+  f2.frequency.linearRampToValueAtTime(850, t + 0.42);
+  g1.gain.value = 2.4; g2.gain.value = 1.6;
+  out.gain.setValueAtTime(0.0001, t); out.gain.exponentialRampToValueAtTime(0.2, t + 0.04); out.gain.setValueAtTime(0.18, t + 0.29);
+  out.gain.linearRampToValueAtTime(0.07, t + 0.33); out.gain.linearRampToValueAtTime(0.17, t + 0.38); out.gain.exponentialRampToValueAtTime(0.0001, t + 0.85);
+  echo.delayTime.value = 0.27; fb.gain.value = 0.32; lp.type = 'lowpass'; lp.frequency.value = 1600;
+  o.connect(f1); o.connect(f2); f1.connect(g1); f2.connect(g2); g1.connect(out); g2.connect(out);
+  out.connect(master); out.connect(echo); echo.connect(lp); lp.connect(fb); fb.connect(echo); lp.connect(master);
+  o.start(t); o.stop(t + 0.9);
+  setTimeout(() => { try { out.disconnect(); lp.disconnect(); fb.disconnect(); } catch (e) {} }, 3500);
+}
+function giggle() { if (!ac || muted) return; for (let i = 0; i < 5; i++) tone(master, 'triangle', 880 + (i % 2) * 170 - i * 20, ac.currentTime + i * 0.09, 0.07, 0.035); }
+function clink() { if (!ac || muted) return; tone(master, 'sine', 2637, ac.currentTime, 0.4, 0.04); tone(master, 'sine', 3951, ac.currentTime + 0.01, 0.25, 0.018); }
+function rumble(d = 0.6, v = 0.18) {
+  if (!ac || muted) return; makeNoise();
+  noiseHit(ac.currentTime, 'lowpass', 160, 0.7, v, d, 0, master); tone(master, 'sine', 55, ac.currentTime, d, v * 0.5);
+}
+function cheer() { if (!ac || muted) return; makeNoise(); for (let i = 0; i < 8; i++) noiseHit(ac.currentTime + i * 0.07, 'bandpass', 900 + (i % 3) * 400, 2, 0.05, 0.25, 0, master); }
+
+// ---- level 3: the cut scenes (how they all look is a guess) ----
+function gradient(y0, y1, top, bot) {  // a vertical wash of color, row by row
+  for (let y = y0; y < y1; y++) {
+    const k = (y - y0) / Math.max(1, y1 - y0 - 1), c = top.map((v, i) => Math.round(v + (bot[i] - v) * k));
+    ctx.fillStyle = 'rgb(' + c.join(',') + ')'; ctx.fillRect(0, y, VW, 1);
+  }
+}
+// a big salmon, from the side, facing right unless flip: x, y the top-left of 36 by 14
+function drawBigSalmon(x, y, flip, k) {
+  const q = painter(x, y, 36, flip), sw = Math.round(Math.sin(k * 9) * 1);
+  for (let i = 0; i < 28; i++) {
+    const a = i / 27, h = Math.max(1, Math.round(Math.sin(Math.min(1, a * 1.15) * Math.PI) * 5 + (a > 0.2 && a < 0.9 ? 1 : 0)));
+    q.r(6 + i, 7 - h, 1, h, '#3e4a32'); q.r(6 + i, 7, 1, Math.max(1, h - 1), '#e8c8b8');
+    q.p(6 + i, 6, '#c8443a'); q.p(6 + i, 7, '#c8443a'); if (h > 3) q.p(6 + i, 5, '#d85a4a');
+  }
+  for (const [a, b] of [[12, 3], [17, 2], [22, 3], [27, 3]]) q.p(a, b, '#1f2a18');
+  q.r(1, 2 + sw, 5, 2, '#3e4a32'); q.r(1, 9 - sw, 5, 2, '#3e4a32'); q.r(3, 4 + sw, 3, 5, '#4e5a3e');   // the tail
+  q.r(16, 1, 5, 2, '#3e4a32'); q.r(17, 10, 4, 2, '#c8a898');                                          // fins
+  q.p(30, 5, '#f4f1ea'); q.p(30, 5, '#1d1d22'); q.p(31, 4, '#f4f1ea'); q.r(32, 7, 2, 1, '#8a2a24');   // eye, mouth
+}
+function uHaul(x, y) {  // a moving truck, orange and white, facing left (West): x, y the top-left of 60 by 32
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+  f(18, 0, 42, 26, '#f4f1ea'); f(18, 0, 42, 3, '#e8782a'); f(18, 14, 42, 6, '#e8782a'); f(18, 20, 42, 1, '#c45c1a');
+  f(60, 2, 1, 24, '#c8c4bc'); f(19, 4, 1, 9, '#d8d4cc');
+  f(2, 8, 17, 18, '#f4f1ea'); f(2, 8, 17, 2, '#e8782a'); f(0, 18, 4, 8, '#f4f1ea');                // the cab
+  f(4, 11, 8, 6, '#3c5a6e'); f(5, 12, 2, 1, '#8fb0c4'); f(13, 11, 1, 13, '#c8c4bc');
+  f(0, 21, 2, 2, '#fff6c8'); f(0, 24, 20, 2, '#5a5a62');
+  for (const wx of [10, 48]) { disc(ctx, x + wx, y + 27, 5, '#1d1d22'); disc(ctx, x + wx, y + 27, 2, '#9a9aa2'); }
+}
+function drawRide() {
+  const S = scene3, t = time - S.t0, dir = S.dir, d = S.dist, seg = S.seg, WL = 60;  // WL: where the water starts
+  const SKY = { lake: [[127, 176, 216], [207, 228, 239]], river: [[140, 192, 230], [224, 238, 244]], gulf: [[90, 176, 232], [216, 240, 250]],
+    beach: [[74, 176, 240], [224, 246, 255]], itasca: [[154, 196, 224], [240, 232, 216]] }[seg];
+  gradient(0, WL, SKY[0], SKY[1]);
+  const WATER = { lake: '#2f6a94', river: '#5a7a5a', gulf: '#2a8ac0', beach: '#3fc4c8', itasca: '#3a7aa0' }[seg];
+  const far = d * 0.25 * dir, near = d * dir;
+  if (seg === 'lake') {  // the cliffs of Palisade Head, behind you; the wooded shore running off
+    for (let x = 0; x < VW; x++) { const top = Math.round(40 + x * 0.06 + Math.sin(x * 0.2) * 1.5); ctx.fillStyle = '#2c5238'; ctx.fillRect(x, top, 1, WL - top); }
+    for (let x = 96; x < VW; x++) {
+      const top = Math.round(18 + (x - 96) * 0.05 + Math.sin(x * 0.45) * 1.5 + (x < 100 ? (100 - x) * 5 : 0));
+      ctx.fillStyle = '#7a3b28'; ctx.fillRect(x, top, 1, WL - top); ctx.fillStyle = '#a5583a'; ctx.fillRect(x, top, 1, 2);
+      if (x % 5 === 0) { ctx.fillStyle = '#5e2a1c'; ctx.fillRect(x, top + 6 + (x % 7), 1, 8); }
+    }
+    spruce(ctx, 128, 4, 3, true); spruce(ctx, 140, 2, 8);
+  } else if (seg === 'river' || seg === 'itasca') {  // hills of trees, then the near bank
+    for (let x = 0; x < VW; x++) {
+      const wx = x + far, top = Math.round(30 + Math.sin(wx * 0.05) * 6 + Math.sin(wx * 0.13) * 3);
+      ctx.fillStyle = seg === 'itasca' ? '#2c4a34' : '#4a7a44'; ctx.fillRect(x, top, 1, WL - top);
+    }
+    for (let x = -20; x < VW + 20; x += 12) {
+      const r = rng(Math.floor((x + near) / 12) * 7 + 3);
+      if (seg === 'itasca') spruce(ctx, Math.round(x - wrapX(near, 12)), 38 + Math.floor(r() * 4), Math.floor((x + near) / 12), r() < 0.5);
+      else disc(ctx, Math.round(x - wrapX(near, 12)) + 6, 47 + Math.floor(r() * 3), 6 + Math.floor(r() * 3), r() < 0.5 ? '#3a6a34' : '#2f5a2c');
+    }
+    ctx.fillStyle = seg === 'itasca' ? '#6a8a4a' : '#7a9a5a'; ctx.fillRect(0, WL - 6, VW, 6);
+  } else if (seg === 'gulf') {
+    ctx.fillStyle = '#e8f4fa'; for (let i = 0; i < 3; i++) { const x = Math.round(wrapX(40 + i * 70 - far * 2, VW + 40) - 20); ctx.fillRect(x, 10 + i * 8, 14, 2); ctx.fillRect(x + 3, 8 + i * 8, 8, 2); }
+  } else if (seg === 'beach') {  // white sand, palms, a few buildings back from the beach
+    for (let x = 0; x < VW; x++) { const wx = x + far, k = Math.floor(wx / 22); ctx.fillStyle = wrapX(k, 3) ? '#f4efe6' : '#e8d8c8'; ctx.fillRect(x, 32 + wrapX(k, 2) * 4, 1, 18); }
+    ctx.fillStyle = '#f6ecd2'; ctx.fillRect(0, 48, VW, WL - 48);
+    for (let x = -30; x < VW + 30; x += 26) {
+      const X = Math.round(x - wrapX(near, 26)) + 12;
+      ctx.fillStyle = '#8a6a42'; for (let j = 0; j < 18; j++) ctx.fillRect(X + Math.round(Math.sin(j * 0.15) * 2), 36 + j, 2, 1);
+      for (let a = 0; a < 6; a++) { const an = Math.PI + a * Math.PI / 5; line(ctx, X, 36, Math.round(X + Math.cos(an) * 8), Math.round(36 + Math.sin(an) * 4 + 4), '#2f8a3a'); }
+    }
+  }
+  // the water, and its ripples going by
+  ctx.fillStyle = WATER; ctx.fillRect(0, WL, VW, VH - WL);
+  ctx.fillStyle = 'rgba(255,255,255,.35)';
+  for (let i = 0; i < 24; i++) { const y = WL + 3 + (i % 10) * 8, x = Math.round(wrapX(i * 37 - near * (1 + (i % 3) * 0.2), VW + 20) - 10); ctx.fillRect(x, y, 6 + (i % 3) * 2, 1); }
+  // signs, going by on the bank
+  const sign = (s, wx, y) => { const X = Math.round(wx - near); if (X < -90 || X > VW + 90) return;
+    ctx.fillStyle = '#5a3a22'; ctx.fillRect(X - 1, y + 4, 2, WL - y - 4); signBoard(ctx, s, X, y, '#f4efe6', '#2a2a2a', '#5a3a22'); };
+  if (seg === 'river') sign('MISSISSIPPI RIVER', dir > 0 ? 240 : -240, 34);
+  if (seg === 'beach') sign('PLAYA DEL CARMEN', S.signAt, 26);
+  if (seg === 'itasca') sign('LAKE ITASCA', S.signAt, 26);
+  if (seg === 'itasca') uHaul(Math.round(S.truckAt - near), WL - 32);
+  // you two: in the water, then on the salmon (it leaps now and then)
+  const flip = dir < 0, sx = flip ? 66 : 58;
+  let sy = WL + 4 + Math.round(Math.sin(t * 3) * 1.2);
+  if (!S.salmon) {  // just your heads, bobbing
+    const b = Math.round(Math.sin(t * 2.4) * 1);
+    ctx.fillStyle = BB.HAIR; ctx.fillRect(70, WL - 3 + b, 6, 2); ctx.fillStyle = BB.SKIN; ctx.fillRect(70, WL - 1 + b, 6, 3);
+    ctx.fillStyle = '#111'; ctx.fillRect(72, WL - 1 + b, 4, 1);
+    drawGrid(MINI, miniPal(), 84, WL - 3 - b, false);
+    splash(73, WL + 2, (t % 1.6) / 1.6, 0.6); return;
+  }
+  const rise = clamp((time - S.salmon) / 0.8, 0, 1);
+  sy += Math.round((1 - rise) * 30);
+  const leapK = S.v > 20 ? ((t % 3.4) - 2.2) / 0.9 : -1;
+  if (leapK >= 0 && leapK <= 1) sy -= Math.round(Math.sin(leapK * Math.PI) * 18);
+  if (leapK > -0.15 && leapK < 0.25) splash(sx + 18, WL + 7, (leapK + 0.15) / 0.4, 1.2);
+  if (leapK > 0.85 && leapK < 1.25) splash(sx + 18, WL + 7, (leapK - 0.85) / 0.4, 1.2);
+  const off = S.off ? clamp((time - S.off) / 1.2, 0, 1) : 0;  // climbing off at Lake Itasca, over to the truck
+  if (off < 1) {
+    const bx = sx + (flip ? 20 : 6) + (S.off ? Math.round((S.truckAt - near + 66 - (sx + 20)) * off) : 0), by = sy - 14 - Math.round(Math.sin(off * Math.PI) * 10 + off * 8);
+    drawBlaineSit(bx - (flip ? 14 : 0), by, flip);
+    drawGrid(MINI, miniPal(), flip ? sx + 2 : sx + 22, sy - 4 - Math.round(off * 8), flip);
+  } else {
+    const X = Math.round(S.truckAt - near) + 62;
+    drawBlaine(X, WL - 18, 'left', 0); drawGrid(MINI, miniPal(), X - 10, WL - 8, true);
+  }
+  if (leapK < 0) { ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.fillRect(sx + 4, WL + 12, 28, 1); }
+  drawBigSalmon(sx, sy, flip, t);
+  ctx.fillStyle = WATER; ctx.globalAlpha = 0.55; ctx.fillRect(0, WL + 12, VW, VH - WL - 12); ctx.globalAlpha = 1;  // the water over its belly
+}
+// the cab, shaped like a minivan, at night: x, y the top-left of 74 by 40
+function drawMinivan(x, y, k) {
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+  f(28, -3, 21, 9, '#1d1d22'); f(29, -2, 19, 7, '#f2d24a'); signText(ctx, 'TAXI', x + 31, y - 1, '#1d1d22');
+  f(0, 6, 64, 28, '#efeee6'); f(64, 12, 6, 22, '#efeee6'); f(62, 8, 4, 4, '#efeee6'); f(70, 18, 4, 16, '#e0dfd6');
+  f(0, 22, 74, 3, '#f2c94c'); f(0, 32, 74, 3, '#3a3a40');
+  f(3, 9, 14, 10, '#1a2a3a'); f(19, 9, 16, 10, '#1a2a3a'); f(37, 9, 16, 10, '#1a2a3a'); f(55, 9, 9, 10, '#1a2a3a');
+  for (let j = 0; j < 9; j++) f(64 + Math.floor(j / 2), 10 + j, 1, 1, '#1a2a3a');
+  // who's inside: Karill, Shawn, Brudda Blaine (and you, on his head), the driver
+  const head = (hx, hair, skin, glasses) => { f(hx, 13, 6, 6, skin); f(hx, 12, 6, 2, hair); if (glasses) f(hx + 2, 14, 4, 1, '#111'); };
+  head(6, '#e8d8a0', '#e9b48f'); head(23, '#6a4a2a', '#d8d4a8'); head(41, BB.HAIR, BB.SKIN, true);
+  f(42, 10, 4, 2, '#2b1d14'); f(41, 11, 1, 1, '#2b1d14'); f(46, 11, 1, 1, '#2b1d14');
+  head(57, '#1a1410', '#b07a50'); f(56, 11, 8, 2, '#3a5a8a');
+  f(36, 9, 1, 25, '#c8c8c0'); f(18, 9, 1, 13, '#c8c8c0'); f(30, 27, 4, 1, '#8a8a8a');
+  f(72, 26, 2, 3, '#fff6c8'); f(0, 26, 2, 3, '#d0302a');
+  for (const wx of [14, 58]) { disc(ctx, x + wx, y + 35, 5, '#141418'); disc(ctx, x + wx, y + 35, 2, '#8a8a92'); px(ctx, x + wx + Math.round(Math.cos(k) * 2), y + 35 + Math.round(Math.sin(k) * 2), '#c8c8d0'); }
+}
+function drawCab() {
+  const S = scene3, t = time - S.t0, d = S.dist, RD = 74;  // RD: where the road starts
+  gradient(0, RD, [10, 16, 48], [36, 40, 86]);
+  const r = rng(5); ctx.fillStyle = '#e8ecff'; for (let i = 0; i < 26; i++) ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * 34), 1, 1);
+  for (let i = 0; i < 30; i++) { const x = Math.round(wrapX(i * 23 - d * 0.15, VW + 40) - 20); ctx.fillStyle = i % 3 ? '#f2d24a' : '#ffffff'; ctx.fillRect(x, 52 + (i % 4) * 3, 1, 1); }
+  for (let i = 0; i < 6; i++) {  // palms, dark against the sky
+    const x = Math.round(wrapX(i * 47 - d * 0.4, VW + 60) - 30);
+    ctx.fillStyle = '#0a0a18'; ctx.fillRect(x, 40, 2, RD - 40);
+    for (let a = 0; a < 5; a++) line(ctx, x + 1, 40, Math.round(x + 1 + Math.cos(Math.PI + a * 0.8) * 9), Math.round(40 + Math.sin(Math.PI + a * 0.8) * 4 + 3), '#0a0a18');
+  }
+  ctx.fillStyle = '#4a4a52'; ctx.fillRect(0, RD - 2, VW, 3); ctx.fillStyle = '#2a2a32'; ctx.fillRect(0, RD + 1, VW, VH - RD - 1);
+  ctx.fillStyle = '#d8d0a0'; for (let i = 0; i < 6; i++) ctx.fillRect(Math.round(wrapX(i * 34 - d, VW + 34) - 17), RD + 18, 12, 2);
+  for (let i = 0; i < 3; i++) {  // streetlights going by
+    const x = Math.round(wrapX(i * 80 - d, VW + 80) - 40);
+    ctx.fillStyle = '#5a5a62'; ctx.fillRect(x, 10, 2, RD - 10); ctx.fillRect(x, 10, 10, 2); ctx.fillStyle = '#fff2b0'; ctx.fillRect(x + 8, 12, 3, 1);
+    ctx.globalCompositeOperation = 'lighter'; const gr = ctx.createRadialGradient(x + 9, 14, 1, x + 9, 30, 30);
+    gr.addColorStop(0, 'rgba(255,220,140,.35)'); gr.addColorStop(1, 'rgba(255,220,140,0)'); ctx.fillStyle = gr; ctx.fillRect(x - 25, 10, 70, 70); ctx.globalCompositeOperation = 'source-over';
+  }
+  if (S.bridgeAt != null) {  // the bridge, sliding in overhead; the cab pulls up under it
+    const X = Math.round(S.bridgeAt - d);
+    ctx.fillStyle = '#6e6e74'; ctx.fillRect(X, 8, 150, 14); ctx.fillStyle = '#8a8a90'; ctx.fillRect(X, 6, 150, 3);
+    ctx.fillStyle = '#5a5a60'; ctx.fillRect(X, 21, 150, 2);
+    for (const px0 of [X + 6, X + 128]) { ctx.fillStyle = '#626268'; ctx.fillRect(px0, 23, 12, RD - 22); ctx.fillStyle = '#7a7a80'; ctx.fillRect(px0, 23, 2, RD - 22); }
+    ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(X + 18, 23, 110, RD - 22);
+  }
+  const bounce = S.v > 5 && Math.floor(t * 9) % 2 ? 1 : 0;
+  drawMinivan(44, RD - 40 + bounce, d * 0.4);
+}
+// back to you: Brudda Blaine, so overjoyed to see you; everything in the world seems right
+function drawHug() {
+  const S = scene3, t = time - S.t0, lt = S.leapT ? time - S.leapT : -1;
+  gradient(0, 58, [106, 58, 138], [248, 176, 96]);
+  disc(ctx, 80, 58, 16, '#ffd890'); disc(ctx, 80, 58, 12, '#fff0c0');
+  gradient(58, 76, [232, 144, 96], [168, 90, 106]);
+  ctx.fillStyle = '#ffe8b0'; for (let i = 0; i < 10; i++) ctx.fillRect(74 + ((i * 7 + Math.floor(t * 3)) % 13), 60 + i * 2 - (i > 7 ? 4 : 0), 3 + (i % 3), 1);
+  for (let j = 76; j < VH; j += 8) for (let i = 0; i < VW; i += 8) { ctx.fillStyle = ((i + j) / 8) % 2 ? '#c97a52' : '#b86c46'; ctx.fillRect(i, j, 8, 8); }
+  ctx.fillStyle = 'rgba(80,30,60,.35)'; ctx.fillRect(0, 76, VW, VH - 76);
+  // the archway, framing it all
+  ctx.fillStyle = '#f1e4c8'; ctx.fillRect(0, 0, 16, VH); ctx.fillRect(VW - 16, 0, 16, VH); ctx.fillRect(0, 0, VW, 10);
+  for (let i = 0; i <= 128; i++) { const k = (i - 64) / 64, h = Math.round(26 * (1 - Math.sqrt(Math.max(0, 1 - k * k)))); ctx.fillStyle = '#f1e4c8'; ctx.fillRect(16 + i, 10, 1, h + 1); ctx.fillStyle = '#c9a878'; ctx.fillRect(16 + i, 11 + h, 1, 1); }
+  for (let i = 0; i < VW; i += 6) { ctx.fillStyle = (i / 6) % 2 ? '#2a5aa8' : '#f2c94c'; ctx.fillRect(i, 2, 6, 4); }
+  for (const x0 of [2, VW - 14]) for (let j = 16; j < VH; j += 8) { ctx.fillStyle = (j / 8) % 2 ? '#2a5aa8' : '#ffffff'; ctx.fillRect(x0, j, 12, 6); ctx.fillStyle = '#f2c94c'; ctx.fillRect(x0 + 5, j + 2, 2, 2); }
+  const rb = rng(9); for (let i = 0; i < 60; i++) px(ctx, Math.floor(rb() * VW), Math.floor(rb() * (i % 2 ? 12 : 22)), ['#e0307a', '#ff5fae', '#b82060', '#3a8a3a'][i % 4]);
+  // the glow around you two
+  const hold = clamp((lt - 2.2) / 1.5, 0, 1);
+  ctx.globalCompositeOperation = 'lighter';
+  const gr = ctx.createRadialGradient(80, 50, 4, 80, 50, 60); gr.addColorStop(0, 'rgba(255,220,160,' + (0.15 + 0.3 * hold) + ')'); gr.addColorStop(1, 'rgba(255,200,140,0)');
+  ctx.fillStyle = gr; ctx.fillRect(10, 0, 140, 124); ctx.globalCompositeOperation = 'source-over';
+  // Brudda Blaine, big, arms wide open; then holding you
+  const X = 56, Y = 26, s = 3, rows = BL_FRONT.concat(BL_LEGS.front[0]);
+  drawBig(rows.map((r, j) => j === 11 ? r.replace(/S/g, '.') : r), BL_PAL, X, Y, s);
+  const tear = (t % 2) / 2;
+  ctx.fillStyle = '#9fd8ff'; ctx.fillRect(X + 5 * s, Y + 5 * s + Math.round(tear * 8), 2, 3);
+  const leap = clamp(lt / 2.2, 0, 1), e = ease(leap);
+  if (hold <= 0) {
+    // arms wide open, waiting
+    ctx.fillStyle = BB.JK; ctx.fillRect(X - 12, Y + 24, 18, 6); ctx.fillRect(X + 42, Y + 24, 18, 6);
+    ctx.fillStyle = BB.SKIN; ctx.fillRect(X - 16, Y + 22, 5, 6); ctx.fillRect(X + 59, Y + 22, 5, 6);
+    const sxp = Math.round(132 + (X + 8 - 132) * e), syp = Math.round(76 + (Y + 12 - 76) * e - Math.sin(leap * Math.PI) * 24);
+    drawBig(SPIDER, SPIDER_PAL[choice || 'none'], sxp, syp, 2, false, Math.floor(t * 4) % 2);
+    if (leap > 0 && leap < 1) for (let i = 1; i <= 3; i++) { ctx.globalAlpha = 0.18 * (4 - i); const k = clamp(leap - i * 0.05, 0, 1), ek = ease(k);
+      drawBig(SPIDER, SPIDER_PAL[choice || 'none'], Math.round(132 + (X + 8 - 132) * ek), Math.round(76 + (Y + 12 - 76) * ek - Math.sin(k * Math.PI) * 24), 2); ctx.globalAlpha = 1; }
+  } else {
+    drawBig(SPIDER, SPIDER_PAL[choice || 'none'], X + 8, Y + 12, 2);
+    ctx.fillStyle = BB.JK; ctx.fillRect(X + 2, Y + 30, 14, 6); ctx.fillRect(X + 32, Y + 30, 14, 6);
+    ctx.fillStyle = BB.SKIN; ctx.fillRect(X + 14, Y + 31, 6, 5); ctx.fillRect(X + 28, Y + 31, 6, 5);
+    for (let i = 0; i < 6; i++) {  // hearts, floating up
+      const k = ((lt - 2.2) * 0.35 + i / 6) % 1, hx = Math.round(X + 24 + Math.sin(k * 7 + i * 2) * (14 + i * 3)), hy = Math.round(Y + 10 - k * 60);
+      ctx.globalAlpha = k > 0.7 ? (1 - k) / 0.3 : 1;
+      HEART.forEach((row, j) => { for (let a = 0; a < row.length; a++) if (row[a] === 'X') { ctx.fillStyle = a === 1 && j === 1 ? '#ffc2d4' : '#ff4f86'; ctx.fillRect(hx + a, hy + j, 1, 1); } });
+      ctx.globalAlpha = 1;
+    }
+  }
+  for (let i = 0; i < 16; i++) {  // bougainvillea petals, drifting down
+    const k = (t * 0.12 + i / 16) % 1, x = Math.round(wrapX(i * 29 + Math.sin(t + i) * 8 - k * 30, VW)), y = Math.round(k * VH);
+    ctx.fillStyle = i % 3 ? '#ff5fae' : '#e0307a'; ctx.fillRect(x, y, 2, 1); ctx.fillRect(x + 1, y + 1, 1, 1);
+  }
+  sparkleAt(X + 4, Y + 4, ((t * 0.7) % 2) - 0.5); sparkleAt(X + 46, Y + 20, ((t * 0.7 + 1) % 2) - 0.5);
+  ctx.fillStyle = '#000'; const lb = Math.round(Math.min(1, t / 1.2) * 9); ctx.fillRect(0, 0, VW, lb); ctx.fillRect(0, VH - lb, VW, lb);
+}
+// over his shoulder: the deer again, playing mariachi music, Isabella close in hand, a California flag waving
+function caFlag(x, y, k) {  // a little California flag: white, a red stripe, a red star, a brown bear (very small)
+  for (let i = 0; i < 14; i++) {
+    const w = Math.round(Math.sin(k * 6 + i * 0.6) * 1);
+    ctx.fillStyle = '#f4f1ea'; ctx.fillRect(x + i, y + w, 1, 7); ctx.fillStyle = '#c8102e'; ctx.fillRect(x + i, y + 7 + w, 1, 2);
+    if (i >= 5 && i <= 9) { ctx.fillStyle = '#6a4a2a'; ctx.fillRect(x + i, y + 3 + w, 1, i === 9 ? 1 : 2); }
+    if (i === 1) { ctx.fillStyle = '#c8102e'; ctx.fillRect(x + i, y + 1 + w, 1, 1); }
+  }
+  ctx.fillStyle = '#5a4a3a'; ctx.fillRect(x - 1, y - 1, 1, 26);
+}
+function drawShoulder() {
+  const t = time - scene3.t0;
+  gradient(0, 40, [58, 58, 122], [232, 138, 106]);
+  for (let i = 0; i < 7; i++) {  // a row of houses, across the street
+    const [c, dk] = HOUSE_COLS[i % HOUSE_COLS.length], x = i * 26 - 8;
+    ctx.fillStyle = c; ctx.fillRect(x, 14, 26, 46); ctx.fillStyle = dk; ctx.fillRect(x, 14, 26, 2);
+    ctx.fillStyle = '#2d3f52'; ctx.fillRect(x + 8, 22, 9, 10); ctx.fillStyle = '#ffe08a'; ctx.fillRect(x + 9, 23, 7, 8);
+    ctx.fillStyle = '#6a3e22'; ctx.fillRect(x + 9, 42, 8, 18);
+  }
+  ctx.fillStyle = '#dcc79c'; ctx.fillRect(0, 60, VW, VH - 60); ctx.fillStyle = '#cdb486'; ctx.fillRect(0, 60, VW, 2);
+  // the deer, walking by, playing: a trumpet, a guitar, a violin; Isabella close in hand; one carries the flag
+  const x0 = Math.round(t * 5);
+  const band = [{ o: 0, inst: 'trumpet' }, { o: 20, inst: 'guitar' }, { o: 34, isa: true }, { o: 46, inst: 'violin' }, { o: 66, inst: 'flag' }];
+  for (const m of band) {
+    const x = x0 + 120 - m.o, y = 48, step = Math.floor(t * 6 + m.o) % 2;
+    if (m.isa) { drawSprite(ctx, step ? ISABELLA_STEP : ISABELLA, ISABELLA_PAL, x, y - 1); continue; }
+    drawSprite(ctx, step ? DEER_STEP : DEER, DEER_PAL, x, y);
+    const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+    if (m.inst === 'trumpet') { f(13, 8, 6, 1, '#f2c94c'); f(18, 6, 2, 5, '#f2c94c'); f(19, 7, 1, 3, '#fff0a0'); }
+    if (m.inst === 'guitar') { disc(ctx, x + 7, y + 9, 3, '#a8622a'); px(ctx, x + 7, y + 9, '#3a2010'); f(9, 7, 6, 1, '#6a3a1a'); }
+    if (m.inst === 'violin') { f(10, 6, 3, 4, '#8a3a1a'); line(ctx, x + 6, y + 3, x + 15, y + 9, '#e8e0d0'); }
+    if (m.inst === 'flag') caFlag(x + 6, y - 22, t);
+  }
+  ctx.fillStyle = '#ffffff';  // notes, drifting up off the band
+  for (let i = 0; i < 4; i++) { const k = (t * 0.5 + i / 4) % 1, nx = Math.round(x0 + 100 - i * 18 + Math.sin(k * 6) * 4), ny = Math.round(44 - k * 30);
+    ctx.globalAlpha = 1 - k; NOTE_GLYPH.forEach((row, j) => { for (let a = 0; a < 3; a++) if (row[a] === 'X') ctx.fillRect(nx + a, ny + j, 1, 1); }); ctx.globalAlpha = 1; }
+  // Brudda Blaine's shoulder and the back of his head, close up; you, on his shoulder, looking out
+  drawBig(BL_BACK.slice(0, 13), BL_PAL, -4, 62, 4);
+  drawBig(SPIDER, SPIDER_PAL[choice || 'none'], 44, 58, 2, false, 0);
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, 9); ctx.fillRect(0, VH - 9, VW, 9);
+}
+// Akumal bay, from above: coral reefs, and turtles everywhere; your salmon, waiting at the water's edge
+let bayCanvas = null;
+function paintBay() {
+  bayCanvas = document.createElement('canvas'); bayCanvas.width = VW; bayCanvas.height = VH;
+  const g = bayCanvas.getContext('2d'), r = rng(31);
+  const shore = x => 40 + Math.round(Math.sin(x * 0.05) * 3 + Math.sin(x * 0.13) * 1.5);
+  for (let x = 0; x < VW; x++) {
+    const s = shore(x);
+    g.fillStyle = '#f4ead0'; g.fillRect(x, 0, 1, s);
+    for (let y = s; y < VH; y++) { const k = (y - s) / (VH - s); g.fillStyle = 'rgb(' + Math.round(120 - 90 * k) + ',' + Math.round(222 - 80 * k) + ',' + Math.round(214 - 30 * k) + ')'; g.fillRect(x, y, 1, 1); }
+  }
+  for (let i = 0; i < 40; i++) px(g, Math.floor(r() * VW), Math.floor(r() * 34), '#e4d6b4');
+  for (const [x, y] of [[14, 6], [52, 2], [118, 4], [146, 10]]) palm(g, x, y, x);
+  for (let i = 0; i < 16; i++) {  // the coral reefs
+    const cx = Math.floor(r() * VW), cy = 66 + Math.floor(r() * 74), c = ['#ff7a9a', '#ff9a4a', '#9a6ad0', '#f2d24a', '#ff5f7a'][i % 5];
+    for (let k = 0; k < 7; k++) disc(g, cx + Math.floor(r() * 10) - 5, cy + Math.floor(r() * 6) - 3, 1 + Math.floor(r() * 2), c);
+    for (let k = 0; k < 4; k++) px(g, cx + Math.floor(r() * 12) - 6, cy + Math.floor(r() * 8) - 4, '#ffffff');
+  }
+  for (let i = 0; i < 20; i++) { const x = Math.floor(r() * VW), y = 56 + Math.floor(r() * 80); g.fillStyle = '#3a9a6a'; g.fillRect(x, y, 1, 3); g.fillRect(x + 2, y + 1, 1, 3); }
+}
+function turtle(x, y, a, k) {  // a sea turtle, from above, swimming along angle a
+  const dx = Math.cos(a), dy = Math.sin(a), fl = Math.sin(k * 5) * 0.6;
+  const at = (f, s) => [Math.round(x + dx * f - dy * s), Math.round(y + dy * f + dx * s)];
+  for (const [f, s, sw] of [[2, -4, fl], [2, 4, -fl], [-3, -3, -fl], [-3, 3, fl]]) { const [px0, py0] = at(f + sw, s); disc(ctx, px0, py0, 1, '#7a9a5a'); }
+  const [hx, hy] = at(6, 0); disc(ctx, hx, hy, 1, '#8aa86a');
+  disc(ctx, Math.round(x), Math.round(y), 4, '#5a6a32'); disc(ctx, Math.round(x), Math.round(y), 2, '#7a8a42');
+  px(ctx, Math.round(x - 2), Math.round(y - 1), '#4a5a2a'); px(ctx, Math.round(x + 1), Math.round(y + 2), '#4a5a2a');
+}
+function drawBay() {
+  const S = scene3, t = time - S.t0;
+  if (!bayCanvas) paintBay();
+  ctx.drawImage(bayCanvas, 0, 0);
+  ctx.fillStyle = 'rgba(255,255,255,.7)';  // the foam at the water's edge
+  for (let x = 0; x < VW; x += 2) { const s = 40 + Math.round(Math.sin(x * 0.05) * 3 + Math.sin(x * 0.13) * 1.5); if ((x + Math.floor(t * 6)) % 6 < 4) ctx.fillRect(x, s + Math.round(Math.sin(t * 2 + x * 0.1)), 2, 1); }
+  for (let i = 0; i < 10; i++) {  // turtles, everywhere
+    const a = t * (0.12 + (i % 3) * 0.05) * (i % 2 ? 1 : -1) + i * 1.7, x = 80 + Math.cos(a) * (30 + (i * 13) % 50), y = 96 + Math.sin(a * 1.3) * (16 + (i * 7) % 26);
+    const vx = -Math.sin(a) * (i % 2 ? 1 : -1), vy = Math.cos(a * 1.3) * 1.3 * (i % 2 ? 1 : -1);
+    turtle(x, y, Math.atan2(vy, vx), t + i);
+  }
+  // the salmon, waiting; then the two of you on it, swimming out
+  const go = S.goT ? clamp((time - S.goT) / 2.2, 0, 1) : 0;
+  const fx0 = 108 + Math.round(go * 40), fy0 = 50 + Math.round(go * go * 110);
+  drawFish(fx0, fy0, Math.PI / 2 + 0.2 * go - 0.6 * (1 - go), 2, SALMON);
+  const run = S.runT ? clamp((time - S.runT) / 2.4, 0, 1) : 0, hop = S.hopT ? clamp((time - S.hopT) / 0.5, 0, 1) : 0;
+  if (!S.hopT) {
+    const step = run < 1 ? (Math.floor(t * 10) % 2 ? 1 : 2) : 0;
+    drawBlaine(Math.round(-16 + run * 104), 18, 'right', step);
+    drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], Math.round(-30 + run * 100), 24, ROT.right, false, step ? 1 : 0);
+  } else {
+    drawBlaine(fx0 - 8, fy0 - 18 - Math.round(Math.sin(hop * Math.PI) * 6), go > 0 ? 'down' : 'right', 0);
+    drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], fx0 - 7, fy0 - 2 - Math.round(Math.sin(hop * Math.PI) * 6), ROT.down);
+    if (hop < 1) splash(fx0, fy0 + 6, hop, 1.3);
+  }
+}
+function drawScene3() {
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
+  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay })[scene3.kind]();
+}
+
+// ---- level 3: drawing the club and the town ----
+function drawRock(X, Y, rx) {  // the boulder, rolling as it goes
+  ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(X + 2, Y + 13, 13, 3);
+  disc(ctx, X + 8, Y + 8, 7, '#8a847a'); disc(ctx, X + 7, Y + 7, 5, '#a29c90'); disc(ctx, X + 6, Y + 5, 2, '#bab4a8');
+  const a = -rx * 2;  // cracks, turning with it
+  for (const o of [0, 2.2, 4.1]) line(ctx, Math.round(X + 8 + Math.cos(a + o) * 2), Math.round(Y + 8 + Math.sin(a + o) * 2), Math.round(X + 8 + Math.cos(a + o) * 6), Math.round(Y + 8 + Math.sin(a + o) * 6), '#6a645a');
+}
+function clubLights(cx, cy) {  // colored lights, sweeping the club
+  ctx.globalCompositeOperation = 'lighter';
+  const n = Math.floor(time / clubBeat());
+  for (let i = 0; i < 3; i++) {
+    const a = time * 0.8 + i * 2.1, x = VW / 2 + Math.cos(a) * 60, y = VH / 2 + Math.sin(a * 1.3) * 45;
+    const col = ['255,80,200', '80,220,255', '255,210,80'][wrapX(i + n, 3)];
+    const gr = ctx.createRadialGradient(x, y, 1, x, y, 30);
+    gr.addColorStop(0, 'rgba(' + col + ',.22)'); gr.addColorStop(1, 'rgba(' + col + ',0)');
+    ctx.fillStyle = gr; ctx.fillRect(x - 30, y - 30, 60, 60);
+  }
+  ctx.globalCompositeOperation = 'source-over';
+}
+function bubbleWords(s, cx0, y, ink) {  // a speech bubble with words in it, centered on cx0
+  const w = signWidth(s), x = Math.round(cx0 - w / 2);
+  ctx.fillStyle = '#2b2118'; ctx.fillRect(x - 3, y - 3, w + 6, 11);
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(x - 2, y - 2, w + 4, 9); ctx.fillRect(Math.round(cx0) - 1, y + 7, 3, 2);
+  ctx.fillStyle = '#2b2118'; ctx.fillRect(Math.round(cx0) - 2, y + 7, 1, 2); ctx.fillRect(Math.round(cx0) + 2, y + 7, 1, 2); ctx.fillRect(Math.round(cx0) - 1, y + 9, 3, 1);
+  signText(ctx, s, x, y, ink);
+}
+function draw3(cx, cy) {
+  const x0 = Math.floor(cx / TS), y0 = Math.floor(cy / TS), club = area !== 'akumal', list = [];
+  if (cy + VH > MAPH) {  // below the edge of the map (the camera dips there in a few scenes): more wall, or more jungle
+    const y = MAPH - cy; ctx.fillStyle = club ? '#2a1f3a' : '#244a22'; ctx.fillRect(0, y, VW, VH - y);
+    if (!club) for (let i = 0; i < 24; i++) disc(ctx, (i * 29) % VW, y + 4 + ((i * 13) % 50), 3, i % 2 ? '#2f6a2c' : '#1d3e1b');
+  }
+  if (club) {
+    const n = Math.floor(time / clubBeat());
+    for (let ty = y0; ty <= y0 + 9; ty++) for (let tx = x0; tx <= x0 + 10; tx++) {
+      const ch = tile(tx, ty), X = tx * TS - cx, Y = ty * TS - cy;
+      if (ch === '.' && wrapX(tx * 3 + ty * 5 + n, 7) === 0) {  // the floor lights up, on the beat
+        ctx.fillStyle = ['rgba(255,79,168,.22)', 'rgba(63,224,255,.2)', 'rgba(242,201,76,.2)'][wrapX(tx + ty + n, 3)]; ctx.fillRect(X + 1, Y + 1, 15, 15);
+      }
+      if (ch === 'v') {  // the dance floor far below: lights, and the tops of heads
+        for (let i = 0; i < 3; i++) { ctx.globalAlpha = 0.3; ctx.fillStyle = ['#ff4fa8', '#3fe0ff', '#f2c94c'][wrapX(i + n + tx, 3)]; ctx.fillRect(X + ((i * 5 + tx * 3) % 12), Y + ((i * 5 + n * 3 + ty) % 14), 4, 2); }
+        ctx.globalAlpha = 1;
+        for (let i = 0; i < 4; i++) { ctx.fillStyle = HAIRS[(tx + ty + i) % HAIRS.length]; ctx.fillRect(X + 1 + i * 4, Y + 2 + ((i * 7 + ty * 3) % 11) + ((n + i) % 2), 2, 2); }
+      }
+      if (ch === 'c') list.push([ty * TS + 8, () => crowdTile(X, Y, tx, ty)]);
+    }
+    if (area === 'club2') list.push([SHAWN.y * TS + 1, () => drawShawn(SHAWN.x * TS - cx, SHAWN.y * TS - cy)]);
+    if (area === 'club1') {
+      list.push([KARILL.y * TS + 8, () => drawKarill(KARILL.x * TS - cx, KARILL.y * TS - cy)]);
+      for (const p of PROMOS) list.push([p.y * TS + 8, () => drawPromoter(p.x * TS - cx, p.y * TS - cy, p.k)]);
+      const b = L3.bl;
+      if (b && !b.gone) list.push([b.y * TS + 9, () => {
+        ctx.globalAlpha = b.fadeT > 0 ? clamp(1 - (time - b.fadeT) / 0.8, 0, 1) : 1;
+        const mv = b.path && b.path.length;
+        drawBlaine(Math.round(b.x * TS) - cx, Math.round(b.y * TS) - cy, b.facing, mv ? (Math.floor(b.walkT * 8) % 2 ? 1 : 2) : 0);
+        ctx.globalAlpha = 1;
+      }]);
+    }
+  } else {
+    const R = L3.rock;
+    list.push([ROCK_FROM.y * TS + 8, () => drawRock(Math.round(R.x * TS) - cx, ROCK_FROM.y * TS - cy, R.x)]);
+    for (const L of L3.locals) list.push([L.y * TS + 8, () => drawLocal(L, Math.round(L.x * TS) - cx, Math.round(L.y * TS) - cy)]);
+    list.push([BRAYDON.y * TS + 8, () => drawBraydon(BRAYDON.x * TS - cx, BRAYDON.y * TS - cy)]);
+    list.push([0, () => drawRoofMan(17 * TS + 14 - cx, 17 - cy)]);
+  }
+  const [ppx, ppy] = ppos();
+  if (!P.hidden) list.push([ppy + 9, () => {
+    const X = Math.round(ppx) - cx, Y = Math.round(ppy) - cy, step = P.moving ? (Math.floor(P.anim * 8) % 2 ? 1 : 2) : 0;
+    if (P.blaine) drawBlaine(X, Y, P.facing, step);
+    else drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], X, Y, ROT[P.facing], false, step ? step - 1 : 0);
+  }]);
+  list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
+  if (club) clubLights(cx, cy);
+  if (area === 'club1' && time - L3.shot < 3.5) {  // the shot: two little glasses, raised, and a clink
+    const k = clamp((time - L3.shot) / 0.6, 0, 1), X = KARILL.x * TS - cx, Y = KARILL.y * TS - cy;
+    for (const [gx, gy] of [[X + 4, Y - 6], [Math.round(ppx) - cx + 8, Math.round(ppy) - cy - 4]]) {
+      const tx0 = Math.round(gx + (X + 8 - gx) * 0.4 * k), ty0 = Math.round(gy - k * 4);
+      ctx.fillStyle = 'rgba(230,245,255,.9)'; ctx.fillRect(tx0, ty0, 3, 4); ctx.fillStyle = '#ffffff'; ctx.fillRect(tx0, ty0, 1, 4);
+    }
+    sparkleAt(X + 6, Y - 10, (time - L3.shot - 0.5) / 0.6);
+  }
+  if (time - L3.haze < 12) {  // everything goes a little hazy
+    const h = clamp((time - L3.haze) / 3, 0, 1);
+    ctx.fillStyle = '#ddd6e6'; ctx.globalAlpha = 0.2 * h; ctx.fillRect(0, 0, VW, VH);
+    for (let j = 0; j < 7; j++) { const y = Math.round(((j * 27 + time * 6) % (VH + 24)) - 12 + Math.sin(time * 0.7 + j) * 4); ctx.globalAlpha = 0.12 * h; ctx.fillRect(0, y, VW, 5 + (j % 3) * 2); }
+    ctx.globalAlpha = 1;
+  }
+  if (area === 'akumal') {
+    const bx = BRAYDON.x * TS - cx, by = BRAYDON.y * TS - cy, k = (time % 3) / 3;
+    for (let i = 0; i < 4; i++) sparkleAt(bx - 14 + ((i * 37) % 44), by - 14 + ((i * 23) % 20), ((time * 0.8 + i * 0.37) % 1.6) - 0.3);  // the archway, glorious
+    if (k >= 0.5) for (let i = 0; i < 2; i++) {  // giggling, gleefully
+      const g = ((time * 1.2 + i * 0.5) % 1);
+      ctx.globalAlpha = 1 - g; signText(ctx, 'HEE', bx + 9 + i * 4, Math.round(by - 2 - g * 12), '#ffffff'); ctx.globalAlpha = 1;
+    }
+    if (time - L3.yellT < 1.0 && P.blaine && !P.hidden) {  // "BRAYDON!", as loud as he can
+      const sh = Math.round(Math.sin(time * 60)), X = Math.round(ppx) - cx + 8 + sh, Y = Math.round(ppy) - cy - 14;
+      bubbleWords('BRAYDON!', clamp(X, 18, VW - 18), Math.max(4, Y), '#c81e1e');
+    }
+  }
+}
+
+// ---- level 3: moving about ----
+function walkable3(x, y) {
+  const ch = tile(x, y);
+  if (area === 'club1') {
+    if (ch === 'U' || ch === 'D') return true;
+    if (ch !== '.') return false;
+    if ((x === KARILL.x && y === KARILL.y) || PROMOS.some(p => p.x === x && p.y === y)) return false;
+    const b = L3.bl; if (b && !b.gone && Math.round(b.x) === x && Math.round(b.y) === y) return false;
+    return true;
+  }
+  if (area === 'club2') return ch === '.' || ch === 'U' || (ch === 'D' && L3.karillSeen);
+  if (!'.:'.includes(ch)) return false;
+  const R = L3.rock;
+  if (!R.done && y === ROCK_FROM.y && (x === Math.floor(R.x) || x === Math.ceil(R.x))) return false;
+  if (L3.locals.some(L => Math.round(L.x) === x && L.y === y)) return false;
+  return true;
+}
+function clubHud() {
+  if (area === 'club1' && !L3.karillSeen) return 'Find the stairs up to floor 2';
+  if (!L3.karillSeen) return 'Floor 2: find your way through';
+  return 'Find a different way down, to Karill';
+}
+function arrive3() {
+  const ch = tile(P.tx, P.ty);
+  if (area === 'club1' && phase === 'club') {
+    if (ch === 'U') { goStairs('club2', 1, 11, 'up'); return; }
+    if (ch === 'D') { goStairs('club2', 19, 1, 'down'); return; }
+    if (!L3.karill && L3.karillSeen && P.ty <= 3 && P.tx >= 11 && P.tx <= 15) karillScene();
+  } else if (area === 'club2' && phase === 'club') {
+    if (ch === 'U') { goStairs('club1', 1, 1, 'down'); return; }
+    if (ch === 'D') { goStairs('club1', 19, 13, 'up'); return; }
+    if (!L3.shawn && P.tx === SHAWN.x && P.ty === SHAWN.y + 1) { shawnScene(); return; }
+    if (L3.shawn && !L3.karillSeen && P.tx === 19) lookDown();
+  } else if (area === 'akumal' && phase === 'town') {
+    if (!L3.restaurant && P.ty === 10 && (P.tx === 6 || P.tx === 7)) { restaurant(); return; }
+    if (!L3.found && P.ty <= 4 && P.tx >= 13) { foundScene(); return; }
+    if (++L3.steps % 10 === 0) autoYell();  // he keeps stopping to yell his name
+  }
+}
+function bump3(x, y, d) {  // you tried to go somewhere you can't: say why, if there's a reason
+  if (box.active || lock || time - L3.said < 2.5) return;
+  const ch = tile(x, y), R = L3.rock;
+  if (area === 'akumal' && phase === 'town' && !R.done && y === ROCK_FROM.y && (x === Math.floor(R.x) || x === Math.ceil(R.x))) {
+    if (d === 'left' && !R.met) { rockScene(); return; }
+    L3.said = time; say(["A big boulder. It won't budge from this side."]);
+  } else if (area === 'club2' && ch === 'D' && !L3.karillSeen) {
+    L3.said = time; say(['Stairs going down.', 'Not yet. Keep going through the maze.']);
+  }
+}
+function interact3() {
+  const [dx, dy] = DIRS[P.facing], fx = P.tx + dx, fy = P.ty + dy, ch = tile(fx, fy);
+  if (area === 'club2') {
+    if (fx === SHAWN.x && fy === SHAWN.y) { if (!L3.shawn) shawnScene(); else say(['Shawn Farley, on the long booth, with his two glasses.']); return; }
+    const words = { c: 'The crowd, dancing. No way through.', b: 'A long booth, in red velvet.', S: 'A long booth, in red velvet.',
+      '=': 'The railing. Down below: the dance floor.', '#': 'A wall, with neon on it.', D: 'Stairs, going down.', U: 'The stairs you came up.' }[ch];
+    if (words) say([words]);
+    return;
+  }
+  if (area === 'club1') {
+    if (fx === KARILL.x && fy === KARILL.y) { say(['Karill, partying exceptionally hard.']); return; }
+    if (PROMOS.some(p => p.x === fx && p.y === fy)) { say(["One of the club's promoters."]); return; }
+    const words = { c: 'The crowd, dancing. No way through.', B: 'The bar.', '#': 'A wall, with neon on it.', E: 'The way out. Not yet.',
+      U: 'Stairs, going up.', D: 'The stairs you came down.' }[ch];
+    if (words) say([words]);
+    return;
+  }
+  const R = L3.rock;
+  if (!R.done && fy === ROCK_FROM.y && (fx === Math.floor(R.x) || fx === Math.ceil(R.x))) {
+    if (!R.met && P.facing === 'left') rockScene(); else if (!R.met) say(["A big boulder. It won't budge from this side."]);
+    return;
+  }
+  if (R.done && fx === 0 && fy === ROCK_FROM.y) { say(['The boulder, blocking the road into town.']); return; }
+  if (L3.locals.some(L => Math.round(L.x) === fx && L.y === fy)) { say([R.done ? 'The locals, cheering.' : 'Locals, pushing the boulder. Upset about the local taxes.']); return; }
+  if (ch === 'R') { say(['A restaurant: huevos rancheros, and watermelon juice.', "It's closed."]); return; }
+  if (ch === 'G') { say(['The road into town.']); return; }
+  if (ch === 'A') { say(['A glorious archway.']); return; }
+  if (phase === 'town') autoYell();  // otherwise: yell his name
+}
+function update3(dt) {
+  const b = L3.bl;
+  if (b) { const was = [b.x, b.y]; updateActor(b, dt); if (b.y < was[1] - 0.001) b.facing = 'up'; else if (b.x < was[0] - 0.001) b.facing = 'left'; else if (b.x > was[0] + 0.001) b.facing = 'right'; }
+  const R = L3.rock;
+  if (R.x > R.goal) R.x = Math.max(R.goal, R.x - dt * 2.5);
+  for (const L of L3.locals) L.x = Math.max(L.min, R.x + L.dx);
+  if (phase === 'push') {
+    if (!P.moving && P.tx - 1 > Math.ceil(R.x - 0.001) && P.tx > 1) stepTo(P.tx - 1, 'left');
+    if (R.x <= 0.001 && !P.moving) rockDone();
+  }
+  const S = scene3;
+  if (S && (S.kind === 'ride' || S.kind === 'cab')) {
+    if (S.vGoal != null) S.v += clamp(S.vGoal - S.v, -dt * 30, dt * 30);
+    if (S.brakeTo != null) S.v = Math.min(S.v, Math.sqrt(2 * 20 * Math.max(0, S.brakeTo - S.dist)));
+    S.dist += S.v * dt;
+  }
+}
+
+// ---- level 3: the scenes ----
+async function level3(k) {
+  if (k) choice = k;
+  if (!choice) choice = 'dog';
+  buildLevel3();
+  for (const id of ['end', 'end2', 'end3', 'pick', 'title']) $(id).hidden = true;
+  closeBox(); box.resolve = null; box.ask = null;
+  level = 3; useArea('club1');
+  lock = 1; phase = 'l3intro'; vista = null; night = null; battle = null; panels(false); hud(null);
+  Object.assign(L3, { shawn: false, floor2: false, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
+    steps: 0, yells: 0, yellT: NEVER, restaurant: false, found: false, bl: null, said: NEVER });
+  Object.assign(L3.rock, { x: ROCK_FROM.x, goal: ROCK_FROM.x, met: false, done: false });
+  L3.locals = [{ kind: 0, dx: -1, min: 1 }, { kind: 1, dx: 0, min: 2 }, { kind: 2, dx: 1, min: 3 }]
+    .map(L => Object.assign(L, { x: ROCK_FROM.x + L.dx, y: ROCK_FROM.y + 1, pose: 'push' }));
+  Object.assign(B, { here: false, mode: 'off', playing: false, decks: false, path: [] });
+  Object.assign(smoke, { t0: -999, branch: -999, haze: false }); Object.assign(rain, { on: false, heavy: false, level: 0 });
+  P.mount = null; P.blaine = false; P.stepTime = choice === 'dog' ? 0.11 : STEP; blur(false); P.hidden = true; sugarMeter(null);
+  Object.assign(P, { tx: 5, ty: 13, nx: 5, ny: 13, moving: false, t: 0, facing: 'up' });
+  camMode = 'follow'; pan = null; [cam.x, cam.y] = playerCam();
+  fade.tween = null; fade.v = 1; $('fade').style.opacity = 1;
+  musicStop(); scene3 = null;
+  const jump = JUMP3[new URLSearchParams(location.search).get('at')];  // for checks: start part way along
+  if (jump) { jump(); return; }
+  rideDown();
+}
+async function rideDown() {
+  phase = 'cut';
+  scene3 = { kind: 'ride', t0: time, dir: 1, seg: 'lake', dist: 0, v: 0, vGoal: 0, salmon: 0 };
+  await fadeTo(0, 1.0);
+  splashSound(0.15);
+  await say(['Lake Superior. You come up for air.', 'Brudda Blaine comes up too, spluttering.']);
+  scene3.salmon = time; splashSound(0.2);
+  await wait(1.0);
+  await say(['A salmon swims up under you both.', 'Impossible, the fox said, at the falls.', 'You climb on.']);
+  scene3.vGoal = 40; musicStart();
+  await wait(1.8);
+  await fadeTo(1, 0.6); scene3.seg = 'river'; scene3.dist = 0; await fadeTo(0, 0.6);
+  await say(['All the way down the Mississippi River.']);
+  await wait(4.2);
+  await fadeTo(1, 0.6); scene3.seg = 'gulf'; await fadeTo(0, 0.6);
+  await say(['Into the Gulf of Mexico.']);
+  await wait(1.2);
+  await fadeTo(1, 0.6);
+  const stop = scene3.dist + 110; Object.assign(scene3, { seg: 'beach', brakeTo: stop, signAt: stop + 116 });
+  await fadeTo(0, 0.6);
+  await wait(3.6);
+  await say(['Playa del Carmen.']);
+  clubIn();
+}
+function lowCam(extra) {  // a scene at the bottom edge of a map: lift it above the text box (the space below stays dark)
+  camMode = 'script'; pan = null; cam.x = playerCam()[0]; cam.y = MAPH - VH + extra;
+}
+async function clubIn() {
+  phase = 'cut';
+  await fadeTo(1, 0.8);
+  scene3 = null; useArea('club1'); musicStop(); musicStart(CLUB_STYLE);
+  Object.assign(P, { tx: 5, ty: 13, nx: 5, ny: 13, moving: false, t: 0, facing: 'up' }); P.hidden = false;
+  L3.bl = { x: 5, y: 12, path: [], walkT: 0, face: 1, facing: 'up', gone: false, fadeT: NEVER };
+  lowCam(52);
+  await fadeTo(0, 0.8);
+  await say(['A club in Playa del Carmen.', 'You go in with Brudda Blaine.']);
+  await walkTo(L3.bl, [[5, 11], [4, 11]], 2.2);
+  L3.bl.fadeT = time; await wait(0.8); L3.bl.gone = true;
+  await say(['Brudda Blaine wanders into the crowd.', "You don't see him anymore."]);
+  await say(['The club is a maze.', 'Find the stairs up to floor 2.']);
+  await panTo(playerCam(), 0.6); camMode = 'follow';
+  hud(clubHud()); phase = 'club'; lock--;
+}
+async function goStairs(to, x, y, facing) {
+  await warp(to, x, y, facing);
+  if (to === 'club2' && !L3.floor2) {
+    L3.floor2 = true; lock++;
+    await say(['Up the stairs, to floor 2.', 'More maze.']);
+    lock--;
+  }
+  hud(clubHud());
+}
+async function shawnScene() {
+  lock++; phase = 'scene'; hud(null); P.facing = 'up';
+  await say(['Shawn Farley, sitting on a long booth.', 'He is throwing up into his glass.']);
+  L3.shawn = true; clink();
+  await say(['You give him another empty glass.']);
+  hud(clubHud()); phase = 'club'; lock--;
+}
+async function lookDown() {
+  lock++; phase = 'scene'; hud(null); P.facing = 'right';
+  await say(['Over the railing: the dance floor, down below.']);
+  await fadeTo(1, 0.4);
+  useArea('club1'); P.hidden = true; camMode = 'script'; [cam.x, cam.y] = camAt(KARILL.x * TS + 8, KARILL.y * TS); L3.wave = true;
+  await fadeTo(0, 0.4);
+  await say(['Down below: Karill, a Russian man, partying exceptionally hard.', 'He waves up at you.']);
+  await fadeTo(1, 0.4);
+  useArea('club2'); P.hidden = false; L3.wave = false; camMode = 'follow'; [cam.x, cam.y] = playerCam();
+  await fadeTo(0, 0.4);
+  L3.karillSeen = true;
+  await say(['The stairs you came up only go back the way you came.', 'Find a different way down, to Karill.']);
+  hud(clubHud()); phase = 'club'; lock--;
+}
+async function karillScene() {
+  L3.karill = true; lock++; phase = 'scene'; hud(null);
+  await say(['Karill!', 'Partying exceptionally hard.']);
+  L3.promo = time; clink();
+  await say(["Two of the club's promoters come over, big-chested, with a bottle of vodka."]);
+  L3.shot = time; clink();
+  await say(['You take a shot of vodka with Karill, off the promoters.']);
+  L3.haze = time; blur(true);
+  if (mus) mus.out.gain.setTargetAtTime(muted ? 0 : musicLevel() * 0.35, ac.currentTime, 0.8);
+  await wait(1.6);
+  await say(['Then everything goes a little hazy.']);
+  await fadeTo(1, 2.2);
+  blur(false); L3.haze = NEVER; musicStop(); P.hidden = true;
+  cab();
+}
+async function cab() {
+  phase = 'cut'; scene3 = { kind: 'cab', t0: time, dist: 0, v: 40, vGoal: 40, bridgeAt: null };
+  await fadeTo(0, 1.2);
+  await say(['You come back.', 'You, Brudda Blaine, Shawn and Karill, in a cab shaped like a minivan.', 'The driver only speaks Spanish.']);
+  scene3.bridgeAt = scene3.dist + 200; scene3.brakeTo = scene3.bridgeAt - 6;
+  await wait(5.4);
+  await say(['He pulls over, under a bridge.', 'Driver: "Aquí, debajo del puente. Bájense."']);
+  await say(['Brudda Blaine, frantic: "Akumal! The place of the turtles!"']);
+  await say(['Driver: "¿Qué?"', 'Brudda Blaine: "AKUMAL! THE PLACE OF THE TURTLES!"']);
+  await fadeTo(1, 2.0);
+  scene3 = null;
+  akumal();
+}
+async function akumal(x = 17, y = 16, facing = 'left') {
+  phase = 'cut';
+  useArea('akumal'); P.blaine = true; P.hidden = false; P.stepTime = 0.16; blur(false);
+  Object.assign(P, { tx: x, ty: y, nx: x, ny: y, moving: false, t: 0, facing });
+  camMode = 'follow'; pan = null; [cam.x, cam.y] = playerCam();
+  const start = x === 17 && y === 16;
+  if (start) lowCam(56);
+  musicStop(); musicStart(TOWN_STYLE);
+  await fadeTo(0, 1.4);
+  if (start) {
+    await say(['You come back again.', 'Akumal: a small pueblo on the Yucatán Peninsula.', 'You are Brudda Blaine now.', 'Find Braydon.']);
+    L3.yellT = time; L3.yells++; yellSound();
+    await wait(0.9);
+    await panTo(playerCam(), 0.6); camMode = 'follow';
+  }
+  hud('Find Braydon'); phase = 'town'; lock--;
+}
+async function autoYell() { lock++; L3.yellT = time; L3.yells++; yellSound(); await wait(0.9); lock--; }
+async function restaurant() {
+  L3.restaurant = true; lock++; phase = 'scene';
+  await say(['A restaurant: huevos rancheros, and watermelon juice.', "It's closed."]);
+  phase = 'town'; lock--;
+}
+async function rockScene() {
+  const R = L3.rock; R.met = true; lock++; phase = 'scene'; hud(null); P.facing = 'left';
+  await panTo(camAt(4 * TS, 13 * TS), 0.6);  // the camera holds on the square while you push
+  await say(['Some locals, Maya, are pushing a big boulder.', "They're upset about the local taxes.", 'They want to block the road into town with it.']);
+  await say(['You help them push.']);
+  phase = 'push'; hud('Push: tap A, fast'); lock--;
+}
+function pushRock() {
+  const R = L3.rock; if (R.done || R.goal <= 0) return;
+  R.goal = Math.max(0, R.goal - 0.2); rumble(0.25, 0.1);
+}
+async function rockDone() {
+  const R = L3.rock; R.done = true; phase = 'scene'; lock++; hud(null);
+  rumble(0.9, 0.2); L3.locals.forEach(L => { L.pose = 'cheer'; }); cheer();
+  await say(['The boulder rolls into the road, and blocks the way into town.', 'The locals cheer.']);
+  await panTo(playerCam(), 0.5); camMode = 'follow';
+  hud('Find Braydon'); phase = 'town'; lock--;
+}
+async function foundScene() {
+  L3.found = true; lock++; phase = 'scene'; hud(null);
+  await panTo(camAt(16 * TS, 1 * TS + 8), 1.0);
+  L3.yellT = time; yellSound();
+  await wait(1.0);
+  await say(['There he is. Braydon.', 'Under a glorious archway, chugging a beer.']);
+  giggle();
+  await say(["He's pointing at a man peeing off the top of a building.", 'Giggling, gleefully.']);
+  giggle();
+  await wait(0.6);
+  await fadeTo(1, 1.0);
+  musicStop(); hug();
+}
+async function hug() {
+  phase = 'cut'; P.blaine = false; P.hidden = true;
+  scene3 = { kind: 'hug', t0: time, leapT: 0 };
+  musicStop(); musicStart(REUNION_STYLE);
+  await fadeTo(0, 1.4);
+  await say(["You're Braydon again."]);
+  scene3.leapT = time;
+  await wait(3.0);
+  await say(['And there is Brudda Blaine, so overjoyed to see you.']);
+  await wait(1.0);
+  await say(['Everything in the world seems right.']);
+  await wait(1.6);
+  await fadeTo(1, 0.9);
+  scene3 = { kind: 'shoulder', t0: time }; musicStop(); musicStart(MARIACHI);
+  await fadeTo(0, 0.9);
+  await wait(1.2);
+  await say(['Then, over his shoulder, you see them.', 'The deer, again, playing mariachi music. Isabella, close in hand.', 'A California flag, waving.']);
+  await say(['You overhear one of them.', 'A deer: "We\'re meeting up with Jim, in the place where the dice never remember."']);
+  await wait(0.6);
+  await fadeTo(1, 0.9);
+  bay();
+}
+async function bay() {
+  phase = 'cut'; scene3 = { kind: 'bay', t0: time, runT: 0, hopT: 0, goT: 0 };
+  musicStop(); musicStart();
+  await fadeTo(0, 0.9);
+  await say(['You and Brudda Blaine run to Akumal bay.']);
+  scene3.runT = time; await wait(2.6);
+  await say(['Coral reefs, and turtles everywhere.', 'Your salmon is waiting for you.']);
+  scene3.hopT = time; splashSound(0.15); await wait(0.7);
+  await say(['You hop back on.']);
+  scene3.goT = time; await wait(2.3);
+  await fadeTo(1, 0.8);
+  rideUp();
+}
+async function rideUp() {
+  phase = 'cut';
+  scene3 = { kind: 'ride', t0: time, dir: -1, seg: 'gulf', dist: 0, v: 40, vGoal: 40, salmon: time - 5 };
+  if (!musicOn) musicStart();
+  await fadeTo(0, 0.7);
+  await say(['Back across the Gulf of Mexico.']);
+  await wait(1.0);
+  await fadeTo(1, 0.6); scene3.seg = 'river'; scene3.dist = 0; await fadeTo(0, 0.6);
+  await say(['All the way back up the Mississippi River...']);
+  await wait(4.0);
+  await fadeTo(1, 0.6);
+  const stop = scene3.dist + 120; Object.assign(scene3, { seg: 'itasca', brakeTo: stop, signAt: 128 - stop, truckAt: 2 - stop });
+  await fadeTo(0, 0.6);
+  await wait(3.8);
+  await say(['...to Lake Itasca, the headwaters of the Mississippi.']);
+  scene3.off = time; await wait(1.4);
+  await say(['A U-Haul is waiting for you, to drive West.', 'The final chapter.']);
+  await fadeTo(1, 1.0);
+  finish3();
+}
+function finish3() {
+  phase = 'done3'; scene3 = null; lock = 0; hud(null);
+  $('end3Text').textContent = 'You fell off Palisade Head with Brudda Blaine, rode a salmon down the Mississippi to Playa del Carmen, ' +
+    'found Shawn and Karill in the club maze, woke up in Akumal as Brudda Blaine, found Braydon, and rode back up to Lake Itasca. ' +
+    'The deer still have Isabella. Next: the final chapter, West, in the U-Haul.';
+  $('end3').hidden = false;
+}
+// for checks: start level 3 part way along (?level=3&at=...)
+function townAt(x, y, facing, rockDone0) {
+  if (rockDone0) { Object.assign(L3.rock, { x: 0, goal: 0, met: true, done: true }); L3.locals.forEach(L => { L.pose = 'cheer'; L.x = L.min; }); }
+  L3.restaurant = true; akumal(x, y, facing);
+}
+const JUMP3 = {
+  club1: () => clubIn(),
+  club2: () => { L3.floor2 = true; L3.bl = null; useArea('club2'); Object.assign(P, { tx: 1, ty: 11, nx: 1, ny: 11, facing: 'up' }); P.hidden = false;
+    musicStart(CLUB_STYLE); [cam.x, cam.y] = playerCam(); fadeTo(0, 0.5); hud(clubHud()); phase = 'club'; lock = 0; },
+  clubB: () => { Object.assign(L3, { floor2: true, shawn: true, karillSeen: true, bl: null }); useArea('club1');
+    Object.assign(P, { tx: 19, ty: 13, nx: 19, ny: 13, facing: 'up' }); P.hidden = false;
+    musicStart(CLUB_STYLE); [cam.x, cam.y] = playerCam(); fadeTo(0, 0.5); hud(clubHud()); phase = 'club'; lock = 0; },
+  cab: () => cab(),
+  akumal: () => akumal(),
+  rock: () => townAt(5, 10, 'left'),
+  arch: () => townAt(15, 5, 'up', true),
+  hug: () => hug(),
+  bay: () => bay(),
+  itasca: () => rideUp(),
+};
 
 // ---- input: the pad, the A button, and the keyboard ----
 const held = []; let padDir = null;
@@ -4066,7 +5569,8 @@ function pressA() {
   if (phase === 'title') return;
   if (wrap) { spinSilk(); return; }
   if (box.active) { boxA(); return; }
-  if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2') return;
+  if (phase === 'push' && !lock) { pushRock(); return; }  // level 3: helping push the boulder
+  if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2' || phase === 'done3') return;
   interact();
 }
 const KEYDIR = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' };
@@ -4112,16 +5616,25 @@ boxEl.addEventListener('click', e => {
 $('start').addEventListener('click', e => { e.currentTarget.blur(); audio(); $('title').hidden = true; intro(); });
 $('another').addEventListener('click', e => { e.currentTarget.blur(); audio(); tryAnother(); });
 $('over').addEventListener('click', () => { location.href = location.pathname; });
-// level 2: on from level 1, straight there from the title, or again from its end
-function showPick(from) { fromPanel = from; $(from).hidden = true; $('pick').hidden = false; }
+// level 2: on from level 1, straight there from the title, or again from its end. Level 3 the same.
+let pickLevel = 2;
+function showPick(from, lv = 2) {
+  fromPanel = from; pickLevel = lv; $(from).hidden = true; $('pick').hidden = false;
+  $('pickTitle').textContent = lv === 3 ? 'Level 3: Mexico' : 'Level 2: the North Shore';
+}
 $('next').addEventListener('click', e => { e.currentTarget.blur(); audio(); level2(); });
 $('skip').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('title'); });
 for (const b of document.querySelectorAll('#pick [data-tick]'))
-  b.addEventListener('click', e => { e.currentTarget.blur(); audio(); level2(b.dataset.tick); });
+  b.addEventListener('click', e => { e.currentTarget.blur(); audio(); (pickLevel === 3 ? level3 : level2)(b.dataset.tick); });
 $('pickBack').addEventListener('click', e => { e.currentTarget.blur(); $('pick').hidden = true; $(fromPanel).hidden = false; });
 $('again2').addEventListener('click', e => { e.currentTarget.blur(); audio(); level2(); });
-$('another2').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('end2'); });
+$('another2').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('end2', 2); });
 $('over2').addEventListener('click', () => { location.href = location.pathname; });
+$('skip3').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('title', 3); });
+$('next2').addEventListener('click', e => { e.currentTarget.blur(); audio(); level3(); });
+$('again3').addEventListener('click', e => { e.currentTarget.blur(); audio(); level3(); });
+$('another3').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('end3', 3); });
+$('over3').addEventListener('click', () => { location.href = location.pathname; });
 const muteBtn = $('mute');
 muteBtn.classList.toggle('off', muted);
 muteBtn.addEventListener('click', () => {
@@ -4134,9 +5647,10 @@ muteBtn.addEventListener('click', () => {
 // ---- the loop ----
 placeCase();
 [cam.x, cam.y] = playerCam();
-{  // a link straight to level 2: ?level=2 (add &tick=regular, human or dog to skip the question)
-  const q = new URLSearchParams(location.search);
-  if (q.get('level') === '2') { if (TICKS[q.get('tick')]) level2(q.get('tick')); else showPick('title'); }
+{  // a link straight to level 2 or 3: ?level=2 (add &tick=regular, human or dog to skip the question)
+  const q = new URLSearchParams(location.search), lv = q.get('level');
+  if (lv === '2') { if (TICKS[q.get('tick')]) level2(q.get('tick')); else showPick('title', 2); }
+  if (lv === '3') { if (TICKS[q.get('tick')]) level3(q.get('tick')); else showPick('title', 3); }
 }
 let last = performance.now();
 function frame(now) {
@@ -4176,14 +5690,20 @@ window.__sketch = {
   get feet() { return area === 'climb' ? climbFeet() : null; }, get vista() { return !!vista; },
   get brudda() { return B.here ? { x: B.tx, y: B.ty, mode: B.mode, playing: B.playing } : null; },
   get ended2() { return !$('end2').hidden; }, get stepTime() { return P.stepTime; }, get hidden() { return P.hidden; },
-  play(k) { audio(); musicStop(); musicStart(k === 'view' ? VIEW : HIP[k] || STYLES[k]); },  // for loudness checks
+  play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, town: TOWN_STYLE, reunion: REUNION_STYLE }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
   get battle() { return battle ? { foe: battle.F.kind, hp: battle.hp, me: battle.me, sugar: battle.sugar, open: battle.open, cool: battle.cool } : null; },
   get foes() { return FOES.map(F => !!F.beaten); }, get pizza() { return pizzaVisited; },
   get dancers() { return night ? dancersAt(night).filter(d => time > d.at).length : 0; },
   get fish() { return fishJumps.length; }, get salmon() { return salmonJumps.length; },
   get roar() { return roar ? roar.level : null; }, get blurred() { return !!cv.style.filter; },
   get rain() { return rain.level; }, get math() { return tarp.math; }, get soaked() { return tarp.soaked; },
-  get decks() { return !!B.decks; },
+  get decks() { return !!B.decks; }, get talker() { return talker; },
+  // level 3
+  get scene() { return scene3 ? scene3.kind + (scene3.seg ? ':' + scene3.seg : '') : null; },
+  get l3() { return { shawn: L3.shawn, karillSeen: L3.karillSeen, karill: L3.karill, restaurant: L3.restaurant, found: L3.found,
+    rock: L3.rock.x, rockDone: L3.rock.done, yells: L3.yells, steps: L3.steps, blaine: !!P.blaine }; },
+  get ended3() { return !$('end3').hidden; },
+  get vistaState() { return vista ? { flag: !!vista.flag, latch: !!vista.latch, ride: !!vista.ride, fall: !!vista.fall, splash: !!vista.splash } : null; },
 };
 })();
 </script>
