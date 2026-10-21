@@ -140,6 +140,12 @@ Every session reads this first and updates it last.
   - Inside the U-Haul, a tortoiseshell cat looking out the window at you, waiting.
   - The only boss left will be an iteration of the egg sack, more than likely in the redwoods, not in a cornfield. The
     other bosses are gone.
+- 2026-10-21 (afternoon), issue #1, one message: when the cut scene on Palisade Head ends, have each tick dive in
+  differently.
+  - Keep the regular tick as is.
+  - The dog gets leashed by Blaine ("A real bonehead decision to try and tie his brother down") and jumps, dragging him in.
+  - The human tick faints from low blood sugar, falling behind Blaine and knocking them both in. On the way down, an eagle
+    shoves a honeybun in his mouth and he's good to go. Make the honeybun shove slightly violent.
 
 ## What you've decided
 
@@ -215,6 +221,9 @@ Every session reads this first and updates it last.
   high rent gouging) are gone. The only boss left is an iteration of the egg sack, more than likely in the redwoods, not
   in a cornfield. (The two fights on the North Shore, the Gales of November and the Edmund Fitzgerald, are still there.)
 - At Lake Itasca, inside the U-Haul: a tortoiseshell cat, looking out the window at you, waiting. (2026-10-21; built.)
+- Off Palisade Head, each tick goes in its own way (2026-10-21, afternoon; built): the regular tick latches on and
+  mind-controls Brudda Blaine, as before; the pointer gets leashed by him and jumps, dragging him in; the human-blood tick
+  faints, falls into him and knocks them both in, and on the way down an eagle shoves a honeybun in, hard.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -504,9 +513,33 @@ Every session reads this first and updates it last.
     She's a "she" because tortoiseshells are nearly always female (checked: the orange and black come from a gene on the
     X chromosome, so the coat needs two X's; males are rare. Source: the Wikipedia article "Tortoiseshell cat"). A test
     hook for checks: `?level=3&at=cat` starts at the close-up.
+- 2026-10-21 (afternoon), sketch 2 changed (`gh-pages`, commit 8a33bb8), from your one message. At the top of Palisade
+  Head, after "You're inspired, once again, to go on with your journey.", each tick goes in its own way:
+  - The regular tick: unchanged (you latch on, mind control, he rides off the edge flapping his arms, and down).
+  - The pointer: "Brudda Blaine clips a leash on you." (a red leash, with a little click) "A real bonehead decision, to try
+    and tie his brother down." "You jump." You leap out over the water after the deer; the leash goes tight and yanks him
+    flat off his bicycle, head first, arms out, holding on. His bicycle is left on the edge, rocking, its bell ringing. You
+    both hang there a moment ("..."). "For a moment, you both fly." Then down, smaller and smaller, with the falling whistle,
+    into the lake. "It ends horribly." "You drag Brudda Blaine all the way down, into Lake Superior."
+  - The human-blood tick: this time Brudda Blaine stands at the very edge, with your vespa parked behind him. "Then your
+    blood sugar drops. Your vision blurs." (the meter goes low, the screen blurs, you sway on the seat) "You faint." You
+    topple over backwards, legs in the air, into his back, and his bicycle lurches out over the edge; a moment hanging
+    there ("..."). "You fall into Brudda Blaine, from behind, and knock you both off the edge." Partway down, everything
+    stops: an eagle dives in from the top right with a honeybun in its feet and crams it in your mouth, hard: a thwack, a
+    burst, crumbs, glaze and bits of wrapper flying, two feathers drifting down, and you're knocked sideways. Your vision
+    clears and the meter goes back to steady. "On the way down, an eagle shoves a honeybun in your mouth." "Hard. Wrapper
+    and all." "Your blood sugar comes back up. Your vision clears. You're good to go." Then the rest of the fall, the
+    whistle, the splash. "It ends horribly." "You and Brudda Blaine fall all the way down, into Lake Superior."
+  - The level 2 end screen says how your tick went in, and lists the new guesses.
+  - Guesses, labeled on the end screen: how it all looks and sounds; the red leash; him flying flat out; the bicycle left
+    behind; Brudda Blaine at the edge with the vespa behind him (so you can fall into him from behind); the faint; the
+    eagle (drawn as a bald eagle: white head, yellow beak, dark brown body, white tail); the crumbs; the words not in your
+    message ("For a moment, you both fly.", "Hard. Wrapper and all.", and the rest).
+  - Links straight to the top of Palisade Head, one per tick: `?level=2&tick=regular&at=top` (or `dog`, or `human`).
 
 ## Open questions
 
+- Said 2026-10-21 (afternoon): the eagle is drawn as a bald eagle, a guess; a different one if you pictured one.
 - Asked 2026-10-21 (later): does the cat have a name? And, when you're ready, what happens on the drive West, before the
   redwoods?
 - Answered 2026-10-21 (later): the coffee roaster and the second boss are gone; the only boss left is an iteration of the
@@ -514,8 +547,8 @@ Every session reads this first and updates it last.
   the baby ticks, the "specialized baby tick units" keeping Isabella safe, as in your first story?), and whether the
   cat comes along West.
 - Said 2026-10-21, not asked: the "tortoise" in Akumal bay are drawn as sea turtles, swimming. Who Jim is, and "the place
-  where the dice never remember": used word for word, not explained. All three ticks mind-control Brudda Blaine the same
-  way at Palisade Head (a guess; only the regular tick had mind control before).
+  where the dice never remember": used word for word, not explained. (Answered 2026-10-21, afternoon: each tick goes off
+  Palisade Head its own way; only the regular tick uses mind control there.)
 - Not checked, and not used: any facts about Playa del Carmen, Akumal, the Yucatan, the Mississippi or Lake Itasca beyond
   your words. "Akumal, the place of the turtles" is Brudda Blaine's line, in your words. The driver's Spanish is plain
   everyday Spanish ("Here, under the bridge. Get out." and "What?").
@@ -648,3 +681,9 @@ Every session reads this first and updates it last.
   sack is left, likely in the redwoods). Built the cat at Lake Itasca in sketch 2, same link, and updated the end
   screens. Replied on issue #1 with what changed, and two questions: does she have a name, and what happens on the drive
   West?
+- 2026-10-21 (afternoon): one message from you on issue #1: each tick dives off Palisade Head its own way (the regular tick as
+  is, the pointer on a leash, the human-blood tick fainting, with an eagle and a honeybun on the way down). Built the two new
+  ones in sketch 2, same link. Replied on issue #1 with what changed, and a link per tick straight to the top of Palisade
+  Head. No question this time: another message from you (the bridge over the bay, the promoters, the deer's line, the club
+  music, Shawn, and Shawn on the beach) came in while this was being built. The reply says it's next; the next session
+  answers it.
