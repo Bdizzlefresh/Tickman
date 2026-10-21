@@ -159,6 +159,46 @@ Every session reads this first and updates it last.
     all night, asleep, a swarm of massive mosquitoes eating him alive.
 - 2026-10-21 (afternoon), issue #1: you asked whether the last line of my reply before (a faint buzzing) meant where the
   computer is, or in the game.
+- 2026-10-21 (afternoon), issue #1: the final chapter, all of it.
+  - The final part: IzzyKat (the tortoiseshell cat in the U-Haul; make her more black and light brown, less orange),
+    Brudda Blaine, and whichever tick you chose.
+  - The first stop is Badlands National Park. On the way: oil fields with large oil rigs, close and far; bison; two
+    horses, one black, one brown, having a slight battle. You park the U-Haul by the river, with sand-like mounds sliding
+    into it, and an S-shaped curve in the river.
+  - A mini game there: whack-a-mole, but with prairie dogs, in a large sandy field with small dune grasses around. The color
+    is red like clay. Each tick's unique ability is part of completing it.
+  - After whack-a-prairie-dog, back at the U-Haul: the door was left open, and IzzyKat has escaped. You're frantic, and
+    wondering why you ate those gummies, filled with the same stuff from Milwaukee. Brudda Blaine and the tick search for
+    her: the pointer by his good sense of smell; the regular tick by what a tick uses to find a warm body; the human-blood
+    tick goes "Pss, pss, pss", like a superpower to attract her. Under a rock: no IzzyKat. By the river: still no IzzyKat.
+    At the end, when you've decided she's gone, you go back to the U-Haul and she's hiding under it, purring, acting as if
+    nothing happened. In reality she left, ate a prairie dog, and developed fighting skills like a prairie dog's. You don't
+    know this until the final boss, where IzzyKat is vital for the victory.
+  - Then back on the road, to Yosemite (your word; see the open questions): elk, mountains, coyotes (with photographers
+    annoyingly following them as if they're wolves, "those idiots"), and Old Faithful. Brudda Blaine and the tick get out
+    to see it, and it almost plays with them: it almost goes once, almost goes twice, takes a couple more, and finally goes
+    off and explodes in a fantastic fashion. IzzyKat was riding the final explosion; she plops down in front of you, wet,
+    purring, like nothing happened. You all wonder how she got out, go back to the U-Haul, and carry on. In reality she ate
+    a coyote and gained its way of attacking, like with the prairie dog: she's gathering super kitty powers for the final
+    boss.
+  - On toward Reno, Nevada, where Isabella is held captive. You pull into a motel 8 (your words), leave IzzyKat, and walk
+    through a canal-like maze, like the LA river, to the old strip in Reno. Into a casino; endless Sierra Nevada Pale Ales;
+    craps. Brudda Blaine and the tick win big, then lose, win big, then lose, and right when they decide to go, a man named
+    Jim, the final boss, strolls in and starts playing craps alongside them.
+  - The final boss: Jim, a long, white-haired man. He says things like "The die never lie", "the die always forget",
+    "the die don't remember", "Santa Cruz is full of damn hippies" and "I roll my own", at random, in a slightly
+    stupefied tone, as if perpetually tired. The only way he gets more energy is when he hits on the craps table, and that
+    only happens now and then.
+- 2026-10-21 (afternoon), issue #1, on Blaine's gift: "Yes, I want to take it."
+- 2026-10-21 (afternoon), issue #1: after the shot with Karill, go hazy as it does, but before the taxi, black out and come
+  back with the tick dancing on the dance floor, partying, and Brudda Blaine coming out of the crowd saying "Where have
+  you been Brudda!? We have to go! Last Taxi out!"; then dance with the music toward him, and black out again, to the taxi
+  under the bridge.
+- 2026-10-21 (afternoon), issue #1: have Shawn say even more incredibly stupid things about the club, along the lines of
+  "I am a rapper. I'm a god to these people" and "The girls love me because I'm American".
+- 2026-10-21 (afternoon), issue #1, two messages: during the bridge scene, make the building before the club a strip club,
+  and make it so you "peer in" and see a groom to be getting a lap dance, incredibly uncomfortable. The groom to be is named
+  Patrick.
 
 ## What you've decided
 
@@ -243,6 +283,15 @@ Every session reads this first and updates it last.
   chair at Akumal bay, eaten alive by massive mosquitoes.
 - The deer's line at the end of level 3 (changed 2026-10-21, afternoon, later): "We are off to meet the enigma, the one who
   claims that the dice do not, in fact, remember." The line about Jim is gone.
+- The cat is IzzyKat: more black and light brown, less orange (2026-10-21; built).
+- The final chapter, level 4, as you wrote it above (2026-10-21). Its first stretch is built: the drive to the Badlands and
+  parking by the river. The rest is queued, in your order (see "Next to build").
+- The final boss is Jim, in a casino in Reno, where Isabella is held (2026-10-21). (Before, it was an iteration of the egg
+  sack in the redwoods; see the open questions.)
+- After the shot with Karill: the haze, a blackout, the dance floor and Brudda Blaine's line, then a blackout to the taxi
+  (2026-10-21; built).
+- Blaine's gift: you said yes (2026-10-21). It's switched on in the sketch; talk about it lives in its own conversation on
+  GitHub.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -591,17 +640,76 @@ Every session reads this first and updates it last.
     mosquitoes). Links for checks: `?level=3&tick=dog&at=bridge` (the bridge, then the club), `&at=hug` (the reunion, the
     deer's line, then the bay).
 
+- 2026-10-21 (afternoon), sketch 2 changed (`gh-pages`, commit fed92d1), from your final chapter (the first stretch):
+  - IzzyKat: named in the words ("Inside the U-Haul, IzzyKat, a tortoiseshell cat, is looking out the window at you."),
+    and her coat is mostly black now, with light brown patches (light brown down one side of her face), not much orange.
+  - Level 4 begins (a "Skip to level 4" button on the first screen; "On to level 4" at the end of level 3). A drive, seen
+    from the side, the U-Haul heading West (left), IzzyKat in the cab window: "The final chapter." "West, in the U-Haul:
+    you, Brudda Blaine, and IzzyKat."
+    - "Oil fields. Large oil rigs, close and far." Drawn as nodding oil pumps (red beams), big by the road and smaller
+      behind, with drilling towers far off on the horizon.
+    - "Bison, right by the road." A few, some grazing.
+    - "Two horses, one black, one brown, having a slight battle." The U-Haul slows down beside them: they take turns going
+      up on their hind legs at each other, a little dust.
+    - Badlands: striped buttes on the horizon and closer, a brown park sign, BADLANDS NATIONAL PARK. "Badlands National
+      Park."
+    - Then from above: red clay ground, dune grass, striped mounds slumping into the river, the river bending in an S. The
+      U-Haul drives in on a track and parks by the river; Brudda Blaine and you step out (IzzyKat stays in the cab). "You
+      park the U-Haul by the river." "Sand-like mounds slide down into it, and the river bends in an S." "The ground is
+      red, like clay."
+    - The level 4 end screen lists what's still to come, from your story.
+  - The end screens: the final boss is Jim, at a craps table in Reno (in place of the egg sack line); level 4 is listed as
+    just begun.
+  - Guesses, labeled on the end screen: how all of it looks.
+- 2026-10-21 (afternoon), sketch 2 changed (`gh-pages`, commit 820e424): after the shot with Karill, the haze as before,
+  then a blackout; you come back on the dance floor ("You come back. On the dance floor, dancing." "Partying."), hopping on
+  every beat and spinning round, confetti coming down, the music back (on a drop). Brudda Blaine comes out of the crowd:
+  "Where have you been Brudda!? We have to go! Last Taxi out!" "You dance, with the music, toward him." Then a blackout,
+  to the taxi under the bridge. Guesses: the dancing and the confetti.
+- 2026-10-21 (afternoon), sketch 2 (`gh-pages`, commit 53e9a9b): Blaine's gift, switched on, since you said yes.
+- 2026-10-21 (afternoon), sketch 2 changed (`gh-pages`, commit 1c55530): Shawn says more. Right after the glass: Shawn: "I am
+  a rapper. I'm a god to these people." Then each tap of A on him, the next one: "The girls love me because I'm
+  American." "Is this the line for the bathroom?" "I tipped the DJ in quarters. He knows who I am now." "I'm a god to
+  these people. I said that already. Still true." "This is my club. I don't own it. But it's mine." (Your two lines word
+  for word; the rest are the assistant's, labeled as guesses on the end screen.)
+- 2026-10-21 (afternoon), sketch 2 changed (`gh-pages`, commit 785c348): the strip club, on the bridge scene, the building
+  just before the club as you walk along the bay (dark, a pink GIRLS sign, glowing windows, a red rope). Walk past it and
+  "A strip club, right before the club." "You peer in." A close-up through its window, the blinds half up: a CONGRATS
+  PATRICK banner, stage lights, Patrick in a white shirt, a loosened tie and a sash, on a chair, trembling, eyes wide and
+  darting, a clenched grin, sweat flying, his hands going up and out; the dancer in front of him, her back to you, long
+  dark hair, a sparkly pink two-piece, swaying. "A groom to be, Patrick, is getting a lap dance." "He is incredibly
+  uncomfortable." "He doesn't know where to put his hands." Tap A on its front to peer in again. Guesses: how it all looks,
+  the banner, and the last line.
+
+## Next to build (queued, in your order)
+
+1. Whack-a-prairie-dog, in the big sandy field of red clay, with your tick's gifts part of it.
+2. IzzyKat gets out of the U-Haul; the gummies; the search (each tick its own way), under a rock, by the river, and at last
+   under the U-Haul, purring.
+3. Back on the road: elk, mountains, coyotes and the photographers; Old Faithful almost going, then exploding, with
+   IzzyKat riding it.
+4. Reno: the motel, the canal maze, the old strip, the casino, the Sierra Nevada Pale Ales, craps, and Jim strolling in.
+5. The fight with Jim, where IzzyKat's super kitty powers (from the prairie dog and the coyote) win it.
+
 ## Open questions
 
-- Asked 2026-10-21 (afternoon, later): will you take Blaine's gift, a few easter eggs for the game? They're switched off
-  until you say yes, and can be taken out at any time, any or all of them.
+- Asked 2026-10-21 (afternoon): which comes first, whack-a-prairie-dog, or something further along, like Jim at the craps
+  table?
+- Asked 2026-10-21 (afternoon): Old Faithful is in Yellowstone, not Yosemite (checked: the National Park Service's page on
+  Old Faithful, nps.gov/yell, "Old Faithful is one of nearly 500 geysers in Yellowstone"). Yellowstone in the game, or keep
+  Yosemite?
+- Not asked yet: is the egg sack gone, now that Jim is the final boss, or part of the fight? How do the ticks' gifts help in
+  whack-a-prairie-dog? How does the fight with Jim go (like Pokémon Red, or at the craps table)?
+
+- Answered 2026-10-21 (afternoon): yes, you'll take Blaine's gift. It's switched on; any of it can be taken out at any
+  time.
 - Not asked yet: is the enigma someone you meet out West? (The deer are off to meet the one who claims that the dice do
   not, in fact, remember.)
 - Said 2026-10-21 (afternoon, later): the club's lyrics are three chanted Spanish words, "¡Baila!", "¡Oye!" and "¡Ey!";
   other words, or a different feel, if you'd like.
 - Said 2026-10-21 (afternoon): the eagle is drawn as a bald eagle, a guess; a different one if you pictured one.
-- Asked 2026-10-21 (later): does the cat have a name? And, when you're ready, what happens on the drive West, before the
-  redwoods?
+- Answered 2026-10-21 (afternoon): the cat is IzzyKat, and the drive West is the final chapter above (asked 2026-10-21,
+  later: does the cat have a name, and what happens on the drive West?).
 - Answered 2026-10-21 (later): the coffee roaster and the second boss are gone; the only boss left is an iteration of the
   egg sack, more than likely in the redwoods. Not asked yet: what the egg sack fight is like there (the deer charging,
   the baby ticks, the "specialized baby tick units" keeping Isabella safe, as in your first story?), and whether the
@@ -753,3 +861,9 @@ Every session reads this first and updates it last.
   deer's new line, and Shawn on the beach chair with the mosquitoes. Replied on issue #1 with what changed and two links
   straight to it. In the same reply, answered your question about the buzzing: neither; it was made up, the start of a bit.
   The bit: a gift from Blaine, a few easter eggs for the game, switched off; asked whether you'll take it.
+- 2026-10-21 (afternoon): six more messages from you on issue #1 around that reply: the whole final chapter (it came in a
+  minute before the reply went up), yes to Blaine's gift, the blackout and the dance floor after the vodka, more stupid
+  things for Shawn to say, and the strip club with Patrick (two messages). Built: IzzyKat's name and colors and the start
+  of level 4 (the drive to the Badlands, parking by the river), the dance floor, Shawn's lines, and the strip club; queued the rest of the final chapter (see "Next to build"). Switched
+  Blaine's gift on, and opened issue #2 for it (all talk about the gift goes there). Replied on issue #1 with what changed,
+  links straight to it, the fact about Old Faithful, and two questions: Yellowstone or Yosemite, and which comes first?
