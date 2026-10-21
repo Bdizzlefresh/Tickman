@@ -1603,6 +1603,7 @@ function interact() {
   if (level === 2) { interact2(); return; }
   if (level === 3) { interact3(); return; }
   const [dx, dy] = DIRS[P.facing], fx = P.tx + dx, fy = P.ty + dy;
+  if (extras.look(fx, fy)) return;
   const gi = bugAt(fx, fy);
   if (gi >= 0) { startWrap(gi); return; }
   if (isPhil(fx, fy)) { say([{ t: PHIL_LINE, fx: philYells }]); return; }
@@ -1704,6 +1705,7 @@ function update(dt) {
   updatePlayer(dt);
   if (level === 2) update2(dt);
   if (level === 3) update3(dt);
+  extras.update(dt);
   updateActor(isa, dt);
   for (const d of deer) updateActor(d, dt);
   if (pan) {
@@ -2941,6 +2943,7 @@ function drawFairies(C, cx, cy) {  // fairies, glowing, looping round the fire i
 
 // ---- level 2: moving about ----
 function walkable2(x, y) {
+  if (extras.blocks(x, y)) return false;
   const ch = tile(x, y);
   const WALK = { route: 'g*-skMbTP', pizza: '.m', climb: '=log' }[area];
   if (!WALK.includes(ch)) return false;
@@ -3732,6 +3735,7 @@ function sfx(kind, dur) {
 // ---- level 2: looking at things ----
 function interact2() {
   const [dx, dy] = DIRS[P.facing], fx = P.tx + dx, fy = P.ty + dy, ch = tile(fx, fy);
+  if (extras.look(fx, fy)) return;
   if (B.here && B.mode !== 'off' && fx === B.tx && fy === B.ty) {
     bruddaSparkle = time;
     if (night === CAMPS[0]) { say([BRANCH_LINE]); return; }
@@ -3883,6 +3887,7 @@ function draw2(cx, cy) {
       list.push([Math.min(by + 1, ppy + 1), () => drawBike(Math.round(bx) + 8 - 11 - cx, Math.round(by) + 16 - 27 - cy, B.side < 0, B.crank, true)]);
   }
   list.push([ppy + 2, () => drawRider(Math.round(ppx) - cx, Math.round(ppy) - cy)]);
+  extras.sprites(list, cx, cy, late);
   drawWaterLife(cx, cy);
   list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
   if (area === 'route' && cx < (FALLS[3] + 2) * TS && cx + VW > (FALLS[0] - 1) * TS) for (let i = 0; i < 16; i++) {  // spray, over the bridge
@@ -5272,9 +5277,11 @@ function draw3(cx, cy) {
   const [ppx, ppy] = ppos();
   if (!P.hidden) list.push([ppy + 9, () => {
     const X = Math.round(ppx) - cx, Y = Math.round(ppy) - cy, step = P.moving ? (Math.floor(P.anim * 8) % 2 ? 1 : 2) : 0;
+    if (P.blaine && extras.rider(X, Y, step)) return;
     if (P.blaine) drawBlaine(X, Y, P.facing, step);
     else drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], X, Y, ROT[P.facing], false, step ? step - 1 : 0);
   }]);
+  extras.sprites(list, cx, cy, null);
   list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
   if (club) clubLights(cx, cy);
   if (area === 'club1' && time - L3.shot < 3.5) {  // the shot: two little glasses, raised, and a clink
@@ -5307,6 +5314,7 @@ function draw3(cx, cy) {
 
 // ---- level 3: moving about ----
 function walkable3(x, y) {
+  if (extras.blocks(x, y)) return false;
   const ch = tile(x, y);
   if (area === 'club1') {
     if (ch === 'U' || ch === 'D') return true;
@@ -5356,6 +5364,7 @@ function bump3(x, y, d) {  // you tried to go somewhere you can't: say why, if t
 }
 function interact3() {
   const [dx, dy] = DIRS[P.facing], fx = P.tx + dx, fy = P.ty + dy, ch = tile(fx, fy);
+  if (extras.look(fx, fy)) return;
   if (area === 'club2') {
     if (fx === SHAWN.x && fy === SHAWN.y) { if (!L3.shawn) shawnScene(); else say(['Shawn Farley, on the long booth, with his two glasses.']); return; }
     const words = { c: 'The crowd, dancing. No way through.', b: 'A long booth, in red velvet.', S: 'A long booth, in red velvet.',
@@ -5759,6 +5768,307 @@ muteBtn.addEventListener('click', () => {
   musicVolume();
   if (!muted) { audio(); if (!mus) pluck(NOTE.A4, 0.2); }
 });
+
+// =====================================================================================================
+// ---- extras, switched off for now ----
+// EXTRAS.on is the switch for all of them: while it's false, nothing below runs, and the game is exactly as it was.
+// Each extra also has its own switch. Each lives in its own block, and the game calls in only through the lines
+// marked "extras." (in interact, interact2, interact3, walkable2, walkable3, draw2, draw3 and update). Keep this
+// section, and those lines, through any rework.
+// =====================================================================================================
+const EXTRAS = { on: false, scooter: true, moonPie: true, norm: true };
+const extras = {
+  parts: [],
+  look(fx, fy) { return this.parts.some(p => p.look && p.look(fx, fy)); },      // tapped A, facing (fx, fy)
+  blocks(x, y) { return this.parts.some(p => p.blocks && p.blocks(x, y)); },    // something stands on (x, y)
+  sprites(list, cx, cy, late) { for (const p of this.parts) if (p.sprites) p.sprites(list, cx, cy, late); },
+  rider(X, Y, step) { return this.parts.some(p => p.rider && p.rider(X, Y, step)); },  // draws you, if it's its turn
+  update(dt) { for (const p of this.parts) if (p.update) p.update(dt); },
+};
+const extraGrid = (g, rows, pal, x, y, flip) => {  // a sprite grid, onto any canvas
+  const w = rows[0].length;
+  for (let j = 0; j < rows.length; j++) for (let i = 0; i < w; i++) {
+    const c = pal[rows[j][i]]; if (!c) continue;
+    g.fillStyle = c; g.fillRect(x + (flip ? w - 1 - i : i), y + j, 1, 1);
+  }
+};
+
+// ---- extra: the tangerine scooter ----
+// Retro and rounded, tangerine, with a black seat, a round chrome headlight, chrome mirrors and a little chrome rack.
+// First, a picture of it on the apartment wall. Then, in Akumal, the real thing, parked at the end of a side street:
+// tap A on it, and ride it round town. (You hop off by yourself when the boulder needs pushing, and at the archway.)
+if (EXTRAS.on && EXTRAS.scooter) {
+  const PAL = { O: '#f0822a', o: '#c25f1a', h: '#ffb066', K: '#1c1c22', k: '#2c2c33', C: '#e2e6ea', c: '#98a1aa',
+    W: '#fff6c8', T: '#1b1b20', R: '#b9c0c6', S: '#16161a', s: '#40404c', r: '#d9302c' };
+  const SCOOT = [  // side on, facing right: 24 by 17
+    '.............cC..cC.....',
+    '.............Cc..Cc.....',
+    '...............c.c......',
+    '.............kkhOOkk....',
+    '...............OOcCc....',
+    '..............kOOCWC....',
+    '.CC...........kOOOcC....',
+    '.C..sSSSSs....kOOOO.....',
+    '.CSSSSSSSSS...kOOOOo....',
+    '..ShhhhhhhOo..kOOOOo....',
+    '.rOOOOOOOOOo..kOOOOOo...',
+    '.OOOOOOOOOOOo.kOOOOOOo..',
+    '..oOOOOOOOOokkkhOOOOOOo.',
+    '...ooooooo..KKK.ooTTTo..',
+    '...kTTTk.........TRRRT..',
+    '...TRCRT.........TRCRT..',
+    '....TTT...........TTT...'];
+  const LITTLE = [  // the same, small, for the picture: 17 by 11
+    '...........c..c..',
+    '..........kOOk...',
+    '...........OOCW..',
+    '.CsSSSS....OOCC..',
+    '.CSSSSSS...kOO...',
+    '..hhhhhOo..kOOo..',
+    '.rOOOOOOo..kOOOo.',
+    '..oOOOOOokkkOOOOo',
+    '...kTTk....kTTT..',
+    '...TRRT....TRRT..',
+    '....TT......TT...'];
+  const HOME = { x: 13, y: 10 };  // Akumal: the end of the side street, east off the main street
+  const sc = { pic: false, met: false, riding: false, at: null };  // at: where it's parked, once you've ridden it
+  const RIDE_STEP = 0.09, WALK_STEP = 0.16;
+  // the picture, in a frame on the apartment's back wall, over the bottles to the right of the futon
+  {
+    const g = AREAS.apartment.base.getContext('2d'), X = 16 * TS + 10, Y = 0, W = 28, H = 13;
+    g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(X + 1, Y + 1, W, H);                       // its shadow on the wall
+    g.fillStyle = '#5a3a22'; g.fillRect(X, Y, W, H);                                         // the frame
+    g.fillStyle = '#7a5232'; g.fillRect(X, Y, W, 1); g.fillRect(X, Y, 1, H);
+    g.fillStyle = '#cfe6ef'; g.fillRect(X + 1, Y + 1, W - 2, H - 2);                         // a pale sky
+    g.fillStyle = '#e4d3a6'; g.fillRect(X + 1, Y + H - 3, W - 2, 2);                         // the ground
+    g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(X + 7, Y + H - 3, 13, 1);
+    extraGrid(g, LITTLE, PAL, X + 5, Y + 1, false);
+    g.fillStyle = 'rgba(255,255,255,.35)'; g.fillRect(X + W - 4, Y + 2, 1, 2);              // a glint on the glass
+  }
+  const park = (x, y) => { sc.at = { x, y }; };
+  const parked = () => sc.riding ? null : (sc.at || HOME);
+  const hopOff = () => {  // parked just behind you, out of the way of the boulder
+    sc.riding = false; P.stepTime = WALK_STEP;
+    park(L3.rock.met && !L3.rock.done && walkable3(P.tx + 1, P.ty) ? P.tx + 1 : P.tx, P.ty);
+  };
+  function beep() {  // a little horn, two soft notes
+    if (!ac || muted) return;
+    for (const [d, f] of [[0, 523.25], [0.16, 659.25]]) { tone(master, 'square', f, ac.currentTime + d, 0.11, 0.025, 1800); tone(master, 'sine', f / 2, ac.currentTime + d, 0.11, 0.03); }
+  }
+  async function hopOn() {
+    lock++;
+    const pages = [];
+    if (!sc.met) {
+      pages.push('A tangerine scooter, parked at the end of the street.',
+                 'A black seat, a round chrome headlight, chrome mirrors, and a little chrome rack on the back.');
+      if (sc.pic) pages.push('Just like the picture on the wall, back in the apartment.');
+    }
+    sc.met = true;
+    if (pages.length) await say(pages);
+    const i = await ask(pages.length ? 'Ride it?' : 'The tangerine scooter. Ride it?', ['Yes', 'No']);
+    if (i === 0) {
+      sc.riding = true; sc.at = null; P.stepTime = RIDE_STEP; putt(); wait(0.5).then(beep);
+      await say(['You hop on. It putters to life.']);
+    }
+    lock--;
+  }
+  function drawScooter(X, Y, flip) {  // X, Y: the top-left of its tile; it's wider than the tile, like a bike
+    ctx.fillStyle = 'rgba(0,0,0,.22)'; ctx.fillRect(X - 1, Y + 14, 18, 2);
+    extraGrid(ctx, SCOOT, PAL, X - 4, Y - 1, flip);
+  }
+  extras.parts.push({
+    look(fx, fy) {
+      if (level === 1 && fy === 0 && (fx === 17 || fx === 18) && P.facing === 'up') {
+        sc.pic = true; say(['A picture of a tangerine scooter, in a frame.', 'Somebody loves that scooter.']); return true;
+      }
+      if (level !== 3 || area !== 'akumal' || phase !== 'town' || sc.riding || L3.found) return false;
+      const at = parked();
+      if ((fx === at.x && fy === at.y) || (sc.at && P.tx === at.x && P.ty === at.y)) { hopOn(); return true; }
+      return false;
+    },
+    blocks(x, y) {  // where it's first parked, it stands in your way (so you can face it, and tap A)
+      return level === 3 && area === 'akumal' && !sc.riding && !sc.at && !L3.found && x === HOME.x && y === HOME.y;
+    },
+    sprites(list, cx, cy) {
+      if (level !== 3 || area !== 'akumal' || L3.found) return;
+      const at = parked(); if (!at) return;
+      list.push([at.y * TS + 8.5, () => drawScooter(at.x * TS - cx, at.y * TS - cy, false)]);
+    },
+    rider(X, Y) {
+      if (!sc.riding || level !== 3 || area !== 'akumal') return false;
+      const flip = P.side < 0, bob = P.moving && Math.floor(P.anim * 10) % 2 ? 1 : 0;
+      drawScooter(X, Y, flip);
+      drawBlaineSit(X - 4 + (flip ? 10 : 0), Y - 8 - bob, flip);
+      const q = painter(X - 4, Y - 8 - bob, 24, flip);  // an arm, out to the handlebar
+      q.r(11, 10, 3, 2, BB.JK); q.r(14, 11, 2, 1, BB.JK); q.p(16, 11, BB.SKIN);
+      return true;
+    },
+    update() {
+      if (level !== 3 || area !== 'akumal') { if (sc.riding || sc.at) { sc.riding = false; sc.at = null; } return; }
+      if (!sc.riding) return;
+      const R = L3.rock;
+      if (L3.found || phase === 'push' || (phase === 'scene' && R.met && !R.done)) hopOff();  // off, to push, or at the end
+    },
+  });
+}
+
+
+// ---- extra: the Moon Pie ----
+// One moment, once a trip: in the pizza joint stuck in the 1980s, an old man with a long white beard, by a little rack
+// of Moon Pies on the counter. Tap A on him. (His two lines are from The Simpsons, "Lisa the Simpson", 1998.)
+if (EXTRAS.on && EXTRAS.moonPie) {
+  const PAL = { s: '#efc7a0', S: '#d8a880', w: '#f4f2ec', W: '#d6d2c8', e: '#ffffff', p: '#1a1a1a', g: '#5d9b48',
+    v: '#8a8f96', n: '#4a4a58', b: '#3a2a20' };
+  const OLD = [  // an old man, front on: bald, big round eyes, a long white beard, green sleeves, a gray vest
+    '......ssss......', '.....ssssss.....', '....ssssssss....', '...wseeeseeesw..', '...wsepesepesw..',
+    '...wseeeseeesw..', '....sssSSsss....', '....wwwwwwww....', '...wwwwwwwwww...', '..gvwwwwwwwwvg..',
+    '..gvwwwwwwwwvg..', '..gvvwwwwwwvvg..', '..ssvvwwwwvvss..', '....vvvwwvvv....', '....vvvvvvvv....',
+    '....nnnnnnnn....', '....nnn..nnn....', '....bbb..bbb....'];
+  const OLD_STEP = OLD.slice(0, 16).concat(['....nnn...nn....', '....bbb...bb....']);
+  const SPOT = { x: 3, y: 1 };  // in the pizza joint: between the arcade games and the counter
+  const mp = { done: false, closeup: false, closeT: -9, gone: false, man: null };
+  const reset = () => Object.assign(mp, { done: false, closeup: false, gone: false, man: { x: SPOT.x, y: SPOT.y, path: [], walkT: 0, face: 1, has: false } });
+  reset();
+  function pie(x, y) {  // a Moon Pie, small, in its wrapper
+    ctx.fillStyle = '#cfe0ea'; ctx.fillRect(x, y, 6, 5);
+    disc(ctx, x + 3, y + 2, 2, '#4a2c1c'); ctx.fillStyle = '#f6f3ec'; ctx.fillRect(x + 2, y + 2, 3, 1);
+    px(ctx, x + 3, y + 3, '#f2c94c'); px(ctx, x, y, '#eef7fb');
+  }
+  function drawRack(X, Y) {  // a little wire rack on the end of the counter, Moon Pies standing in it
+    ctx.fillStyle = '#b8bec4'; ctx.fillRect(X + 1, Y - 3, 1, 8); ctx.fillRect(X + 10, Y - 3, 1, 8); ctx.fillRect(X + 1, Y + 4, 10, 1);
+    for (let i = 0; i < 2; i++) pie(X + 2 + i * 4 - (i ? 1 : 0), Y - 2 + i);
+  }
+  function drawOld(X, Y) {  // X, Y: the top-left of his tile; he's a little taller than it
+    const M = mp.man, mv = M.path && M.path.length, art = mv && Math.floor(M.walkT * 6) % 2 ? OLD_STEP : OLD;
+    ctx.fillStyle = 'rgba(0,0,0,.22)'; ctx.fillRect(X + 3, Y + 14, 10, 2);
+    extraGrid(ctx, art, PAL, X, Y - 3, false);
+    if (M.has) { pie(X + 5, Y + 7); px(ctx, X + 4, Y + 9, PAL.s); px(ctx, X + 11, Y + 9, PAL.s); }
+  }
+  function closeUp() {  // the Moon Pie, held up close: its wrapper, the round pie, the label, the moon
+    const X = 34, Y = 14, W = 92, H = 72, k = clamp((time - mp.closeT) / 0.35, 0, 1);
+    ctx.globalAlpha = k;
+    ctx.fillStyle = '#2b2118'; ctx.fillRect(X - 2, Y - 2, W + 4, H + 4);
+    ctx.fillStyle = '#7a4a2a'; ctx.fillRect(X, Y, W, H);
+    ctx.fillStyle = '#5e3820'; for (let i = 4; i < W; i += 8) ctx.fillRect(X + i, Y, 1, H);
+    const bx = X + 14, by = Y + 8 - Math.round(Math.sin(time * 2) * 1);
+    ctx.fillStyle = '#b9cdd8'; ctx.fillRect(bx - 1, by - 1, 60, 56);                       // the wrapper
+    ctx.fillStyle = '#d9e8f0'; ctx.fillRect(bx, by, 58, 54);
+    ctx.fillStyle = '#f4fbff'; for (const [a, b, l] of [[3, 4, 9], [44, 6, 8], [6, 44, 7], [47, 46, 6]]) ctx.fillRect(bx + a, by + b, l, 1);
+    for (let i = 0; i < 58; i += 3) { ctx.fillStyle = '#c4d6e0'; ctx.fillRect(bx + i, by, 1, 3); ctx.fillRect(bx + i, by + 51, 1, 3); }  // crimped ends
+    const cx0 = bx + 29, cy0 = by + 27;
+    disc(ctx, cx0, cy0, 22, '#3a2418'); disc(ctx, cx0, cy0, 20, '#f6f3ec');               // the pie, and its label
+    const s = 'MOON PIE', tw = textWidth(s);
+    ctx.fillStyle = '#e8eef6'; ctx.fillRect(cx0 - Math.ceil(tw / 2) - 2, cy0 - 9, tw + 4, 9);
+    pixelText(ctx, s, cx0 - Math.ceil(tw / 2), cy0 - 7, '#2f5fb0');
+    disc(ctx, cx0 - 1, cy0 + 8, 6, '#f2c94c'); disc(ctx, cx0 + 2, cy0 + 6, 6, '#f6f3ec');  // a crescent moon
+    ctx.fillStyle = '#5d9b48'; ctx.fillRect(bx + 60, by + 36, 14, 20); ctx.fillStyle = '#4a8a3a'; ctx.fillRect(bx + 60, by + 36, 2, 20);  // his green sleeve
+    ctx.fillStyle = '#efc7a0'; ctx.fillRect(bx + 55, by + 16, 9, 24);                      // his hand, round the side of it
+    for (let i = 0; i < 4; i++) {                                                           // four fingers over the front
+      ctx.fillStyle = '#efc7a0'; ctx.fillRect(bx + 49 - (i === 0 || i === 3 ? 0 : 1), by + 17 + i * 6, 7, 5);
+      ctx.fillStyle = '#d8a880'; ctx.fillRect(bx + 49, by + 21 + i * 6, 6, 1); px(ctx, bx + 49 - (i === 0 || i === 3 ? 0 : 1), by + 17 + i * 6, '#f6dcc0');
+    }
+    sparkleAt(bx + 8, by + 6, ((time - mp.closeT) % 1.6) / 0.8);
+    ctx.globalAlpha = 1;
+  }
+  async function moment() {
+    lock++; mp.done = true;
+    await say(['An old man with a long white beard, by the counter.', 'He picks up a Moon Pie, and stares at it.']);
+    mp.man.has = true; mp.closeup = true; mp.closeT = time; pluck(NOTE.A4, 0.12); pluck(NOTE.D5, 0.1, 0.1);
+    await say(['Old man: "Moon Pie."', 'Old man: "What a time to be alive."']);
+    mp.closeup = false;
+    lock--;
+    await walkTo(mp.man, [[SPOT.x, 7], [SPOT.x + 1, 7], [SPOT.x + 1, 8]], 2.2);  // and out the door with it
+    mp.gone = true;
+  }
+  extras.parts.push({
+    look(fx, fy) {
+      if (level !== 2 || area !== 'pizza' || mp.done || fx !== SPOT.x || fy !== SPOT.y) return false;
+      moment(); return true;
+    },
+    blocks(x, y) { return level === 2 && area === 'pizza' && !mp.done && x === SPOT.x && y === SPOT.y; },
+    sprites(list, cx, cy, late) {
+      if (level !== 2 || area !== 'pizza') return;
+      list.push([1 * TS + 0.5, () => drawRack(4 * TS - cx, 1 * TS - cy)]);
+      if (!mp.gone) list.push([Math.round(mp.man.y * TS) + 8, () => drawOld(Math.round(mp.man.x * TS) - cx, Math.round(mp.man.y * TS) - cy)]);
+      if (mp.closeup && late) late.push([1e9, closeUp]);
+    },
+    update(dt) {
+      if (level !== 2 || pizzaVisited === false) { if (mp.done) reset(); return; }  // a new trip up the shore
+      updateActor(mp.man, dt);
+    },
+  });
+}
+
+// ---- extra: Norm ----
+// A few nods to Norm Macdonald, each once, where they're least expected: his memoir, on the apartment's coffee table; a
+// moth at the second camp, with a long, sad story told like a Russian novel (after his moth joke, told on Conan in
+// 2009); and, in the club in Playa del Carmen, some German tourists (after his old Weekend Update joke).
+if (EXTRAS.on && EXTRAS.norm) {
+  // the paperback, on the coffee table beside the laptop (painted once, like the rest of the room)
+  {
+    const g = AREAS.apartment.base.getContext('2d'), X = 14 * TS + 4, Y = 3 * TS + 6;
+    g.fillStyle = 'rgba(0,0,0,.3)'; g.fillRect(X + 1, Y + 1, 8, 6);
+    g.fillStyle = '#e8e2d2'; g.fillRect(X, Y, 8, 6);                       // the pages
+    g.fillStyle = '#2f4a6a'; g.fillRect(X, Y, 8, 5);                       // the cover
+    g.fillStyle = '#f2ead8'; g.fillRect(X + 1, Y + 1, 6, 1); g.fillRect(X + 1, Y + 3, 4, 1);  // the title
+    g.fillStyle = '#c8323a'; g.fillRect(X, Y, 1, 5);                       // the spine
+  }
+  let crowd = false;
+  // the moth, by the fire at the second camp, next to the pizza joint (its neon glows all night)
+  const C = CAMPS[1], SPOT = { x: C.cx + 3, y: C.cy - 1 };  // just over the fire
+  const SIGN = { x: 37 * TS + 56, y: 1 * TS + 6 };          // the pizza joint's neon sign
+  const m = { told: false, off: -9 };
+  const TALE = [
+    'A moth, fluttering over the fire.',
+    'Moth: "Forgive me, friend. I have to tell someone, or I\'ll go mad."',
+    'Moth: "I was born in the birch woods above the shore, the youngest son of Arkady Pavlovich, a moth of no fortune."',
+    'Moth: "Every night I work for Fyodor Ilyich, who owns every porch light on the shore. He pays me in dust."',
+    'Moth: "My wife, Varvara, no longer looks at me. She looks only at the lamps."',
+    'Moth: "My son went to the city. He wrote that he had found a light that never goes out. That was his last letter."',
+    'Moth: "And the winters. Eight months of cold, and every sweater locked away in a cedar chest."',
+    'Moth: "Some nights I think I am not a moth at all. Only a leaf the wind will not let fall."',
+    'You: "I\'m sorry. But I eat moths. Why come to me?"',
+    'Moth: "\'Cause the light was on."',
+  ];
+  const here = () => level === 2 && area === 'route' && night === C;
+  const rainbow = k => RAINBOW[(Math.floor(time * 8 + 4) + k) % RAINBOW.length];  // like the bugs on your web
+  async function tell() {
+    lock++;
+    await say(TALE);
+    m.told = true; m.off = time;
+    await say(['It flutters off, toward the neon.']);
+    lock--;
+  }
+  function where() {  // the moth, in map pixels: over the fire; then, once it's told you, off to the neon
+    const fx = SPOT.x * TS + 6 + Math.sin(time * 3.1) * 5 + Math.sin(time * 7.3) * 2, fy = SPOT.y * TS + 6 + Math.sin(time * 4.7) * 3;
+    if (!m.told) return [fx, fy];
+    const sx = SIGN.x + Math.sin(time * 3.7) * 9, sy = SIGN.y + Math.sin(time * 5.3) * 4, k = ease(clamp((time - m.off) / 2.5, 0, 1));
+    return [fx + (sx - fx) * k, fy + (sy - fy) * k - Math.sin(k * Math.PI) * 14];
+  }
+  extras.parts.push({
+    look(fx, fy) {
+      if (level === 1 && fx === 14 && fy === 3) {
+        say(['A coffee table. On it, a paperback: Based on a True Story.', "Somebody's memoir. Most of it never happened."]);
+        return true;
+      }
+      if (level === 3 && (area === 'club1' || area === 'club2') && tile(fx, fy) === 'c' && !crowd) {
+        crowd = true; say(['The crowd, dancing. No way through.', 'Some German tourists keep asking the DJ for David Hasselhoff.']);
+        return true;
+      }
+      if (!here() || phase !== 'night' || m.told || fx !== SPOT.x || fy !== SPOT.y) return false;
+      tell(); return true;
+    },
+    blocks(x, y) { return here() && !m.told && x === SPOT.x && y === SPOT.y; },
+    sprites(list, cx, cy, late) {
+      if (!late || !here()) return;
+      late.push([SPOT.y * TS + 3, () => {
+        const [x, y] = where();
+        drawBug('moth', Math.round(x) - cx, Math.round(y) - cy, Math.floor(time * 18) % 2 ? -1 : 0, rainbow);
+      }]);
+    },
+    update() { if (level !== 2 || camps === 0) m.told = false; },  // a new trip up the shore: it's back
+  });
+}
 
 // ---- the loop ----
 placeCase();
