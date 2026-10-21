@@ -271,8 +271,6 @@ a { color:var(--accent); }
     <p id="end4Text"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>IzzyKat gets out of the U-Haul. The gummies. Searching for her (each tick its own way), under a rock, by the
-        river, and at last under the U-Haul, purring.</li>
       <li>On the road again, to Yellowstone: elk, mountains, coyotes (and photographers), and Old Faithful, which almost
         goes, and almost goes, then explodes, with IzzyKat riding it.</li>
       <li>Reno: a motel, a maze of canals, the old strip, a casino, Sierra Nevada Pale Ales, craps, and Jim.</li>
@@ -282,7 +280,11 @@ a { color:var(--accent); }
       U-Haul from above, and IzzyKat's new colors. In whack-a-prairie-dog: the field, the nine holes, how the prairie
       dogs look, how each tick whacks (the regular tick latching on and using one as a weapon; Lyme disease, blood sugar
       and the honeybun, and sensing the next one; the pointer's point, the freeze, and the hunter), the jump-yip waves,
-      twelve to win, the ending, and all the timing.</p>
+      twelve to win, the ending, and all the timing. In the search for IzzyKat: how it all looks and sounds; the open
+      door; the gummies in a thought bubble, and the haze; the pointer's nose and the scent; the regular tick up a stalk
+      of dune grass, and what it feels as warm (Brudda Blaine, then a rock in the sun); the rings of "Pss, pss, pss", and
+      who comes; the rock, and the beetle under it; Brudda Blaine's yell by the river; the purr; and the close-up of her
+      under the U-Haul. The words not in your story are guesses too.</p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -4544,7 +4546,7 @@ const SIGN_FONT = {
   K: 'X.XX.XXX.X.XX.X', L: 'X..X..X..X..XXX', M: 'X.XXXXXXXX.XX.X', N: 'XXXX.XX.XX.XX.X', O: '.X.X.XX.XX.X.X.',
   P: 'XX.X.XXX.X..X..', Q: '.X.X.XX.XXX..XX', R: 'XX.X.XXX.X.XX.X', S: '.XXX...X...XXX.', T: 'XXX.X..X..X..X.',
   U: 'X.XX.XX.XX.XXXX', V: 'X.XX.XX.XX.X.X.', W: 'X.XX.XXXXXXXX.X', X: 'X.XX.X.X.X.XX.X', Y: 'X.XX.X.X..X..X.',
-  Z: 'XXX..X.X.X..XXX', '-': '......XXX......',
+  Z: 'XXX..X.X.X..XXX', '-': '......XXX......', '?': 'XXX..X.X.....X.',
 };
 function signWidth(s) { let w = -1; for (const ch of s) w += ch === ' ' ? 3 : ch === '!' || ch === '.' || ch === '¡' ? 2 : 4; return w; }
 function signText(g, s, x, y, c) {
@@ -5839,7 +5841,7 @@ async function peekIn() {
 }
 function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
-  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField })[scene3.kind]();
+  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -6126,6 +6128,7 @@ function update3(dt) {
     S.dist += S.v * dt;
   }
   if (S && S.kind === 'field') updateField(dt);  // level 4: whack-a-prairie-dog
+  if (S && (S.kind === 'search' || S.kind === 'under')) updateSearch(dt);  // and the search for IzzyKat
 }
 
 // ---- level 3: the scenes ----
@@ -6453,8 +6456,8 @@ const JUMP3 = {
 // ---- level 4: West, in the U-Haul (just begun) ----
 // The final chapter: you, Brudda Blaine and IzzyKat, West in the U-Haul. Through the oil fields (large oil rigs, close
 // and far), past bison, and two horses, one black, one brown, having a slight battle; to Badlands National Park. You
-// park the U-Haul by the river, where sand-like mounds slide down into it and it bends in an S. Then whack-a-prairie-dog
-// (below). Next, from your story: IzzyKat gets out of the U-Haul. (How it all looks is a guess.)
+// park the U-Haul by the river, where sand-like mounds slide down into it and it bends in an S. Then whack-a-prairie-dog,
+// and IzzyKat gets out (both below). Next, from your story: Yellowstone. (How it all looks is a guess.)
 const DRIVE_SKY = { oil: [[150, 190, 226], [238, 226, 198]], bison: [[138, 186, 228], [232, 230, 204]],
   horses: [[132, 180, 226], [238, 224, 194]], badlands: [[120, 172, 224], [246, 214, 178]] };
 const DRIVE_FIELD = { oil: ['#b9a96a', '#a8985a'], bison: ['#a9b06c', '#98a05c'], horses: ['#b4a868', '#a49858'], badlands: ['#c4a874', '#b49464'] };
@@ -6612,7 +6615,7 @@ async function level4(k) {
   Object.assign(smoke, { t0: -999, branch: -999, haze: false }); Object.assign(rain, { on: false, heavy: false, level: 0 });
   P.mount = null; P.blaine = false; blur(false); P.hidden = true; sugarMeter(null); L3.bl = null;
   fade.tween = null; fade.v = 1; $('fade').style.opacity = 1;
-  musicStop(); scene3 = null; field = null;
+  musicStop(); scene3 = null; field = null; purr.on = false;
   const jump = JUMP4[new URLSearchParams(location.search).get('at')];  // for checks: start part way along
   if (jump) { jump(); return; }
   driveWest();
@@ -6921,7 +6924,7 @@ async function endField() {  // twelve: they've had enough
   await say(['The prairie dogs have had enough. They stay down.', 'Brudda Blaine cheers.']);
   blur(false); sugarMeter(null);
   await wait(0.4);
-  finish4();
+  searchIzzy();  // back at the U-Haul
 }
 function drawPD(H, i) {  // a prairie dog in its hole: rising, up, ducking, or whacked
   const k = time - H.t0, X = HOLES[i].x, Y = HOLES[i].y;
@@ -7071,12 +7074,375 @@ function yip(v = 0.03) {  // the jump-yip: "wee-oo"
   g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.27);
   o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.3);
 }
+// ---- level 4: IzzyKat gets out, and the search for her. A scene you watch (your answer). Back at the U-Haul, the door
+// was left open, and IzzyKat is gone. You're frantic, and wondering why you ate those gummies (the same stuff from
+// Milwaukee). Then you search, Brudda Blaine and you, each tick its own way:
+//   the pointer: a pointer's nose, to the ground; the scent leads to a rock, and you point.
+//   the regular tick: up a stalk of dune grass, front legs held out, feeling for breath and body heat (real ticks do
+//     this: the CDC's page "About Ticks and Tickborne Disease"). Something warm: Brudda Blaine. Then a rock, warm in the sun.
+//   the human-blood tick: "Pss, pss, pss", like a superpower: rings go out, and everything comes. Everything but IzzyKat.
+// Under a rock: no IzzyKat. By the river: still no IzzyKat. You decide she's gone. Then a purr: she's under the U-Haul,
+// as if nothing happened. (What she was really up to stays a secret until the final boss.) How it all looks and sounds
+// is a guess; the words not in your story are guesses too. ----
+const ROCK = { x: 50, y: 120 };    // the rock (its middle), on the red clay below the U-Haul
+const STALK = { x: 12, y: 104 };   // a tall stalk of dune grass, by the track (its foot)
+const PD_PEEK = [[14, 58], [64, 140], [44, 40]];  // prairie dog holes, near the river: they peek up at "pss, pss, pss"
+const SNIFF_PATH = [[22, 98], [12, 90], [6, 98], [18, 102], [28, 96], [42, 92]];  // nose to the ground, to the rock
+const GUMMY = ['X...X', 'XXXXX', '.XXX.', 'XXXXX', '.XXX.', 'XX.XX'];  // a gummy bear
+const purr = { on: false, next: 0, marks: [] };  // the purr, once it starts (it carries on into the close-up)
+function searcher(x, y, facing) { return { x, y, path: [], speed: 30, walkT: 0, face: 1, facing, moving: false, res: null, nx: null, ny: null }; }
+const SCENT = (() => {  // marks along the ground where the scent is: from where you start, along your nose's path
+  const out = []; let [x0, y0] = [30, 92];
+  for (const [x1, y1] of SNIFF_PATH) {
+    const d = Math.hypot(x1 - x0, y1 - y0), n = Math.max(1, Math.round(d / 7));
+    for (let i = 0; i < n; i++) out.push([Math.round(x0 + (x1 - x0) * i / n) + 8, Math.round(y0 + (y1 - y0) * i / n) + 10]);
+    [x0, y0] = [x1, y1];
+  }
+  return out;
+})();
+async function searchIzzy() {
+  await fadeTo(1, 0.8);
+  blur(false); sugarMeter(null); hud(null); purr.on = false;
+  scene3 = { kind: 'search', t0: time, bl: searcher(-20, 88, 'right'), me: searcher(-38, 94, 'right'), tip: null,
+    bangs: [], puffs: [], rings: [], frantic: null, think: null, haze: null, hazeOff: null, sniff: null, trail: null, point: null,
+    stalk: false, legs: false, leap: null, ride: false, heat: null, peek: null, trance: null, beetle: null, yell: null };
+  const S = scene3, bl = S.bl, me = S.me;
+  await fadeTo(0, 0.8);
+  await Promise.all([walkTo(bl, [[60, 88]], 30), walkTo(me, [[40, 92]], 30)]);
+  await say(['Back at the U-Haul.']);
+  musicStop();
+  await walkTo(bl, [[66, 86]], 24); bl.facing = 'up';
+  await wait(0.5);
+  await say(['The door was left open.']);
+  S.bangs.push({ who: 'bl', s: '!', t0: time, d: 2.2 }); me.facing = 'up'; alarm();
+  await wait(0.9);
+  await say(['IzzyKat is gone.']);
+  S.frantic = { t0: time, next: time, b: [bl.x - 12, bl.y + 4], m: [me.x - 6, me.y + 2] };  // round and round
+  await wait(1.4);
+  await say(["You're frantic."]);
+  S.think = time; S.haze = time;
+  await wait(1.2);
+  await say(['Why did you eat those gummies?', 'Filled with the same stuff from Milwaukee.']);
+  S.frantic = null; S.think = null;
+  await Promise.all([walkTo(bl, [[62, 88]], 40), walkTo(me, [[30, 92]], 40)]);
+  bl.facing = 'left'; me.facing = 'down';
+  await wait(0.4);
+  await say(['You search for her.']);
+  await ({ dog: sniffWay, regular: questWay, human: pssWay })[choice]();
+  // under a rock
+  bl.facing = 'right';
+  await wait(0.5);
+  S.tip = time; rumble(0.5, 0.05);
+  await wait(0.7);
+  thump(0.05); S.beetle = time;
+  await wait(0.6);
+  await say(['Under a rock: no IzzyKat.', 'Just a beetle.']);
+  // by the river
+  await fadeTo(1, 0.5);
+  Object.assign(bl, { x: 102, y: 28, facing: 'right', path: [] }); Object.assign(me, { x: 86, y: 32, facing: 'right', path: [] });
+  Object.assign(S, { beetle: null, point: null, trail: null, ride: false });
+  await fadeTo(0, 0.5);
+  await wait(0.6);
+  S.yell = time; yellSound();
+  await wait(1.2);
+  await say(['By the river: still no IzzyKat.']);
+  // she's gone
+  await fadeTo(1, 0.8);
+  S.yell = null; S.hazeOff = time;
+  Object.assign(bl, { x: 52, y: 88, facing: 'down', path: [] }); Object.assign(me, { x: 34, y: 94, facing: 'down', path: [] });
+  await fadeTo(0, 0.8);
+  await wait(0.6);
+  await say(["You've looked everywhere.", "You decide she's gone."]);
+  await wait(1.6);
+  Object.assign(purr, { on: true, next: time, marks: [] });
+  await wait(1.4);
+  await say(['Then, a purr.']);
+  bl.facing = 'up'; me.facing = 'up'; S.bangs.push({ who: 'bl', s: '?', t0: time });
+  await wait(1.0);
+  await fadeTo(1, 0.6);
+  scene3 = { kind: 'under', t0: time };
+  await fadeTo(0, 0.6);
+  await wait(1.0);
+  await say(['Under the U-Haul: IzzyKat.', 'Purring, as if nothing happened.']);
+  await wait(1.2);
+  purr.on = false; musicStart();
+  finish4();
+}
+async function sniffWay() {  // the pointer: nose to the ground; the scent leads to a rock, and you point
+  const S = scene3, bl = S.bl, me = S.me;
+  await say(["A pointer's nose."]);
+  S.sniff = time; S.trail = time;
+  walkTo(bl, [[50, 86], [36, 84]], 16);  // he follows, a few steps behind
+  await walkTo(me, SNIFF_PATH, 20);
+  S.sniff = null; me.facing = 'down'; S.point = time; S.bangs.push({ who: 'me', s: '!', t0: time }); alarm();
+  await wait(0.9);
+  await say(["You've got something. You point: a rock."]);
+  await walkTo(bl, [[26, 100], [26, 104]], 30);
+}
+async function questWay() {  // the regular tick: up a stalk of dune grass, front legs out, feeling for a warm body
+  const S = scene3, bl = S.bl, me = S.me;
+  walkTo(bl, [[54, 100]], 20).then(() => { bl.facing = 'left'; });  // he looks around, out on the clay
+  await walkTo(me, [[STALK.x - 8, STALK.y - 12]], 30);
+  me.facing = 'up'; S.stalk = true;
+  await walkTo(me, [[STALK.x - 8, STALK.y - 26]], 10);  // up the stalk
+  S.legs = true;
+  await wait(0.8);
+  await say(['You climb a stalk of dune grass, and hold out your front legs.', "That's how a tick finds a warm body: breath, and body heat."]);
+  S.heat = { on: 'bl', t0: time };
+  await wait(1.4);
+  await say(['Something warm, and breathing!']);
+  S.legs = false; S.heat = null; S.leap = { t0: time, from: [me.x, me.y] }; whoosh(0.3, 0.03);
+  await wait(0.55);
+  S.leap = null; S.stalk = false; S.ride = true; thump(0.05);
+  S.bangs.push({ who: 'bl', s: '!', t0: time });
+  await wait(0.8);
+  await say(["It's Brudda Blaine."]);
+  S.heat = { on: 'rock', t0: time };
+  await wait(1.4);
+  await say(['Something else is warm: a rock, in the sun.']);
+  S.heat = null;
+  await walkTo(bl, [[40, 96], [26, 104]], 26);
+  S.ride = false; me.x = bl.x; me.y = bl.y - 9;
+  await walkTo(me, [[42, 92]], 40); me.facing = 'down';
+}
+async function pssWay() {  // the human-blood tick: "Pss, pss, pss", like a superpower
+  const S = scene3, bl = S.bl, me = S.me;
+  await say(['You go: "Pss, pss, pss."']);
+  for (let i = 0; i < 3; i++) {
+    S.rings.push({ t0: time, x: me.x + 8, y: me.y + 8 }); S.bangs.push({ who: 'me', s: 'PSS', t0: time, d: 0.55 }); pss();
+    await wait(0.6);
+  }
+  S.peek = time;
+  await wait(0.9);
+  S.trance = time;
+  await walkTo(bl, [[64, 100], [56, 100], [48, 92]], 10);  // he comes too, in a trance
+  await wait(0.6);
+  await say(['Everything comes. Everything but IzzyKat.']);
+  S.trance = null; S.bangs.push({ who: 'bl', s: '?', t0: time });
+  await wait(0.7);
+  await say(["Maybe she's hiding. Under a rock?"]);
+  await Promise.all([walkTo(bl, [[40, 100], [26, 104]], 30), walkTo(me, [[42, 92]], 30)]);
+  me.facing = 'down';
+}
+function updateSearch(dt) {
+  const S = scene3;
+  if (S.kind === 'search') {
+    const bl = S.bl, me = S.me;
+    if (S.frantic) {  // running round in circles
+      const F = S.frantic, k = time - F.t0;
+      bl.path = []; me.path = [];
+      bl.nx = F.b[0] + Math.cos(k * 5) * 12; bl.ny = F.b[1] + Math.sin(k * 5) * 5;
+      me.nx = F.m[0] + Math.cos(2 - k * 6.5) * 9; me.ny = F.m[1] + Math.sin(2 - k * 6.5) * 5;
+      if (time >= F.next) { whoosh(0.3, 0.02); F.next = time + 0.7; }
+    }
+    if (S.leap) {  // the leap, from the top of the stalk onto his head
+      const k = clamp((time - S.leap.t0) / 0.5, 0, 1), [fx, fy] = S.leap.from;
+      me.nx = fx + (bl.x - fx) * k; me.ny = fy + (bl.y - 9 - fy) * k - Math.sin(k * Math.PI) * 16;
+    }
+    for (const a of [bl, me]) {
+      const was = [a.x, a.y];
+      if (a.nx != null) { a.x = a.nx; a.y = a.ny; a.nx = a.ny = null; a.walkT += dt; } else updateActor(a, dt);
+      const dx = a.x - was[0], dy = a.y - was[1];
+      a.moving = Math.abs(dx) + Math.abs(dy) > 0.001;
+      if (a.moving && !(a === me && S.leap)) a.facing = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
+    }
+    if (S.ride) { me.x = bl.x; me.y = bl.y - 9; me.facing = bl.facing; me.moving = bl.moving; me.walkT = bl.walkT; }
+    if (S.sniff && me.moving && time >= S.sniff) { sniff(); S.sniff = time + 0.5; S.puffs.push({ t0: time, x: me.x + 8, y: me.y + 14 }); }
+    S.puffs = S.puffs.filter(p => time - p.t0 < 0.5); S.rings = S.rings.filter(r => time - r.t0 < 1.1);
+    S.bangs = S.bangs.filter(b => time - b.t0 < (b.d || 1.0));
+  }
+  if (purr.on && time >= purr.next) { purrBreath(); purr.next = time + 1.3; purr.marks.push(time); }
+  purr.marks = purr.marks.filter(t0 => time - t0 < 1.6);
+}
+function drawStone(cx, cy, a) {  // the rock: rounded, gray-brown; its highlight and a crack turn as it rolls
+  for (let y = -4; y <= 4; y++) { const w = Math.round(9 * Math.sqrt(1 - (y / 4.5) ** 2)); ctx.fillStyle = 'rgba(70,30,14,.35)'; ctx.fillRect(cx - w + 2, cy + y + 3, w * 2, 1); }
+  for (let y = -5; y <= 5; y++) { const w = Math.round(8 * Math.sqrt(1 - (y / 5.5) ** 2)); ctx.fillStyle = y < -1 ? '#9a8a7a' : y < 2 ? '#857565' : '#6e6052'; ctx.fillRect(cx - w, cy + y, w * 2, 1); }
+  ctx.fillStyle = '#b8aa98'; ctx.fillRect(Math.round(cx + Math.cos(a) * 4) - 1, Math.round(cy - 2 + Math.sin(a) * 2), 3, 1);
+  ctx.fillStyle = '#5a4e42'; ctx.fillRect(Math.round(cx + Math.cos(a + 2.4) * 4), Math.round(cy + 1 + Math.sin(a + 2.4) * 2), 2, 1);
+}
+function heatAt(cx, top, t0) {  // warmth, rising: wavy lines, faint
+  const k = clamp((time - t0) / 0.8, 0, 1);
+  for (let n = 0; n < 4; n++) for (let j = 0; j < 14; j += 2) {
+    const x = Math.round(cx - 6 + n * 4 + Math.sin(time * 5 + j * 0.5 + n * 1.7) * 1.5), y = Math.round(top - j - (time * 10 + n * 3) % 2);
+    ctx.globalAlpha = k * 0.9 * (1 - j / 16); ctx.fillStyle = n % 2 ? '#ff6a2a' : '#ffa040'; ctx.fillRect(x, y, 1, 2);
+  }
+  ctx.globalAlpha = 1;
+}
+function drawGummies(sx, sy, t0) {  // a thought bubble over you (sx, sy: your top-left): gummy bears, wobbling
+  const k = time - t0, w = 27, h = 12, sway = Math.round(Math.sin(time * 1.3) * 2);
+  const bx = clamp(Math.round(sx + 8 - w / 2) + sway, 2, VW - w - 2), by = Math.max(2, Math.round(sy) - 24);
+  ctx.globalAlpha = clamp(k / 0.3, 0, 1);
+  ctx.fillStyle = '#a89ec0'; ctx.fillRect(bx + 1, by - 1, w - 2, h + 2); ctx.fillRect(bx - 1, by + 1, w + 2, h - 2);
+  ctx.fillStyle = '#f6f3ee'; ctx.fillRect(bx + 1, by, w - 2, h); ctx.fillRect(bx, by + 1, w, h - 2);
+  disc(ctx, Math.round(sx) + 9, by + h + 3, 2, '#a89ec0'); disc(ctx, Math.round(sx) + 9, by + h + 3, 1, '#f6f3ee');
+  const COLS = ['#e8402a', '#f0a020', '#3aa84a', '#2a7ad8', '#c04ac8'];
+  for (let i = 0; i < 3; i++) {  // each bobs on its own, and the colors drift
+    const bob = Math.round(Math.sin(time * 4 + i * 1.3) * 1.2), c = COLS[(Math.floor(time * 2) + i * 2) % COLS.length], gx = bx + 4 + i * 7, gy = by + 3 + bob;
+    ctx.fillStyle = c; GUMMY.forEach((row, j) => { for (let a = 0; a < 5; a++) if (row[a] === 'X') ctx.fillRect(gx + a, gy + j, 1, 1); });
+    ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.fillRect(gx + 1, gy + 1, 1, 1);
+  }
+  ctx.globalAlpha = 1;
+}
+function drawSearch() {
+  const S = scene3, bl = S.bl, me = S.me;
+  if (!riverCanvas) paintRiver();
+  ctx.drawImage(riverCanvas, 0, 0);
+  ctx.fillStyle = 'rgba(255,255,255,.45)';  // the river, flowing
+  for (let i = 0; i < 14; i++) { const y = Math.round(wrapX(i * 11 + time * 14, VH)); ctx.fillRect(riverX(y) - 3 + (i % 3) * 2, y, 3, 1); }
+  for (const [x, y] of PD_PEEK) {  // prairie dog holes
+    for (let j = -2; j <= 2; j++) { const w = Math.round(7 * Math.sqrt(1 - (j / 2.6) ** 2)); ctx.fillStyle = '#c87a4e'; ctx.fillRect(x - w, y + j, w * 2, 1); }
+    ctx.fillStyle = '#2a120a'; ctx.fillRect(x - 3, y - 1, 6, 2); ctx.fillRect(x - 2, y + 1, 4, 1);
+  }
+  for (let k = 0; k < 5; k++) line(ctx, STALK.x + k - 2, STALK.y, STALK.x + (k - 2) * 2, STALK.y - 20 + Math.abs(k - 2) * 3, ['#a8a84a', '#8a9a3a', '#b8b65a', '#7a8a34', '#9aa448'][k]);  // the stalk
+  if (S.trail != null) SCENT.forEach(([x, y], i) => {  // the scent, along the ground
+    const k = time - S.trail - i * 0.12; if (k < 0) return;
+    ctx.globalAlpha = 0.35 + 0.25 * Math.sin(time * 4 + i); ctx.fillStyle = '#fff1c8';
+    ctx.fillRect(x, y, 1, 1); ctx.fillRect(x + 1, y - 1, 1, 1); ctx.fillRect(x + 2, y, 1, 1); ctx.fillRect(x + 3, y - 1, 1, 1);
+    ctx.globalAlpha = 1;
+  });
+  if (S.tip != null) {  // where the rock was: damp clay
+    for (let y = -4; y <= 4; y++) { const w = Math.round(8 * Math.sqrt(1 - (y / 4.5) ** 2)); ctx.fillStyle = '#7e3c22'; ctx.fillRect(ROCK.x - w, ROCK.y + y, w * 2, 1); }
+    ctx.fillStyle = '#9a5434'; for (const [a, b] of [[-4, -1], [3, 1], [0, 2], [5, -2]]) ctx.fillRect(ROCK.x + a, ROCK.y + b, 1, 1);
+  }
+  const rk = S.tip != null ? ease(clamp((time - S.tip) / 0.6, 0, 1)) : 0;
+  drawStone(Math.round(ROCK.x + rk * 8), Math.round(ROCK.y + rk * 10), -1 + rk * 5);
+  if (S.beetle != null) {  // a beetle scuttles out from under it
+    const k = clamp((time - S.beetle) / 1.8, 0, 1), hue = j => RAINBOW[(Math.floor(time * 8) + j) % RAINBOW.length];
+    if (k < 1) drawBug('beetle', Math.round(ROCK.x - 2 + k * 44), Math.round(ROCK.y + k * 14 + Math.sin(k * 30)), Math.floor(time * 18) % 2 ? -1 : 0, hue);
+  }
+  if (S.peek != null) PD_PEEK.forEach(([x, y], i) => {  // prairie dogs, peeking up at "pss, pss, pss"
+    const k = time - S.peek - i * 0.3; if (k < 0) return;
+    const h = k < 0.2 ? k / 0.2 : k < 2.6 ? 1 : Math.max(0, 1 - (k - 2.6) / 0.2); if (h <= 0) return;
+    ctx.save(); ctx.beginPath(); ctx.rect(x - 6, y - 16, 12, 16); ctx.clip();
+    drawGrid(PD, PD_PAL, x - 5, Math.round(y - 14 + (1 - h) * 15), false);
+    ctx.restore();
+  });
+  uHaulTop(30, 66);  // the U-Haul, its cab door left open
+  ctx.fillStyle = '#2a2a2e'; ctx.fillRect(68, 81, 11, 2);
+  line(ctx, 79, 83, 73, 92, '#f4f1ea'); line(ctx, 78, 83, 72, 92, '#f4f1ea'); line(ctx, 77, 83, 71, 92, '#e8782a');
+  if (purr.on) {  // her tail, poking out from under it, the tip flicking
+    const fl = Math.round(Math.sin(time * 2.4) * 1.5);
+    ctx.fillStyle = TORTIE.K; ctx.fillRect(44, 84, 2, 3); ctx.fillStyle = TORTIE.O; ctx.fillRect(45, 87, 2, 2);
+    ctx.fillStyle = TORTIE.K; ctx.fillRect(46 + fl, 89, 3, 2);
+  }
+  const drawBl = () => {
+    drawBlaine(Math.round(bl.x), Math.round(bl.y), bl.facing, bl.moving ? 1 + Math.floor(bl.walkT * 8) % 2 : 0);
+    if (S.trance != null) mindRings(Math.round(bl.x + 8), Math.round(bl.y + 4));
+  };
+  const drawMe = () => {
+    const x = Math.round(me.x), y = Math.round(me.y);
+    if (S.stalk && !S.leap) { ctx.fillStyle = 'rgba(40,16,8,.35)'; ctx.fillRect(STALK.x - 4, STALK.y, 8, 2); }  // your shadow, at the foot of the stalk
+    drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], x, y, ROT[me.facing], false, me.moving ? Math.floor(me.walkT * 10) % 2 : 0);
+    if (S.legs) { const w = Math.round(Math.sin(time * 7)); line(ctx, x + 5, y + 3, x + 2, y - 3 + w, '#2b1d14'); line(ctx, x + 10, y + 3, x + 13, y - 3 - w, '#2b1d14'); }  // front legs, held out
+    if (S.point != null && time - S.point < 6) line(ctx, x + 5, y + 11, x + 3, y + 17, '#2b1d14');  // a front leg up: on point
+  };
+  const order = S.ride || me.y + 16 > bl.y + 16 ? [drawBl, drawMe] : [drawMe, drawBl];
+  order.forEach(f => f());
+  if (S.heat) {  // warmth, rising: off him (and his breath), or off the rock
+    if (S.heat.on === 'bl') {
+      heatAt(Math.round(bl.x + 8), Math.round(bl.y - 1), S.heat.t0);
+      const b = (time * 0.8) % 1; ctx.globalAlpha = 0.6 * (1 - b); ctx.fillStyle = '#f6f3ee';
+      ctx.fillRect(Math.round(bl.x + 1 - b * 6), Math.round(bl.y + 6 - b * 3), 2, 1); ctx.fillRect(Math.round(bl.x - b * 7), Math.round(bl.y + 5 - b * 4), 1, 1);
+      ctx.globalAlpha = 1;
+    } else heatAt(ROCK.x, ROCK.y - 6, S.heat.t0);
+  }
+  for (const p of S.puffs) {  // sniffs
+    const k = (time - p.t0) / 0.5; ctx.globalAlpha = 0.7 * (1 - k); ctx.fillStyle = '#f6efe0';
+    ctx.fillRect(Math.round(p.x - 2 - k * 3), Math.round(p.y + k * 2), 1, 1); ctx.fillRect(Math.round(p.x + 2 + k * 3), Math.round(p.y + k * 2), 1, 1);
+    ctx.globalAlpha = 1;
+  }
+  for (const r of S.rings) {  // "pss, pss, pss": rings, going out across the land
+    const k = (time - r.t0) / 1.1;
+    for (const [rad, al] of [[5 + k * 75, 1], [k * 60, 0.6]]) {
+      ctx.globalAlpha = al * (1 - k);
+      for (let m = 0; m < 64; m++) { const a = m / 64 * Math.PI * 2; ctx.fillStyle = m % 2 ? '#ff5ad0' : '#b050ff'; ctx.fillRect(Math.round(r.x + Math.cos(a) * rad), Math.round(r.y + Math.sin(a) * rad * 0.8), 2, 1); }
+    }
+    ctx.globalAlpha = 1;
+  }
+  const over = (a, s, ink) => { const w = signWidth(s); bubbleWords(s, clamp(Math.round(a.x + 8), w / 2 + 4, VW - w / 2 - 4), Math.max(4, Math.round(a.y) - (a === bl ? 12 : 10)), ink); };
+  if (S.frantic) {  // ! and ?, back and forth; he's sweating
+    const f = Math.floor(time * 2.8) % 2;
+    over(bl, f ? '!' : '?', '#c81e1e'); over(me, f ? '?' : '!', '#c81e1e');
+    for (let n = 0; n < 2; n++) { const k = (time * 2.5 + n * 0.5) % 1; ctx.fillStyle = '#9fd0f0'; ctx.fillRect(Math.round(bl.x + 8 + (n ? 1 : -1) * (4 + k * 6)), Math.round(bl.y + 1 - k * 4 + k * k * 8), 1, 2); }
+  } else for (const b of S.bangs) over(S[b.who], b.s, b.s === 'PSS' ? '#8a2a9a' : '#c81e1e');
+  if (S.yell != null && time - S.yell < 1.2) over(bl, 'IZZYKAT!', '#c81e1e');
+  if (S.think != null) drawGummies(me.x, me.y, S.think);
+  for (const t0 of purr.marks) {  // the purr, from under the U-Haul
+    const k = (time - t0) / 1.6; ctx.globalAlpha = 1 - k;
+    signText(ctx, 'PRR', 50, Math.round(86 - k * 10), '#3a1a10'); signText(ctx, 'PRR', 49, Math.round(85 - k * 10), '#fff1dc');
+    ctx.globalAlpha = 1;
+  }
+  if (S.haze != null) {  // the gummies: a haze, drifting, in colors (it lifts when you decide she's gone)
+    const h = clamp((time - S.haze) / 3, 0, 1) * (S.hazeOff != null ? clamp(1 - (time - S.hazeOff) / 1.0, 0, 1) : 1);
+    for (let j = 0; j < 6; j++) {
+      const y = Math.round(((j * 29 + time * 6) % (VH + 24)) - 12 + Math.sin(time * 0.8 + j) * 4);
+      ctx.globalAlpha = 0.1 * h; ctx.fillStyle = 'hsl(' + Math.round((time * 30 + j * 60) % 360) + ',80%,75%)'; ctx.fillRect(0, y, VW, 6 + (j % 3) * 2);
+    }
+    ctx.globalAlpha = 1;
+  }
+}
+function drawUnder() {  // the close-up: down low, under the U-Haul, in the shade; IzzyKat, purring
+  const t = time - scene3.t0, s = 3, X = 44, Y = 40;
+  if (!catFur) tortieFur();
+  gradient(9, 44, [150, 196, 232], [236, 226, 206]);  // out the far side, in the sun: the sky, a striped butte, red clay
+  for (let x = 0; x < VW; x++) {
+    const h = Math.round(Math.max(0, 9 + Math.sin(x * 0.045 + 1) * 8 + Math.sin(x * 0.17) * 2));
+    for (let y = 44 - h; y < 44; y++) { ctx.fillStyle = BANDS[wrapX(Math.floor(y / 2), BANDS.length)]; ctx.fillRect(x, y, 1, 1); }
+  }
+  ctx.fillStyle = '#d4845a'; ctx.fillRect(0, 44, VW, 10);
+  gradient(54, VH, [96, 46, 28], [176, 98, 62]);  // under the truck: shade, lighter toward you
+  for (let i = 0; i < 40; i++) { ctx.fillStyle = i % 2 ? '#7a3a22' : '#b06a44'; ctx.fillRect((i * 37) % VW, 56 + (i * 23) % 80, 1, 1); }
+  ctx.fillStyle = '#f4f1ea'; ctx.fillRect(0, 9, VW, 6); ctx.fillStyle = '#e8782a'; ctx.fillRect(0, 12, VW, 2);  // the bottom of its side,
+  ctx.fillStyle = '#2a2a2e'; ctx.fillRect(0, 15, VW, 20); ctx.fillStyle = '#3e3e44'; ctx.fillRect(0, 19, VW, 3); ctx.fillRect(0, 28, VW, 3);  // its underside,
+  ctx.fillStyle = '#1c1c20'; ctx.fillRect(0, 34, VW, 2);
+  for (const wx of [4, 156]) {  // and a wheel at either end
+    disc(ctx, wx, 64, 28, '#1d1d22'); disc(ctx, wx, 64, 22, '#2c2c32'); disc(ctx, wx, 64, 10, '#9a9aa2'); disc(ctx, wx, 64, 4, '#6a6a72');
+  }
+  for (let y = -3; y <= 3; y++) { const w = Math.round(40 * Math.sqrt(1 - (y / 3.5) ** 2)); ctx.fillStyle = 'rgba(30,12,6,.35)'; ctx.fillRect(80 - w, Y + 74 + y, w * 2, 1); }  // her shadow
+  // her, in the shade, looking out at you; a slow blink now and then
+  const blink = (t % 3.4) > 2.8, earFlick = (t % 6.1) > 5.9;
+  for (let j = 0; j < CAT_FACE.length; j++) for (let i = 0; i < CAT_FACE[j].length; i++) {
+    let ch = CAT_FACE[j][i]; if (ch === '.') continue;
+    if (earFlick && j < 3 && i > 12) continue;
+    if (blink && 'EPW'.includes(ch)) ch = j === 9 ? 'm' : '#';
+    ctx.fillStyle = ch === '#' ? TORTIE[catFur[j][i]] : TORTIE[ch]; ctx.fillRect(X + i * s, Y + j * s, s, s);
+  }
+  for (const [a, b, c, d] of [[8, 12.4, -5, 11.6], [8, 13, -6, 13.6], [8, 13.5, -5, 15.6]]) {  // whiskers
+    line(ctx, X + a * s, Math.round(Y + b * s), X + c * s, Math.round(Y + d * s), 'rgba(240,236,224,.75)');
+    line(ctx, X + (23 - a) * s + 2, Math.round(Y + b * s), X + (23 - c) * s + 2, Math.round(Y + d * s), 'rgba(240,236,224,.75)');
+  }
+  ctx.fillStyle = '#e6cc98'; ctx.fillRect(X + 11 * s, Y + 15 * s, s, 2); ctx.fillStyle = '#b98a56'; ctx.fillRect(X + 12 * s, Y + 15 * s + 1, 2, s);  // a little tuft, on her chin
+  const lk = t % 4.8; if (lk > 4.2) { ctx.fillStyle = '#e8909c'; ctx.fillRect(X + (10 + Math.floor((lk - 4.2) / 0.6 * 4)) * s, Y + 14 * s, s, 2); }  // she licks her lips
+  for (const t0 of purr.marks) {  // the purr
+    const k = (time - t0) / 1.6; ctx.globalAlpha = 1 - k;
+    signText(ctx, 'PRR', 121, Math.round(82 - k * 12), '#3a1a10'); signText(ctx, 'PRR', 120, Math.round(81 - k * 12), '#fff1dc');
+    ctx.globalAlpha = 1;
+  }
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, 9); ctx.fillRect(0, VH - 9, VW, 9);
+}
+// ---- level 4: little sounds for the search ----
+function alarm() { if (!ac || muted) return; tone(master, 'square', 880, ac.currentTime, 0.07, 0.02, 2400); tone(master, 'square', 1175, ac.currentTime + 0.08, 0.1, 0.02, 2400); }
+function sniff() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; for (const d of [0, 0.1]) noiseHit(t + d, 'bandpass', 2600, 1.4, 0.045, 0.07, 0, master); }
+function pss() {  // "pss": a little p, then a hiss
+  if (!ac || muted) return; makeNoise(); const t = ac.currentTime;
+  noiseHit(t, 'lowpass', 700, 0.7, 0.03, 0.03, 0, master); noiseHit(t + 0.03, 'highpass', 5000, 0.8, 0.045, 0.24, 0, master);
+}
+function purrBreath(v = 0.09) {  // one breath of a purr: a soft, low rumble, fluttering
+  if (!ac || muted) return; makeNoise();
+  const t = ac.currentTime, s = ac.createBufferSource(), lp = ac.createBiquadFilter(), am = ac.createGain(), lfo = ac.createOscillator(), lg = ac.createGain(), g = ac.createGain();
+  s.buffer = noise; s.loop = true; lp.type = 'lowpass'; lp.frequency.value = 300;
+  lfo.frequency.value = 25; lg.gain.value = 0.5; am.gain.value = 0.5; lfo.connect(lg); lg.connect(am.gain);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.3); g.gain.setValueAtTime(v, t + 0.6); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.1);
+  s.connect(lp); lp.connect(am); am.connect(g); g.connect(master);
+  s.start(t, Math.random() * 0.5); lfo.start(t); s.stop(t + 1.15); lfo.stop(t + 1.15);
+}
 function finish4() {
-  phase = 'done4'; lock = 0; hud(null);  // (the field stays on screen, behind)
+  phase = 'done4'; lock = 0; hud(null);  // (the last scene stays on screen, behind)
   $('end4Text').textContent = 'You drove West in the U-Haul with Brudda Blaine and IzzyKat, through the oil fields, past bison ' +
     'and two horses having a slight battle, to Badlands National Park, and parked by the river. Then whack-a-prairie-dog, ' +
-    'in the big field of red clay: twelve whacked, and the prairie dogs had enough. Next, from your story: IzzyKat gets ' +
-    'out of the U-Haul.';
+    'in the big field of red clay: twelve whacked, and the prairie dogs had enough. Back at the U-Haul, the door was left ' +
+    'open, and IzzyKat was gone. You searched, under a rock and by the river, and decided she was gone. Then, a purr: she ' +
+    'was under the U-Haul, as if nothing happened. Next, from your story: on the road again, to Yellowstone.';
   $('end4').hidden = false;
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
@@ -7084,6 +7450,7 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   bison: () => { driveWest(); },
   horses: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); horses(); },
   badlands: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); badlands(); },
+  search: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; phase = 'cut'; musicStart(); searchIzzy(); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
