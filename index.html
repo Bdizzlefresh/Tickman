@@ -206,7 +206,9 @@ a { color:var(--accent); }
       storm cloud with a face, blowing) and what they do; how the Edmund Fitzgerald looks (a made-up look, not drawn from
       the real ship) and what it does; the gull you latch onto at the ship; the hunter, and how he looks; the
       road up through giant trees; the view from the top; the stoner talk at the falls (the words); the Mexican flag,
-      the mariachi music (original); and how the flight off Palisade Head goes, and the fall.</p>
+      the mariachi music (original); and how each tick goes off Palisade Head, and the fall: the regular tick's flight;
+      the pointer's leash, the jump, and Brudda Blaine yanked off his bicycle; the human-blood tick's faint, the eagle
+      (drawn as a bald eagle), the honeybun shove, and the crumbs.</p>
     <div class="btns">
       <button class="btn" id="next2">On to level 3</button>
     </div>
@@ -3332,7 +3334,22 @@ async function overlook() {
   await say(['Mariachi music drifts back across the water.', 'One of the deer is carrying a Mexican flag.']);
   await say(['You and Brudda Blaine: "It sounds like they\'re heading to Mexico..."']);
   await say(["You're inspired, once again, to go on with your journey."]);
-  // you latch onto Brudda Blaine, and mind-control him into flying after them. It ends horribly.
+  // each tick goes in its own way (your words, 2026-10-21): the regular tick latches on, as before; the pointer gets
+  // leashed and jumps, dragging him in; the human-blood tick faints, and an eagle shoves a honeybun in on the way down
+  if (choice === 'dog') await offLeash();
+  else if (choice === 'human') await offFaint();
+  else await offLatch();
+  await fadeTo(1, 1.0);
+  vista = null; phase = 'done2';
+  const how = { regular: 'rode a naked mole rat', human: 'rode the tangerine vespa', dog: 'ran with the zoomies' }[choice];
+  const off = { dog: 'jumped off it on a leash, dragging Brudda Blaine into Lake Superior',
+    human: 'fainted off it into Lake Superior, with a honeybun from an eagle on the way down' }[choice] || 'fell off it into Lake Superior';
+  $('end2Text').textContent = 'You ' + how + ' up the North Shore with Brudda Blaine, killed the Gales of November, ' +
+    'sank the Edmund Fitzgerald, camped three times, climbed Palisade Head, and ' + off + '. ' +
+    "The deer still have Isabella, and it sounds like they're heading to Mexico. Next: level 3.";
+  $('end2').hidden = false;
+}
+async function offLatch() {  // the regular tick: you latch onto Brudda Blaine, and mind-control him into flying after them
   vista.latch = time; whoosh(0.5, 0.04);
   await wait(0.8);
   await say(['You latch onto Brudda Blaine.', { t: 'Mind control: you make him fly after them.', fx: () => { vista.mind = time; } }]);
@@ -3345,13 +3362,46 @@ async function overlook() {
   vista.splash = time; splashSound(0.1);
   await wait(1.4);
   await say(['It ends horribly.', 'You and Brudda Blaine fall all the way down, into Lake Superior.']);
-  await fadeTo(1, 1.0);
-  vista = null; phase = 'done2';
-  const how = { regular: 'rode a naked mole rat', human: 'rode the tangerine vespa', dog: 'ran with the zoomies' }[choice];
-  $('end2Text').textContent = 'You ' + how + ' up the North Shore with Brudda Blaine, killed the Gales of November, ' +
-    'sank the Edmund Fitzgerald, camped three times, climbed Palisade Head, and fell off it into Lake Superior. ' +
-    "The deer still have Isabella, and it sounds like they're heading to Mexico. Next: level 3.";
-  $('end2').hidden = false;
+}
+async function offLeash() {  // the pointer: Brudda Blaine leashes you, and you jump, dragging him in off his bicycle
+  await say([{ t: 'Brudda Blaine clips a leash on you.', fx: () => { vista.leash = time; leashClip(); } },
+             'A real bonehead decision, to try and tie his brother down.']);
+  await say(['You jump.']);
+  musicStop(); vista.jump = time; whoosh(0.6, 0.05);
+  await wait(LEAP);
+  vista.yank = time; leashTwang(); whoosh(0.5, 0.05);   // the leash goes tight, and yanks him off his bicycle
+  await wait(0.3);
+  bikeBell();                                            // his bicycle, left behind on the edge, rings as it rocks
+  await wait(1.4);
+  await say(['For a moment, you both fly.']);
+  await wait(0.6);
+  vista.fall = time; slideWhistle();
+  await wait(1.75);
+  vista.splash = time; splashSound(0.1);
+  await wait(1.4);
+  await say(['It ends horribly.', 'You drag Brudda Blaine all the way down, into Lake Superior.']);
+}
+async function offFaint() {  // the human-blood tick: low blood sugar; you faint, fall into him, and knock you both in
+  await say([{ t: 'Then your blood sugar drops. Your vision blurs.', fx: () => { vista.low = time; sugarMeter('low'); blur(true); } }]);
+  await wait(1.0);
+  await say([{ t: 'You faint.', fx: () => { vista.faint = time; musicStop(); } }]);
+  await wait(Math.max(0, vista.faint + FAINT - time));
+  vista.bump = time; thump();                            // you hit his back; his bicycle lurches out over the edge
+  await wait(0.9);
+  await say(['You fall into Brudda Blaine, from behind, and knock you both off the edge.']);
+  vista.fall = time; whoosh(0.6, 0.05);
+  await wait(0.75);
+  vista.eagle = time; whoosh(0.45, 0.06);                // an eagle, diving
+  await wait(EAGLE_HIT);
+  vista.hit = time; thwack(); sugarMeter('steady'); blur(false);
+  await wait(1.3);
+  await say(['On the way down, an eagle shoves a honeybun in your mouth.', 'Hard. Wrapper and all.',
+             "Your blood sugar comes back up. Your vision clears. You're good to go."]);
+  vista.fall2 = time; slideWhistle();
+  await wait(1.75);
+  vista.splash = time; splashSound(0.1);
+  await wait(1.4);
+  await say(['It ends horribly.', 'You and Brudda Blaine fall all the way down, into Lake Superior.']);
 }
 
 // =====================================================================================================
@@ -4176,7 +4226,13 @@ function drawVista() {
   }
   // you and Brudda Blaine, on the edge, looking out. Then you latch onto him, and he rides off the edge after them,
   // flapping his arms; hangs there a moment, like in an old cartoon; then down he goes, with you, smaller and smaller,
-  // into the lake (how it all looks is a guess)
+  // into the lake (how it all looks is a guess). The pointer and the human-blood tick go in their own ways (below).
+  if (choice === 'dog' || choice === 'human') {
+    (choice === 'dog' ? drawLeashOff : drawFaintOff)(vista);
+    ctx.fillStyle = '#000'; const lb2 = Math.round(Math.min(1, t / 1.5) * 9);  // a letterbox, like a film
+    ctx.fillRect(0, 0, VW, lb2); ctx.fillRect(0, VH - lb2, VW, lb2);
+    return;
+  }
   const flipV = true, V = vista;
   if (P.mount === 'molerat') drawGrid(MOLE, MOLE_PAL, 108, 78, flipV);
   else if (P.mount === 'vespa') drawVespa(106, 71, flipV, 0);
@@ -4210,6 +4266,141 @@ function drawVista() {
   } else splash(bx + 11, by + 27, (time - V.splash) / 0.9, 0.7);
   ctx.fillStyle = '#000'; const lb = Math.round(Math.min(1, t / 1.5) * 9);  // a letterbox, like a film
   ctx.fillRect(0, 0, VW, lb); ctx.fillRect(0, VH - lb, VW, lb);
+}
+// ---- off Palisade Head, the pointer's way: Brudda Blaine clips a leash on you (a real bonehead decision), you jump
+// after them, the leash goes tight and yanks him flat off his bicycle, and you both go down into the lake. (How it all
+// looks is a guess: a red leash, him flying flat out behind you, his bicycle left rocking on the edge.) ----
+const LEAP = 0.7, YANK = 0.45, LX = 68, LY = 82;  // how long the leap and the yank take; where you hang, out over the water
+function leash(x0, y0, x1, y1, sag) {  // a leash, sagging a little unless it's pulled tight
+  const n = Math.max(6, Math.ceil(Math.hypot(x1 - x0, y1 - y0)));
+  ctx.fillStyle = '#d6332b';
+  for (let i = 0; i <= n; i++) {
+    const k = i / n;
+    ctx.fillRect(Math.round(x0 + (x1 - x0) * k), Math.round(y0 + (y1 - y0) * k + Math.sin(k * Math.PI) * sag), 1, 1);
+  }
+}
+function drawBlaineFlat(cx, cy) {  // Brudda Blaine, flat out in the air, head first, arms out ahead (at 0,0 in this frame)
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(-Math.PI / 2);
+  drawGrid(BL_SIDE.concat(BL_LEGS.side[1]), BL_PAL, -8, -8, true);
+  line(ctx, -3, 1, -4, -9, BB.JK); line(ctx, -1, 1, -2, -9, BB.JK);  // his arms, out past his head
+  px(ctx, -4, -10, BB.SKIN); px(ctx, -2, -10, BB.SKIN);              // his hands, on the leash
+  ctx.restore();
+}
+function drawLeashOff(V) {
+  const flipV = true, spot = [112, 74], hand = [132, 71];   // where you stand; his hand, on the handlebars
+  const jk = V.jump ? clamp((time - V.jump) / LEAP, 0, 1) : 0;
+  const yk = V.yank ? clamp((time - V.yank) / YANK, 0, 1) : 0, yE = 1 - (1 - yk) * (1 - yk);
+  // you: on the edge; then a leap out over the water, after them
+  const tx = Math.round(spot[0] + (LX - spot[0]) * jk), ty = Math.round(spot[1] + (LY - spot[1]) * jk - Math.sin(jk * Math.PI) * 14);
+  // him: on his bicycle; then yanked off it, flat out through the air behind you (his middle at bxm, bym)
+  const bxm = Math.round(136 + (LX + 22 - 136) * yE), bym = Math.round(66 + (LY - 2 - 66) * yE - Math.sin(yk * Math.PI) * 6);
+  const rock = V.yank && time - V.yank < 1.2 ? Math.round(Math.sin((time - V.yank) * 30) * (1.2 - (time - V.yank))) : 0;
+  drawBike(126 + rock, 59, flipV, 0.6, !V.yank);           // his bicycle (left behind, rocking, once he's yanked off it)
+  if (!V.fall) {
+    if (V.yank) drawBlaineFlat(bxm, bym);
+    const collar = [tx + 4, ty + 2], h = V.yank ? [bxm - 10, bym + 3] : hand;
+    if (V.leash) leash(h[0], h[1], collar[0], collar[1], V.jump ? Math.max(0, 3 - jk * 6) : 3);
+    drawGrid(MINI, miniPal(), tx, ty, flipV);
+    if (V.yank && yk >= 1 && time - V.yank > YANK + 0.7) talkBubble(bxm - 4, bym - 13);  // a moment in the air
+  } else if (!V.splash) {  // down you both go, smaller and smaller
+    const k = clamp((time - V.fall) / 1.7, 0, 1), sc = 1 - 0.72 * k, ax = LX + 11 + k * 2, ay = LY + k * k * 44;
+    ctx.save(); ctx.translate(Math.round(ax), Math.round(ay)); ctx.scale(sc, sc);   // (you, and him, around a point between)
+    drawBlaineFlat(11, -2);
+    leash(1, 1, -7, 2, 0);
+    drawGrid(MINI, miniPal(), -11, 0, flipV);
+    ctx.restore();
+  } else splash(LX + 13, LY + 42, (time - V.splash) / 0.9, 0.7);
+}
+// ---- off Palisade Head, the human-blood tick's way: your blood sugar drops, you faint (legs in the air), fall into
+// Brudda Blaine from behind, and knock you both off the edge. Partway down, an eagle dives in and shoves a honeybun in
+// your mouth, hard; your blood sugar comes back up, and you're good to go, all the way down into the lake. (How it all
+// looks is a guess: the vespa parked behind him, the faint, the eagle, the crumbs.) ----
+const FAINT = 0.55, EAGLE_HIT = 0.5, MID = 0.25;  // how long you take to topple; the eagle's dive; how far down you hang
+// an eagle, flying left: a white head, a yellow beak, a dark brown body, a white tail, yellow feet (a bald eagle, a guess)
+const EAGLE_UP = [
+  '.......bb.......',
+  '......bbbb......',
+  '.....bbbbbb.....',
+  '.HH...bbbbb.....',
+  'YHeHBBBBBBBBTTT.',
+  '.YHBBBBBBBBBBTTT',
+  '....BBBBBBBB....',
+  '.....F...F......'];
+const EAGLE_DOWN = [
+  '................',
+  '................',
+  '................',
+  '.HH.............',
+  'YHeHBBBBBBBBTTT.',
+  '.YHBBbbbbbBBBTTT',
+  '....BbbbbbbB....',
+  '.....bbbbbb.....',
+  '......bbbb......'];
+const EAGLE_PAL = { H: '#f4f1ea', Y: '#f2b630', e: '#2b1d14', B: '#4a2f1c', b: '#6b4528', T: '#efece4', F: '#e8b830' };
+function drawFaintOff(V) {
+  const flipV = true, seat = [130, 69];
+  if (P.mount === 'vespa') drawVespa(124, 71, flipV, 0);  // your vespa, parked behind him
+  // him: on his bicycle at the very edge; the bump sends him lurching out over it
+  const bk = V.bump ? clamp((time - V.bump) / 0.5, 0, 1) : 0;
+  let bx = 100 - Math.round(24 * (1 - (1 - bk) * (1 - bk))), by = 59, sc = 1, k = 0;
+  if (V.fall) k = V.fall2 ? MID + (1 - MID) * clamp((time - V.fall2) / 1.7, 0, 1) : Math.min(MID, (time - V.fall) / 1.7);
+  if (V.fall) { by = 59 + Math.round(k * k * 42); sc = 1 - 0.72 * k; bx += Math.round(k * 4); }
+  // you: on the seat (swaying once your blood sugar drops), then toppling off, legs in the air, into his back
+  const fk = V.faint ? clamp((time - V.faint) / FAINT, 0, 1) : 0;
+  const sway = V.low && !V.faint ? Math.round(Math.sin((time - V.low) * 9) * Math.min(1.5, (time - V.low) * 1.2)) : 0;
+  const rel = [2, -19];   // where you land, against his back (from his bicycle's bottom middle), facing back the other way
+  const hit = V.hit || NEVER, jolt = clamp(1 - (time - hit) / 0.4, 0, 1);
+  const legsUp = V.faint && time - V.faint > 0.08 && !V.hit;
+  const mini = legsUp ? MINI.slice().reverse() : MINI;
+  if (V.splash) { splash(bx + 11, by + 27, (time - V.splash) / 0.9, 0.7); return; }
+  ctx.save(); ctx.translate(bx + 11, by + 27); ctx.scale(sc, sc);
+  drawBike(-11, -27, flipV, 0.6 + (V.bump ? (time - V.bump) * 10 : 0), true);
+  if (V.bump) {  // you, against his back (knocked loose by the honeybun, then upright again)
+    const jx = -Math.round(jolt * (2 + Math.sin(time * 60) * 1.5)), jy = Math.round(jolt * 2);  // knocked by the shove
+    drawGrid(mini, miniPal(), rel[0] + jx, rel[1] + jy, false);
+  }
+  ctx.restore();
+  if (!V.bump) {
+    const x = Math.round(seat[0] + (100 + rel[0] + 11 - seat[0]) * fk) + sway;
+    const y = Math.round(seat[1] + (59 + 27 + rel[1] - seat[1]) * fk - Math.sin(fk * Math.PI) * 4);
+    drawGrid(mini, miniPal(), x, y, V.faint ? false : flipV);  // (fainting, you topple over backwards)
+  }
+  if (V.bump && !V.fall && time - V.bump > 0.6) talkBubble(bx + 4, by - 9);  // hanging there, over the edge
+  if (!V.eagle) return;
+  // the eagle: a dive in from the top right, right at you; the honeybun, shoved in hard; then off it goes, flapping
+  const tx = bx + 11 + (rel[0] + 8) * sc, ty = by + 27 + (rel[1] + 3) * sc;   // your head
+  const ek = (time - V.eagle) / EAGLE_HIT, at = [Math.round(tx - 7), Math.round(ty - 8)];
+  let ex, ey, up = true;
+  if (ek < 1) { const e = ek * ek; ex = 172 + (at[0] - 172) * e; ey = -14 + (at[1] + 14) * e; }
+  else { const e = clamp((time - V.eagle - EAGLE_HIT) / 0.9, 0, 1); ex = at[0] - 190 * e; ey = at[1] - 40 * e * e; up = Math.floor(time * 10) % 2 === 0; }
+  if (ex > -20) {
+    drawGrid(up ? EAGLE_UP : EAGLE_DOWN, EAGLE_PAL, Math.round(ex), Math.round(ey), false);
+    if (!V.hit) miniBun(Math.round(ex) + 7, Math.round(ey) + 9);  // the honeybun, in its feet
+  }
+  if (!V.hit) return;
+  const h = time - V.hit;
+  if (h < 0.9) miniBun(Math.round(bx + 11 + (rel[0] + 9) * sc), Math.round(by + 27 + (rel[1] + 2) * sc));  // crammed in
+  if (h < 0.3) {  // the hit: a burst
+    ctx.fillStyle = h < 0.15 ? '#fff4cf' : '#f2c94c';
+    for (let i = 0; i < 8; i++) {
+      const a = i / 8 * Math.PI * 2 + 0.3, r0 = 4 + h * 10;
+      for (let r = r0; r < r0 + 4; r++) ctx.fillRect(Math.round(tx + Math.cos(a) * r), Math.round(ty + Math.sin(a) * r), 1, 1);
+    }
+  }
+  if (h < 1.4) {  // crumbs, glaze and bits of wrapper, flying
+    const cols = ['#c98a3e', '#8a5222', '#f7e3b2', '#ecf2f8'];
+    ctx.globalAlpha = clamp(1.4 - h, 0, 1);
+    for (let i = 0; i < 14; i++) {
+      const a = i * 2.4, s = 16 + (i * 7) % 18;
+      ctx.fillStyle = cols[i % 4];
+      ctx.fillRect(Math.round(tx + Math.cos(a) * s * h), Math.round(ty + Math.sin(a) * s * h - 12 * h + 34 * h * h), 1, 1);
+    }
+    ctx.globalAlpha = 1;
+  }
+  if (h < 3) for (let i = 0; i < 2; i++) {  // two feathers, drifting down
+    const fx = Math.round(tx - 6 + i * 9 + Math.sin(h * 3 + i * 2) * 3), fy = Math.round(ty - 6 + h * 9);
+    ctx.fillStyle = '#6b4528'; ctx.fillRect(fx, fy, 2, 1); ctx.fillStyle = '#4a2f1c'; ctx.fillRect(fx + 2, fy, 1, 1);
+  }
 }
 
 // =====================================================================================================
@@ -4767,6 +4958,23 @@ function reunionStep(S, n, t, six) {
 }
 
 // ---- level 3: little sounds ----
+function leashClip() {  // a little metal click, the leash's clip
+  if (!ac || muted) return;
+  tone(master, 'square', 2600, ac.currentTime, 0.025, 0.015, 5000); tone(master, 'square', 1900, ac.currentTime + 0.06, 0.03, 0.015, 5000);
+}
+function leashTwang() {  // the leash, pulled tight all at once
+  if (!ac || muted) return;
+  tone(master, 'triangle', 196, ac.currentTime, 0.35, 0.05); tone(master, 'triangle', 98, ac.currentTime, 0.3, 0.04);
+}
+function thump(v = 0.08) {  // a soft bump
+  if (!ac || muted) return; makeNoise();
+  noiseHit(ac.currentTime, 'lowpass', 500, 0.7, v, 0.18, 0, master); tone(master, 'sine', 110, ac.currentTime, 0.16, v * 0.6);
+}
+function thwack() {  // a honeybun, shoved in hard
+  if (!ac || muted) return; makeNoise();
+  const t = ac.currentTime;
+  noiseHit(t, 'bandpass', 1100, 1.1, 0.1, 0.12, 0, master); tone(master, 'sine', 150, t, 0.2, 0.06); tone(master, 'triangle', 620, t, 0.06, 0.02);
+}
 function slideWhistle() {  // falling a long way, like in an old cartoon
   if (!ac || muted) return;
   const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
@@ -6129,7 +6337,9 @@ window.__sketch = {
   get l3() { return { shawn: L3.shawn, karillSeen: L3.karillSeen, karill: L3.karill, restaurant: L3.restaurant, found: L3.found,
     rock: L3.rock.x, rockDone: L3.rock.done, yells: L3.yells, steps: L3.steps, blaine: !!P.blaine }; },
   get ended3() { return !$('end3').hidden; },
-  get vistaState() { return vista ? { flag: !!vista.flag, latch: !!vista.latch, ride: !!vista.ride, fall: !!vista.fall, splash: !!vista.splash } : null; },
+  get vistaState() { return vista ? { flag: !!vista.flag, latch: !!vista.latch, ride: !!vista.ride, fall: !!vista.fall, splash: !!vista.splash,
+    leash: !!vista.leash, jump: !!vista.jump, yank: !!vista.yank, low: !!vista.low, faint: !!vista.faint, bump: !!vista.bump,
+    eagle: !!vista.eagle, hit: !!vista.hit, fall2: !!vista.fall2 } : null; },
 };
 })();
 </script>
