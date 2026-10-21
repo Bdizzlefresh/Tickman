@@ -162,8 +162,8 @@ a { color:var(--accent); }
         Lake Itasca. <i>(Level 3, in this sketch.)</i></li>
       <li>West, in the U-Haul: the final chapter.</li>
     </ol>
-    <p class="small">Not placed yet: the coffee roaster (the first boss); the second boss (the crumbling American
-      middle class and high rent gouging); the cornfield by the woods (waves of deer, the great charge, the egg sack).</p>
+    <p class="small">The only boss left: an iteration of the egg sack, more than likely in the redwoods, not in a
+      cornfield. The other bosses are gone.</p>
     <p class="small">Guesses in this sketch: the bugs, how the wrapping works (how fast to tap, how hard each bug wriggles,
       how a wrapped bug looks), the futon's colors, the rest of the apartment, the view outside, how Phil,
       Isabella, the ticks and the deer look (the red bandanas too), how she blows the kiss, how the deer take her, how
@@ -194,8 +194,8 @@ a { color:var(--accent); }
         Lake Itasca. <i>(Level 3, in this sketch.)</i></li>
       <li>West, in the U-Haul: the final chapter.</li>
     </ol>
-    <p class="small">Not placed yet: the coffee roaster (the first boss); the second boss (the crumbling American
-      middle class and high rent gouging); the cornfield by the woods (waves of deer, the great charge, the egg sack).</p>
+    <p class="small">The only boss left: an iteration of the egg sack, more than likely in the redwoods, not in a
+      cornfield. The other bosses are gone.</p>
     <p class="small">Guesses in level 2: the whole map (the path, the woods, the rocky shore, where things sit); the
       apartment door and its mat; how the naked mole rat, the vespa (drawn as a scooter) and the zoomies look, and how
       fast each goes; how Brudda Blaine's bicycle looks; the camps (the fire, his decks); at the first camp, how the
@@ -235,15 +235,16 @@ a { color:var(--accent); }
         Lake Itasca. <i>(Level 3, in this sketch.)</i></li>
       <li>West, in the U-Haul: the final chapter.</li>
     </ol>
-    <p class="small">Not placed yet: the coffee roaster (the first boss); the second boss (the crumbling American
-      middle class and high rent gouging); the cornfield by the woods (waves of deer, the great charge, the egg sack).</p>
+    <p class="small">The only boss left: an iteration of the egg sack, more than likely in the redwoods, not in a
+      cornfield. The other bosses are gone.</p>
     <p class="small">Guesses in level 3: the salmon ride (how it looks, the signs on the bank); the club, and both maze
       floors (the crowd as the walls, the bar, the booths, the railing); how Shawn, Karill and the promoters look; the
       club music (original, a reggaeton beat); the cab and the bridge, and the driver's Spanish; Akumal, and its maze;
       the music there (original, a guitar); how Brudda Blaine looks on foot, and his yell; the restaurant; the
       boulder, the locals and how the pushing works; the archway, the man on the roof, and Braydon with his beer; the
       reunion and its music; the deer's instruments, and the mariachi music (original); the bay, the coral and the
-      turtles (drawn as sea turtles); Lake Itasca, and the U-Haul (orange and white, no logo).</p>
+      turtles (drawn as sea turtles); Lake Itasca, and the U-Haul (orange and white, no logo); how the tortoiseshell
+      cat looks (her patches, her eyes, her tail), and the close-up of her in the window.</p>
     <div class="btns">
       <button class="btn" id="again3">Play level 3 again</button>
     </div>
@@ -4824,6 +4825,14 @@ function uHaul(x, y) {  // a moving truck, orange and white, facing left (West):
   f(60, 2, 1, 24, '#c8c4bc'); f(19, 4, 1, 9, '#d8d4cc');
   f(2, 8, 17, 18, '#f4f1ea'); f(2, 8, 17, 2, '#e8782a'); f(0, 18, 4, 8, '#f4f1ea');                // the cab
   f(4, 11, 8, 6, '#3c5a6e'); f(5, 12, 2, 1, '#8fb0c4'); f(13, 11, 1, 13, '#c8c4bc');
+  // in the window: a tortoiseshell cat, looking out at you, waiting (she blinks now and then)
+  const blink = (time % 4.2) > 3.9, C = TORTIE;
+  for (const [a, b, c] of [[5, 11, 'K'], [9, 11, 'O'],
+    [5, 12, 'K'], [6, 12, 'K'], [7, 12, 'O'], [8, 12, 'O'], [9, 12, 'K'],
+    [5, 13, 'K'], [6, 13, blink ? 'K' : 'E'], [7, 13, 'O'], [8, 13, blink ? 'O' : 'E'], [9, 13, 'O'],
+    [5, 14, 'k'], [6, 14, 'K'], [7, 14, 'N'], [8, 14, 'O'], [9, 14, 'o'],
+    [5, 15, 'K'], [6, 15, 'O'], [7, 15, 'K'], [8, 15, 'o'], [9, 15, 'K'],
+    [5, 16, 'O'], [6, 16, 'K'], [7, 16, 'k'], [8, 16, 'o'], [9, 16, 'O']]) f(a, b, 1, 1, C[c]);
   f(0, 21, 2, 2, '#fff6c8'); f(0, 24, 20, 2, '#5a5a62');
   for (const wx of [10, 48]) { disc(ctx, x + wx, y + 27, 5, '#1d1d22'); disc(ctx, x + wx, y + 27, 2, '#9a9aa2'); }
 }
@@ -5096,9 +5105,103 @@ function drawBay() {
     if (hop < 1) splash(fx0, fy0 + 6, hop, 1.3);
   }
 }
+// inside the U-Haul: a tortoiseshell cat, looking out the window at you, waiting. Close up, through the cab's side
+// window, with the far window and the pines of Lake Itasca behind her. (How she looks is a guess.)
+const TORTIE = { K: '#1c1714', k: '#4a3222', O: '#d0702c', o: '#eaa862', E: '#e2b43a', P: '#0c0a08', W: '#ffffff',
+  N: '#b8645c', I: '#c98a80', m: '#2a1a12' };
+const CAT_FACE = [
+  '....#..............#....',
+  '....##............##....',
+  '....#I#..........#I#....',
+  '...#II##........##II#...',
+  '...#II############II#...',
+  '..####################..',
+  '..####################..',
+  '..####################..',
+  '..#####EP######EP#####..',
+  '.#####EWPE####EWPE#####.',
+  '.######EP######EP######.',
+  '.######################.',
+  '.##########NN##########.',
+  '..#########mm#########..',
+  '...#######m##m#######...',
+  '....################....',
+  '......############......',
+  '.....##############.....',
+  '....################....',
+  '...##################...',
+  '...##################...',
+  '..####################..',
+  '..####################..',
+  '..####################..',
+  '..####m#m######m#m####..',
+];
+let catFur = null;
+function tortieFur() {  // her coat: black and orange in patches, flecked through (made once, the same every time)
+  const W = CAT_FACE[0].length, H = CAT_FACE.length, r = rng(77), blobs = [];
+  for (let i = 0; i < 12; i++) blobs.push({ x: r() * W, y: 4 + r() * (H - 4), rad: 1.5 + r() * 2.5, c: r() < 0.5 ? 'O' : 'K' });
+  catFur = [];
+  for (let j = 0; j < H; j++) {
+    const row = [];
+    for (let i = 0; i < W; i++) {
+      let c = i < W / 2 ? 'K' : 'O';  // darker on one side of her face, orange on the other
+      for (const b of blobs) if (Math.hypot(i - b.x, (j - b.y) * 1.2) < b.rad) c = b.c;
+      if (i >= 11 && i <= 12 && j >= 4 && j <= 11) c = 'o';  // a blaze down her nose
+      const f = r(); if (f < 0.14) c = c === 'K' ? 'k' : 'o';
+      row.push(c);
+    }
+    catFur.push(row);
+  }
+}
+function drawCatScene() {
+  const t = time - scene3.t0, s = 3, X = 44, Y = 21;
+  if (!catFur) tortieFur();
+  // the far window, across the cab: the sky, and the pines; then the seat
+  gradient(0, 80, [188, 214, 232], [236, 234, 214]);
+  ctx.fillStyle = '#3a7aa0'; ctx.fillRect(0, 64, VW, 14); ctx.fillStyle = 'rgba(255,255,255,.3)';  // the lake, beyond
+  for (let i = 0; i < 9; i++) ctx.fillRect((i * 37 + Math.floor(t * 2)) % VW, 67 + (i % 4) * 3, 5, 1);
+  ctx.fillStyle = '#4a6a3a'; ctx.fillRect(0, 60, VW, 4);
+  for (let x = -6; x < VW; x += 11) spruce(ctx, x, 44 + (x * 7 + 70) % 9, x + 40, false);
+  ctx.fillStyle = '#6e6458'; ctx.fillRect(0, 78, VW, VH - 78); ctx.fillStyle = '#5e554a'; ctx.fillRect(0, 78, VW, 2);
+  // her tail, curled up beside her, the tip flicking
+  let tx = 108, ty = 95, th = -1.0;
+  for (let i = 0; i <= 18; i++) {
+    th -= 0.07 + (i > 11 ? 0.05 + Math.sin(t * 2.2) * 0.06 : 0);
+    tx += Math.cos(th) * 1.8; ty += Math.sin(th) * 1.8;
+    disc(ctx, Math.round(tx), Math.round(ty), i > 15 ? 2 : 3, TORTIE[i % 6 < 2 ? 'K' : i % 6 === 5 ? 'k' : 'O']);
+  }
+  // her, looking out at you; a slow blink now and then
+  const blink = (t % 4.6) > 4.2, earFlick = (t % 7.3) > 7.1;
+  for (let j = 0; j < CAT_FACE.length; j++) for (let i = 0; i < CAT_FACE[j].length; i++) {
+    let ch = CAT_FACE[j][i]; if (ch === '.') continue;
+    if (earFlick && j < 3 && i > 12) continue;
+    if (blink && 'EPW'.includes(ch)) ch = j === 9 ? 'm' : '#';
+    const c = ch === '#' ? TORTIE[catFur[j][i]] : TORTIE[ch];
+    ctx.fillStyle = c; ctx.fillRect(X + i * s, Y + j * s, s, s);
+  }
+  // whiskers
+  for (const [a, b, c, d] of [[8, 12.4, -5, 11.6], [8, 13, -6, 13.6], [8, 13.5, -5, 15.6]]) {
+    line(ctx, X + a * s, Math.round(Y + b * s), X + c * s, Math.round(Y + d * s), 'rgba(240,236,224,.75)');
+    line(ctx, X + (23 - a) * s + 2, Math.round(Y + b * s), X + (23 - c) * s + 2, Math.round(Y + d * s), 'rgba(240,236,224,.75)');
+  }
+  // the glass, catching the light
+  ctx.fillStyle = 'rgba(255,255,255,.16)';
+  for (let i = 0; i < 26; i++) { ctx.fillRect(24 + i, 46 - i, 6, 1); ctx.fillRect(40 + i, 52 - i * 1.4 | 0, 3, 1); }
+  // the door around the window: white, an orange stripe, the rubber seal, the sill she rests her paws on
+  ctx.fillStyle = '#f4f1ea'; ctx.fillRect(0, 0, 22, VH); ctx.fillRect(138, 0, 22, VH); ctx.fillRect(0, 0, VW, 14); ctx.fillRect(0, 96, VW, VH - 96);
+  ctx.fillStyle = '#e8782a'; ctx.fillRect(0, 9, VW, 4); ctx.fillStyle = '#c45c1a'; ctx.fillRect(0, 13, VW, 1);
+  ctx.fillStyle = '#2a2a2e'; ctx.fillRect(20, 14, 2, 84); ctx.fillRect(138, 14, 2, 84); ctx.fillRect(20, 14, 120, 2); ctx.fillRect(20, 96, 120, 2);
+  ctx.fillStyle = '#d8d4cc'; ctx.fillRect(22, 98, 116, 1); ctx.fillRect(0, 116, VW, 1);
+  ctx.fillStyle = '#b8b4ac'; ctx.fillRect(112, 106, 16, 3); ctx.fillStyle = '#8a8680'; ctx.fillRect(112, 109, 16, 1);  // the door handle
+  for (let i = 0; i < CAT_FACE[0].length; i++) {  // her paws, over the sill
+    const ch = CAT_FACE[24][i]; if (ch === '.') continue;
+    ctx.fillStyle = ch === '#' ? TORTIE[catFur[24][i]] : TORTIE[ch]; ctx.fillRect(X + i * s, 96, s, 2);
+  }
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, 9); ctx.fillRect(0, VH - 9, VW, 9);
+}
 function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
-  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay })[scene3.kind]();
+  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -5529,15 +5632,27 @@ async function rideUp() {
   await wait(3.8);
   await say(['...to Lake Itasca, the headwaters of the Mississippi.']);
   scene3.off = time; await wait(1.4);
-  await say(['A U-Haul is waiting for you, to drive West.', 'The final chapter.']);
+  await say(['A U-Haul is waiting for you, to drive West.']);
+  await wait(0.8);
+  await fadeTo(1, 0.8);
+  catInWindow();
+}
+async function catInWindow() {  // inside the U-Haul, close up: the cat in the window
+  phase = 'cut'; scene3 = { kind: 'cat', t0: time };
+  if (!musicOn) musicStart();
+  await fadeTo(0, 0.8);
+  await wait(1.6);
+  await say(['Inside the U-Haul, a tortoiseshell cat is looking out the window at you.', 'Waiting.']);
+  await wait(1.4);
+  await say(['The final chapter.']);
   await fadeTo(1, 1.0);
   finish3();
 }
 function finish3() {
   phase = 'done3'; scene3 = null; lock = 0; hud(null);
   $('end3Text').textContent = 'You fell off Palisade Head with Brudda Blaine, rode a salmon down the Mississippi to Playa del Carmen, ' +
-    'found Shawn and Karill in the club maze, woke up in Akumal as Brudda Blaine, found Braydon, and rode back up to Lake Itasca. ' +
-    'The deer still have Isabella. Next: the final chapter, West, in the U-Haul.';
+    'found Shawn and Karill in the club maze, woke up in Akumal as Brudda Blaine, found Braydon, and rode back up to Lake Itasca, ' +
+    'where a tortoiseshell cat waits in the U-Haul. The deer still have Isabella. Next: the final chapter, West, in the U-Haul.';
   $('end3').hidden = false;
 }
 // for checks: start level 3 part way along (?level=3&at=...)
@@ -5559,6 +5674,7 @@ const JUMP3 = {
   hug: () => hug(),
   bay: () => bay(),
   itasca: () => rideUp(),
+  cat: () => catInWindow(),
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
