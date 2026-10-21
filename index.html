@@ -271,16 +271,18 @@ a { color:var(--accent); }
     <p id="end4Text"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>Whack-a-prairie-dog, in a big sandy field of red clay, with your tick's gifts.</li>
       <li>IzzyKat gets out of the U-Haul. The gummies. Searching for her (each tick its own way), under a rock, by the
         river, and at last under the U-Haul, purring.</li>
-      <li>On the road again: elk, mountains, coyotes (and photographers), and Old Faithful, which almost goes, and almost
-        goes, then explodes, with IzzyKat riding it.</li>
+      <li>On the road again, to Yellowstone: elk, mountains, coyotes (and photographers), and Old Faithful, which almost
+        goes, and almost goes, then explodes, with IzzyKat riding it.</li>
       <li>Reno: a motel, a maze of canals, the old strip, a casino, Sierra Nevada Pale Ales, craps, and Jim.</li>
     </ol>
     <p class="small">Guesses in level 4 so far: how the oil fields look (the oil rigs drawn as nodding pumps, with drilling
       towers far off), the bison, the horses and their battle, the badlands, the park sign, the river, the mounds, the
-      U-Haul from above, and IzzyKat's new colors.</p>
+      U-Haul from above, and IzzyKat's new colors. In whack-a-prairie-dog: the field, the nine holes, how the prairie
+      dogs look, how each tick whacks (the regular tick latching on and using one as a weapon; Lyme disease, blood sugar
+      and the honeybun, and sensing the next one; the pointer's point, the freeze, and the hunter), the jump-yip waves,
+      twelve to win, the ending, and all the timing.</p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -1683,7 +1685,7 @@ function interact() {
 }
 const canMove = () => !box.active && !wrap && lock === 0 && !fade.tween && fade.v < 0.5 &&
   !['title', 'intro', 'later', 'capture', 'eating', 'done', 'l2intro', 'mounting', 'camp', 'sleep', 'warp', 'vista', 'done2',
-    'fightin', 'battle', 'l3intro', 'cut', 'scene', 'push', 'done3', 'done4'].includes(phase);
+    'fightin', 'battle', 'l3intro', 'cut', 'scene', 'push', 'done3', 'done4', 'whack'].includes(phase);
 
 function updatePlayer(dt) {
   if (P.moving) {
@@ -1743,7 +1745,7 @@ function update(dt) {
   }
   updatePlayer(dt);
   if (level === 2) update2(dt);
-  if (level === 3 || level === 4) update3(dt);  // (level 4, so far: the drive West)
+  if (level === 3 || level === 4) update3(dt);  // (level 4, so far: the drive West, and whack-a-prairie-dog)
   extras.update(dt);
   updateActor(isa, dt);
   for (const d of deer) updateActor(d, dt);
@@ -5837,7 +5839,7 @@ async function peekIn() {
 }
 function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
-  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek })[scene3.kind]();
+  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -6123,6 +6125,7 @@ function update3(dt) {
     if (S.brakeTo != null) S.v = Math.min(S.v, Math.sqrt(2 * 20 * Math.max(0, S.brakeTo - S.dist)));
     S.dist += S.v * dt;
   }
+  if (S && S.kind === 'field') updateField(dt);  // level 4: whack-a-prairie-dog
 }
 
 // ---- level 3: the scenes ----
@@ -6450,8 +6453,8 @@ const JUMP3 = {
 // ---- level 4: West, in the U-Haul (just begun) ----
 // The final chapter: you, Brudda Blaine and IzzyKat, West in the U-Haul. Through the oil fields (large oil rigs, close
 // and far), past bison, and two horses, one black, one brown, having a slight battle; to Badlands National Park. You
-// park the U-Haul by the river, where sand-like mounds slide down into it and it bends in an S. Next, from your story:
-// whack-a-prairie-dog. (How it all looks is a guess.)
+// park the U-Haul by the river, where sand-like mounds slide down into it and it bends in an S. Then whack-a-prairie-dog
+// (below). Next, from your story: IzzyKat gets out of the U-Haul. (How it all looks is a guess.)
 const DRIVE_SKY = { oil: [[150, 190, 226], [238, 226, 198]], bison: [[138, 186, 228], [232, 230, 204]],
   horses: [[132, 180, 226], [238, 224, 194]], badlands: [[120, 172, 224], [246, 214, 178]] };
 const DRIVE_FIELD = { oil: ['#b9a96a', '#a8985a'], bison: ['#a9b06c', '#98a05c'], horses: ['#b4a868', '#a49858'], badlands: ['#c4a874', '#b49464'] };
@@ -6609,7 +6612,7 @@ async function level4(k) {
   Object.assign(smoke, { t0: -999, branch: -999, haze: false }); Object.assign(rain, { on: false, heavy: false, level: 0 });
   P.mount = null; P.blaine = false; blur(false); P.hidden = true; sugarMeter(null); L3.bl = null;
   fade.tween = null; fade.v = 1; $('fade').style.opacity = 1;
-  musicStop(); scene3 = null;
+  musicStop(); scene3 = null; field = null;
   const jump = JUMP4[new URLSearchParams(location.search).get('at')];  // for checks: start part way along
   if (jump) { jump(); return; }
   driveWest();
@@ -6658,16 +6661,426 @@ async function badlands() {
   await wait(1.2);
   await say(['The ground is red, like clay.']);
   await wait(0.6);
+  await prairie();
+}
+
+// ---- level 4: whack-a-prairie-dog. A big sandy field, red like clay, dune grass around it; nine holes, and prairie dogs
+// popping up out of them and ducking back down. Hop from hole to hole with the arrows, and tap A. Each tick whacks its
+// own way (all of it a guess at "each tick's unique ability is part of completing it"):
+//   the regular tick: tap A on a prairie dog to latch on. Mind control: now it's your weapon, and you whack the others
+//     with it. After four whacks it's dizzy, and you toss it back: latch onto another. Very mobile: quick hops.
+//   the human-blood tick: shoot Lyme disease. Every spell burns blood sugar; run low and your vision blurs, your hops
+//     slow, and you can't cast: hop left off the middle row to your N.E.R.D. album case, and eat a honeybun. While
+//     you're steady, you sense where the next one will pop up (a shimmer over the hole).
+//   the dog-blood tick: point. A prairie dog you point at freezes, and the hunter fires; point at an empty hole and he
+//     only hits dirt. The quickest hops.
+// Twice, one does the jump-yip and it goes round the town like the wave (real prairie dogs do this; here they're all
+// up for a moment, a chance for a few quick whacks). Whack twelve, and they've had enough. ----
+const WHACK_GOAL = 12, WHACK_LOW = 35, LYME_COST = 12, WEAPON_HITS = 4;
+const HOLES = [];
+for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) HOLES.push({ c, r, x: 52 + c * 34, y: 46 + r * 32 });
+const CASE_SPOT = { x: 20, y: 78 };  // the album case (the human-blood tick only): just left of the middle row
+const HOP_TIME = { regular: 0.09, human: 0.12, dog: 0.07 };
+const PD = [  // a prairie dog, standing up tall out of its hole, paws at its chest (how it looks is a guess)
+  '.T......T.',
+  '.TttttttT.',
+  '.ttettett.',
+  '.ttwwwwtt.',
+  '..twnnwt..',
+  '..ttwwtt..',
+  '.tttttttt.',
+  'tttbbbbttt',
+  'ttpbbbbptt',
+  'ttppbbpptt',
+  'ttbbbbbbtt',
+  'ttbbbbbbtt',
+  'tttbbbbttt',
+  '.tttttttt.',
+  '..TT..TT..'];
+const PD_YIP = [  // the jump-yip: up tall, arms in the air, calling
+  'p.T....T.p',
+  'pTttttttTp',
+  'pttettettp',
+  'pttwwwwttp',
+  '.ptwkkwtp.',
+  '.pttkkttp.',
+  '.tttttttt.',
+  'tttbbbbttt',
+  'ttbbbbbbtt',
+  'ttbbbbbbtt'].concat(PD.slice(10));
+const PD_PAL = { T: '#7a5432', t: '#b98a56', b: '#e6cc98', e: '#1a120c', w: '#efdcb8', n: '#4a2a1a', p: '#9a6a3e', k: '#5a1a14' };
+const PD_DAZED = Object.assign({}, PD_PAL, { e: '#fff6e0' });
+const PD_MIND = Object.assign({}, PD_PAL, { e: '#ff7ad9' });  // mind-controlled: pink eyes
+const PD_SICK = { T: '#5a7a32', t: '#93ad55', b: '#cfe09c', e: '#fff6e0', w: '#dfeab8', n: '#3a4a1a', p: '#7a9a44', k: '#3a4a1a' };
+const PD_SOOT = { T: '#2a2622', t: '#4a4440', b: '#6a6460', e: '#ffffff', w: '#7a7470', n: '#1a1a1a', p: '#3a3430', k: '#1a1a1a' };
+function rotGrid(rows) {  // a sprite grid, turned a quarter turn clockwise
+  const H = rows.length, W = rows[0].length, out = [];
+  for (let j = 0; j < W; j++) { let s = ''; for (let i = 0; i < H; i++) s += rows[H - 1 - i][j]; out.push(s); }
+  return out;
+}
+const PD_DOWN = PD.slice().reverse(), PD_SIDE = rotGrid(PD), PD_SIDE2 = rotGrid(PD_DOWN);
+const WHACK_TEACH = {
+  regular: ['Hop from hole to hole with the arrows.', "Tap A on a prairie dog to latch on. Mind control: now it's your weapon.",
+            'Tap A to whack the others with it. After a few whacks it gets dizzy: latch onto another.'],
+  human: ['Hop from hole to hole with the arrows.', 'Tap A to shoot Lyme disease at a prairie dog.',
+          'Every spell burns blood sugar. Run low, and your album case is just left of the middle row: eat a honeybun.',
+          "While you're steady, you can sense where the next one will pop up."],
+  dog: ["Hop from hole to hole with the arrows. You're quick.", 'Tap A to point. A prairie dog you point at freezes, and the hunter fires.',
+        'Point at an empty hole, and he only hits dirt.'],
+};
+let field = null, fieldCanvas = null;
+function paintField() {  // the field: red clay, sandy patches, cracks, dune grass all around, and the nine holes
+  fieldCanvas = document.createElement('canvas'); fieldCanvas.width = VW; fieldCanvas.height = VH;
+  const g = fieldCanvas.getContext('2d'), r = rng(818);
+  g.fillStyle = '#b8643e'; g.fillRect(0, 0, VW, VH);
+  for (let i = 0; i < 18; i++) {  // sandy patches, a little lighter
+    const cx = r() * VW, cy = r() * VH, rx = 8 + r() * 18, ry = 4 + r() * 8;
+    g.fillStyle = 'rgba(214,150,104,.35)';
+    for (let y = -Math.floor(ry); y <= ry; y++) { const w = Math.round(rx * Math.sqrt(Math.max(0, 1 - (y / ry) ** 2))); g.fillRect(Math.round(cx - w), Math.round(cy + y), w * 2, 1); }
+  }
+  for (let i = 0; i < 520; i++) px(g, Math.floor(r() * VW), Math.floor(r() * VH), ['#a8562e', '#c87850', '#b06040', '#cc8a5c', '#9e5030'][i % 5]);
+  for (let i = 0; i < 14; i++) {  // little cracks in the clay
+    let x = r() * VW, y = r() * VH;
+    for (let k = 0; k < 6; k++) { const nx = x + (r() - 0.5) * 6, ny = y + (r() - 0.3) * 4; line(g, Math.round(x), Math.round(y), Math.round(nx), Math.round(ny), '#9a4c2a'); x = nx; y = ny; }
+  }
+  const tuft = (x, y) => { for (let k = 0; k < 4; k++) line(g, x + k, y + 4, x + k * 2 - 2, y, ['#a8a84a', '#8a9a3a', '#b8b65a', '#7a8a34'][k]); };
+  for (let i = 0; i < 46; i++) tuft(Math.floor(r() * VW), Math.floor(r() * 10));        // dune grass along the top
+  for (let i = 0; i < 30; i++) tuft(Math.floor(r() * VW), 134 + Math.floor(r() * 8));   // the bottom
+  for (let i = 0; i < 16; i++) tuft(150 + Math.floor(r() * 8), Math.floor(r() * VH));   // the right
+  for (let i = 0; i < 16; i++) tuft(Math.floor(r() * 8), Math.floor(r() * VH));         // the left
+  for (const H of HOLES) {  // a mound of clay round each hole
+    for (let y = -6; y <= 6; y++) { const w = Math.round(13 * Math.sqrt(1 - (y / 6.5) ** 2)); g.fillStyle = 'rgba(70,30,14,.3)'; g.fillRect(H.x - w + 2, H.y + y + 2, w * 2, 1); }
+    for (let y = -6; y <= 6; y++) { const w = Math.round(13 * Math.sqrt(1 - (y / 6.5) ** 2)); g.fillStyle = y < -2 ? '#d68e60' : '#c87a4e'; g.fillRect(H.x - w, H.y + y, w * 2, 1); }
+    for (let i = 0; i < 9; i++) { const a = r() * Math.PI * 2; px(g, Math.round(H.x + Math.cos(a) * (8 + r() * 4)), Math.round(H.y + Math.sin(a) * (4 + r() * 2)), '#e0a070'); }
+    for (let y = -3; y <= 3; y++) { const w = Math.round(6 * Math.sqrt(1 - (y / 3.5) ** 2)); g.fillStyle = y < 0 ? '#2a120a' : '#1c0a04'; g.fillRect(H.x - w, H.y + y, w * 2, 1); }
+  }
+}
+function newField() {
+  return { holes: HOLES.map(() => ({ st: 'down', t0: -9, upFor: 1.5, popAt: 0, pose: 'look', fx: null, frozen: false })),
+    at: { c: 1, r: 1 }, from: null, hopT0: -9, hopDur: 0.1, hopEnd: 0, holdTill: 0, busyTill: 0, lastDir: null, repeatAt: 0,
+    n: 0, live: false, spawn: true, next: time + 0.8, lastHole: -1, act: null, swing: null, grab: null, cast: null, point: null,
+    shot: null, weapon: null, toss: null, sugar: 100, low: false, caseOpen: -9, pops: [], dust: [], cheer: -9, cheerAll: false,
+    wave: null, waveAt: 0, waves: 0, hunterIn: null };
+}
+const fieldSpot = at => at.c < 0 ? [CASE_SPOT.x, CASE_SPOT.y] : [HOLES[at.r * 3 + at.c].x, HOLES[at.r * 3 + at.c].y];
+function youAt() {  // where you are on screen (mid-hop, too), and how high off the ground
+  const F = field, [tx, ty] = fieldSpot(F.at), k = clamp((time - F.hopT0) / F.hopDur, 0, 1);
+  if (!F.from || k >= 1) return [tx, ty, 0];
+  return [F.from[0] + (tx - F.from[0]) * k, F.from[1] + (ty - F.from[1]) * k, Math.sin(k * Math.PI) * 5];
+}
+function setHole(H, st) { H.st = st; H.t0 = time; if (st === 'down') { H.pose = 'look'; H.fx = null; H.frozen = false; } }
+function hittable(H) { const k = time - H.t0; return (H.st === 'rise' && k > 0.06) || H.st === 'up' || (H.st === 'duck' && k < 0.08); }
+function pop(at, s) {  // a word in a little bubble: over a hole (by number), or at a spot
+  const [x, y] = typeof at === 'number' ? [HOLES[at].x, HOLES[at].y - 22] : at;
+  field.pops.push({ s, x, y, t0: time }); if (field.pops.length > 6) field.pops.shift();
+}
+function fieldHud() { hud('Whacked: ' + field.n + ' of ' + WHACK_GOAL); }
+function fieldSugar() {  // the blood sugar meter, for the human-blood tick
+  const F = field; sugarMeter(F.low ? 'low' : 'steady'); $('sugarBar').style.width = Math.max(4, Math.round(F.sugar)) + '%';
+}
+async function prairie() {
+  await fadeTo(1, 0.8);
+  if (!fieldCanvas) paintField();
+  field = newField(); scene3 = { kind: 'field', t0: time };
+  await fadeTo(0, 0.8);
+  await wait(1.0);
+  await say(['Past the dune grass: a big, sandy field, red like clay, and full of holes.', 'Prairie dogs.']);
+  if (choice === 'dog') { field.hunterIn = time; await wait(1.2); await say(['A hunter, in blaze orange, waits at the edge of the field.']); }
+  await say(['Whack-a-prairie-dog.', ...WHACK_TEACH[choice], 'Whack twelve of them.']);
+  field.live = true; field.next = Math.min(field.next, time + 0.3); phase = 'whack';
+  if (choice === 'human') fieldSugar();
+  fieldHud();
+}
+function hopField(d) {
+  const F = field, { c, r } = F.at;
+  let nc = c, nr = r;
+  if (c < 0) { nc = 0; nr = 1; }  // from the album case, any way but left goes back to the field
+  else if (d === 'left') nc = c - 1; else if (d === 'right') nc = c + 1; else if (d === 'up') nr = r - 1; else nr = r + 1;
+  if (c < 0 && d === 'left') return;
+  if (nc < 0 && !(choice === 'human' && r === 1 && nc === -1)) return;
+  if (nc > 2 || nr < 0 || nr > 2) return;
+  F.from = fieldSpot(F.at).slice(); F.at = { c: nc, r: nr }; F.hopT0 = time;
+  F.hopDur = choice === 'human' && F.low ? 0.24 : HOP_TIME[choice] || 0.1; F.hopEnd = time + F.hopDur;
+  if (ac && !muted) tone(master, 'sine', 640 + nr * 70, ac.currentTime, 0.04, 0.012);
+}
+function whackA() {
+  const F = field; if (!F || !F.live || time < F.busyTill || time < F.hopEnd) return;
+  const [yx, yy] = youAt();
+  if (F.at.c < 0) {  // at the album case: a honeybun
+    if (F.sugar >= 100) { pop([CASE_SPOT.x, CASE_SPOT.y - 28], 'NOT YET'); F.busyTill = time + 0.3; return; }
+    F.sugar = 100; F.low = false; blur(false); fieldSugar(); caseSting(); F.caseOpen = time; F.busyTill = time + 0.6;
+    pop([CASE_SPOT.x + 6, CASE_SPOT.y - 30], 'HONEYBUN'); return;
+  }
+  const i = F.at.r * 3 + F.at.c, H = F.holes[i];
+  if (choice === 'regular') {
+    if (!F.weapon) {
+      if (hittable(H)) {  // latch on: mind control, and it's your weapon
+        setHole(H, 'down'); F.weapon = { hits: 0, dizzyAt: 0 }; F.grab = { t0: time, i }; squeak(); pop(i, 'LATCHED ON');
+        F.busyTill = time + 0.3; F.holdTill = time + 0.2;
+      } else { pop(i, 'MISS'); F.busyTill = time + 0.2; }
+      return;
+    }
+    if (F.weapon.dizzyAt) return;
+    F.swing = { t0: time, i }; F.act = { kind: 'swing', i, at: time + 0.07 }; F.busyTill = time + 0.24; F.holdTill = time + 0.12;
+    whoosh(0.18, 0.05);
+  } else if (choice === 'human') {
+    if (F.sugar < WHACK_LOW) { pop([yx, yy - 6], 'TOO LOW'); F.busyTill = time + 0.35; return; }
+    F.sugar = Math.max(0, F.sugar - LYME_COST); fieldSugar();
+    F.cast = { t0: time, i, x: yx, y: yy + 6 }; F.act = { kind: 'cast', i, at: time + 0.2 }; F.busyTill = time + 0.3; F.holdTill = time + 0.2;
+    zap();
+  } else {  // the pointer: point; if one's up there it freezes, and the hunter fires
+    if (hittable(H)) { H.frozen = true; if (H.st === 'duck') setHole(H, 'up'); }
+    F.point = { t0: time, i }; F.act = { kind: 'shot', i, at: time + 0.3 }; F.busyTill = time + 0.6; F.holdTill = time + 0.3;
+    cock();
+  }
+}
+function hitHole(i, fx) {
+  const F = field, H = F.holes[i];
+  setHole(H, 'hit'); H.fx = fx; H.frozen = false; F.n++; F.cheer = time; bonk();
+  if (fx === 'dizzy') pop(i, 'BONK!');
+  if ((F.n === 4 || F.n === 8) && F.waves < 2) F.waveAt = time + 0.7;
+  fieldHud();
+  if (F.n >= WHACK_GOAL) endField();
+}
+function resolveAct(a) {
+  const F = field, H = F.holes[a.i];
+  if (a.kind === 'shot') {
+    F.shot = { t0: time, i: a.i }; bang();
+    if (hittable(H)) hitHole(a.i, 'soot'); else { F.dust.push({ i: a.i, t0: time }); pop(a.i, 'MISS'); }
+  } else if (a.kind === 'cast') {
+    if (hittable(H)) hitHole(a.i, 'sick'); else pop(a.i, 'MISS');
+    if (F.live && F.sugar < WHACK_LOW && !F.low) { F.low = true; blur(true); fieldSugar(); const [yx, yy] = youAt(); pop([yx, yy - 6], 'LOW'); }
+  } else if (a.kind === 'swing') {
+    if (hittable(H)) { hitHole(a.i, 'dizzy'); if (F.weapon && ++F.weapon.hits >= WEAPON_HITS) F.weapon.dizzyAt = time + 0.25; }
+    else pop(a.i, 'MISS');
+  }
+}
+function startWave() {  // one stretches up, arms in the air, and yips; then the next, and the next, out across the town
+  const F = field, s = Math.floor(Math.random() * 9), S0 = HOLES[s];
+  const order = HOLES.map((H, i) => ({ i, d: Math.hypot(H.c - S0.c, H.r - S0.r) })).sort((a, b) => a.d - b.d);
+  F.wave = { list: order.map((o, n) => ({ i: o.i, at: time + (n ? 0.5 + o.d * 0.3 : 0), done: false, first: !n })) };
+  F.wave.end = Math.max(...F.wave.list.map(e => e.at)) + 1.1; F.waves++;
+}
+function updateField(dt) {
+  const F = field; if (!F) return;
+  if (F.live) {  // hopping: one hop a press; hold an arrow to keep hopping
+    const d = curDir();
+    if (!d) F.lastDir = null;
+    else if (time >= F.hopEnd && time >= F.holdTill && (d !== F.lastDir || time >= F.repeatAt)) { hopField(d); F.lastDir = d; F.repeatAt = time + 0.24; }
+  }
+  for (const H of F.holes) {
+    const k = time - H.t0;
+    if (H.st === 'soon' && time >= H.popAt) { setHole(H, 'rise'); if (ac && !muted) tone(master, 'sine', 1900, ac.currentTime, 0.05, 0.01); }
+    else if (H.st === 'rise' && k >= 0.14) setHole(H, 'up');
+    else if (H.st === 'up' && !H.frozen && k >= H.upFor) setHole(H, 'duck');
+    else if (H.st === 'duck' && k >= 0.14) setHole(H, 'down');
+    else if (H.st === 'hit' && k >= 0.8) setHole(H, 'down');
+  }
+  if (F.act && time >= F.act.at) { const a = F.act; F.act = null; resolveAct(a); }
+  if (F.weapon && F.weapon.dizzyAt && time >= F.weapon.dizzyAt) {  // dizzy: you toss it back, into an empty hole
+    const free = F.holes.map((H, i) => H.st === 'down' ? i : -1).filter(i => i >= 0), [yx, yy] = youAt();
+    F.toss = { t0: time, i: free.length ? pick2(free) : 4, x: yx + 6, y: yy - 1 }; F.weapon = null; pop([yx, yy - 6], 'DIZZY');
+  }
+  if (F.toss && time - F.toss.t0 >= 0.45) { F.dust.push({ i: F.toss.i, t0: time }); thump(0.04); F.toss = null; }
+  if (F.live && F.waveAt && time >= F.waveAt && !F.act) { F.waveAt = 0; startWave(); }
+  if (F.wave) {
+    for (const e of F.wave.list) if (!e.done && time >= e.at) {
+      e.done = true; const H = F.holes[e.i];
+      if (H.st === 'down' || H.st === 'soon' || H.st === 'duck') { setHole(H, 'rise'); H.upFor = e.first ? 1.4 : 0.9; }
+      else if (H.st === 'rise') H.upFor = 0.9;
+      else if (H.st === 'up') H.upFor = time - H.t0 + 0.9;
+      if (H.st !== 'hit') H.pose = 'yip';
+      yip(e.first ? 0.05 : 0.02);
+      if (e.first) pop(e.i, 'WEE-OO!');
+    }
+    if (time >= F.wave.end) { F.wave = null; F.next = time + 0.5; }
+  }
+  if (F.spawn && !F.wave && !F.waveAt && time >= F.next) {  // the next one: faster, and more at once, as you go
+    const k = clamp(F.n / WHACK_GOAL, 0, 1), busy = F.holes.filter(H => H.st !== 'down').length, most = F.live ? (F.n < 3 ? 1 : 2) : 1;
+    if (busy < most) {
+      const free = F.holes.map((H, i) => H.st === 'down' && i !== F.lastHole ? i : -1).filter(i => i >= 0);
+      if (free.length) { const i = pick2(free), H = F.holes[i]; setHole(H, 'soon'); H.popAt = time + 0.6; H.upFor = 1.7 - 0.7 * k + Math.random() * 0.3; F.lastHole = i; }
+    }
+    F.next = time + (1.0 - 0.4 * k) * (0.7 + Math.random() * 0.6);
+  }
+  F.pops = F.pops.filter(p => time - p.t0 < 0.8); F.dust = F.dust.filter(d => time - d.t0 < 0.45);
+}
+async function endField() {  // twelve: they've had enough
+  const F = field; F.live = false; F.spawn = false; F.wave = null; F.waveAt = 0; phase = 'cut'; lock++;
+  await wait(1.0);
+  if (F.weapon) { const [yx, yy] = youAt(); F.toss = { t0: time, i: 4, x: yx + 6, y: yy - 1 }; F.weapon = null; await wait(0.5); }
+  for (const H of F.holes) if (H.st !== 'down') setHole(H, 'down');
+  await wait(0.6);
+  for (const H of F.holes) { setHole(H, 'rise'); H.frozen = true; }  // all of them, at once
+  if (ac && !muted) for (let n = 0; n < 5; n++) tone(master, 'sine', 1700 + n * 90, ac.currentTime + n * 0.03, 0.05, 0.01);
+  await wait(0.5);
+  await say(['All of them pop up at once, and look at you.']);
+  for (const H of F.holes) { H.frozen = false; setHole(H, 'duck'); F.dust.push({ i: F.holes.indexOf(H), t0: time }); }
+  thump(0.08); F.cheerAll = true;
+  await wait(0.8);
+  await say(['The prairie dogs have had enough. They stay down.', 'Brudda Blaine cheers.']);
+  blur(false); sugarMeter(null);
+  await wait(0.4);
   finish4();
 }
+function drawPD(H, i) {  // a prairie dog in its hole: rising, up, ducking, or whacked
+  const k = time - H.t0, X = HOLES[i].x, Y = HOLES[i].y;
+  let h = 0;
+  if (H.st === 'rise') h = clamp(k / 0.14, 0, 1);
+  else if (H.st === 'up') h = 1;
+  else if (H.st === 'duck') h = 1 - clamp(k / 0.14, 0, 1);
+  else if (H.st === 'hit') h = k < 0.5 ? 1 : 1 - clamp((k - 0.5) / 0.3, 0, 1);
+  if (h <= 0) return;
+  const yipping = H.pose === 'yip' && H.st !== 'hit';
+  const rows = yipping ? PD_YIP : PD, pal = H.st === 'hit' ? (H.fx === 'sick' ? PD_SICK : H.fx === 'soot' ? PD_SOOT : PD_DAZED) : PD_PAL;
+  const bob = yipping && H.st === 'up' ? Math.round(Math.abs(Math.sin(k * 10)) * 2) : H.st === 'up' && Math.floor(k * 2.5 + i) % 4 === 0 ? 1 : 0;
+  const top = Y - 13 + Math.round((1 - h) * 15) - bob, shake = H.st === 'hit' && k < 0.5 ? Math.round(Math.sin(k * 60)) : 0;
+  ctx.save(); ctx.beginPath(); ctx.rect(X - 8, Y - 26, 16, 27); ctx.clip();
+  drawGrid(rows, pal, X - 5 + shake, top, false);
+  ctx.restore();
+  if (H.frozen && H.st !== 'hit' && field.live) { ctx.fillStyle = '#e3241c'; ctx.fillRect(X, top - 7, 1, 4); ctx.fillRect(X, top - 2, 1, 1); }  // frozen
+  if (H.st === 'hit') {
+    if (k < 0.7) for (let n = 0; n < 3; n++) {  // stars, going round its head
+      const a = time * 8 + n * 2.1, sx = Math.round(X + Math.cos(a) * 7), sy = Math.round(top - 2 + Math.sin(a) * 2);
+      ctx.fillStyle = '#ffe14a'; ctx.fillRect(sx - 1, sy, 3, 1); ctx.fillRect(sx, sy - 1, 1, 3);
+    }
+    if (H.fx === 'sick') for (let n = 0; n < 3; n++) { ctx.fillStyle = '#b8e05a'; ctx.fillRect(X - 4 + n * 4, Math.round(top + 2 - ((k * 20 + n * 5) % 14)), 2, 2); }
+    if (H.fx === 'soot' && k < 0.5) { ctx.globalAlpha = 0.7 * (1 - k / 0.5); disc(ctx, X, Math.round(top + 4 - k * 10), 3 + Math.round(k * 8), '#8a8480'); ctx.globalAlpha = 1; }
+  }
+}
+function mindRings(cx0, cy0) {  // mind control: pink rings, going out
+  for (let n = 0; n < 2; n++) {
+    const rr = 4 + ((time * 10 + n * 4) % 8);
+    ctx.globalAlpha = clamp(1 - rr / 12, 0, 1); ctx.fillStyle = '#ff7ad9';
+    for (let m = 0; m < 16; m++) { const a = m / 16 * Math.PI * 2; ctx.fillRect(Math.round(cx0 + Math.cos(a) * rr), Math.round(cy0 + Math.sin(a) * rr), 1, 1); }
+  }
+  ctx.globalAlpha = 1;
+}
+function drawField() {
+  const F = field;
+  if (!fieldCanvas) paintField();
+  ctx.drawImage(fieldCanvas, 0, 0);
+  if (!F) return;
+  const [yx, yy, lift] = youAt();
+  if (F.live) {  // a ring round the hole you're at
+    const [cx0, cy0] = fieldSpot(F.at), onCase = F.at.c < 0;
+    ctx.globalAlpha = 0.75 + 0.25 * Math.sin(time * 6); ctx.fillStyle = '#fff1b0';
+    for (let n = 0; n < 26; n++) { const a = n / 26 * Math.PI * 2; ctx.fillRect(Math.round(cx0 + Math.cos(a) * (onCase ? 12 : 15)), Math.round((onCase ? cy0 - 10 : cy0) + Math.sin(a) * (onCase ? 12 : 8)), 1, 1); }
+    ctx.globalAlpha = 1;
+  }
+  for (let i = 0; i < 9; i++) {
+    const H = F.holes[i], X = HOLES[i].x, Y = HOLES[i].y;
+    if (H.st === 'soon') {
+      if (choice === 'human' && !F.low && F.live) {  // you sense it coming: a shimmer over the hole
+        const sk = clamp(1 - (H.popAt - time) / 0.6, 0, 1);  // it grows brighter as the moment comes
+        ctx.globalAlpha = 0.55 + 0.35 * Math.abs(Math.sin(time * 9)); ctx.fillStyle = '#f2c4ff';
+        for (let n = 0; n < 20; n++) { const a = n / 20 * Math.PI * 2 + time * 3; ctx.fillRect(Math.round(X + Math.cos(a) * (11 - sk * 3)), Math.round(Y - 2 + Math.sin(a) * (6 - sk * 2)), 2, 1); }
+        ctx.fillStyle = '#c070ff'; for (let n = 0; n < 3; n++) ctx.fillRect(Math.round(X - 5 + n * 5), Math.round(Y - 6 - ((time * 18 + n * 4) % 10)), 1, 2);  // a wisp, rising
+        ctx.globalAlpha = 1;
+      }
+      if (H.popAt - time < 0.25) { ctx.fillStyle = '#e0a070'; for (let n = 0; n < 4; n++) ctx.fillRect(X - 4 + n * 3, Y - 2 - (Math.floor(time * 30 + n) % 2), 1, 1); }  // the dirt twitches
+    }
+    drawPD(H, i);
+  }
+  for (const d of F.dust) {  // dirt kicked up: a shot into an empty hole, or one tossed back in
+    const k = (time - d.t0) / 0.45, X = HOLES[d.i].x, Y = HOLES[d.i].y;
+    ctx.globalAlpha = Math.max(0, 1 - k); ctx.fillStyle = '#e0a070';
+    for (let n = 0; n < 8; n++) { const a = n / 8 * Math.PI * 2; ctx.fillRect(Math.round(X + Math.cos(a) * (3 + k * 10)), Math.round(Y - 2 + Math.sin(a) * (2 + k * 5) - k * 4), 2, 1); }
+    ctx.globalAlpha = 1;
+  }
+  if (choice === 'human') {  // your album case, by the field
+    const o = albumCase.opened; albumCase.opened = F.caseOpen; drawCase(CASE_SPOT.x - 8, CASE_SPOT.y - 17); albumCase.opened = o;
+    if (F.low && F.live) { ctx.globalAlpha = 0.45 + 0.55 * Math.abs(Math.sin(time * 3)); ctx.fillStyle = '#fffbe8'; ctx.fillRect(CASE_SPOT.x + 5, CASE_SPOT.y - 19, 1, 5); ctx.fillRect(CASE_SPOT.x + 3, CASE_SPOT.y - 17, 5, 1); ctx.globalAlpha = 1; }
+  }
+  // you
+  const pointing = F.point && time - F.point.t0 < 0.45;
+  drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], Math.round(yx - 8), Math.round(yy + 3 - lift), ROT.up, false, lift > 0 ? Math.floor(time * 20) % 2 : 0);
+  if (pointing) line(ctx, Math.round(yx + 4), Math.round(yy + 7), Math.round(yx + 7), Math.round(yy + 2), '#2b1d14');  // a front leg up: on point
+  if (choice === 'dog' && F.hunterIn != null) {  // the hunter, at the edge of the field
+    const inK = clamp((time - F.hunterIn) / 1.0, 0, 1), hx = Math.round(-14 + 20 * inK), hy = 66;
+    let aim = -1.25;
+    if (F.point && time - F.point.t0 < 0.5) {
+      const T = HOLES[F.point.i], target = Math.atan2(T.y - 8 - (hy + 7), T.x - (hx + 6));
+      aim = -1.25 + (target + 1.25) * clamp((time - F.point.t0) / 0.15, 0, 1);
+    }
+    const [gx, gy] = drawHunter(hx, hy, aim, 1, inK > 0 && inK < 1);
+    if (F.shot && time - F.shot.t0 < 0.07) {  // the shot: a flash, and the line of it to the hole
+      const T = HOLES[F.shot.i];
+      disc(ctx, Math.round(gx + 1), Math.round(gy), 2, '#fff2a8'); line(ctx, Math.round(gx), Math.round(gy), T.x, T.y - 6, '#fff6c8');
+    }
+    if (F.shot && time - F.shot.t0 < 0.4) { const t = (time - F.shot.t0) / 0.4; ctx.globalAlpha = 0.7 * (1 - t); disc(ctx, Math.round(gx + 2 + t * 3), Math.round(gy - t * 6), 1 + Math.round(t * 2), '#d8d4cc'); ctx.globalAlpha = 1; }
+  }
+  const ch = F.cheerAll ? (Math.floor(time * 2.5) % 2) * 3 : time - F.cheer < 0.3 ? 3 : 0;  // Brudda Blaine, at the edge
+  drawBlaine(140, 70 - ch, 'left', 0);
+  if (F.weapon) {  // the regular tick: the prairie dog you latched onto, your weapon
+    const sw = F.swing && time - F.swing.t0 < 0.22 ? time - F.swing.t0 : null;
+    if (sw !== null && sw < 0.07) drawGrid(PD_SIDE, PD_MIND, Math.round(yx - 7), Math.round(yy - 12), false);  // swung up
+    else if (sw !== null) {  // and down, onto the hole
+      const T = HOLES[F.swing.i];
+      drawGrid(PD_DOWN, PD_MIND, T.x - 5, T.y - 16, false);
+      ctx.fillStyle = '#fff6c8'; for (const [dx, dy] of [[-9, -3], [9, -3], [-7, 2], [7, 2]]) ctx.fillRect(T.x + dx - (dx < 0 ? 2 : 0), T.y + dy, 3, 1);
+    } else {
+      const gk = F.grab ? clamp((time - F.grab.t0) / 0.2, 0, 1) : 1;
+      let wx = yx + 6, wy = yy - 1 - lift + Math.round(Math.sin(time * 4));
+      if (gk < 1) { const T = HOLES[F.grab.i]; wx = T.x - 5 + (wx - T.x + 5) * gk; wy = T.y - 13 + (wy - T.y + 13) * gk - Math.sin(gk * Math.PI) * 8; }
+      drawGrid(PD_DOWN, PD_MIND, Math.round(wx), Math.round(wy), false);
+      mindRings(Math.round(wx + 5), Math.round(wy + 7));
+    }
+  }
+  if (F.toss) {  // dizzy, tossed back into a hole, tumbling
+    const k = clamp((time - F.toss.t0) / 0.45, 0, 1), T = HOLES[F.toss.i];
+    const x = F.toss.x + (T.x - 5 - F.toss.x) * k, y = F.toss.y + (T.y - 12 - F.toss.y) * k - Math.sin(k * Math.PI) * 18;
+    drawGrid([PD, PD_SIDE, PD_DOWN, PD_SIDE2][Math.floor(k * 8) % 4], PD_DAZED, Math.round(x), Math.round(y), false);
+  }
+  if (F.cast) {  // Lyme disease: a sickly orb, out of you and onto the hole; a burst
+    const k = (time - F.cast.t0) / 0.2, T = HOLES[F.cast.i];
+    if (k < 1) {
+      const x = F.cast.x + (T.x - F.cast.x) * k, y = F.cast.y + (T.y - 7 - F.cast.y) * k - Math.sin(k * Math.PI) * 6;
+      disc(ctx, Math.round(x), Math.round(y), 3, '#7aa83a'); disc(ctx, Math.round(x), Math.round(y), 1, '#d8f07a');
+      ctx.fillStyle = '#7a3a9a'; for (let n = -2; n <= 2; n++) ctx.fillRect(Math.round(x + n), Math.round(y + Math.sin(n + time * 20)), 1, 1);
+    } else if (k < 2.5) {
+      const b = (k - 1) / 1.5; ctx.globalAlpha = 1 - b;
+      for (let n = 0; n < 10; n++) { const a = n / 10 * Math.PI * 2; ctx.fillStyle = n % 2 ? '#b8e05a' : '#9a5ac0'; ctx.fillRect(Math.round(T.x + Math.cos(a) * b * 12), Math.round(T.y - 7 + Math.sin(a) * b * 9), 2, 2); }
+      ctx.globalAlpha = 1;
+    }
+  }
+  for (const p of F.pops) { const k = (time - p.t0) / 0.8; if (k < 1 && p.s === 'WEE-OO!') yipWords(Math.round(clamp(p.x, 20, VW - 20)), Math.round(p.y - k * 4)); else if (k < 1) bubbleWords(p.s, Math.round(clamp(p.x, signWidth(p.s) / 2 + 4, VW - signWidth(p.s) / 2 - 4)), Math.round(p.y - k * 4), '#2b2118'); }
+}
+function yipWords(cx0, y) {  // "WEE-OO!" in a speech bubble
+  const w = 28, x = cx0 - 14;
+  bubbleWords('          ', cx0, y, '#2b2118');  // the bubble (ten spaces: 29 wide)
+  pixelText(ctx, 'WEE', x, y, '#2b2118'); ctx.fillRect(x + 14, y + 2, 3, 1); pixelText(ctx, 'OO', x + 18, y, '#2b2118');
+  ctx.fillRect(x + w - 2, y, 1, 3); ctx.fillRect(x + w - 2, y + 4, 1, 1);
+}
+// ---- level 4: little sounds for the field ----
+function bonk() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; tone(master, 'square', 330, t, 0.05, 0.05, 1400); tone(master, 'sine', 150, t, 0.14, 0.12); noiseHit(t, 'bandpass', 1500, 2, 0.07, 0.05, 0, master); }
+function bang() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; noiseHit(t, 'lowpass', 2500, 0.7, 0.2, 0.3, 0, master); tone(master, 'sine', 60, t, 0.22, 0.15); }
+function cock() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; noiseHit(t, 'bandpass', 2600, 3, 0.08, 0.04, 0, master); noiseHit(t + 0.07, 'bandpass', 1700, 3, 0.08, 0.04, 0, master); }
+function zap() {  // a short spell: a wobbling note, sliding up
+  if (!ac || muted) return;
+  const t = ac.currentTime, o = ac.createOscillator(), vib = ac.createOscillator(), vg = ac.createGain(), g = ac.createGain();
+  o.type = 'triangle'; o.frequency.setValueAtTime(320, t); o.frequency.exponentialRampToValueAtTime(1000, t + 0.22);
+  vib.frequency.value = 14; vg.gain.value = 30; vib.connect(vg); vg.connect(o.frequency);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.035, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.26);
+  o.connect(g); g.connect(master); o.start(t); vib.start(t); o.stop(t + 0.3); vib.stop(t + 0.3);
+}
+function yip(v = 0.03) {  // the jump-yip: "wee-oo"
+  if (!ac || muted) return;
+  const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  o.type = 'triangle'; o.frequency.setValueAtTime(1300, t); o.frequency.exponentialRampToValueAtTime(2300, t + 0.08); o.frequency.exponentialRampToValueAtTime(1100, t + 0.24);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.27);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.3);
+}
 function finish4() {
-  phase = 'done4'; lock = 0; hud(null);  // (the river stays on screen, behind)
+  phase = 'done4'; lock = 0; hud(null);  // (the field stays on screen, behind)
   $('end4Text').textContent = 'You drove West in the U-Haul with Brudda Blaine and IzzyKat, through the oil fields, past bison ' +
-    'and two horses having a slight battle, to Badlands National Park, and parked by the river. Next, from your story: ' +
-    'whack-a-prairie-dog.';
+    'and two horses having a slight battle, to Badlands National Park, and parked by the river. Then whack-a-prairie-dog, ' +
+    'in the big field of red clay: twelve whacked, and the prairie dogs had enough. Next, from your story: IzzyKat gets ' +
+    'out of the U-Haul.';
   $('end4').hidden = false;
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
+  field: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; musicStart(); prairie(); },
   bison: () => { driveWest(); },
   horses: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); horses(); },
   badlands: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); badlands(); },
@@ -6682,6 +7095,7 @@ function pressA() {
   if (wrap) { spinSilk(); return; }
   if (box.active) { boxA(); return; }
   if (phase === 'push' && !lock) { pushRock(); return; }  // level 3: helping push the boulder
+  if (phase === 'whack') { whackA(); return; }  // level 4: whack-a-prairie-dog
   if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2' || phase === 'done3' || phase === 'done4') return;
   interact();
 }
@@ -7122,6 +7536,12 @@ window.__sketch = {
   get l3() { return { shawn: L3.shawn, karillSeen: L3.karillSeen, karill: L3.karill, restaurant: L3.restaurant, found: L3.found,
     rock: L3.rock.x, rockDone: L3.rock.done, yells: L3.yells, steps: L3.steps, blaine: !!P.blaine }; },
   get ended3() { return !$('end3').hidden; }, get ended4() { return !$('end4').hidden; },
+  get whack() {  // level 4: whack-a-prairie-dog
+    const F = field; if (!F) return null;
+    return { live: F.live, n: F.n, goal: WHACK_GOAL, at: [F.at.c, F.at.r], up: F.holes.map((H, i) => hittable(H) ? i : -1).filter(i => i >= 0),
+      states: F.holes.map(H => H.st), weapon: F.weapon ? F.weapon.hits : null, sugar: F.sugar, low: F.low, wave: !!F.wave, waves: F.waves,
+      ready: time >= F.hopEnd && time >= F.busyTill && time >= F.holdTill };
+  },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
   get vistaState() { return vista ? { flag: !!vista.flag, latch: !!vista.latch, ride: !!vista.ride, fall: !!vista.fall, splash: !!vista.splash,
