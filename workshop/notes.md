@@ -107,6 +107,35 @@ Every session reads this first and updates it last.
   - When Brudda Blaine arrives, don't say he'll play a DJ set at each camp. Just have him do it, as a surprise.
   - Make the first tent, the one that goes horribly wrong, a lean-to style tarp you try to tie up between trees to keep
     off the rain. Have it fail "mathematically", because of the Milwaukee weed that was smoked.
+- 2026-10-21, issue #1, three messages within about 35 minutes:
+  - The cut scene on Palisade Head: the deer carry a Mexican flag as they walk away, mariachi music plays, and the tick and
+    Blaine say "it sounds like they're heading to Mexico....".
+  - At the end of that cut scene, the tick attaches to Blaine and mind-controls him into flying after them. It ends
+    horribly: Blaine and the tick fall into the water like a scene from Wile E. Coyote (you wrote "Wiley"). Then they ride
+    a salmon all the way down the Mississippi River into the Gulf of Mexico, and end at Playa del Carmen.
+  - Blaine and the tick go into a club, and the club is a maze. Blaine wanders into the crowd and you don't see him
+    anymore; the tick has to figure out the maze. First: from floor 1 up the stairs to floor 2, to find Shawn Farley,
+    sitting on a long booth-like seat, throwing up into his glass. You give him another empty glass and go on. You see
+    Karill, a Russian man, partying exceptionally hard down below and waving up at you. Then a different maze down, to
+    find Karill. You take a shot of vodka with him, off big-chested women who work as promoters for the club, and then
+    everything goes a little hazy.
+  - You come back in a cab shaped like a minivan: you, Blaine, Shawn and Karill, with a man who only speaks Spanish,
+    trying to drop you off under a bridge. Blaine frantically says "Akumal, the place of the turtles", and you fade out
+    again.
+  - You come back in Akumal, a small Mexican pueblo on the Yucatan peninsula, and you are now Blaine. The final maze, to
+    find Braydon (the tick); the whole maze, you keep stopping and yelling his name as loud as you can. You walk by the
+    restaurant that serves huevos rancheros and watermelon juice (it is closed); you help the local Maya push a boulder
+    to block the entrance of the town (they are upset with local taxes); and at the end you find Braydon under a
+    glorious Hispanic-inspired archway, chugging a beer and pointing at a man peeing off the top of a building, giggling
+    gleefully.
+  - Then back to the tick's view: Blaine, so overjoyed to see you. A romantic, brotherly cut scene where everything in
+    the world seems right. Over Blaine's shoulder, the tick sees the deer again, playing mariachi music, Isabella close in
+    hand, a California flag waving, and overhears them say they're meeting up with Jim, in the place where the dice never
+    remember. You and Brudda Blaine run to Akumal bay (coral reefs, "tortoise everywhere") and hop back on your salmon, up
+    the Mississippi to Lake Itasca, the headwaters of the Mississippi, where a U-Haul is waiting to drive West, in the
+    final chapter of the story.
+  - At the last camp, by Gooseberry Falls: when Blaine starts playing, the animals and the tick talk about riding salmon,
+    and how that must be impossible, the way a group of stoners would, in an esoteric way.
 
 ## What you've decided
 
@@ -169,6 +198,15 @@ Every session reads this first and updates it last.
 - Camp 1's shelter is a tarp, not a tent: a lean-to you try to tie up between two trees to keep off the rain, and it goes
   horribly wrong because the math, done high on the Milwaukee weed, is wrong. (2026-10-16; built. The three bits of math
   are guesses.)
+- The tick, the hero, is called Braydon. (2026-10-21.)
+- At the top of Palisade Head (2026-10-21; built): the deer carry a Mexican flag as they go, mariachi music plays, and you
+  and Brudda Blaine say "it sounds like they're heading to Mexico....". Then you latch onto him and mind-control him into
+  flying after them, and it ends horribly: you both fall into Lake Superior, like a scene from Wile E. Coyote.
+- At the last camp, by Gooseberry Falls (2026-10-21; built): the animals and you talk, like stoners, about riding salmon,
+  and how that must be impossible.
+- The story's order (changed 2026-10-21): after the North Shore comes Mexico, as you wrote it above (built as level 3).
+  Then the final chapter: driving West in the U-Haul. Where the coffee roaster, the second boss and the cornfield go now
+  isn't settled (asked, below).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -392,8 +430,72 @@ Every session reads this first and updates it last.
   - Guesses, labeled on the end screen: the two trees, the tarp, the rain, the math, and how it all goes wrong. A test
     hook for checks: `?at=camp1` starts level 2 right at the first camp.
 
+- 2026-10-21, sketch 2 changed (`gh-pages`, commit 3cc3dfb), from your three messages:
+  - Gooseberry Falls: when Brudda Blaine's track drops, the animals and you talk about riding salmon, a little speech
+    bubble over whoever's talking. The words (guesses): "Salmon keep leaping up the falls, in the firelight." Raccoon:
+    "Whoa. Look at them go. Up a waterfall." You: "What if you rode one?" Fox: "Ride a salmon? Impossible." Rabbit: "But
+    is it, though?" Raccoon: "To the salmon, the falls aren't going up. The river's coming down." Fox: "So who's riding
+    who?" You: "Whoa." Rabbit: "Every river is just a salmon's road home, man." Fox: "But where would you even hold on?"
+    Raccoon: "You don't hold on to the salmon. You hold on to the moment." A long pause. Everyone: "Totally impossible."
+  - Palisade Head: once you see the deer, mariachi music (original, a waltz with trumpets, violins and strummed
+    guitars, muffled by distance) drifts back across the water, and one deer carries a little Mexican flag. You and
+    Brudda Blaine: "It sounds like they're heading to Mexico..." Then "You're inspired, once again, to go on with your
+    journey." You hop onto his head and latch on; mind control (pink rings); he rides his bicycle straight off the edge
+    after them, flapping his arms, hangs in the air a moment ("..."), then drops, smaller and smaller, with a falling
+    whistle, into the lake: a tiny splash. "It ends horribly." The level 2 end screen now leads to level 3 ("On to level
+    3"). The line about the coffee roaster is gone from the end of level 2.
+  - Level 3, Mexico (new; "Skip to level 3" on the first screen, which asks which tick you ate):
+    - The salmon: you both come up in Lake Superior; a salmon swims up under you ("Impossible, the fox said, at the
+      falls"); you ride it, leaping now and then, down the Mississippi (a sign on the bank: MISSISSIPPI RIVER), into the
+      Gulf of Mexico, to a beach with palms: PLAYA DEL CARMEN. Your beat plays.
+    - The club, a maze in two floors; the walls are the crowd, dancing; lights sweep; the floor lights up on the beat;
+      the music is an original reggaeton beat. Brudda Blaine wanders into the crowd and is gone. Floor 1: find the stairs
+      up. Floor 2: Shawn Farley on a long red booth, throwing up into his glass; you give him another empty glass (it
+      sits beside him after). At the railing you look down: Karill, partying exceptionally hard, waves up at you. The
+      stairs you came up only go back; a different set of stairs leads down to the other part of floor 1, and up through
+      the crowd to the dance floor: Karill, and two promoters in sparkly dresses with a bottle of vodka and a sparkler.
+      "Two of the club's promoters come over, big-chested, with a bottle of vodka." "You take a shot of vodka with Karill,
+      off the promoters." Everything goes hazy and blurry, the music dips, fade out.
+    - The cab, shaped like a minivan (white, a TAXI light), at night: you, Brudda Blaine, Shawn and Karill. It pulls over
+      under a bridge. Driver: "Aquí, debajo del puente. Bájense." (Spanish for "Here, under the bridge. Get out.") Brudda
+      Blaine, frantic: "Akumal! The place of the turtles!" Driver: "¿Qué?" ("What?") Then louder. Fade out.
+    - Akumal, a maze of sandy streets, painted houses, stone garden walls and palms; you are Brudda Blaine (drawn on foot
+      from his look on the bicycle). Every ten steps he stops and yells "BRAYDON!" (a speech bubble, and a yell sound that
+      echoes); tap A any time to yell too. You pass the restaurant (a striped awning, a sign: CERRADO, "closed"): "A
+      restaurant: huevos rancheros, and watermelon juice. It's closed." In a little square, three locals (a man in a straw
+      hat, a woman in a white embroidered dress, a young man in a red tee) are pushing a boulder; walk into it from the
+      right, then tap A fast to push it with them, into the road into town. The locals cheer. Music: an original guitar
+      piece with a shaker and a guiro.
+    - At the end, a square under a big archway (painted tiles, bougainvillea, the bay through it, glints): Braydon,
+      chugging a beer, then pointing and giggling (HEE), at a man on the roof of the building next door, peeing off it.
+    - Then you're Braydon again: a close-up at sunset, framed by the archway; Brudda Blaine, arms wide open, a tear of
+      joy; you leap into his arms in slow motion; hearts, petals, a glow. Music: slow guitar, a warm swell, bells
+      (original).
+    - Over his shoulder: the deer walk by playing mariachi (a trumpet, a guitar, a violin), Isabella close among them,
+      one carrying a California flag. A deer: "We're meeting up with Jim, in the place where the dice never remember."
+    - Akumal bay, from above: coral reefs, turtles swimming everywhere (drawn as sea turtles), your salmon waiting at the
+      water's edge. You both run to it and hop on.
+    - Back across the Gulf, back up the Mississippi, to LAKE ITASCA: pines, and an orange-and-white moving truck (no
+      logo) parked on the shore. "A U-Haul is waiting for you, to drive West." "The final chapter." The level 3 end
+      screen lists the levels: 1 the apartment, 2 the North Shore, 3 Mexico, 4 West in the U-Haul, the final chapter; and,
+      not placed yet, the coffee roaster, the second boss, and the cornfield.
+  - Guesses, labeled on the end screens: everything above that isn't in your words (how it all looks and sounds, the
+    mazes, the words at the falls, how the boulder pushing works). Test hooks for checks: `?level=3&tick=dog`, plus
+    `&at=club1`, `club2`, `clubB`, `cab`, `akumal`, `rock`, `arch`, `hug`, `bay` or `itasca`; for level 2, `&at=camp3`
+    (the falls) and `&at=top` (the view).
+
 ## Open questions
 
+- Asked 2026-10-21: your first story had three more stops, the coffee roaster, the rent-gouging boss (the crumbling
+  American middle class and high rent gouging), and the cornfield with the egg sack. Do they happen out West, in the
+  final chapter, or are they gone?
+- Said 2026-10-21, not asked: the "tortoise" in Akumal bay are drawn as sea turtles, swimming. Who Jim is, and "the place
+  where the dice never remember": used word for word, not explained. All three ticks mind-control Brudda Blaine the same
+  way at Palisade Head (a guess; only the regular tick had mind control before).
+- Not checked, and not used: any facts about Playa del Carmen, Akumal, the Yucatan, the Mississippi or Lake Itasca beyond
+  your words. "Akumal, the place of the turtles" is Brudda Blaine's line, in your words. The driver's Spanish is plain
+  everyday Spanish ("Here, under the bridge. Get out." and "What?").
+- Still open from 2026-10-16: is the tarp's math what you meant by "mathematically"? (No answer yet; no rush.)
 - Asked 2026-10-16 (evening): is the tarp's math what you meant by "mathematically" (8 > 10, then 360 degrees, then
   y = x²)? Different math, or a different way for it to fail?
 - Answered 2026-10-16: the gale is gone once you beat it.
@@ -513,3 +615,8 @@ Every session reads this first and updates it last.
   Brudda Blaine's sets as a surprise; and the first tent as a lean-to tarp that fails mathematically, because of the
   weed. Built the last two in sketch 2, same link (the gale already worked that way). Replied on issue #1 with what
   changed, and one question: is the math what you meant?
+- 2026-10-21: three messages from you on issue #1 within about 35 minutes (answered the next morning): the Mexican flag and
+  mariachi at Palisade Head, the whole Mexico chapter, and the salmon talk at Gooseberry Falls. Built all three in sketch
+  2, same link: the falls talk, the flag and the fall off Palisade Head, and level 3, Mexico, with a "Skip to level 3"
+  button. Replied on issue #1 with what's in it, and one question: where do the coffee roaster, the second boss and the
+  cornfield go now?
