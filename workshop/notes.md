@@ -201,6 +201,9 @@ Every session reads this first and updates it last.
   Patrick.
 - 2026-10-21 (afternoon), issue #1: Yellowstone, not Yosemite ("My mistake"). Jim at the craps table is last in this scene;
   the prairie dog mini game is first.
+- 2026-10-21 (afternoon), issue #1: the search for IzzyKat is "A scene you watch".
+- 2026-10-21 (afternoon), issue #1: add a cut scene between parking at the river and the mini game: a long landscape view of
+  prairie dogs popping up and down, that leads into the mini game.
 
 ## What you've decided
 
@@ -295,6 +298,9 @@ Every session reads this first and updates it last.
 - Old Faithful is in Yellowstone, in the game too (2026-10-21).
 - The order for the rest of level 4 (2026-10-21): whack-a-prairie-dog first, Jim at the craps table last. (The rest, in
   between, in your story's order: a guess.) Whack-a-prairie-dog is built.
+- The search for IzzyKat is a scene you watch, not a game you play (2026-10-21; built).
+- Between parking by the river and whack-a-prairie-dog: a long view of prairie dogs popping up and down, leading into the
+  field (2026-10-21; built).
 - Blaine's gift: you said yes (2026-10-21). It's switched on in the sketch; talk about it lives in its own conversation on
   GitHub.
 - Everything else is yours to decide.
@@ -715,18 +721,64 @@ Every session reads this first and updates it last.
     each tick whacks, the jump-yip waves, twelve to win, the ending, the timing). Links straight to the field, one per
     tick: `?level=4&tick=regular&at=field` (or `human`, or `dog`).
 
+- 2026-10-21 (afternoon), sketch 2 changed (`gh-pages`, commit 033e9b0), from your answer: IzzyKat gets out, a scene you
+  watch, right after whack-a-prairie-dog.
+  - Back at the U-Haul by the river, seen from above: the cab door left open. "Back at the U-Haul." The music stops. "The
+    door was left open." Brudda Blaine looks in ("!"). "IzzyKat is gone."
+  - You both run round in circles, "!" and "?" over your heads, Brudda Blaine sweating. "You're frantic." A thought bubble
+    over you with three gummy bears, wobbling and changing color, and a colored haze drifts over everything (it lifts
+    when you decide she's gone). "Why did you eat those gummies?" "Filled with the same stuff from Milwaukee."
+  - "You search for her." Each tick its own way:
+    - The pointer: "A pointer's nose." You go nose to the ground, sniffing (a sniff sound, little puffs), and a faint trail
+      of scent shows on the ground, leading round to a rock. You point at it, a front leg up ("!"). "You've got
+      something. You point: a rock."
+    - The regular tick: you climb a tall stalk of dune grass and hold out your front legs. "You climb a stalk of dune
+      grass, and hold out your front legs." "That's how a tick finds a warm body: breath, and body heat." Warmth rises off
+      Brudda Blaine, and his breath puffs. "Something warm, and breathing!" You leap onto his head ("!"). "It's Brudda
+      Blaine." Then warmth rises off the rock. "Something else is warm: a rock, in the sun." You ride on his head to it.
+    - The human-blood tick: 'You go: "Pss, pss, pss."' Three PSS bubbles, and pink and purple rings go out across the
+      land each time. Prairie dogs pop up out of three holes nearby, and Brudda Blaine walks over to you, slowly, in a
+      trance (pink rings round his head). "Everything comes. Everything but IzzyKat." He snaps out of it ("?"). "Maybe
+      she's hiding. Under a rock?"
+  - Brudda Blaine tips the rock over (it rolls), and a rainbow-winged beetle scuttles out. "Under a rock: no IzzyKat."
+    "Just a beetle."
+  - By the river: Brudda Blaine yells "IZZYKAT!" (his yell from Akumal). "By the river: still no IzzyKat."
+  - Back by the U-Haul: "You've looked everywhere." "You decide she's gone." A quiet moment. Then a purr (a soft, low
+    rumble; PRR floats up from under the truck, and her tail pokes out). "Then, a purr." You both look ("?").
+  - The close-up, down low under the U-Haul, in the shade, the wheels either side and the sunlit badlands out the far side:
+    IzzyKat, looking at you, slow blinks, purring. "Under the U-Haul: IzzyKat." "Purring, as if nothing happened." Now and
+    then she licks her lips, and there's a little tuft of light fur on her chin (a small clue, nothing said about it; see
+    the open questions). Then your beat comes back, and the level 4 end screen.
+  - Your story's secret (she ate a prairie dog and picked up its fighting skills) isn't shown or said anywhere.
+  - Guesses, labeled on the end screen: how it all looks and sounds, and the words not in your story. Links straight to it,
+    one per tick: `?level=4&tick=regular&at=search` (or `human`, or `dog`).
+- 2026-10-21 (afternoon), sketch 2 changed (`gh-pages`, commit 7e6776c), from your next message: a long view of a prairie
+  dog town, between parking by the river and whack-a-prairie-dog. Seen from the side, letterboxed like a film: the sky,
+  the striped badlands far off, and a wide plain of red clay with dune grass and rows of mounds, near and far. The view pans
+  slowly across it (about nine seconds). Prairie dogs pop up out of their mounds and duck back down, each on its own
+  timing, with a little chirp now and then from the near ones. At the end, one pops up right in front of you, twice the
+  size, and looks at you, blinking. Then into the field ("Past the dune grass: a big, sandy field..."). No words. Your
+  beat plays through it. Guesses, labeled on the end screen: how it looks, the chirps, and how long it lasts. A link
+  straight to it: `?level=4&tick=dog&at=town`.
+
 ## Next to build (queued, in your order: Jim last)
 
-1. IzzyKat gets out of the U-Haul; the gummies; the search (each tick its own way), under a rock, by the river, and at last
-   under the U-Haul, purring.
-2. Back on the road, to Yellowstone: elk, mountains, coyotes and the photographers; Old Faithful almost going, then
+1. Back on the road, to Yellowstone: elk, mountains, coyotes and the photographers; Old Faithful almost going, then
    exploding, with IzzyKat riding it.
-3. Reno: the motel, the canal maze, the old strip, the casino, the Sierra Nevada Pale Ales, craps, and Jim strolling in.
-4. The fight with Jim, where IzzyKat's super kitty powers (from the prairie dog and the coyote) win it.
+2. Reno: the motel, the canal maze, the old strip, the casino, the Sierra Nevada Pale Ales, craps, and Jim strolling in.
+3. The fight with Jim, where IzzyKat's super kitty powers (from the prairie dog and the coyote) win it.
 
 ## Open questions
 
-- Asked 2026-10-21 (afternoon): the search for IzzyKat, a little game you play (like the club maze), or a scene you watch?
+- Asked 2026-10-21 (afternoon): the little tuft of light fur on IzzyKat's chin in the close-up, a small clue: keep it, or
+  take it out so the final boss is a total surprise?
+- Asked 2026-10-21 (afternoon): Yellowstone next. A scene you watch, like the search, or something to play?
+- Said 2026-10-21 (afternoon): the regular tick's way of searching is real. Checked on the CDC's page "About Ticks and
+  Tickborne Disease" (cdc.gov/ticks/about): "Ticks find their hosts by detecting animals' breath and body odors, or by
+  sensing body heat, moisture, and vibrations." and, of ticks waiting on grass ("questing"), "They hold the first pair of
+  legs outstretched, waiting to climb on to the host."
+- Answered 2026-10-21 (afternoon): the search for IzzyKat is a scene you watch (asked: a game you play, or a scene you
+  watch?).
 - Said 2026-10-21 (afternoon): how whack-a-prairie-dog plays is a guess (each tick's way, twelve to win, the speed); too
   easy, too hard, or the wrong feel?
 - The jump-yip, checked 2026-10-21 and told you: black-tailed prairie dogs stretch up, throw their arms in the air and call
@@ -911,3 +963,7 @@ Every session reads this first and updates it last.
   Built whack-a-prairie-dog in sketch 2, same link, and put Yellowstone on the end screen. Replied on issue #1 (comment
   6323318820) with how each tick plays it, the real jump-yip, a link per tick straight to the field, and one question: the
   search for IzzyKat, a game you play or a scene you watch?
+- 2026-10-21 (afternoon): two messages from you on issue #1, about 6 minutes apart: the search is a scene you watch, and a long
+  view of prairie dogs popping up and down before the field. Built both in sketch 2, same link: the search for IzzyKat
+  (each tick its own way) and the long view. Replied on issue #1 (comment 6323901325) with what's in it, the real fact about how ticks find a
+  body, links straight to both, and two questions: keep the clue on her chin, and Yellowstone, a scene or something to play?
