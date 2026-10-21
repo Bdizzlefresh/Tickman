@@ -204,6 +204,7 @@ Every session reads this first and updates it last.
 - 2026-10-21 (afternoon), issue #1: the search for IzzyKat is "A scene you watch".
 - 2026-10-21 (afternoon), issue #1: add a cut scene between parking at the river and the mini game: a long landscape view of
   prairie dogs popping up and down, that leads into the mini game.
+- 2026-10-21 (afternoon), issue #1: "Yellowstone is a scene you watch, until the Geyser, which is separate." "Keep the tuft."
 
 ## What you've decided
 
@@ -301,6 +302,8 @@ Every session reads this first and updates it last.
 - The search for IzzyKat is a scene you watch, not a game you play (2026-10-21; built).
 - Between parking by the river and whack-a-prairie-dog: a long view of prairie dogs popping up and down, leading into the
   field (2026-10-21; built).
+- Yellowstone is a scene you watch, up to Old Faithful; the geyser is separate (2026-10-21; the scene is built).
+- The little tuft of light fur on IzzyKat's chin, in the close-up under the U-Haul, stays (2026-10-21).
 - Blaine's gift: you said yes (2026-10-21). It's switched on in the sketch; talk about it lives in its own conversation on
   GitHub.
 - Everything else is yours to decide.
@@ -761,18 +764,46 @@ Every session reads this first and updates it last.
   beat plays through it. Guesses, labeled on the end screen: how it looks, the chirps, and how long it lasts. A link
   straight to it: `?level=4&tick=dog&at=town`.
 
+- 2026-10-21 (afternoon), sketch 2 changed (`gh-pages`, commit 8189305), from your answer: back on the road, to Yellowstone, a
+  scene you watch, right after the close-up of IzzyKat under the U-Haul. The drive, seen from the side as before, with
+  mountains on the horizon the whole way (snow on the peaks) and a ridge of pines below them; a meadow in front of the road,
+  no fences.
+  - "Back on the road, to Yellowstone." You slow and stop by a brown park sign: YELLOWSTONE NATIONAL PARK. "Yellowstone
+    National Park."
+  - Elk, cows grazing on the far side of the road, now and then looking up; you stop, and a bull stands right by the road on
+    the near side (big antlers, a dark mane, a pale rump). "Elk, grazing by the road." He stretches his neck out, muzzle to
+    the sky, antlers laid back, and bugles: a low call rising to a high whistle, then a few grunts, his breath puffing up.
+  - "Mountains." Closer mountains, bigger, with more snow, and pines along the road.
+  - You stop again. Two coyotes trot in along the meadow, and four photographers creep after them on tiptoe (vests full of
+    pockets, hats, long white lenses held up). The coyotes stop and look back; the photographers drop to one knee, and
+    CLICK, CLICK (a little glint off the lenses, and the click of shutters, a few at a time). "Coyotes." "And photographers,
+    annoyingly following them as if they're wolves." The coyotes trot on, and the photographers creep after them. "Those
+    idiots." You drive on, and they're still at it.
+  - Old Faithful: pale ground, steam rising out of it here and there; the U-Haul pulls up beside Old Faithful's cone (a
+    mound of pale rock, streaked orange where water runs off, steam rising from the vent), with an OLD FAITHFUL sign by the
+    road. "Old Faithful." Then the level 4 end screen ("Next, from your story: Old Faithful itself, which is separate.").
+  - Guesses, labeled on the end screen: how it all looks and sounds (the park sign, the mountains and their snow, the pines,
+    the elk, the bull and his bugle, the coyotes, the photographers and their long lenses, the clicks, the steam, and Old
+    Faithful's cone and sign). The words not in your story are guesses too ("Elk, grazing by the road." and the rest). A link
+    straight to it: `?level=4&tick=dog&at=yellowstone`.
+  - The bull's bugle is real, checked on the National Park Service's page on Yellowstone's elk (nps.gov/yell, "Elk"):
+    "Bulls bugle to announce their availability and fitness to females and to warn and challenge other bulls."
+
 ## Next to build (queued, in your order: Jim last)
 
-1. Back on the road, to Yellowstone: elk, mountains, coyotes and the photographers; Old Faithful almost going, then
-   exploding, with IzzyKat riding it.
+1. Old Faithful, separate from the Yellowstone scene (your word): it almost goes, almost goes again, takes a couple more,
+   then explodes in a fantastic fashion, with IzzyKat riding the final explosion. How it plays is the open question below.
 2. Reno: the motel, the canal maze, the old strip, the casino, the Sierra Nevada Pale Ales, craps, and Jim strolling in.
 3. The fight with Jim, where IzzyKat's super kitty powers (from the prairie dog and the coyote) win it.
 
 ## Open questions
 
-- Asked 2026-10-21 (afternoon): the little tuft of light fur on IzzyKat's chin in the close-up, a small clue: keep it, or
-  take it out so the final boss is a total surprise?
-- Asked 2026-10-21 (afternoon): Yellowstone next. A scene you watch, like the search, or something to play?
+- Asked 2026-10-21 (afternoon): Old Faithful is separate. Something to play, or its own scene? If it's to play, what are you
+  doing while it almost goes?
+- Answered 2026-10-21 (afternoon): keep the tuft on IzzyKat's chin (asked: keep it, or take it out so the final boss is a
+  total surprise?).
+- Answered 2026-10-21 (afternoon): Yellowstone is a scene you watch, until the geyser, which is separate (asked: a scene you
+  watch, or something to play?).
 - Said 2026-10-21 (afternoon): the regular tick's way of searching is real. Checked on the CDC's page "About Ticks and
   Tickborne Disease" (cdc.gov/ticks/about): "Ticks find their hosts by detecting animals' breath and body odors, or by
   sensing body heat, moisture, and vibrations." and, of ticks waiting on grass ("questing"), "They hold the first pair of
@@ -967,3 +998,8 @@ Every session reads this first and updates it last.
   view of prairie dogs popping up and down before the field. Built both in sketch 2, same link: the search for IzzyKat
   (each tick its own way) and the long view. Replied on issue #1 (comment 6323901325) with what's in it, the real fact about how ticks find a
   body, links straight to both, and two questions: keep the clue on her chin, and Yellowstone, a scene or something to play?
+- 2026-10-21 (afternoon): one message from you on issue #1: Yellowstone is a scene you watch, until the geyser, which is
+  separate; and keep the tuft. Built the Yellowstone scene in sketch 2, same link (the park sign, elk and a bull bugling,
+  mountains, coyotes and the photographers, then up to Old Faithful). Replied on issue #1 (comment 6324334117) with what's in
+  it, the real fact about the bugle, a link straight to it, and one question: Old Faithful, something to play or its own
+  scene?
