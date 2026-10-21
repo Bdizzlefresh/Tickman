@@ -6700,7 +6700,7 @@ muteBtn.addEventListener('click', () => {
 // marked "extras." (in interact, interact2, interact3, walkable2, walkable3, draw2, draw3 and update). Keep this
 // section, and those lines, through any rework.
 // =====================================================================================================
-const EXTRAS = { on: false, scooter: true, moonPie: true, norm: true };
+const EXTRAS = { on: true, scooter: true, moonPie: true, norm: true };
 const extras = {
   parts: [],
   look(fx, fy) { return this.parts.some(p => p.look && p.look(fx, fy)); },      // tapped A, facing (fx, fy)
