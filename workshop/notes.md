@@ -136,12 +136,17 @@ Every session reads this first and updates it last.
     final chapter of the story.
   - At the last camp, by Gooseberry Falls: when Blaine starts playing, the animals and the tick talk about riding salmon,
     and how that must be impossible, the way a group of stoners would, in an esoteric way.
+- 2026-10-21 (later), issue #1, one message:
+  - Inside the U-Haul, a tortoiseshell cat looking out the window at you, waiting.
+  - The only boss left will be an iteration of the egg sack, more than likely in the redwoods, not in a cornfield. The
+    other bosses are gone.
 
 ## What you've decided
 
 - The southern Bell is Isabella, a person. (Sketch 1 guessed a flower; that guess was wrong.)
 - The whole storyline above: the sunroom, the three ticks and what each gives, the deer
-  taking Isabella, the two bosses, the mounts, the cornfield and the egg sack.
+  taking Isabella, the two bosses, the mounts, the cornfield and the egg sack. (Since changed in places, below: the
+  two bosses are gone, and the egg sack is likely in the redwoods.)
 - The choice of tick is made once, before leaving the sunroom.
 - A level-based game, seen from above, like Pokémon Red.
 - Level 1's room is a one-bedroom college apartment: empty Rolling Rock bottles, a puked-on
@@ -205,8 +210,11 @@ Every session reads this first and updates it last.
 - At the last camp, by Gooseberry Falls (2026-10-21; built): the animals and you talk, like stoners, about riding salmon,
   and how that must be impossible.
 - The story's order (changed 2026-10-21): after the North Shore comes Mexico, as you wrote it above (built as level 3).
-  Then the final chapter: driving West in the U-Haul. Where the coffee roaster, the second boss and the cornfield go now
-  isn't settled (asked, below).
+  Then the final chapter: driving West in the U-Haul.
+- The bosses (changed 2026-10-21, later): the coffee roaster and the second boss (the crumbling American middle class and
+  high rent gouging) are gone. The only boss left is an iteration of the egg sack, more than likely in the redwoods, not
+  in a cornfield. (The two fights on the North Shore, the Gales of November and the Edmund Fitzgerald, are still there.)
+- At Lake Itasca, inside the U-Haul: a tortoiseshell cat, looking out the window at you, waiting. (2026-10-21; built.)
 - Everything else is yours to decide.
 
 ## What's been built
@@ -483,12 +491,28 @@ Every session reads this first and updates it last.
     mazes, the words at the falls, how the boulder pushing works). Test hooks for checks: `?level=3&tick=dog`, plus
     `&at=club1`, `club2`, `clubB`, `cab`, `akumal`, `rock`, `arch`, `hug`, `bay` or `itasca`; for level 2, `&at=camp3`
     (the falls) and `&at=top` (the view).
+- 2026-10-21 (later), sketch 2 changed (`gh-pages`, commit 3f31a62), from your one message:
+  - At Lake Itasca, a tortoiseshell cat sits in the U-Haul's cab window as you ride up (small, blinking now and then).
+    After "A U-Haul is waiting for you, to drive West.", it cuts in close: the cab's side window, the far window and the
+    pines and the lake behind her, and the cat looking straight out at you, paws on the sill. Black and orange in patches
+    (darker on one side of her face, orange on the other, an orange blaze down her nose), gold eyes, whiskers, a slow
+    blink now and then, an ear flick, the tip of her tail flicking. "Inside the U-Haul, a tortoiseshell cat is looking
+    out the window at you." "Waiting." Then "The final chapter." The level 3 end screen mentions her too.
+  - All three end screens: "The only boss left: an iteration of the egg sack, more than likely in the redwoods, not in
+    a cornfield. The other bosses are gone." (In place of the "not placed yet" line.)
+  - Guesses, labeled on the level 3 end screen: how the cat looks (her patches, her eyes, her tail), and the close-up.
+    She's a "she" because tortoiseshells are nearly always female (checked: the orange and black come from a gene on the
+    X chromosome, so the coat needs two X's; males are rare. Source: the Wikipedia article "Tortoiseshell cat"). A test
+    hook for checks: `?level=3&at=cat` starts at the close-up.
 
 ## Open questions
 
-- Asked 2026-10-21: your first story had three more stops, the coffee roaster, the rent-gouging boss (the crumbling
-  American middle class and high rent gouging), and the cornfield with the egg sack. Do they happen out West, in the
-  final chapter, or are they gone?
+- Asked 2026-10-21 (later): does the cat have a name? And, when you're ready, what happens on the drive West, before the
+  redwoods?
+- Answered 2026-10-21 (later): the coffee roaster and the second boss are gone; the only boss left is an iteration of the
+  egg sack, more than likely in the redwoods. Not asked yet: what the egg sack fight is like there (the deer charging,
+  the baby ticks, the "specialized baby tick units" keeping Isabella safe, as in your first story?), and whether the
+  cat comes along West.
 - Said 2026-10-21, not asked: the "tortoise" in Akumal bay are drawn as sea turtles, swimming. Who Jim is, and "the place
   where the dice never remember": used word for word, not explained. All three ticks mind-control Brudda Blaine the same
   way at Palisade Head (a guess; only the regular tick had mind control before).
@@ -620,3 +644,7 @@ Every session reads this first and updates it last.
   2, same link: the falls talk, the flag and the fall off Palisade Head, and level 3, Mexico, with a "Skip to level 3"
   button. Replied on issue #1 with what's in it, and one question: where do the coffee roaster, the second boss and the
   cornfield go now?
+- 2026-10-21 (later): one message from you on issue #1: a tortoiseshell cat in the U-Haul, and the bosses (only the egg
+  sack is left, likely in the redwoods). Built the cat at Lake Itasca in sketch 2, same link, and updated the end
+  screens. Replied on issue #1 with what changed, and two questions: does she have a name, and what happens on the drive
+  West?
