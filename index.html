@@ -242,7 +242,7 @@ a { color:var(--accent); }
     <p class="small">Guesses in level 3: the salmon ride (how it looks, the signs on the bank); the bridge over the bay
       (in the evening), the row of buildings, how the club looks and bounces, the way down the bridge and along the road,
       and the music heard from outside; the club, and both maze floors (the crowd as the walls, the bar, the booths, the
-      railing); how Shawn, Karill and the promoters look; what Shawn says; the club music (original Latin house, with
+      railing); how Shawn, Karill and the promoters look; what Shawn says; the dance floor after the blackout (your dancing, the confetti); the club music (original Latin house, with
       drops, and voices chanting "¡Baila!", "¡Oye!" and "¡Ey!", made by the game itself); the cab and the bridge, and
       the driver's Spanish; Akumal, and its maze;
       the music there (original, a guitar); how Brudda Blaine looks on foot, and his yell; the restaurant; the
@@ -4527,7 +4527,7 @@ const KARILL ={ x: 13, y: 2 }, PROMOS = [{ x: 12, y: 2, k: 0 }, { x: 14, y: 2, k
 const BRAYDON = { x: 15, y: 1 }, ROCK_FROM = { x: 3, y: 10 };
 let built3 = false, scene3 = null;
 const NEVER = -1e9;  // a moment that hasn't happened
-const L3 = { shawn: false, shawnSaid: 0, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
+const L3 = { dance: false, shawn: false, shawnSaid: 0, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
   steps: 0, yells: 0, yellT: NEVER, restaurant: false, rock: { x: 3, goal: 3, met: false, done: false },
   locals: [], found: false, bl: null, said: NEVER };
 
@@ -5865,6 +5865,11 @@ function draw3(cx, cy) {
     const X = Math.round(ppx) - cx, Y = Math.round(ppy) - cy, step = P.moving ? (Math.floor(P.anim * 8) % 2 ? 1 : 2) : 0;
     if (P.blaine && extras.rider(X, Y, step)) return;
     if (P.blaine) drawBlaine(X, Y, P.facing, step);
+    else if (L3.dance && club) {  // dancing: a hop on every beat, spinning round, confetti coming down
+      const bt = clubBeats(), hop = Math.round(Math.sin(wrapX(bt, 1) * Math.PI) * 3);
+      drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], X, Y - hop, ROT[['up', 'right', 'down', 'left'][wrapX(Math.floor(bt), 4)]], false, wrapX(Math.floor(bt * 2), 2));
+      for (let i = 0; i < 8; i++) { ctx.fillStyle = ['#ff4fa8', '#3fe0ff', '#f2c94c', '#7ae82a'][i % 4]; ctx.fillRect(Math.round(X + 8 + Math.sin(time * 2 + i * 1.7) * 13), Math.round(Y - 14 + wrapX(time * 18 + i * 7, 34)), 1, 2); }
+    }
     else drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], X, Y, ROT[P.facing], false, step ? step - 1 : 0);
   }]);
   extras.sprites(list, cx, cy, null);
@@ -6061,7 +6066,7 @@ async function level3(k) {
   closeBox(); box.resolve = null; box.ask = null;
   level = 3; useArea('club1');
   lock = 1; phase = 'l3intro'; vista = null; night = null; battle = null; panels(false); hud(null);
-  Object.assign(L3, { shawn: false, shawnSaid: 0, floor2: false, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
+  Object.assign(L3, { dance: false, shawn: false, shawnSaid: 0, floor2: false, karillSeen: false, wave: false, karill: false, promo: NEVER, shot: NEVER, haze: NEVER,
     steps: 0, yells: 0, yellT: NEVER, restaurant: false, found: false, bl: null, said: NEVER });
   Object.assign(L3.rock, { x: ROCK_FROM.x, goal: ROCK_FROM.x, met: false, done: false });
   L3.locals = [{ kind: 0, dx: -1, min: 1 }, { kind: 1, dx: 0, min: 2 }, { kind: 2, dx: 1, min: 3 }]
@@ -6183,6 +6188,26 @@ async function karillScene() {
   await say(['Then everything goes a little hazy.']);
   await fadeTo(1, 2.2);
   blur(false); L3.haze = NEVER; musicStop(); P.hidden = true;
+  await wait(1.0);  // a blackout
+  danceFloor();
+}
+async function danceFloor() {  // you come back on the dance floor, dancing, partying. Brudda Blaine comes out of the crowd
+  phase = 'scene'; useArea('club1'); L3.bl = null; L3.dance = true;
+  Object.assign(P, { tx: 15, ty: 3, nx: 15, ny: 3, moving: false, t: 0, facing: 'right' }); P.hidden = false;
+  camMode = 'follow'; pan = null; [cam.x, cam.y] = playerCam();
+  musicStop(); musicStart(CLUB_STYLE);  // you come back right on a drop
+  await fadeTo(0, 0.5);
+  await wait(1.2);
+  await say(['You come back. On the dance floor, dancing.', 'Partying.']);
+  L3.bl = { x: 18, y: 3, path: [], walkT: 0, face: -1, facing: 'left', gone: false, fadeT: NEVER };
+  await walkTo(L3.bl, [[17, 3]], 2.2);
+  await say(['Brudda Blaine comes out of the crowd.', 'Brudda Blaine: "Where have you been Brudda!? We have to go! Last Taxi out!"']);
+  await say(['You dance, with the music, toward him.']);
+  await stepTo(16, 'right');
+  await wait(0.9);
+  await fadeTo(1, 0.5);  // and black out again
+  L3.dance = false; L3.bl = null; musicStop(); P.hidden = true;
+  await wait(0.6);
   cab();
 }
 async function cab() {
@@ -6344,6 +6369,7 @@ const JUMP3 = {
     Object.assign(P, { tx: 19, ty: 13, nx: 19, ny: 13, facing: 'up' }); P.hidden = false;
     musicStart(CLUB_STYLE); [cam.x, cam.y] = playerCam(); fadeTo(0, 0.5); hud(clubHud()); phase = 'club'; lock = 0; },
   cab: () => cab(),
+  dance: () => { Object.assign(L3, { floor2: true, shawn: true, karillSeen: true, karill: true, promo: time }); P.hidden = true; danceFloor(); },
   akumal: () => akumal(),
   rock: () => townAt(5, 10, 'left'),
   arch: () => townAt(15, 5, 'up', true),
