@@ -205,6 +205,18 @@ Every session reads this first and updates it last.
 - 2026-10-21 (afternoon), issue #1: add a cut scene between parking at the river and the mini game: a long landscape view of
   prairie dogs popping up and down, that leads into the mini game.
 - 2026-10-21 (afternoon), issue #1: "Yellowstone is a scene you watch, until the Geyser, which is separate." "Keep the tuft."
+- 2026-10-21 (evening), issue #1, one message:
+  - Get rid of the mountains scene, and put the mountains in the background of the elk scene.
+  - The scene for the geyser is playable. You park in a large parking lot after pulling into Yellowstone. The tick steps
+    out of the U-Haul and holds Izzy up to the sky, with the sign "Yellowstone National Park" behind. Blaine is cheering
+    too, in the photo. It's taken by a group of girls who are obviously smitten with the tick and his allure.
+  - You walk through smaller geysers on a hike, and chug a beer or two. Then you see the smoke in the distance and know
+    you've made it. Make that a small cut scene where the geyser tricks you multiple times.
+  - When it finally explodes, in a fantastical way, Izzy is riding it and launches far into the air. Blaine and the tick
+    exchange quizzical glances, and acknowledge that IzzyKat might be indestructible. She lands at your feet, and you all
+    walk back to the U-Haul.
+  - Then driving through the barren wastelands, listening to Kyuss, "the desert rock band", in Utah, and then Mac Miller,
+    the album Circles, in Nevada. You arrive in Reno, and from there, it is as you said earlier.
 
 ## What you've decided
 
@@ -304,6 +316,14 @@ Every session reads this first and updates it last.
   field (2026-10-21; built).
 - Yellowstone is a scene you watch, up to Old Faithful; the geyser is separate (2026-10-21; the scene is built).
 - The little tuft of light fur on IzzyKat's chin, in the close-up under the U-Haul, stays (2026-10-21).
+- The mountains are behind the elk now; the mountains scene is gone (2026-10-21, evening; built).
+- Old Faithful (2026-10-21, evening; all built): you park in a large parking lot; the picture in front of the park sign,
+  you holding IzzyKat up to the sky, Brudda Blaine cheering, taken by a group of girls smitten with you and your allure;
+  a hike through the smaller geysers, something to play, with a beer or two; the steam in the distance; a small cut scene
+  where the geyser tricks you, again and again, then explodes with IzzyKat riding it, far into the air; the quizzical
+  glances (she might be indestructible); she lands at your feet; back to the U-Haul.
+- Then the drive to Reno (2026-10-21, evening; built): the barren wastelands, Kyuss in Utah, Mac Miller's Circles in
+  Nevada. From Reno on, as you wrote it before (see "Next to build").
 - Blaine's gift: you said yes (2026-10-21). It's switched on in the sketch; talk about it lives in its own conversation on
   GitHub.
 - Everything else is yours to decide.
@@ -789,17 +809,83 @@ Every session reads this first and updates it last.
   - The bull's bugle is real, checked on the National Park Service's page on Yellowstone's elk (nps.gov/yell, "Elk"):
     "Bulls bugle to announce their availability and fitness to females and to warn and challenge other bulls."
 
+- 2026-10-21 (evening), sketch 2 changed (`gh-pages`, commit 067daa5), from your one message:
+  - The mountains scene is gone. The elk scene has the closer mountains (bigger, more snow) behind the elk.
+  - After the coyotes, the parking lot, from above: two rows of spaces, nearly all full (cars, two campers), the park sign
+    on the grass at the top. The U-Haul drives in and parks across four spaces. "You park in a large parking lot." You
+    and Brudda Blaine step out, IzzyKat with you. "You step out of the U-Haul, with IzzyKat."
+  - The picture, seen as the camera sees it: a big wooden sign, YELLOWSTONE NATIONAL PARK, the mountains and pines behind.
+    You lift IzzyKat (dangling, held under her front legs) from your chest up into the sky, rays of light round her, a
+    rising chime. "You hold IzzyKat up to the sky." Brudda Blaine throws his arms up, hopping, "WOO!" "Brudda Blaine
+    cheers." Three girls come in at the bottom, seen from behind (blond with a pink top; brown hair with a teal top, holding
+    up the camera; black hair, a yellow top and a sun hat), swaying, hearts floating up off them, a giggle. "A group of
+    girls is taking the picture." "They're obviously smitten with you, and your allure." A click, a flash, and there's
+    the picture, in a white border, over the parking lot. "IzzyKat goes back in the U-Haul, for a nap."
+  - The hike, to play, seen from above: a wooden boardwalk winding up through a geyser basin (pale ground, hot springs,
+    blue in the middle with orange and brown round them, steam rising, pines along the sides). "A hike, through the
+    smaller geysers." "Stay on the boardwalk." "The little geysers bubble, then blow. Wait for them, then go." Five little
+    geysers sit by the boardwalk. Each one is quiet for a couple of seconds, bubbles for a second (the boardwalk next to it
+    flickers, and a gurgle), then blows for a moment (a column of water, spray all round, a hiss). Get caught in the spray
+    and you're knocked back down the boardwalk, out of its reach ("HOT!"); the first time: "Hot! The spray knocks you
+    back." "Wait for it to stop, then go." Step off the boardwalk and: "Stay on the boardwalk." Brudda Blaine walks one step
+    behind you.
+  - Two benches. The first: "A bench." "Brudda Blaine pulls two beers out of his jacket." "Chug it! Tap A, fast." A beer
+    meter at the top; each tap is a gulp; he chugs his alongside; then a burp. "Ahh." The second: 'A bench. Brudda Blaine:
+    "One more?"' Yes: chug again ("Ahh. Two beers."). No: "Brudda Blaine drinks yours, too."
+  - At the top of the boardwalk, the far side of the basin: a line of pines, Old Faithful's cone, steam rising off it.
+    "Steam, in the distance." "Old Faithful. You've made it."
+  - Old Faithful, a small cut scene, letterboxed, seen from the side: the cone, a low mound of pale rock streaked orange,
+    steaming; a crowd of nine on a bench in front of it, seen from behind; you and Brudda Blaine on the boardwalk. "Old
+    Faithful." "A crowd waits on the benches." It gurgles, splashes a little, the crowd stands, and it dies down (a groan):
+    "It almost goes." A bigger splash, Brudda Blaine hopping, "HERE IT GOES!", and nothing: "It almost goes, again." Two
+    more little ones: "It takes a couple more." Then a rumble, the ground shakes, and it goes: a huge column of water, spray
+    everywhere, steam billowing, a rainbow in the mist, sparkles, the crowd on its feet, a roar. "It explodes, in a
+    fantastic fashion." Sitting on the very top: IzzyKat. "Riding it: IzzyKat." She shoots up out of sight, and a twinkle
+    in the sky. "She launches far into the air." It dies down. Brudda Blaine turns to you; question marks, back and forth.
+    "Brudda Blaine and you exchange quizzical glances." 'Brudda Blaine: "IzzyKat might be indestructible."' You nod. "You
+    nod. She might be." A falling whistle, and she drops out of the sky, plop, right at your feet, dripping, purring.
+    "She lands at your feet." "Wet, and purring, as if nothing happened." You all walk off. "You all walk back to the
+    U-Haul."
+  - The drive to Reno, seen from the side as before, music notes floating out of the cab window:
+    - Utah: pale desert, white salt, flat-topped mesas, far pale mountains, dead shrubs, a tumbleweed blowing across,
+      cracked ground; a blue UTAH sign. "Back on the road." "Through the barren wastelands." "Utah. On the stereo: Kyuss,
+      the desert rock band." The music: original desert rock, slow and heavy, a fuzzed-out guitar riff in D with the bass
+      right under it; the riff alone first, then big drums with a ride.
+    - Nevada: the sun going down ahead, purple ranges, sagebrush; a blue NEVADA sign. "Nevada. On the stereo: Mac Miller,
+      Circles." The music: original, mellow, soft drums with a lazy swing, a warm electric piano, a round bass, a little
+      celesta line, a little record crackle.
+    - Reno, at night: stars, dark mountains, the city lit up (towers with lit windows and neon on top, a glow over it), a
+      purple RENO sign with bulbs chasing round it, street lights going by, headlights. "You arrive in Reno." Then the
+      level 4 end screen ("Next, from your story: Reno.").
+  - Guesses, labeled on the end screen: how all of it looks and sounds; the U-Haul across four spaces; three girls, and
+    how they look; the picture; IzzyKat back in the U-Haul for a nap; the hike's map; how the little geysers work and
+    knock you back; the benches, the beers, chugging by tapping A; the crowd; how many times it tricks you; the eruption,
+    the rainbow, her ride and the twinkle; the nod; the drive's look; the music; the words not in your message.
+  - Links for checks: `?level=4&tick=dog&at=lot` (the parking lot), `&at=photo`, `&at=hike`, `&at=geyser` (Old Faithful),
+    `&at=reno` (the drive to Reno). `&at=yellowstone` still starts at the park sign.
+  - Checked: the music levels match the other tracks.
+
 ## Next to build (queued, in your order: Jim last)
 
-1. Old Faithful, separate from the Yellowstone scene (your word): it almost goes, almost goes again, takes a couple more,
-   then explodes in a fantastic fashion, with IzzyKat riding the final explosion. How it plays is the open question below.
-2. Reno: the motel, the canal maze, the old strip, the casino, the Sierra Nevada Pale Ales, craps, and Jim strolling in.
-3. The fight with Jim, where IzzyKat's super kitty powers (from the prairie dog and the coyote) win it.
+1. Reno: the motel, the canal maze (like the LA river) to the old strip, the casino, the Sierra Nevada Pale Ales, craps
+   (win big, lose, win big, lose), and Jim strolling in.
+2. The fight with Jim, where IzzyKat's super kitty powers (from the prairie dog and the coyote) win it.
 
 ## Open questions
 
-- Asked 2026-10-21 (afternoon): Old Faithful is separate. Something to play, or its own scene? If it's to play, what are you
-  doing while it almost goes?
+- Asked 2026-10-21 (evening): in Reno, is the canal maze something you walk, like Akumal? And at craps, do you roll the dice
+  yourself, or watch?
+- Said 2026-10-21 (evening), checked: Old Faithful really does play before it erupts. The National Park Service's exhibit
+  page on predicting it (home.nps.gov/features/yell/ofvec/exhibits/eruption/prediction/predict7.htm): "Old Faithful 'plays' prior to an eruption with
+  splashes of boiling water that may reach as high as 20 feet (6 m)." "A full eruption usually begins from this play."
+- Said 2026-10-21 (evening), checked: Kyuss formed in Palm Desert, California, in 1987, and are counted among the pioneers
+  of stoner rock (Wikipedia, "Kyuss"); so in the game they're on the stereo while you cross Utah. Checked, not used:
+  Circles came out on January 17, 2020, after Mac Miller died, and Jon Brion completed its production (Wikipedia,
+  "Circles (Mac Miller album)").
+- Not asked: IzzyKat goes back in the U-Haul after the picture (a guess), so how she ends up riding the geyser stays a
+  mystery. Her secret at Yellowstone (she ate a coyote, from your story) isn't shown or said.
+- Answered 2026-10-21 (evening): Old Faithful is playable: the hike to it (asked: something to play, or its own scene?).
+  The tricks themselves are a small cut scene.
 - Answered 2026-10-21 (afternoon): keep the tuft on IzzyKat's chin (asked: keep it, or take it out so the final boss is a
   total surprise?).
 - Answered 2026-10-21 (afternoon): Yellowstone is a scene you watch, until the geyser, which is separate (asked: a scene you
@@ -1003,3 +1089,8 @@ Every session reads this first and updates it last.
   mountains, coyotes and the photographers, then up to Old Faithful). Replied on issue #1 (comment 6324334117) with what's in
   it, the real fact about the bugle, a link straight to it, and one question: Old Faithful, something to play or its own
   scene?
+- 2026-10-21 (evening): one message from you on issue #1: the mountains behind the elk, and Old Faithful through to Reno.
+  Built all of it in sketch 2, same link: the mountains behind the elk, the parking lot, the picture, the hike (to play,
+  with two beers), Old Faithful's tricks and eruption with IzzyKat, and the drive to Reno. Replied on issue #1 (comment
+  6330228925) with what's in it, the real fact about Old Faithful's plays, where Kyuss are from, links straight to each
+  part, and two questions about Reno: the canal maze, and craps.
