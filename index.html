@@ -271,8 +271,8 @@ a { color:var(--accent); }
     <p id="end4Text"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>The fight with Jim, on the craps table, where IzzyKat's powers bring you back.</li>
-      <li>The Truckee River, and the realm of California: the deer, Isabella, the egg sac, and Isabella free at last.</li>
+      <li>The Truckee River: Jim melts into it; the cigarette as long as time itself; you and Brudda Blaine walk in.</li>
+      <li>The realm of California: the deer, Isabella, the egg sac, and Isabella free at last.</li>
       <li>The very end, as you want it.</li>
     </ol>
     <p class="small">Guesses in level 4 so far: how the oil fields look (the oil rigs drawn as nodding pumps, with drilling
@@ -294,7 +294,7 @@ a { color:var(--accent); }
       Faithful: the crowd on the benches, how many times it tricks you, the eruption (the rainbow, the sparkles), her
       ride, the glances, the nod, and her landing. The drive to Reno: the wastelands, the signs, the tumbleweed, the
       sunset, Reno at night, and the music (original, in the spirit of the bands you named; real recordings can't go in
-      the game). The words not in your story are guesses too. In Reno: how it all looks and sounds (the motel, the Denny's, the fence, the canals and what's in them, the old strip, the casino, the slot machines, the table, the dealer, Jim's look); the craps table's rules are the real ones for the pass line, but the bets (10, or all of it), the buy-in, how many free drinks, when he arrives, and how many rounds he plays are guesses; and the words not in your story.</p>
+      the game). The words not in your story are guesses too. In Reno: how it all looks and sounds (the motel, the Denny's, the fence, the canals and what's in them, the old strip, the casino, the slot machines, the table, the dealer, Jim's look); the craps table's rules are the real ones for the pass line, but the bets (10, or all of it), the buy-in, how many free drinks, when he arrives, and how many rounds he plays are guesses; and the words not in your story. The fight: all of it but your words (how he throws the dice and spins the chips, the hands and how fast they close, your hearts, his energy, how you die, the spirits, the hippie glow, the giant swing, turning the dice over to win, how he melts).</p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -5855,7 +5855,7 @@ function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown,
     lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful,
-    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps })[scene3.kind]();
+    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -6149,6 +6149,7 @@ function update3(dt) {
   if (S && S.kind === 'faithful') updateFaithful();     // Old Faithful (her purr, after)
   if (S && S.kind === 'canal') updateCanal(dt);         // Reno: the canals,
   if (S && S.kind === 'craps') updateCraps();           // and craps
+  if (S && S.kind === 'fight') updateFight(dt);         // and the fight with Jim
 }
 
 // ---- level 3: the scenes ----
@@ -8532,6 +8533,7 @@ async function toReno() {
   await say(['You arrive in Reno.']);
   await wait(0.6);
   await reno();
+  await jimFight();
 }
 // ---- the stereo: all original, in the spirit of what you named (no real recordings).
 //   Utah, desert rock: slow and heavy, a fuzzed-out guitar riff in D, the bass right under it, big drums with a ride
@@ -9293,6 +9295,509 @@ function enlargeSound() {  // a low rumble, rising, and a boom
   noiseHit(t, 'lowpass', 300, 0.7, 0.05, 1.8, 0, master); noiseHit(t + 1.8, 'lowpass', 200, 0.7, 0.12, 0.9, 0, master);
 }
 function perkUp() { if (!ac || muted) return; [392, 523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(master, 'triangle', f, ac.currentTime + i * 0.06, 0.18, 0.03)); }
+
+// ---- the fight with Jim (your message), on a large craps table, seen from above. Jim, enlarged, leans over the far
+// end. He throws the die that never lie at you, spins gambling chips like frisbees, and brings down his hands, very dry,
+// with scleroderma, round you: they slowly close, and you must jump out of them (A). The further in, the faster they
+// close. You both die. IzzyKat, who ate a prairie dog and a coyote, sends their spirits into you, and you come back:
+// the true hippiest of hippies of them all. Then the second phase: Jim, even larger, swings down like a giant, and
+// IzzyKat, alongside you, never attacking, dodges it all, bored. The way to beat him (your ask for creativity; a guess):
+// his dice land and stay; walk up to one and tap A to turn it over. The top and the bottom of a die always add up to
+// seven, so whatever a die shows you, it hides something else. Show him seven times, and his philosophy shatters: the die
+// do lie. He disintegrates, and melts away, toward the Truckee River. (How all of it looks, sounds and plays: guesses.) ----
+const FT = { x0: 14, y0: 56, x1: 146, y1: 126 };  // the felt you can stand on
+const FIGHT_SPEED = { dog: 72, regular: 62, human: 54 };
+const JIM_CRACK = ['NO.', 'THE DIE...', 'NEVER...', 'LIE?', 'THEY...', 'THEY LIE?', 'THE DIE LIE.'];
+const HAND = { s: '#efdccb', d: '#c9ab95', e: '#8a6a58', w: '#fffaf2', n: '#f2e2dc' };  // dry, tight, shiny skin; cracks
+const SPIRIT_DOG = ['..XX..', '.XXXX.', '.XoXo.', '..XX..', '.XXXX.', 'XXXXXX', '.XXXX.', '.XXXX.', '.X..X.'];  // standing up
+const SPIRIT_YOTE = ['..........X.X.', '.........XXXX.', '.........XoXXX', 'X.......XXXX..', '.XXXXXXXXXX...', '..XXXXXXXXX...',
+  '..XXXXXXXXX...', '..X.X...X.X...', '..X.X...X.X...'];  // trotting, side on
+let fightCanvas = null;
+const fdist = (a, b, x, y) => Math.hypot(a - x, b - y);
+function newFight(ph) {
+  return { kind: 'fight', t0: time, ph, live: false, done: null, el: 0, final: false, barrage: null, dead: null, hip: ph === 2,
+    me: { x: 80, y: 112, face: 'up', jump: null, inv: NEVER, hurt: NEVER, walkT: 0, moving: false },
+    bl: { x: 98, y: 114, face: 'up', walkT: 0, moving: false, down: false },
+    cat: ph === 2 ? { x: 62, y: 116, hop: null, yawn: NEVER, lick: NEVER, from: null } : null,
+    hp: 3, energy: 1, lies: 0, dice: [], chips: [], hands: [], swings: [], pops: [], spirits: [], bits: null,
+    next: { dice: time + 1.2, chip: time + 3.5, hand: time + 6, swing: time + 4 }, shake: NEVER, flash: NEVER, perk: NEVER, grow: null, crack: NEVER };
+}
+function fightState() {
+  const S = scene3; if (!S || S.kind !== 'fight') return null;
+  return { phase: S.ph, live: S.live, hp: S.hp, energy: Math.round(S.energy * 100) / 100, lies: S.lies, dead: !!S.dead, final: S.final,
+    me: [S.me.x, S.me.y], jumping: !!S.me.jump, inv: time < S.me.inv,
+    dice: S.dice.map(d => ({ x: d.x, y: d.y, tx: d.tx, ty: d.ty, land: d.t0 + d.dur - time, rest: d.landed && !d.gone && !d.flip, landed: d.landed })),
+    chips: S.chips.map(c => ({ x: c.x, y: c.y, vx: c.vx, vy: c.vy })),
+    hands: S.hands.map(h => ({ x: h.cx, y: h.cy, r: handR(h), closing: time >= h.t0 + h.tele && !h.lift, inside: fdist(S.me.x, S.me.y, h.cx, h.cy) < handR(h) })),
+    swings: S.swings.map(w => ({ x: w.x, w: w.w, slam: w.t0 + w.tele - time })), cat: S.cat ? [S.cat.x, S.cat.y] : null };
+}
+const handR = h => { const k = clamp((time - h.t0 - h.tele) / h.close, 0, 1); return h.r0 * (1 - k) + 3 * k; };
+function fightPop(s, x, y, c, life = 1.2) { scene3.pops.push({ s: String(s), x, y, t0: time, c, life }); }
+
+// ---- the attacks ----
+function jimThrow(S) {  // two dice, at you (a little ahead of you, if you're moving)
+  const m = S.me, d = curDir(), lead = d && S.live ? DIRS[d].map(v => v * 10) : [0, 0];
+  const tx = clamp(m.x + lead[0] + (Math.random() - 0.5) * 12, FT.x0 + 4, FT.x1 - 4), ty = clamp(m.y + lead[1] + (Math.random() - 0.5) * 10, FT.y0 + 4, FT.y1 - 4);
+  const hx = S.ph === 2 ? 80 + (Math.random() < 0.5 ? -26 : 26) : 80 + (Math.random() < 0.5 ? -18 : 18), hy = 44;
+  const dur = S.ph === 2 ? 1.0 : clamp(1.0 - S.el * 0.004, 0.72, 1.0) * (S.barrage ? 0.85 : 1);
+  for (let i = 0; i < 2; i++) {
+    const x = clamp(tx + (i ? 9 : 0), FT.x0 + 4, FT.x1 - 4), y = clamp(ty + (i ? 5 : 0), FT.y0 + 4, FT.y1 - 4);
+    S.dice.push({ x0: hx, y0: hy, tx: x, ty: y, x: hx, y: hy, t0: time + i * 0.08, dur, face: 1 + Math.floor(Math.random() * 6),
+      landed: false, rest: S.ph === 2 ? 9 : 0.9, gone: null, flip: null, dx: (x - hx) / Math.max(1, Math.hypot(x - hx, y - hy)), dy: (y - hy) / Math.max(1, Math.hypot(x - hx, y - hy)) });
+  }
+  rattle();
+}
+function spinChip(S) {  // a gambling chip, spun like a frisbee, curving across the table
+  const m = S.me, fromL = Math.random() < 0.5, sx = fromL ? 34 : 126, sy = 46;
+  const a = Math.atan2(m.y - sy, m.x - sx), sp = (S.ph === 2 ? 70 : 64 + S.el * 0.6) * (S.barrage ? 1.25 : 1);
+  S.chips.push({ x: sx, y: sy, x0: sx, y0: sy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, t0: time, amp: 10 + Math.random() * 8, ph: Math.random() * 6, spin: 0,
+    c: ['#c8202a', '#2a8a4a', '#1a1a1a', '#3a5ac8'][Math.floor(Math.random() * 4)] });
+  whoosh(0.5, 0.03);
+}
+function dropHand(S, who) {  // a hand comes down round you; it closes, slowly (faster, the further in)
+  const t = who || S.me, r0 = 24;
+  const close = S.final ? 0.45 : S.barrage ? 0.8 : S.ph === 2 ? 1.8 : clamp(2.8 - S.el * 0.045, 1.0, 2.8);
+  S.hands.push({ cx: clamp(t.x, FT.x0 + 6, FT.x1 - 6), cy: clamp(t.y, FT.y0 + 6, FT.y1 - 6), r0, t0: time, tele: S.final ? 0.25 : 0.6, close, lift: null, caught: false, ang: Math.random() * 6.28, flakes: [] });
+  handRustle();
+}
+function giantSwing(S) {  // phase two: he swings down like a giant, across a strip of the table
+  const x = clamp(S.me.x + (Math.random() - 0.5) * 16, FT.x0 + 15, FT.x1 - 15);
+  S.swings.push({ x, w: 30, t0: time, tele: 1.05, slammed: false });
+  growl(0.6);
+}
+
+// ---- you ----
+function fightA() {
+  const S = scene3; if (!S || S.kind !== 'fight' || !S.live || box.active) return;
+  const m = S.me;
+  if (S.ph === 2 && !m.jump && S.lies < 7 && !S.flipping) {  // turn a die over, if you're right by one
+    const d = S.dice.filter(d => d.landed && !d.gone && !d.flip).sort((a, b) => fdist(a.x, a.y, m.x, m.y) - fdist(b.x, b.y, m.x, m.y))[0];
+    if (d && fdist(d.x, d.y, m.x, m.y) < 13) { flipDie(S, d); return; }
+  }
+  if (m.jump || S.final) return;
+  const dir = curDir() || m.face, [dx, dy] = DIRS[dir];
+  m.jump = { t0: time, fx: m.x, fy: m.y, tx: clamp(m.x + dx * 32, FT.x0, FT.x1), ty: clamp(m.y + dy * 32, FT.y0, FT.y1) };
+  m.face = dir; whoosh(0.3, 0.035);
+}
+function hurt(S) {
+  const m = S.me;
+  if (time < m.inv || m.jump || S.dead) return;
+  S.hp--; m.inv = time + 1.3; m.hurt = time; S.flash = time; thump(0.08);
+  fightPop('OW', m.x, m.y - 14, '#c8202a', 0.9);
+  if (S.hp <= 0) {
+    if (S.ph === 1) { S.live = false; S.dying = true; return; }
+    S.hp = 3; fightPop(Math.random() < 0.5 ? 'WEE-OO!' : 'AWOO!', m.x, m.y - 22, '#3a8ab8', 1.6); perkUp();  // the spirits get you back up
+  }
+}
+async function flipDie(S, d) {
+  d.flip = { t0: time, from: d.face, to: 7 - d.face };
+  S.lies++; S.crack = time; S.flipping = true; flipClick();
+  const n = S.lies;
+  await wait(0.4);
+  S.flipping = false;
+  d.face = d.flip.to; crackSound(n);
+  fightPop(JIM_CRACK[Math.min(n, 7) - 1], 80, 6, '#2b2118', 2.2);
+  hud('Turn his dice over: ' + n + ' of 7');
+  if (n === 1) {
+    S.live = false;
+    await say(['It said ' + d.flip.from + '. Underneath, it says ' + d.flip.to + '.', 'The top and the bottom of a die always add up to seven.',
+      'Whatever a die shows you, it hides something else.']);
+    S.live = true;
+  }
+  if (n >= 7 && S.done) { S.live = false; const r = S.done; S.done = null; r(); }
+}
+
+// ---- each frame ----
+function updateFight(dt) {
+  const S = scene3, m = S.me, bl = S.bl;
+  S.pops = S.pops.filter(p => time - p.t0 < p.life);
+  for (const sp of S.spirits) { sp.k = clamp((time - sp.t0) / sp.dur, 0, 1); }
+  if (S.bits) for (const b of S.bits) if (time > b.at) { b.vy += 140 * dt; b.x += b.vx * dt; b.y += b.vy * dt; if (b.y > b.floor) { b.y = b.floor; b.vy = 0; b.vx = 30 + b.drift; b.pool = true; } }
+  if (box.active) return;
+  // you: walk, or mid-jump
+  if (m.jump) {
+    const k = clamp((time - m.jump.t0) / 0.42, 0, 1);
+    m.x = m.jump.fx + (m.jump.tx - m.jump.fx) * k; m.y = m.jump.fy + (m.jump.ty - m.jump.fy) * k;
+    if (k >= 1) { m.jump = null; thump(0.03); }
+  } else if (S.live) {
+    const d = curDir(); m.moving = !!d;
+    if (d) {
+      m.face = d; m.walkT += dt;
+      const sp = FIGHT_SPEED[choice] || 62, [dx, dy] = DIRS[d];
+      let nx = clamp(m.x + dx * sp * dt, FT.x0, FT.x1), ny = clamp(m.y + dy * sp * dt, FT.y0, FT.y1);
+      for (const h of S.hands) {  // the fingers: once a hand closes round you, you can't walk out (jump!)
+        if (h.lift || time < h.t0 + h.tele) continue;
+        const r = handR(h), was = fdist(m.x, m.y, h.cx, h.cy), now = fdist(nx, ny, h.cx, h.cy);
+        if (was < r && now > r - 4 && now > was) { const k = Math.max(0, r - 4) / Math.max(0.01, now); nx = h.cx + (nx - h.cx) * k; ny = h.cy + (ny - h.cy) * k; }
+      }
+      m.x = nx; m.y = ny;
+    }
+  }
+  // Brudda Blaine, right with you (he dodges by himself)
+  if (!bl.down) {
+    const side = m.x > 118 ? -1 : 1, gx = clamp(m.x + side * 16, FT.x0, FT.x1), gy = clamp(m.y + 3, FT.y0, FT.y1);
+    const dx = gx - bl.x, dy = gy - bl.y, dd = Math.hypot(dx, dy);
+    bl.moving = dd > 2;
+    if (bl.moving) { const s = Math.min(dd, (m.jump ? 110 : 66) * dt); bl.x += dx / dd * s; bl.y += dy / dd * s; bl.walkT += dt; bl.face = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'); }
+  }
+  // IzzyKat: alongside you, dodging everything, bored
+  const C = S.cat;
+  if (C && S.live && S.ph === 2) {
+    if (C.hop) { const k = clamp((time - C.hop.t0) / 0.3, 0, 1); C.x = C.hop.fx + (C.hop.tx - C.hop.fx) * k; C.y = C.hop.fy + (C.hop.ty - C.hop.fy) * k; if (k >= 1) C.hop = null; }
+    else {
+      const threat = S.dice.some(d => !d.landed && fdist(d.tx, d.ty, C.x, C.y) < 14) || S.chips.some(c => fdist(c.x, c.y, C.x, C.y) < 22)
+        || S.swings.some(w => !w.slammed && Math.abs(w.x - C.x) < w.w / 2 + 6) || S.hands.some(h => !h.lift && fdist(h.cx, h.cy, C.x, C.y) < handR(h) + 4);
+      const far = fdist(C.x, C.y, m.x, m.y) > 40;
+      if (threat || far) {
+        let best = null;
+        for (let i = 0; i < 12; i++) {
+          const a = i / 12 * Math.PI * 2, tx = clamp((far ? m.x - 18 : C.x) + Math.cos(a) * 24, FT.x0, FT.x1), ty = clamp((far ? m.y : C.y) + Math.sin(a) * 18, FT.y0, FT.y1);
+          const bad = S.dice.some(d => !d.landed && fdist(d.tx, d.ty, tx, ty) < 14) || S.swings.some(w => !w.slammed && Math.abs(w.x - tx) < w.w / 2 + 6)
+            || S.hands.some(h => !h.lift && fdist(h.cx, h.cy, tx, ty) < h.r0 + 4) || fdist(tx, ty, m.x, m.y) < 10;
+          if (!bad && (!best || fdist(tx, ty, m.x, m.y) < fdist(best[0], best[1], m.x, m.y))) best = [tx, ty];
+        }
+        if (best) C.hop = { t0: time, fx: C.x, fy: C.y, tx: best[0], ty: best[1] };
+      } else if (time - C.yawn > 6 && Math.random() < dt * 0.25) { C.yawn = time; fightPop('YAWN', C.x, C.y - 16, '#2b2118', 1.4); }
+      else if (time - C.lick > 5 && Math.random() < dt * 0.2) C.lick = time;
+    }
+  }
+  if (!S.live) return;
+  S.el += dt;
+  // the dice: in the air, landing, rolling a little, at rest
+  for (const d of S.dice) {
+    const t = time - d.t0;
+    if (t < 0) continue;
+    if (!d.landed) {
+      const k = clamp(t / d.dur, 0, 1); d.x = d.x0 + (d.tx - d.x0) * k; d.y = d.y0 + (d.ty - d.y0) * k; d.h = Math.sin(k * Math.PI) * 26;
+      if (k >= 1) {
+        d.landed = time; d.h = 0; diceHit();
+        if (fdist(m.x, m.y, d.tx, d.ty) < 8) hurt(S); else if (S.ph === 1 && !S.barrage) S.energy = Math.max(0, S.energy - 0.017);
+      }
+    } else if (!d.gone) {
+      const k = clamp((time - d.landed) / 0.3, 0, 1); d.x = d.tx + d.dx * 7 * ease(k); d.y = clamp(d.ty + d.dy * 7 * ease(k), FT.y0, FT.y1);
+      if (!d.flip && time - d.landed > d.rest) d.gone = time;
+    }
+  }
+  S.dice = S.dice.filter(d => !d.gone || time - d.gone < 0.4);
+  // the chips
+  for (const c of S.chips) {
+    const t = time - c.t0, len = Math.hypot(c.vx, c.vy), nx = -c.vy / len, ny = c.vx / len, off = Math.sin(t * 3.2 + c.ph) * c.amp * Math.min(1, t * 2);
+    c.x = c.x0 + c.vx * t + nx * off; c.y = c.y0 + c.vy * t + ny * off; c.spin += dt * 20;
+    if (fdist(c.x, c.y, m.x, m.y) < 6 && !c.hit) { c.hit = true; hurt(S); }
+    if (c.x < -10 || c.x > VW + 10 || c.y > VH + 10 || c.y < 20) { c.out = true; if (!c.hit && S.ph === 1 && !S.barrage) S.energy = Math.max(0, S.energy - 0.025); }
+  }
+  S.chips = S.chips.filter(c => !c.out);
+  // the hands: they come down round you, and close
+  for (const h of S.hands) {
+    if (h.lift) continue;
+    const r = handR(h), inside = fdist(m.x, m.y, h.cx, h.cy) < r + 1;
+    if (time >= h.t0 + h.tele) { if (Math.random() < dt * 14) h.flakes.push({ a: Math.random() * 6.28, t0: time }); }
+    if (time >= h.t0 + h.tele && inside && r < 8 && !m.jump) { h.caught = true; h.lift = time; hurt(S); }
+    else if (time >= h.t0 + h.tele + h.close) { h.lift = time; if (S.ph === 1 && !S.barrage) S.energy = Math.max(0, S.energy - 0.05); }
+  }
+  S.hands = S.hands.filter(h => !h.lift || time - h.lift < 0.5);
+  // the giant swing
+  for (const w of S.swings) if (!w.slammed && time >= w.t0 + w.tele) {
+    w.slammed = time; S.shake = time; boom();
+    if (Math.abs(m.x - w.x) < w.w / 2 + 3) hurt(S);
+  }
+  S.swings = S.swings.filter(w => !w.slammed || time - w.slammed < 0.6);
+  // what comes next, and when
+  const N = S.next, e = S.el;
+  if (S.ph === 1) {
+    const b = S.barrage;
+    if (time > N.dice) { jimThrow(S); N.dice = time + (b ? 0.75 : clamp(1.9 - e * 0.02, 1.0, 1.9)); }
+    if (time > N.chip && e > 2.5) { spinChip(S); N.chip = time + (b ? 1.05 : clamp(3.0 - e * 0.03, 1.5, 3.0)); }
+    if (time > N.hand && e > 5.5) { dropHand(S); N.hand = time + (b ? 1.7 : clamp(5.0 - e * 0.05, 2.8, 5.0)); }
+    if (!b && (S.energy <= 0.12 || e > 60) && S.done) { S.live = false; const r = S.done; S.done = null; r('comeback'); }
+    if (b && time - b > 11 && !S.final && S.done) { S.live = false; const r = S.done; S.done = null; r('final'); }
+  } else {
+    if (time > N.dice) { jimThrow(S); N.dice = time + 1.7; }
+    if (time > N.chip) { spinChip(S); N.chip = time + 3.2; }
+    if (time > N.swing) { giantSwing(S); N.swing = time + 4.6; }
+    if (time > N.hand && e > 8) { dropHand(S); N.hand = time + 7; }
+  }
+  if (S.dying && S.done) { const r = S.done; S.done = null; r('dead'); }
+}
+
+// ---- drawing ----
+function paintFightTable() {
+  fightCanvas = document.createElement('canvas'); fightCanvas.width = VW; fightCanvas.height = VH;
+  const g = fightCanvas.getContext('2d'), f = (a, b, w, h, c) => { g.fillStyle = c; g.fillRect(a, b, w, h); };
+  f(4, 46, 152, 92, '#4a2810'); f(4, 46, 152, 1, '#7a4a24'); f(5, 47, 150, 3, '#6a3a1a'); f(4, 136, 152, 2, '#2a1608');  // the rail
+  f(10, 52, 140, 80, '#1e6a3a');                                                                                       // the felt
+  for (let y = 54; y < 132; y += 4) for (let x = 12 + (y % 8); x < 150; x += 8) px(g, x, y, '#1a5e32');
+  f(10, 52, 140, 1, '#164e2a');
+  const BX = [26, 44, 62, 80, 98, 116], BN = ['4', '5', 'SIX', '8', 'NINE', '10'];
+  BX.forEach((bx, i) => { f(bx, 58, 18, 12, '#e8e4d0'); f(bx + 1, 59, 16, 10, '#1e6a3a'); const s = BN[i]; renoText(g, s, bx + 9 - Math.ceil(renoW(s) / 2), 62, '#f2ece0'); });
+  f(14, 82, 132, 1, '#e8e4d0'); f(14, 96, 132, 1, '#e8e4d0'); signText(g, 'FIELD', 70, 87, '#e8e4d0');
+  for (const [x, s] of [[24, '2'], [40, '3'], [56, '4'], [100, '9'], [116, '10'], [134, '12']]) renoText(g, s, x, 87, '#ffd24f');
+  f(14, 112, 132, 1, '#e8e4d0'); f(14, 124, 132, 1, '#e8e4d0'); signText(g, 'PASS LINE', 62, 116, '#e8e4d0');
+  f(0, 138, VW, 6, '#100a14');  // the strip along the bottom, for your hearts and his bar
+}
+function drawHand(h) {  // seen from above: the fingers, curled round, closing; dry and cracked, flakes coming off
+  const r = handR(h), down = time >= h.t0 + h.tele, kd = clamp((time - h.t0) / h.tele, 0, 1), up = h.lift ? clamp((time - h.lift) / 0.5, 0, 1) : 0;
+  ctx.globalAlpha = 0.35 * (down ? 1 - up : kd); disc(ctx, h.cx, h.cy, Math.round(h.r0 + 8), '#0a1a10'); ctx.globalAlpha = 1;  // its shadow
+  if (!down) return;
+  ctx.globalAlpha = 1 - up;
+  const lift = up * 10, rr = r + lift;
+  for (let i = 0; i < 5; i++) {  // four fingers and a thumb, round the ring, pointing in
+    const a = h.ang + i * (Math.PI * 2 / 5) + (i === 4 ? 0.25 : 0), len = i === 4 ? 9 : 12, w = i === 4 ? 3 : 2.5;
+    const x0 = h.cx + Math.cos(a) * (rr + len), y0 = h.cy + Math.sin(a) * (rr + len) - lift, x1 = h.cx + Math.cos(a) * rr, y1 = h.cy + Math.sin(a) * rr - lift;
+    for (let k = 0; k <= 8; k++) { const t = k / 8, x = x0 + (x1 - x0) * t, y = y0 + (y1 - y0) * t; disc(ctx, Math.round(x), Math.round(y), Math.round(w + 0.5), HAND.e); }
+    for (let k = 0; k <= 8; k++) { const t = k / 8, x = x0 + (x1 - x0) * t, y = y0 + (y1 - y0) * t; disc(ctx, Math.round(x), Math.round(y), Math.round(w - 0.5), HAND.s); }
+    for (const t of [0.35, 0.65]) { const x = x0 + (x1 - x0) * t, y = y0 + (y1 - y0) * t; line(ctx, Math.round(x - Math.sin(a) * 2), Math.round(y + Math.cos(a) * 2), Math.round(x + Math.sin(a) * 2), Math.round(y - Math.cos(a) * 2), HAND.d); }  // the creases, dry
+    px(ctx, Math.round(x0 + (x1 - x0) * 0.2), Math.round(y0 + (y1 - y0) * 0.2) - 1, HAND.w);  // tight, shiny
+    px(ctx, Math.round(x1), Math.round(y1), HAND.n);  // the nail
+  }
+  for (const fl of h.flakes) { const k = (time - fl.t0) / 0.8; if (k < 1) px(ctx, Math.round(h.cx + Math.cos(fl.a) * (rr + 6)), Math.round(h.cy + Math.sin(fl.a) * (rr + 6) + k * 8 - lift), '#fffaf2'); }
+  ctx.globalAlpha = 1;
+}
+function drawChip(c) {
+  const w = Math.max(1, Math.round(Math.abs(Math.cos(c.spin)) * 4)), x = Math.round(c.x), y = Math.round(c.y);
+  ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(x - 3, y + 3, 7, 2);
+  ctx.fillStyle = '#1a1a1a'; ctx.fillRect(x - 4, y - w, 9, w * 2 + 1);
+  ctx.fillStyle = c.c; ctx.fillRect(x - 3, y - w, 7, w * 2 + 1);
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(x - 3 + (Math.floor(c.spin) % 2) * 5, y - w, 1, w * 2 + 1); ctx.fillRect(x, y, 1, 1);
+}
+function drawSpirit(rows, x, y, a, sc = 1) {
+  ctx.globalAlpha = a;
+  for (let j = 0; j < rows.length; j++) for (let i = 0; i < rows[j].length; i++) { const ch = rows[j][i]; if (ch === '.') continue; ctx.fillStyle = ch === 'o' ? '#ffffff' : '#9ad8ff'; ctx.fillRect(Math.round(x + i * sc), Math.round(y + j * sc), sc, sc); }
+  ctx.globalAlpha = 1;
+}
+function hippie(x, y, big) {  // a flower crown, and a glow in every color
+  const n = big ? 7 : 5, R = big ? 6 : 7;
+  ctx.globalAlpha = 0.18 + 0.08 * Math.sin(time * 4);
+  disc(ctx, x, y + (big ? 4 : 0), big ? 11 : 10, RAINBOW[Math.floor(time * 3) % RAINBOW.length]); ctx.globalAlpha = 1;
+  for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2 + time * 0.3; px(ctx, Math.round(x + Math.cos(a) * R), Math.round(y - (big ? 4 : 2) + Math.sin(a) * (big ? 2 : 3)), RAINBOW[(i * 2) % RAINBOW.length]); }
+}
+function drawFight() {
+  const S = scene3, m = S.me, bl = S.bl;
+  if (!fightCanvas) paintFightTable();
+  ctx.save();
+  if (time - S.shake < 0.5) ctx.translate(Math.round(Math.sin(time * 60) * 3 * (1 - (time - S.shake) / 0.5)), 0);
+  ctx.fillStyle = '#120c18'; ctx.fillRect(-4, 0, VW + 8, VH);
+  for (let i = 0; i < 18; i++) { const x = i * 10 - 4, on = (Math.floor(time * 1.5) + i * 3) % 7; ctx.fillStyle = '#241c2c'; ctx.fillRect(x, 4, 8, 12); ctx.fillStyle = ['#3ac8ff', '#ff4fae', '#ffd24f', '#7ae82a', '#c86aff', '#3ac8ff', '#ff8a2a'][on]; ctx.fillRect(x + 1, 6, 6, 4); }
+  ctx.globalAlpha = 0.45; ctx.fillStyle = '#08040e'; ctx.fillRect(-4, 0, VW + 8, 46); ctx.globalAlpha = 1;
+  // Jim, enlarged, leaning over the far end (even larger in the second phase); cracks, as the lies add up
+  const gk = S.grow ? ease(clamp((time - S.grow) / 1.6, 0, 1)) : (S.ph === 2 ? 1 : 0), sc = 1.75 + 0.5 * gk, foot = 64 + 8 * gk;
+  const perk = time - S.perk < 3 || S.ph === 2;
+  if (!S.bits) {
+    const wob = time - S.crack < 0.5 ? Math.round(Math.sin(time * 70) * 2) : 0;
+    drawJimFight(80 + wob, foot, sc, perk, S.lies);
+  }
+  ctx.drawImage(fightCanvas, 0, 0);
+  // the giant swing: its shadow first, then his arm, slammed down across the table
+  for (const w of S.swings) {
+    const k = clamp((time - w.t0) / w.tele, 0, 1);
+    if (!w.slammed) { ctx.globalAlpha = 0.15 + 0.35 * k; ctx.fillStyle = '#081008'; ctx.fillRect(Math.round(w.x - w.w / 2), FT.y0 - 4, w.w, FT.y1 - FT.y0 + 10); ctx.globalAlpha = 1; }
+    else {
+      const up = clamp((time - w.slammed - 0.3) / 0.3, 0, 1), X = Math.round(w.x - w.w / 2 + 3), top = 30 - Math.round(up * 60), bot = FT.y1 + 4 - Math.round(up * 90);
+      ctx.fillStyle = '#5a7a9a'; ctx.fillRect(X, top, w.w - 6, Math.max(0, bot - 18 - top)); ctx.fillStyle = '#7a9aba'; ctx.fillRect(X, top, 2, Math.max(0, bot - 18 - top));
+      ctx.fillStyle = HAND.e; ctx.fillRect(X - 1, bot - 19, w.w - 4, 20); ctx.fillStyle = HAND.s; ctx.fillRect(X, bot - 18, w.w - 6, 18);
+      for (let i = 1; i < 4; i++) { ctx.fillStyle = HAND.d; ctx.fillRect(X + i * Math.round((w.w - 6) / 4), bot - 18, 1, 18); }
+      ctx.fillStyle = HAND.w; ctx.fillRect(X + 2, bot - 16, 3, 1);
+      if (time - w.slammed < 0.3) for (let i = 0; i < 8; i++) px(ctx, Math.round(w.x + Math.cos(i) * (w.w / 2 + 4 + (time - w.slammed) * 30)), Math.round(bot + Math.sin(i * 2) * 4), '#e8e4d0');
+    }
+  }
+  // the dice: a shadow where each will land, growing; the dice in the air; at rest; turning over
+  for (const d of S.dice) {
+    if (time < d.t0) continue;
+    if (!d.landed) { const k = clamp((time - d.t0) / d.dur, 0, 1); ctx.globalAlpha = 0.2 + 0.4 * k; disc(ctx, Math.round(d.tx), Math.round(d.ty), Math.round(2 + 3 * k), '#081008'); ctx.globalAlpha = 1; }
+  }
+  // you, Brudda Blaine, IzzyKat (and the dice, and the hands), back to front
+  const list = [];
+  for (const d of S.dice) if (time >= d.t0) list.push([d.landed ? d.y : 200, () => {
+    const a = d.gone ? 1 - clamp((time - d.gone) / 0.4, 0, 1) : 1; ctx.globalAlpha = a;
+    if (d.flip && time - d.flip.t0 < 0.4) {  // turning over: it squashes, and shows its other side
+      const k = (time - d.flip.t0) / 0.4, face = k < 0.5 ? d.flip.from : d.flip.to, hh = Math.round(Math.abs(Math.cos(k * Math.PI)) * 5) + 1;
+      ctx.fillStyle = '#6a0c14'; ctx.fillRect(Math.round(d.x) - 4, Math.round(d.y) - 3 - (6 - hh) - 4, 7, hh + 1); ctx.fillStyle = '#c8202a'; ctx.fillRect(Math.round(d.x) - 4, Math.round(d.y) - 3 - (6 - hh) - 4, 7, hh);
+      if (hh > 4) die(d.x, d.y - 4, face, 4);
+    } else die(d.x, d.y, d.face, d.h || 0);
+    if (d.flip && time - d.flip.t0 < 2.2 && time - d.flip.t0 > 0.4) renoBubble(d.flip.from + ' ' + d.flip.to, d.x, d.y - 20, '#c8202a');
+    else if (S.ph === 2 && d.landed && !d.flip && !d.gone && fdist(d.x, d.y, m.x, m.y) < 13 && Math.floor(time * 3) % 2) renoBubble('A', d.x, d.y - 16, '#2b2118');
+    ctx.globalAlpha = 1;
+  }]);
+  const jk = m.jump ? Math.sin(clamp((time - m.jump.t0) / 0.42, 0, 1) * Math.PI) : 0;
+  const blink = time < m.inv && Math.floor(time * 12) % 2;
+  if (!S.dead || S.risen) list.push([m.y, () => {
+    ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.fillRect(Math.round(m.x) - 4, Math.round(m.y) + 5, 9, 2);
+    if (S.hip) hippie(Math.round(m.x), Math.round(m.y - jk * 12), false);
+    if (!blink) drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], Math.round(m.x) - 8, Math.round(m.y - jk * 12) - 8, ROT[m.face], false, m.moving || m.jump ? Math.floor(time * 12) % 2 : 0);
+  }]);
+  else list.push([m.y, () => { ctx.globalAlpha = 0.6; drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], Math.round(m.x) - 8, Math.round(m.y) - 8, 2, true, 0); ctx.globalAlpha = 1; }]);
+  if (!bl.down) list.push([bl.y, () => {
+    if (S.hip) hippie(Math.round(bl.x), Math.round(bl.y) - 10, true);
+    drawBlaine(Math.round(bl.x) - 8, Math.round(bl.y) - 12 - Math.round(jk * 8), bl.face, bl.moving ? 1 + Math.floor(bl.walkT * 8) % 2 : 0);
+    if (S.hip) for (let i = 0; i < 6; i++) px(ctx, Math.round(bl.x) - 5 + i * 2, Math.round(bl.y) - 13 - Math.round(jk * 8) - (i % 2), RAINBOW[(i + Math.floor(time * 2)) % RAINBOW.length]);  // his flower crown
+  }]);
+  else list.push([bl.y, () => { ctx.globalAlpha = 0.65; drawBlaineFlat(Math.round(bl.x), Math.round(bl.y)); ctx.globalAlpha = 1; }]);
+  const C = S.cat;
+  if (C) list.push([C.y, () => {
+    const hop = C.hop ? Math.round(Math.sin(clamp((time - C.hop.t0) / 0.3, 0, 1) * Math.PI) * 6) : 0, yawn = time - C.yawn < 1.2, lick = time - C.lick < 1.4;
+    ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(Math.round(C.x) - 5, Math.round(C.y) + 5, 11, 2);
+    const rows = yawn ? CAT_SIT.map((r, j) => j === 6 ? r.replace('m', 'N') : j === 3 ? r.replace(/EP/g, 'KK') : r) : (Math.floor(time * 0.7) % 5 === 0 ? CAT_SIT.map((r, j) => j === 3 ? r.replace(/EP/g, 'KK') : r) : CAT_SIT);
+    drawGrid(rows, TORTIE, Math.round(C.x) - 5, Math.round(C.y) - 8 - hop, false);
+    if (lick) { const k = Math.floor(time * 6) % 2; ctx.fillStyle = TORTIE.K; ctx.fillRect(Math.round(C.x) - 3, Math.round(C.y) - 4 - k - hop, 2, 3); }  // a paw up, licking it
+    if (S.glow && time - S.glow < 6) { const a = 0.5 + 0.5 * Math.sin(time * 8); ctx.globalAlpha = a; px(ctx, Math.round(C.x) - 3, Math.round(C.y) - 5, '#fff6a0'); px(ctx, Math.round(C.x) + 2, Math.round(C.y) - 5, '#fff6a0'); ctx.globalAlpha = 1; }
+  }]);
+  for (const h of S.hands) list.push([h.cy + 20, () => drawHand(h)]);
+  list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
+  for (const c of S.chips) drawChip(c);
+  for (const sp of S.spirits) {  // the prairie dog and the coyote, rising out of her, and into you
+    const k = sp.k, x = sp.fx + (sp.tx - sp.fx) * ease(k), y = sp.fy + (sp.ty - sp.fy) * ease(k) - Math.sin(k * Math.PI) * 30;
+    drawSpirit(sp.rows, x - sp.rows[0].length, y - sp.rows.length, k < 0.85 ? 0.85 : (1 - k) * 5.6, 2);
+  }
+  // he disintegrates: bits of him, falling, pooling, running off the table
+  if (S.bits) for (const b of S.bits) { if (b.x > VW + 2) continue; ctx.fillStyle = b.pool ? (b.c2 || '#7aa0c0') : b.c; ctx.fillRect(Math.round(b.x), Math.round(b.y), 2, 2); }
+  for (const p of S.pops) { const k = (time - p.t0) / p.life; renoBubble(p.s, clamp(p.x, 6 + renoW(p.s) / 2, VW - 6 - renoW(p.s) / 2), Math.round(p.y - k * 6), p.c || '#2b2118'); }
+  ctx.restore();
+  if (time - S.flash < 0.25) { ctx.globalAlpha = 0.35 * (1 - (time - S.flash) / 0.25); ctx.fillStyle = '#ff2020'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }
+  if (S.dark) { ctx.globalAlpha = clamp((time - S.dark) / 1.5, 0, 0.82) * (S.risen ? 1 - clamp((time - S.risen) / 1.0, 0, 1) : 1); ctx.fillStyle = '#05020a'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1;
+    if (S.cat && !S.risen) { const C2 = S.cat; drawGrid(CAT_SIT, TORTIE, Math.round(C2.x) - 5, Math.round(C2.y) - 8, false); if (S.glow) { px(ctx, Math.round(C2.x) - 3, Math.round(C2.y) - 5, '#fff6a0'); px(ctx, Math.round(C2.x) + 2, Math.round(C2.y) - 5, '#fff6a0'); }
+      for (const sp of S.spirits) { const k = sp.k, x = sp.fx + (sp.tx - sp.fx) * ease(k), y = sp.fy + (sp.ty - sp.fy) * ease(k) - Math.sin(k * Math.PI) * 30; drawSpirit(sp.rows, x - sp.rows[0].length, y - sp.rows.length, k < 0.85 ? 0.9 : (1 - k) * 6, 2); } } }
+  // along the bottom: your hearts; his bar (his energy, then the lies)
+  ctx.fillStyle = '#100a14'; ctx.fillRect(0, 138, VW, 6);
+  for (let i = 0; i < 3; i++) { const on = i < S.hp; ctx.fillStyle = on ? '#e8322a' : '#4a2a2a'; ctx.fillRect(4 + i * 7, 139, 2, 1); ctx.fillRect(7 + i * 7, 139, 2, 1); ctx.fillRect(4 + i * 7, 140, 5, 2); ctx.fillRect(5 + i * 7, 142, 3, 1); }
+  signText(ctx, 'JIM', 84, 139, '#e8e6e0');
+  ctx.fillStyle = '#2a2a30'; ctx.fillRect(98, 139, 58, 4);
+  if (S.ph === 1) { ctx.fillStyle = S.energy > 0.3 ? '#f2c230' : '#e8782a'; ctx.fillRect(98, 139, Math.round(58 * S.energy), 4); }
+  else for (let i = 0; i < 7; i++) { ctx.fillStyle = i < 7 - S.lies ? '#f2c230' : '#4a2a2a'; ctx.fillRect(98 + i * 8 + 1, 139, 7, 4); }
+}
+function drawJimFight(cx0, foot, sc, perk, lies) {  // Jim, big, with a crack for every lie
+  if (!jimCanvas) { jimCanvas = document.createElement('canvas'); jimCanvas.width = 40; jimCanvas.height = 50; }
+  const g = jimCanvas.getContext('2d'); g.clearRect(0, 0, 40, 50);
+  drawJim(20, perk, false, g);
+  const CR = [[18, 16, 21, 22], [22, 20, 19, 27], [14, 30, 20, 35], [24, 31, 27, 38], [17, 23, 15, 29], [21, 36, 18, 42], [12, 19, 16, 25]];
+  for (let i = 0; i < Math.min(lies, 7); i++) { const [a, b, c, d] = CR[i]; line(g, a, b, c, d, '#1a0a0a'); px(g, c, d, '#ffffff'); }
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(jimCanvas, Math.round(cx0 - 20 * sc), Math.round(foot - 46 * sc), Math.round(40 * sc), Math.round(50 * sc));
+}
+function crumbleJim(S) {  // break him into bits (from the top down), that fall, pool, and run off toward the river
+  const sc = 2.25, foot = 72, W = Math.round(40 * sc), H = Math.round(50 * sc), c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d'); g.imageSmoothingEnabled = false;
+  if (!jimCanvas) { jimCanvas = document.createElement('canvas'); jimCanvas.width = 40; jimCanvas.height = 50; }
+  const jg = jimCanvas.getContext('2d'); jg.clearRect(0, 0, 40, 50); drawJim(20, true, false, jg); g.drawImage(jimCanvas, 0, 0, W, H);
+  const d = g.getImageData(0, 0, W, H).data, X0 = Math.round(80 - 20 * sc), Y0 = Math.round(foot - 46 * sc), bits = [];
+  for (let y = 0; y < H; y += 2) for (let x = 0; x < W; x += 2) {
+    const i = (y * W + x) * 4; if (d[i + 3] < 128) continue;
+    const yy = Y0 + y; if (yy > 52) continue;  // only what's showing, above the table
+    bits.push({ x: X0 + x, y: yy, vx: (Math.random() - 0.5) * 20, vy: -Math.random() * 20, at: time + 0.4 + (y / H) * 2.2 + Math.random() * 0.3,
+      c: 'rgb(' + d[i] + ',' + d[i + 1] + ',' + d[i + 2] + ')', floor: 112 + Math.random() * 14, drift: Math.random() * 20, pool: false, c2: Math.random() < 0.5 ? '#6a8aa8' : '#8ab0c8' });
+  }
+  S.bits = bits;
+}
+
+// ---- the fight, start to finish ----
+async function jimFight(from) {
+  await fadeTo(1, 0.8);
+  musicStop(); hud(null); phase = 'cut';
+  scene3 = newFight(from === 2 ? 2 : 1);
+  const S = scene3;
+  phase = 'fight';
+  await fadeTo(0, 0.8);
+  if (from !== 2) {
+    await say(['On a large craps table: the fight with Jim.', 'He throws the die that never lie at you, and spins his chips like frisbees.',
+      'His hands are very dry, with scleroderma. When they close round you, tap A to jump out.']);
+    musicStart(DESERT);
+    hud('Dodge! Tap A to jump');
+    S.live = true; S.next = { dice: time + 0.8, chip: time + 3.5, hand: time + 6, swing: NEVER };
+    let why = await new Promise(res => { S.done = res; });
+    if (why === 'comeback') {  // he's nearly out of energy; then he rolls, and hits
+      hud(null);
+      await say(['Jim is nearly out of energy.', 'He rolls the dice, on the end of the table.']);
+      S.dice.push({ x0: 80, y0: 44, tx: 74, ty: 70, x: 80, y: 44, t0: time, dur: 0.8, face: 3, landed: false, rest: 3, gone: null, flip: null, dx: 0, dy: 1 },
+        { x0: 80, y0: 44, tx: 86, ty: 74, x: 80, y: 44, t0: time + 0.08, dur: 0.8, face: 4, landed: false, rest: 3, gone: null, flip: null, dx: 0, dy: 1 });
+      rattle(); S.live = true; S.el = 0; S.next = { dice: time + 9, chip: time + 9, hand: time + 9, swing: NEVER };
+      await wait(1.6); S.live = false;
+      fightPop('7', 80, 60, '#c8202a', 2.0);
+      await say(['Seven.', 'Jim hits.']);
+      S.perk = time; S.energy = 1; perkUp(); S.grow = time; enlargeSound();
+      await wait(1.2);
+      await say(['His energy comes back, all of it.', 'The hands close faster.']);
+      hud('Dodge! Tap A to jump');
+      S.barrage = time; S.live = true; S.next = { dice: time + 0.4, chip: time + 1.0, hand: time + 0.8, swing: NEVER };
+      why = await new Promise(res => { S.done = res; });
+    }
+    if (why === 'final') {  // both hands, at once, round you both: too fast to jump
+      S.final = true; S.live = true; S.hands = []; dropHand(S); dropHand(S, S.bl); S.next = { dice: time + 9, chip: time + 9, hand: time + 9, swing: NEVER };
+      await wait(1.0);
+      S.live = false; S.hp = 0; thump(0.1); S.flash = time;
+    }
+    // you die. Brudda Blaine, too
+    S.live = false; hud(null); musicStop();
+    S.dead = time; S.bl.down = true; S.chips = []; S.swings = [];
+    for (const h of S.hands) if (!h.lift) h.lift = time;
+    await wait(0.8);
+    S.dark = time;
+    await wait(1.6);
+    await say(['The hands close round you both.', 'You die.', 'Brudda Blaine, too.']);
+    await wait(1.4);
+    // IzzyKat
+    S.cat = { x: 168, y: 104, hop: null, yawn: NEVER, lick: NEVER };
+    for (let i = 0; i < 40; i++) { S.cat.x -= 2; await wait(0.03); }
+    S.cat.x = Math.round((S.me.x + S.bl.x) / 2); S.cat.y = Math.round(Math.max(S.me.y, S.bl.y) + 4);
+    purrBreath(0.06);
+    await say(['Then: IzzyKat.', 'Nobody knows how she got out of the motel.']);
+    S.glow = time; spiritChime();
+    await wait(0.8);
+    await say(['Back in the Badlands, she ate a prairie dog.']);
+    S.spirits.push({ rows: SPIRIT_DOG, fx: S.cat.x, fy: S.cat.y - 6, tx: S.me.x, ty: S.me.y, t0: time, dur: 2.0, k: 0 });
+    fightPop('WEE-OO!', S.cat.x, S.cat.y - 30, '#3a8ab8', 1.6);
+    await wait(2.1);
+    await say(['In Yellowstone, a coyote.']);
+    S.spirits.push({ rows: SPIRIT_YOTE, fx: S.cat.x, fy: S.cat.y - 6, tx: S.bl.x, ty: S.bl.y, t0: time, dur: 2.0, k: 0 });
+    fightPop('AWOO!', S.cat.x, S.cat.y - 30, '#3a8ab8', 1.6); coyoteHowl();
+    await wait(2.1);
+    await say(['She sends their spirits into you.']);
+    S.risen = time; S.dead = null; S.dying = false; S.final = false; S.barrage = null; S.bl.down = false; S.hip = true; S.hp = 3; S.flash = NEVER; S.spirits = [];
+    S.dice = []; S.hands = []; S.chips = []; S.swings = [];
+    spiritChime(); perkUp();
+    await wait(1.2);
+    await say(['You come back.', 'The true hippiest of hippies of them all.', 'The very stereotype Jim fears, for Santa Cruz.']);
+    await say(['Jim: "...Hippies."']);
+    S.dark = null; S.risen = null;
+    S.ph = 2; S.grow = time; S.perk = time; enlargeSound();
+    await wait(1.8);
+    await say(['Jim grows even larger.', 'IzzyKat stays with you.']);
+  } else { S.hip = true; }
+  // the second phase
+  musicStart();
+  await say(['He swings down like a giant.', 'His dice land, and stay there.', 'Walk up to one, and tap A to turn it over. Show him.']);
+  hud('Turn his dice over: 0 of 7');
+  S.live = true; S.el = 0; S.next = { dice: time + 0.6, chip: time + 3, hand: time + 9, swing: time + 2.5 };
+  await new Promise(res => { S.done = res; });
+  // seven: the die do lie
+  hud(null); S.live = false;
+  for (const w of S.swings) w.slammed = w.slammed || time;
+  S.chips = []; S.hands.forEach(h => { if (!h.lift) h.lift = time; });
+  await wait(1.6);
+  musicStop();
+  await say(['Seven times, the die lied.', 'Jim: "The die... lie."']);
+  await say(['His philosophy, shattered.', 'His core being, full of untruths.']);
+  crumbleJim(S); crumbleSound();
+  await wait(3.6);
+  await say(['He disintegrates.', 'He melts away, off the table.', 'Toward the Truckee River.']);
+  await wait(0.8);
+  phase = 'cut';
+}
+
+// ---- little sounds for the fight ----
+function handRustle() { if (!ac || muted) return; makeNoise(); for (let i = 0; i < 6; i++) noiseHit(ac.currentTime + i * 0.05, 'highpass', 3000 + i * 200, 1.2, 0.025, 0.05, 0, master); }  // dry skin, rustling
+function growl(v = 1) { if (!ac || muted) return; const t = ac.currentTime, o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  o.type = 'sawtooth'; o.frequency.setValueAtTime(70, t); o.frequency.linearRampToValueAtTime(55, t + 0.8); lp.type = 'lowpass'; lp.frequency.value = 300;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.03 * v, t + 0.2); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+  o.connect(lp); lp.connect(g); g.connect(master); o.start(t); o.stop(t + 0.95); }
+function boom() { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTime, 'lowpass', 180, 0.7, 0.14, 0.7, 0, master); tone(master, 'sine', 55, ac.currentTime, 0.5, 0.08); }
+function flipClick() { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTime, 'bandpass', 2200, 3, 0.05, 0.04, 0, master); noiseHit(ac.currentTime + 0.4, 'bandpass', 1600, 2, 0.06, 0.06, 0, master); }
+function crackSound(n) { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; noiseHit(t, 'highpass', 1800, 0.8, 0.05 + n * 0.008, 0.25, 0.2, master); tone(master, 'triangle', 220 - n * 12, t, 0.3, 0.03); }
+function crumbleSound() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; for (let i = 0; i < 24; i++) noiseHit(t + i * 0.12 + Math.random() * 0.05, 'bandpass', 600 + Math.random() * 2400, 1.5, 0.03, 0.12, 0.2, master);
+  noiseHit(t + 2.6, 'lowpass', 900, 0.6, 0.05, 1.8, 0.3, master); }  // and then it runs, like water
+function spiritChime() { if (!ac || muted) return; [1318.51, 1567.98, 1975.53, 2637.02].forEach((f, i) => tone(master, 'sine', f, ac.currentTime + i * 0.08, 0.9, 0.025)); }
+function coyoteHowl() { if (!ac || muted) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  o.type = 'sine'; o.frequency.setValueAtTime(520, t); o.frequency.linearRampToValueAtTime(880, t + 0.5); o.frequency.linearRampToValueAtTime(700, t + 1.3);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.03, t + 0.2); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.4);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t + 1.45); }
 function finish4() {
   phase = 'done4'; lock = 0; hud(null);  // (the last scene stays on screen, behind)
   $('end4Text').textContent = 'You drove West in the U-Haul with Brudda Blaine and IzzyKat, through the oil fields, past bison ' +
@@ -9306,7 +9811,7 @@ function finish4() {
     'smaller geysers, and a beer or two. Steam in the distance: Old Faithful. It tricked you, again and again, then ' +
     'exploded, with IzzyKat riding it, far into the air. She might be indestructible. She landed at your feet. Then on, ' +
     'through the barren wastelands, Kyuss in Utah and Mac Miller\'s Circles in Nevada, to Reno.' +
-    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. Next, from your story: the fight with Jim.';
+    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered, and he melted away, toward the Truckee River. Next, from your story: the Truckee River.';
   $('end4').hidden = false;
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
@@ -9322,11 +9827,13 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   hike: () => { phase = 'cut'; musicStart(); hike().then(finish4); },
   geyser: () => { phase = 'cut'; oldFaithful().then(finish4); },
   reno: () => { phase = 'cut'; toReno().then(finish4); },
-  motel: () => { phase = 'cut'; reno('motel').then(finish4); },
-  canal: () => { phase = 'cut'; reno('canal').then(finish4); },
-  strip: () => { phase = 'cut'; reno('strip').then(finish4); },
-  casino: () => { phase = 'cut'; reno('casino').then(finish4); },
-  jim: () => { phase = 'cut'; reno('jim').then(finish4); },
+  motel: () => { phase = 'cut'; reno('motel').then(jimFight).then(finish4); },
+  canal: () => { phase = 'cut'; reno('canal').then(jimFight).then(finish4); },
+  strip: () => { phase = 'cut'; reno('strip').then(jimFight).then(finish4); },
+  casino: () => { phase = 'cut'; reno('casino').then(jimFight).then(finish4); },
+  jim: () => { phase = 'cut'; reno('jim').then(jimFight).then(finish4); },
+  fight: () => { phase = 'cut'; jimFight().then(finish4); },
+  fight2: () => { phase = 'cut'; jimFight(2).then(finish4); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
@@ -9342,6 +9849,7 @@ function pressA() {
   if (phase === 'hike') { hikeA(); return; }    // and the hike, at Yellowstone
   if (phase === 'canal') { canalA(); return; }  // Reno: the canals,
   if (phase === 'craps') { crapsA(); return; }  // and craps
+  if (phase === 'fight') { fightA(); return; }  // and the fight with Jim
   if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2' || phase === 'done3' || phase === 'done4') return;
   interact();
 }
@@ -9718,6 +10226,7 @@ window.__sketch = {
   },
   get canal() { const C = scene3; return C && C.kind === 'canal' ? { at: [C.me.tx, C.me.ty], moving: C.me.moving, hop: !!C.me.hop, live: C.live, jumped: C.jumped, grid: CANAL } : null; },
   get craps() { const C = scene3; return C && C.kind === 'craps' ? { chips: C.chips, point: C.point, drinks: C.drinks, ready: C.ready, rolls: C.rolls, jim: !!C.jim, shooter: C.shooter } : null; },
+  get fight() { return fightState(); },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
   get vistaState() { return vista ? { flag: !!vista.flag, latch: !!vista.latch, ride: !!vista.ride, fall: !!vista.fall, splash: !!vista.splash,
