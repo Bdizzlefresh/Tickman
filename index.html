@@ -271,9 +271,9 @@ a { color:var(--accent); }
     <p id="end4Text"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>Reno: a motel, a maze of canals like the LA river, the old strip, a casino, Sierra Nevada Pale Ales, craps, and Jim
-        strolling in.</li>
-      <li>The fight with Jim, where IzzyKat's powers win it.</li>
+      <li>The fight with Jim, on the craps table, where IzzyKat's powers bring you back.</li>
+      <li>The Truckee River, and the realm of California: the deer, Isabella, the egg sac, and Isabella free at last.</li>
+      <li>The very end, as you want it.</li>
     </ol>
     <p class="small">Guesses in level 4 so far: how the oil fields look (the oil rigs drawn as nodding pumps, with drilling
       towers far off), the bison, the horses and their battle, the badlands, the park sign, the river, the mounds, the
@@ -294,7 +294,7 @@ a { color:var(--accent); }
       Faithful: the crowd on the benches, how many times it tricks you, the eruption (the rainbow, the sparkles), her
       ride, the glances, the nod, and her landing. The drive to Reno: the wastelands, the signs, the tumbleweed, the
       sunset, Reno at night, and the music (original, in the spirit of the bands you named; real recordings can't go in
-      the game). The words not in your story are guesses too.</p>
+      the game). The words not in your story are guesses too. In Reno: how it all looks and sounds (the motel, the Denny's, the fence, the canals and what's in them, the old strip, the casino, the slot machines, the table, the dealer, Jim's look); the craps table's rules are the real ones for the pass line, but the bets (10, or all of it), the buy-in, how many free drinks, when he arrives, and how many rounds he plays are guesses; and the words not in your story.</p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -5854,7 +5854,8 @@ async function peekIn() {
 function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown,
-    lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful })[scene3.kind]();
+    lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful,
+    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -6146,6 +6147,8 @@ function update3(dt) {
   if (S && S.kind === 'drive' && S.pack) updateYS();  // Yellowstone: the photographers, clicking
   if (S && S.kind === 'hike') updateHike(dt);          // the hike through the smaller geysers
   if (S && S.kind === 'faithful') updateFaithful();     // Old Faithful (her purr, after)
+  if (S && S.kind === 'canal') updateCanal(dt);         // Reno: the canals,
+  if (S && S.kind === 'craps') updateCraps();           // and craps
 }
 
 // ---- level 3: the scenes ----
@@ -8528,6 +8531,7 @@ async function toReno() {
   await wait(4.2);
   await say(['You arrive in Reno.']);
   await wait(0.6);
+  await reno();
 }
 // ---- the stereo: all original, in the spirit of what you named (no real recordings).
 //   Utah, desert rock: slow and heavy, a fuzzed-out guitar riff in D, the bass right under it, big drums with a ride
@@ -8576,6 +8580,719 @@ function circlesStep(S, n, t, six) {
   for (const [at, k, len] of [[0, 1, 5], [6, 1.5, 2], [10, 1, 4], [14, 2, 2]]) if (at === s) upright(ch.bass * k, t, six * len, 0.85);
   if (bar >= 2 && bar % 2) for (const [at, i] of [[2, 3], [5, 2], [8, 1], [11, 2]]) if (at === s) bell(ch.keys[i] * 2, t, 0.03, 0.9, 0.6);  // a little celesta line
 }
+// ---- Reno (your message). A motel 8, where IzzyKat stays. Then the canals: thin, a little grimy, like an urban city
+// park; you get in by jumping a fence next to a Denny's, and walk them, to the old strip. A darkish casino, lights from
+// the screens in the background, a slight smell of despair and cigarettes. Craps: just you, Brudda Blaine and the
+// dealer; you roll the dice yourself, by the real rules of the pass line. Free drinks keep coming (Sierra Nevada Pale
+// Ales), and once you're good and drunk, Jim strolls in: the enigma. (How it all looks and sounds, the chips, the bets,
+// how many drinks, and the words not in your story, are guesses.) ----
+
+// numbers and an apostrophe, for signs and the table (the sign alphabet has letters only)
+const DIGIT = { 0: 'XXXX.XX.XX.XXXX', 1: '.X.XX..X..X.XXX', 2: 'XX...X.X.X..XXX', 3: 'XX...X.X...XXX.', 4: 'X.XX.XXXX..X..X',
+  5: 'XXXX..XX...XXX.', 6: '.XXX..XXXX.XXXX', 7: 'XXX..X.X..X..X.', 8: 'XXXX.XXXXX.XXXX', 9: 'XXXX.XXXX..XXX.' };
+const renoW = s => [...s].reduce((w, ch) => w + (ch === ' ' ? 3 : ch === "'" || ch === '!' || ch === '.' ? 2 : 4), -1);
+function renoText(g, s, x, y, c) {  // the sign alphabet, with numbers and an apostrophe too
+  for (const ch of s) {
+    if (DIGIT[ch]) { g.fillStyle = c; for (let i = 0; i < 15; i++) if (DIGIT[ch][i] === 'X') g.fillRect(x + i % 3, y + Math.floor(i / 3), 1, 1); x += 4; }
+    else if (ch === "'") { g.fillStyle = c; g.fillRect(x, y, 1, 2); x += 2; }
+    else { signText(g, ch, x, y, c); x += ch === ' ' ? 3 : ch === '!' || ch === '.' ? 2 : 4; }
+  }
+}
+function renoBubble(s, cx0, y, ink) {  // a speech bubble, numbers and all
+  const w = renoW(s), x = Math.round(cx0 - w / 2);
+  ctx.fillStyle = '#2b2118'; ctx.fillRect(x - 3, y - 3, w + 6, 11);
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(x - 2, y - 2, w + 4, 9); ctx.fillRect(Math.round(cx0) - 1, y + 7, 3, 2);
+  ctx.fillStyle = '#2b2118'; ctx.fillRect(Math.round(cx0) - 2, y + 7, 1, 2); ctx.fillRect(Math.round(cx0) + 2, y + 7, 1, 2); ctx.fillRect(Math.round(cx0) - 1, y + 9, 3, 1);
+  renoText(ctx, s, x, y, ink);
+}
+function nightSky(y1, seed) {  // a dark sky, a few stars twinkling
+  gradient(0, y1, [10, 12, 34], [40, 28, 64]);
+  for (let i = 0; i < 26; i++) { const x = (i * 61 + seed) % VW, y = (i * 37 + seed) % Math.max(1, y1 - 14); if ((Math.floor(time * 2) + i) % 6) px(ctx, x, y, i % 4 ? '#b8b8e0' : '#ffffff'); }
+}
+function bulbFrame(x, y, w, h, on, off) {  // a sign's border of bulbs, chasing round it
+  const pts = [];
+  for (let i = 0; i < w; i += 3) pts.push([x + i, y]);
+  for (let j = 0; j < h; j += 3) pts.push([x + w - 1, y + j]);
+  for (let i = w - 1; i > 0; i -= 3) pts.push([x + i, y + h - 1]);
+  for (let j = h - 1; j > 0; j -= 3) pts.push([x, y + j]);
+  pts.forEach(([a, b], i) => px(ctx, a, b, (i + Math.floor(time * 8)) % 3 === 0 ? on : off));
+}
+
+// ---- the motel 8, at night: IzzyKat stays in the room, and watches you go ----
+function drawMotel() {
+  const S = scene3, t = time - S.t0, GR = 86;
+  nightSky(GR, 17);
+  for (let x = 0; x < VW; x++) { const h = 8 + 7 * Math.abs(Math.sin(x * 0.021 + 1)) + 2 * Math.abs(Math.sin(x * 0.13)), top = Math.round(40 - h); ctx.fillStyle = '#1a1830'; ctx.fillRect(x, top, 1, 40 - top); }
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(a, b, w, h); };
+  f(4, 28, 116, GR - 28, '#3e3646'); f(1, 25, 122, 4, '#2a2232'); f(1, 25, 122, 1, '#4a4054');   // the walls; the roof
+  f(2, 56, 120, 3, '#56505e'); f(2, 59, 120, 1, '#2a2430');                                      // the walkway upstairs
+  for (let x = 3; x < 122; x += 6) f(x, 50, 1, 6, '#8a8494'); f(2, 50, 120, 1, '#a8a2b0');        // its railing
+  for (const [fl, y0] of [[1, 33], [0, 63]]) for (let i = 0; i < 6; i++) {                     // rooms: a door and a window each
+    const rx = 8 + i * 19, lit = (i * 3 + fl * 2) % 5 < 3;
+    f(rx, y0, 7, GR - 63 - 5 + (fl ? -7 : 0), '#2e5a5c'); f(rx, y0, 7, 1, '#3e7a7c'); px(ctx, rx + 5, y0 + 9, '#d8c060');
+    const wx = rx + 9, wy = y0 + 3, cat = fl === 1 && i === 1;
+    f(wx - 1, wy - 1, 10, 9, '#24202a');
+    f(wx, wy, 8, 7, cat && S.left ? '#f0cc7a' : lit ? '#e8b860' : '#1e1a26');
+    if (!(cat && S.left)) { f(wx, wy, 3, 7, lit ? '#b8603a' : '#3a2a30'); f(wx + 5, wy, 3, 7, lit ? '#b8603a' : '#3a2a30'); }  // curtains
+    else {  // IzzyKat's room: the curtains open, and her, sitting on the sill, looking out at you
+      f(wx, wy, 1, 7, '#b8603a'); f(wx + 7, wy, 1, 7, '#b8603a');
+      const blink = (time % 3.7) > 3.45, rows = blink ? CAT_TINY.map(r => r.replace(/E/g, 'K')) : CAT_TINY;
+      drawGrid(rows, TORTIE, wx + 2, wy + 1, false);
+    }
+  }
+  f(122, 30, 10, GR - 30, '#2a2432');                                                            // the stairs, up the end
+  for (let j = 0; j < 9; j++) f(122 + Math.floor(j * 1.1), 56 + j * 3, 8, 1, '#6a6474');
+  f(6, 70, 6, 14, '#c82a3a'); f(7, 72, 4, 4, '#ffe8a0');                                          // a soda machine, glowing
+  ctx.globalAlpha = 0.18; f(2, 66, 14, 20, '#ffd0a0'); ctx.globalAlpha = 1;
+  // the sign, on a tall pole: MOTEL 8, and VACANCY in neon
+  f(141, 26, 3, GR - 26, '#4a4652');
+  f(126, 6, 32, 15, '#1a2a5a'); f(127, 7, 30, 13, '#2a4a8a'); renoText(ctx, 'MOTEL 8', 129, 11, '#ffd24f');
+  bulbFrame(126, 6, 32, 15, '#fff6c8', '#8a6a2a');
+  f(128, 23, 28, 9, '#120c1c');
+  const buzz = Math.sin(time * 37) > 0.93;  // the neon buzzes, now and then
+  signText(ctx, 'VACANCY', 130, 25, buzz ? '#6a2a4a' : '#ff5fae');
+  if (!buzz) { ctx.globalAlpha = 0.16; f(124, 20, 36, 15, '#ff5fae'); ctx.globalAlpha = 1; }
+  f(0, GR, VW, VH - GR, '#26242c');                                                              // the lot, its lines
+  for (let x = 6; x < VW; x += 26) f(x, GR + 2, 1, 20, '#8a8a90');
+  // the U-Haul pulls in; you and Brudda Blaine step out, and set off on foot
+  const k = ease(clamp(t / 2.4, 0, 1)), x = Math.round(170 - k * 74), y = 56;
+  uHaul(x, y);
+  if (S.left) { f(x + 4, y + 11, 8, 6, '#3c5a6e'); f(x + 5, y + 12, 2, 1, '#8fb0c4'); }  // she's not in the cab now
+  if (S.out) {
+    const w = S.walk ? (time - S.walk) * 24 : 0, step = S.walk ? 1 + Math.floor(time * 8) % 2 : 0;
+    drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], Math.round(x + 2 - w), 72, S.walk ? ROT.left : ROT.down, false, S.walk ? Math.floor(time * 10) % 2 : 0);
+    drawBlaine(Math.round(x + 16 - w), 70, S.walk ? 'left' : 'down', step);
+  }
+}
+async function motel() {
+  await fadeTo(1, 0.8);
+  musicStop(); hud(null); phase = 'cut';
+  scene3 = { kind: 'motel', t0: time, out: null, left: null, walk: null };
+  const S = scene3;
+  await fadeTo(0, 0.8);
+  await wait(2.6);
+  await say(['You pull into a motel 8.']);
+  S.out = time; thump(0.05);
+  await wait(0.8);
+  S.left = time; purrBreath(0.05);
+  await wait(0.6);
+  await say(['You leave IzzyKat in the room.', 'She watches you go, from the window.']);
+  S.walk = time;
+  await wait(2.6);
+}
+
+// ---- the canals: a maze, seen from above, at night. In over the fence next to the Denny's; up to the old strip ----
+// N the old strip, up top; U the stairs up to it; C the canal (thin); r the canal, under the road; R the road;
+// G a grate; # the park; F the fence, low by the Denny's; f the fence; D the Denny's; s sidewalk; S the street
+const CANAL = [
+  'NNNNNNNNNN',
+  'NNNNNNNNNN',
+  '####U#####',
+  '####C#####',
+  '####C#####',
+  '#CCCC##C##',
+  '####C##C##',
+  '####C##C##',
+  '####CCCC##',
+  '##C####C##',
+  '##C####C##',
+  '##C####C##',
+  '##CCCCCCG#',
+  '##C#####C#',
+  '##C#####C#',
+  'RRrRRRRRrR',
+  'RRrRRRRRrR',
+  '##C#####C#',
+  '##C#####C#',
+  '##C#####C#',
+  '##C#####C#',
+  '##CCCCCCC#',
+  '######C###',
+  '#C####C###',
+  '#C####C###',
+  '#CCCCCCCC#',
+  '###C####C#',
+  '###C######',
+  'DDDFffffff',
+  'DDDsssssss',
+  'DDDsssssss',
+  'SSSSSSSSSS',
+  'SSSSSSSSSS',
+  'ssssssssss'];
+const CANAL_H = CANAL.length * TS, CANAL_START = { x: 8, y: 29 }, CANAL_END = { x: 4, y: 2 };
+const canalTile = (x, y) => (x >= 0 && y >= 0 && x < 10 && y < CANAL.length) ? CANAL[y][x] : '#';
+const CANAL_THINGS = [  // in the dead ends
+  { x: 1, y: 23, kind: 'cart', block: true, say: 'A shopping cart, on its side.' },
+  { x: 8, y: 26, kind: 'puddle', say: 'A puddle, with a rainbow sheen of oil.' },
+  { x: 7, y: 5, kind: 'tag', say: 'Graffiti, all over the walls.' },
+  { x: 1, y: 5, kind: 'tire', block: true, say: 'An old tire.' },
+];
+const PIGEONS = { x: 2, y: 9 };
+const CANAL_LAMPS = [[5, 26], [7, 22], [1, 19], [3, 13], [8, 9], [5, 6], [3, 3]];  // street lamps, on the banks (the second one flickers)
+const canalOpen = (x, y) => 'CrsU'.includes(canalTile(x, y)) && !CANAL_THINGS.some(t => t.block && t.x === x && t.y === y);
+let canalCanvas = null;
+function paintCanal() {
+  canalCanvas = document.createElement('canvas'); canalCanvas.width = VW; canalCanvas.height = CANAL_H;
+  const g = canalCanvas.getContext('2d'), r = rng(775), T = canalTile;
+  const bed = (x, y) => 'CrUG'.includes(T(x, y));
+  const f = (a, b, w, h, c) => { g.fillStyle = c; g.fillRect(a, b, w, h); };
+  const TAGS = ['#ff4fae', '#3ac8ff', '#ffd24f', '#7ae82a', '#ff8a2a', '#c86aff', '#f4f1ea'];
+  const tag = (X, Y, w, h, n) => { for (let i = 0; i < n; i++) { const c = TAGS[Math.floor(r() * TAGS.length)]; let a = X + Math.floor(r() * w), b = Y + Math.floor(r() * h); for (let k = 0; k < 5; k++) { px(g, a, b, c); a += Math.round(r() * 2 - 0.5); b += Math.round(r() * 2 - 1); a = clamp(a, X, X + w - 1); b = clamp(b, Y, Y + h - 1); } } };
+  for (let y = 0; y < CANAL.length; y++) for (let x = 0; x < 10; x++) {
+    const ch = T(x, y), X = x * TS, Y = y * TS;
+    if (ch === '#') {  // the park: patchy grass, bare dirt, a little litter
+      f(X, Y, TS, TS, '#28311f');
+      for (let i = 0; i < 14; i++) px(g, X + Math.floor(r() * 16), Y + Math.floor(r() * 16), ['#34402a', '#3a3426', '#1e2618', '#44402e'][i % 4]);
+      if (r() < 0.35) disc(g, X + 4 + Math.floor(r() * 8), Y + 4 + Math.floor(r() * 8), 2 + Math.floor(r() * 2), '#3a3426');
+      if (r() < 0.3) px(g, X + Math.floor(r() * 14) + 1, Y + Math.floor(r() * 14) + 1, ['#c8c8c0', '#c84a3a', '#d8c060'][Math.floor(r() * 3)]);
+      const busy = (x >= 6 && x <= 8 && y >= 4 && y <= 6);  // where the graffiti is thickest
+      if (bed(x, y + 1)) { f(X, Y + 10, TS, 6, '#55555c'); f(X, Y + 10, TS, 1, '#6e6e76'); f(X, Y + 15, TS, 1, '#3e3e44'); if (busy || r() < 0.35) tag(X, Y + 11, TS, 4, busy ? 5 : 2); }
+      if (bed(x, y - 1)) { f(X, Y, TS, 6, '#4c4c53'); f(X, Y + 5, TS, 1, '#6e6e76'); if (busy || r() < 0.35) tag(X, Y, TS, 5, busy ? 5 : 2); }
+      if (bed(x + 1, y)) { f(X + 10, Y, 6, TS, '#505058'); f(X + 10, Y, 1, TS, '#6e6e76'); if (busy || r() < 0.35) tag(X + 11, Y, 5, TS, busy ? 5 : 2); }
+      if (bed(x - 1, y)) { f(X, Y, 6, TS, '#505058'); f(X + 5, Y, 1, TS, '#6e6e76'); if (busy || r() < 0.35) tag(X, Y, 5, TS, busy ? 5 : 2); }
+    } else if (ch === 'C' || ch === 'U' || ch === 'G') {  // the canal: a thin concrete channel, a trickle down the middle
+      f(X, Y, TS, TS, '#46464d');
+      for (let i = 0; i < 6; i++) px(g, X + Math.floor(r() * 16), Y + Math.floor(r() * 16), ['#3c3c42', '#52525a'][i % 2]);
+      if (r() < 0.4) { let a = X + 2 + Math.floor(r() * 12), b = Y + 2 + Math.floor(r() * 12); for (let k = 0; k < 5; k++) { px(g, a, b, '#323238'); a += Math.round(r() * 2 - 1); b += 1; } }  // a crack
+      const ud = bed(x, y - 1) || bed(x, y + 1) || y === 27, lr = bed(x - 1, y) || bed(x + 1, y);
+      if (ch === 'C') {
+        if (ud) { f(X + 6, bed(x, y - 1) ? Y : Y + 6, 4, bed(x, y + 1) || y === 27 ? (bed(x, y - 1) ? TS : 10) : 10, '#26323a'); }
+        if (lr) { f(bed(x - 1, y) ? X : X + 6, Y + 6, bed(x + 1, y) ? (bed(x - 1, y) ? TS : 10) : 10, 4, '#26323a'); }
+        for (let i = 0; i < 3; i++) if (r() < 0.6) px(g, X + 6 + Math.floor(r() * 4), Y + 6 + Math.floor(r() * 4), '#4a6a7a');
+        if (r() < 0.35) { const a = X + 2 + Math.floor(r() * 11), b = Y + 2 + Math.floor(r() * 11), c = ['#b8b8c0', '#c84a3a', '#d8c060', '#7a9a5a'][Math.floor(r() * 4)]; f(a, b, 2, 1, c); px(g, a, b + 1, '#2a2a30'); }  // litter
+      }
+      if (ch === 'U') {  // stairs up, concrete, a rail each side
+        for (let j = 0; j < 16; j += 3) { f(X + 2, Y + j, 12, 2, '#6e6e76'); f(X + 2, Y + j + 2, 12, 1, '#3e3e44'); }
+        f(X + 1, Y, 1, TS, '#9a9aa2'); f(X + 14, Y, 1, TS, '#9a9aa2');
+      }
+      if (ch === 'G') {  // a grate, across the canal
+        f(X + 3, Y + 4, 10, 12, '#121216');
+        for (let i = 3; i < 13; i += 2) f(X + i, Y + 4, 1, 12, '#7a7a82');
+        f(X + 3, Y + 4, 10, 1, '#9a9aa2'); f(X + 3, Y + 15, 10, 1, '#5a5a62');
+      }
+    } else if (ch === 'R' || ch === 'r') {  // the road, over the canal
+      f(X, Y, TS, TS, '#232329');
+      for (let i = 0; i < 5; i++) px(g, X + Math.floor(r() * 16), Y + Math.floor(r() * 16), '#2e2e36');
+      if (y === 15) f(X, Y, TS, 2, '#5a5a62');
+      if (y === 16) { f(X, Y + 14, TS, 2, '#5a5a62'); if (x % 2 === 0) f(X + 2, Y - 1, 8, 1, '#d8b83a'); }
+      if (ch === 'r') {  // where the canal goes under: the mouth of a culvert, dark
+        if (y === 15) { f(X + 3, Y + 2, 10, 4, '#0c0c10'); f(X + 2, Y + 2, 1, 4, '#6a6a72'); f(X + 13, Y + 2, 1, 4, '#6a6a72'); }
+        if (y === 16) { f(X + 3, Y + 10, 10, 4, '#0c0c10'); f(X + 2, Y + 10, 1, 4, '#6a6a72'); f(X + 13, Y + 10, 1, 4, '#6a6a72'); }
+      }
+    } else if (ch === 'f' || ch === 'F') {  // a chain-link fence, along a strip of weeds
+      f(X, Y, TS, TS, '#28311f');
+      for (let i = 0; i < 8; i++) px(g, X + Math.floor(r() * 16), Y + Math.floor(r() * 16), '#3a4a2a');
+      const top = ch === 'F' ? 6 : 3;  // by the Denny's, it sags: low enough to jump
+      for (let i = 0; i < TS; i++) for (let j = top; j < 14; j++) if ((i + j) % 4 === 0 || (i - j + 32) % 4 === 0) px(g, X + i, Y + j, '#74747c');
+      f(X, Y + top, TS, 1, '#a8a8b0'); f(X, Y + 13, TS, 1, '#8a8a92'); f(X, Y + 2, 2, 12, '#9a9aa2');
+    } else if (ch === 's') {  // the sidewalk
+      f(X, Y, TS, TS, '#55555d'); f(X + (y % 2 ? 7 : 15), Y, 1, TS, '#46464e'); if (y === 30 || y === 33) f(X, Y + (y === 30 ? 15 : 0), TS, 1, '#7a7a82');
+    } else if (ch === 'S') {  // the street
+      f(X, Y, TS, TS, '#222228'); if (y === 31) { f(X + 3, Y + 15, 9, 1, '#d8d4c8'); }
+    } else if (ch === 'D') f(X, Y, TS, TS, '#55555d');
+  }
+  // the Denny's, from above: its roof, lit windows along the side, and its sign on a pole
+  f(0, 28 * TS + 2, 46, 46, '#6a5a4c'); f(0, 28 * TS + 2, 46, 2, '#8a7a6a'); f(44, 28 * TS + 2, 2, 46, '#4a3e34');
+  for (let j = 0; j < 4; j++) f(46, 28 * TS + 6 + j * 11, 2, 7, '#f0d890');
+  for (const [a, b] of [[8, 460], [26, 470], [14, 484]]) { f(a, b, 8, 5, '#7a7a80'); f(a + 1, b + 1, 6, 3, '#5a5a62'); }  // vents on the roof
+  const dw = renoW("DENNY'S"), dx = 23 - Math.ceil(dw / 2);
+  f(22, 28 * TS + 22, 2, 16, '#3a3a42');
+  f(dx - 3, 28 * TS + 13, dw + 6, 11, '#8a6a10'); f(dx - 2, 28 * TS + 14, dw + 4, 9, '#f2c230'); renoText(g, "DENNY'S", dx, 28 * TS + 16, '#c8202a');
+  // up top, the old strip: buildings, lit up, and the glow over them
+  f(0, 0, VW, 32, '#120c22');
+  for (let i = 0; i < 8; i++) { const bx = i * 20 + (i % 3), bh = 16 + (i * 7) % 12; f(bx, 32 - bh, 18, bh, ['#1e1a2e', '#241e36', '#1a1828'][i % 3]); for (let yy = 34 - bh; yy < 30; yy += 3) for (let xx = bx + 2; xx < bx + 16; xx += 3) if ((xx + yy + i) % 4) px(g, xx, yy, '#ffe0a0'); }
+  for (const [a, b, w, c] of [[6, 12, 14, '#ff4fae'], [44, 8, 18, '#3ac8ff'], [86, 14, 12, '#ffd24f'], [124, 10, 16, '#ff4fae']]) { f(a, b, w, 3, c); g.globalAlpha = 0.25; f(a - 3, b - 2, w + 6, 7, c); g.globalAlpha = 1; }
+  // the lamps: a light on a pole, a pool of orange light round it
+  for (const [lx, ly] of CANAL_LAMPS) {
+    const cx = lx * TS + 8, cy = ly * TS + 8, gr = g.createRadialGradient(cx, cy, 2, cx, cy, 30);
+    gr.addColorStop(0, 'rgba(255,184,100,.32)'); gr.addColorStop(1, 'rgba(255,160,80,0)');
+    g.fillStyle = gr; g.fillRect(cx - 30, cy - 30, 60, 60);
+  }
+  for (const [lx, ly] of CANAL_LAMPS) { const cx = lx * TS + 8, cy = ly * TS + 8; f(cx - 1, cy + 1, 3, 3, '#2a2a30'); disc(g, cx, cy, 2, '#ffe0a0'); px(g, cx, cy, '#ffffff'); }
+  // a bench and a bin, up in the park; the things in the dead ends
+  f(5 * TS + 2, 23 * TS + 4, 12, 2, '#6a4a2a'); f(5 * TS + 2, 23 * TS + 7, 12, 2, '#5a3a20'); f(5 * TS + 3, 23 * TS + 9, 1, 3, '#2a2a30'); f(5 * TS + 12, 23 * TS + 9, 1, 3, '#2a2a30');
+  disc(g, 8 * TS + 6, 23 * TS + 6, 4, '#3a4a3a'); disc(g, 8 * TS + 6, 23 * TS + 6, 3, '#2a2a2a'); px(g, 8 * TS + 5, 23 * TS + 2, '#d8d4c8'); px(g, 8 * TS + 9, 23 * TS + 3, '#c84a3a');
+  { const X = 1 * TS, Y = 23 * TS; f(X + 2, Y + 4, 12, 8, '#8a8a92'); for (let i = 3; i < 14; i += 2) f(X + i, Y + 4, 1, 8, '#5a5a62'); f(X + 2, Y + 4, 12, 1, '#b8b8c0'); disc(g, X + 4, Y + 13, 1, '#2a2a30'); disc(g, X + 12, Y + 13, 1, '#2a2a30'); f(X + 13, Y + 2, 2, 3, '#b8b8c0'); }  // the cart
+  { const X = 1 * TS, Y = 5 * TS; disc(g, X + 8, Y + 8, 6, '#1a1a1e'); disc(g, X + 8, Y + 8, 3, '#46464d'); for (let i = 0; i < 6; i++) px(g, X + 8 + Math.round(Math.cos(i) * 5), Y + 8 + Math.round(Math.sin(i) * 5), '#2e2e34'); }  // the tire
+  { const X = 8 * TS, Y = 26 * TS; for (let j = -3; j <= 3; j++) { const w = Math.round(6 * Math.sqrt(1 - (j / 3.6) ** 2)); f(X + 8 - w, Y + 8 + j, w * 2, 1, '#22303a'); }
+    [['#c86aff', -3], ['#3ac8ff', -1], ['#7ae82a', 1], ['#ffd24f', 3]].forEach(([c, d]) => f(X + 4 + d, Y + 7 + Math.round(d / 2), 5, 1, c)); }  // the puddle
+}
+function canalMe() {  // where you are, in pixels (mid-step, or mid-jump)
+  const m = scene3.me;
+  if (m.hop) { const k = clamp((time - m.hop.t0) / 0.5, 0, 1); return [m.tx * TS, (m.hop.fy + (m.ty - m.hop.fy) * k) * TS - Math.sin(k * Math.PI) * 12]; }
+  return m.moving ? [(m.tx + (m.nx - m.tx) * m.t) * TS, (m.ty + (m.ny - m.ty) * m.t) * TS] : [m.tx * TS, m.ty * TS];
+}
+function canalWords(x, y) {
+  const th = CANAL_THINGS.find(t => t.block && t.x === x && t.y === y);
+  if (th) return th.say;
+  return { f: "A fence. The way in is next to the Denny's.", F: "The fence, next to the Denny's.", D: "The Denny's.", G: 'A grate. No way through.',
+    R: 'The road, overhead.', S: 'The street.' }[canalTile(x, y)] || null;
+}
+function jumpFence() {  // over the fence, next to the Denny's, into the canal
+  const C = scene3, m = C.me;
+  C.bl.path.push({ x: m.tx, y: m.ty });
+  m.hop = { t0: time, fy: m.ty }; m.ty = m.ny = m.ty - 2; m.facing = 'up'; C.jumped = true;
+  whoosh(0.45, 0.04);
+}
+function updateCanal(dt) {
+  const C = scene3, m = C.me, bl = C.bl;
+  if (m.hop && time - m.hop.t0 >= 0.5) { m.hop = null; canalArrive(); }
+  if (m.moving) {
+    m.t += dt / STEP; m.anim += dt;
+    if (m.t >= 1) { m.tx = m.nx; m.ty = m.ny; m.t = 0; m.moving = false; canalArrive(); }
+  }
+  if (!m.moving && !m.hop && C.live && !box.active) {
+    const d = curDir();
+    if (d) {
+      m.facing = d;
+      const [dx, dy] = DIRS[d], nx = m.tx + dx, ny = m.ty + dy;
+      if (canalOpen(nx, ny)) { bl.path.push({ x: m.tx, y: m.ty }); m.nx = nx; m.ny = ny; m.t = 0; m.moving = true; }
+      else if (canalTile(nx, ny) === 'F' && d === 'up' && !C.jumped) jumpFence();
+      else if (time - C.said > 2.5) { const w = canalWords(nx, ny); if (w) { C.said = time; say([w]); } }
+    }
+  }
+  const was = [bl.x, bl.y]; updateActor(bl, dt);  // Brudda Blaine, a step behind you
+  const dx = bl.x - was[0], dy = bl.y - was[1]; bl.moving = Math.abs(dx) + Math.abs(dy) > 0.0001;
+  if (bl.moving) bl.facing = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
+  const [, py] = canalMe(), goal = clamp(Math.round(py + 8 - VH / 2), 0, CANAL_H - VH);
+  C.cam += (goal - C.cam) * Math.min(1, dt * 8); if (Math.abs(goal - C.cam) < 0.5) C.cam = goal;
+  if (!C.pigeons && Math.abs(m.tx - PIGEONS.x) + Math.abs(m.ty - PIGEONS.y) <= 3) { C.pigeons = time; flutter(); }  // they fly off
+  const K = C.car;  // a car, now and then, over the road
+  if (!K.t0 && time > K.next) { K.t0 = time; K.dir = -K.dir; const ry = 15 * TS - C.cam; if (ry > -60 && ry < VH + 30) whoosh(1.4, 0.025); }
+  if (K.t0 && time - K.t0 > 2.4) { K.t0 = null; K.next = time + 4 + (Math.floor(time * 7) % 4); }
+  if (time > C.drip) { C.drip = time + 2.2 + (Math.floor(time * 13) % 5) * 0.4; drip(); }
+}
+function canalArrive() {
+  const C = scene3, m = C.me;
+  if (C.jumped && !C.inSaid) {
+    C.inSaid = true; C.live = false; thump(0.05);
+    say(["You jump the fence, next to the Denny's.", 'Into the canal.']).then(() => { C.live = true; hud('Walk the canals, to the old strip'); });
+    return;
+  }
+  const th = CANAL_THINGS.find(t => !t.block && t.x === m.tx && t.y === m.ty);
+  if (th && !C.seen.has(th.kind)) { C.seen.add(th.kind); say([th.say]); }
+  if (m.tx === CANAL_END.x && m.ty === CANAL_END.y && C.done) { C.live = false; const r = C.done; C.done = null; r(); }
+}
+function canalA() {
+  const C = scene3; if (!C || C.kind !== 'canal' || !C.live || C.me.moving || C.me.hop) return;
+  const m = C.me, [dx, dy] = DIRS[m.facing], fx = m.tx + dx, fy = m.ty + dy;
+  if (Math.round(C.bl.x) === fx && Math.round(C.bl.y) === fy) { say(['Brudda Blaine, right behind you.']); return; }
+  if (canalTile(fx, fy) === 'F' && m.facing === 'up' && !C.jumped) { jumpFence(); return; }
+  const th = CANAL_THINGS.find(t => !t.block && t.x === m.tx && t.y === m.ty);
+  const w = canalWords(fx, fy) || (th ? th.say : null);
+  if (w) say([w]);
+}
+function drawCanal() {
+  const C = scene3, cy = Math.round(C.cam);
+  if (!canalCanvas) paintCanal();
+  ctx.drawImage(canalCanvas, 0, cy, VW, VH, 0, 0, VW, VH);
+  if (cy < 40) for (const [a, b, w, c, k] of [[6, 12, 14, '#ff4fae', 0], [86, 14, 12, '#ffd24f', 2]]) if ((Math.floor(time * 3) + k) % 5 === 0) { ctx.fillStyle = '#2a1a2a'; ctx.fillRect(a, b - cy, w, 3); }  // the neon flickers
+  { const [lx, ly] = CANAL_LAMPS[1], X = lx * TS + 8, Y = ly * TS + 8 - cy;  // one lamp flickers
+    if (Y > -40 && Y < VH + 40 && (Math.sin(time * 23) > 0.6 || Math.sin(time * 3.1) > 0.85)) { ctx.globalAlpha = 0.55; disc(ctx, X, Y, 12, '#0e1012'); ctx.globalAlpha = 1; disc(ctx, X, Y, 2, '#6a5a3a'); } }
+  { const X = PIGEONS.x * TS + 8, Y = PIGEONS.y * TS + 10 - cy;  // pigeons, pecking; then up and away
+    if (Y > -40 && Y < VH + 20) for (let i = 0; i < 3; i++) {
+      const k = C.pigeons ? (time - C.pigeons) / 1.6 : 0; if (k >= 1) continue;
+      const bx = X - 5 + i * 5 - Math.round(k * k * (40 + i * 20)), by = Y - (i % 2) * 3 - Math.round(k * (30 + i * 12)), peck = !C.pigeons && Math.floor(time * 3 + i * 1.7) % 3 === 0;
+      ctx.globalAlpha = 1 - k;
+      ctx.fillStyle = '#7a7a86'; ctx.fillRect(bx - 2, by - 1, 4, 3); ctx.fillStyle = '#5a5a66'; ctx.fillRect(bx - 3, by, 1, 2);
+      ctx.fillStyle = '#4a7a6a'; ctx.fillRect(bx + 1, by - 2 + (peck ? 2 : 0), 2, 2); px(ctx, bx + 3, by - 1 + (peck ? 2 : 0), '#d8a060');
+      if (C.pigeons) { const up = Math.floor(time * 14 + i) % 2; ctx.fillStyle = '#9a9aa6'; ctx.fillRect(bx - 2, by - (up ? 3 : -2), 5, 1); }
+      ctx.globalAlpha = 1;
+    } }
+  const [mx, my] = canalMe(), bl = C.bl, list = [];
+  const hop = (Math.abs(bl.x - 3) < 0.3 && bl.y > 27.1 && bl.y < 28.9) ? Math.round(Math.sin((28.9 - bl.y) / 1.8 * Math.PI) * 9) : 0;  // over the fence
+  list.push([bl.y * TS, () => drawBlaine(Math.round(bl.x * TS), Math.round(bl.y * TS) - cy - 2 - hop, bl.facing, bl.moving ? 1 + Math.floor(bl.walkT * 8) % 2 : 0)]);
+  list.push([my, () => drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], Math.round(mx), Math.round(my) - cy, ROT[C.me.facing], false, C.me.moving ? Math.floor(C.me.anim * 12) % 2 : 0)]);
+  list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
+  const ry = 15 * TS - cy;  // the road goes over the top of you: in the culvert, you're in its shade
+  if (ry > -32 && ry < VH) {
+    for (let x = 0; x < 10; x++) { ctx.globalAlpha = canalTile(x, 15) === 'r' ? 0.74 : 1; ctx.drawImage(canalCanvas, x * TS, 15 * TS, TS, 32, x * TS, ry, TS, 32); }
+    ctx.globalAlpha = 1;
+    const K = C.car;
+    if (K.t0) {  // a car, from above, headlights out ahead
+      const k = (time - K.t0) / 2.4, x = Math.round(K.dir > 0 ? -24 + k * 208 : 184 - k * 208), y = ry + (K.dir > 0 ? 19 : 4);
+      ctx.globalAlpha = 0.22; ctx.fillStyle = '#fff2c0'; ctx.fillRect(K.dir > 0 ? x + 16 : x - 22, y, 22, 9); ctx.globalAlpha = 1;
+      ctx.fillStyle = '#8a2a2a'; ctx.fillRect(x, y + 1, 16, 7); ctx.fillStyle = '#2a3a4a'; ctx.fillRect(x + (K.dir > 0 ? 9 : 3), y + 2, 4, 5); ctx.fillStyle = '#5a1a1a'; ctx.fillRect(x + (K.dir > 0 ? 3 : 10), y + 2, 3, 5);
+      ctx.fillStyle = '#fff2c0'; ctx.fillRect(K.dir > 0 ? x + 15 : x, y + 1, 1, 2); ctx.fillRect(K.dir > 0 ? x + 15 : x, y + 6, 1, 2);
+    }
+  }
+}
+async function canal() {
+  await fadeTo(1, 0.8);
+  if (!canalCanvas) paintCanal();
+  scene3 = { kind: 'canal', t0: time, cam: CANAL_H - VH, live: false, jumped: false, inSaid: false, said: -9, seen: new Set(), done: null,
+    pigeons: null, car: { t0: null, next: time + 3, dir: -1 }, drip: time + 2,
+    me: { tx: CANAL_START.x, ty: CANAL_START.y, nx: CANAL_START.x, ny: CANAL_START.y, t: 0, moving: false, facing: 'left', anim: 0, hop: null },
+    bl: { x: CANAL_START.x + 1, y: CANAL_START.y, path: [], speed: 1 / STEP, walkT: 0, face: -1, facing: 'left', res: null, moving: false } };
+  const C = scene3;
+  phase = 'canal';
+  await fadeTo(0, 0.8);
+  await say(['The way to the old strip: a maze of canals.', "In over the fence, next to the Denny's."]);
+  C.live = true; hud("Jump the fence, next to the Denny's");
+  await new Promise(res => { C.done = res; });
+  hud(null); phase = 'cut';
+  await say(['Up the stairs, to the old strip.']);
+}
+function flutter() { if (!ac || muted) return; makeNoise(); for (let i = 0; i < 9; i++) noiseHit(ac.currentTime + i * 0.055, 'bandpass', 1300 + (i % 3) * 300, 1.5, 0.035, 0.04, 0, master); }
+function drip() { if (!ac || muted) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(900, t); o.frequency.exponentialRampToValueAtTime(1700, t + 0.06); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.012, t + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12); o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.14); }
+
+// ---- the old strip, at night: casinos lit up, bulbs chasing round their signs; you and Brudda Blaine walk in ----
+function drawStrip() {
+  const S = scene3, GR = 84;
+  nightSky(30, 41);
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(a, b, w, h); };
+  for (let i = 0; i < 9; i++) { const bx = i * 19 - 4, bh = 30 + (i * 11) % 22; f(bx, 40 - bh + 20, 18, bh, '#1a1628'); }  // towers behind
+  f(0, 26, 56, GR - 26, '#2e2238'); f(0, 26, 56, 2, '#4a3a58');                    // a casino: CASINO up top, in bulbs
+  f(4, 10, 48, 15, '#3a0e2a'); bigWords('CASINO', 28, 14, 1, '#ffd24f', '#c81e5a'); bulbFrame(4, 10, 48, 15, '#fff6c8', '#7a4a2a');
+  const dead = Math.sin(time * 9) > 0.4;  // one letter, nearly gone
+  if (dead) { f(30, 15, 4, 6, '#3a0e2a'); }
+  for (let y = 32; y < 64; y += 8) for (let x = 4; x < 52; x += 8) f(x, y, 5, 5, (x + y) % 3 ? '#ffd890' : '#6a4a3a');
+  f(56, 34, 58, GR - 34, '#3a2a30'); f(56, 34, 58, 2, '#5a4048');                  // the one you go in: SLOTS, a marquee
+  f(60, 36, 50, 12, '#120c1c'); signText(ctx, 'SLOTS', 75, 40, Math.floor(time * 2) % 2 ? '#3ac8ff' : '#7ae8ff');
+  ctx.globalAlpha = 0.18; f(58, 34, 54, 16, '#3ac8ff'); ctx.globalAlpha = 1;
+  f(60, 54, 50, 3, '#c8a040'); for (let x = 60; x < 110; x += 3) px(ctx, x, 55, (x + Math.floor(time * 10)) % 6 < 3 ? '#fff6c8' : '#8a6a2a');
+  f(74, 60, 22, GR - 60, '#ffcf80'); f(84, 60, 2, GR - 60, '#a8783a'); f(74, 60, 22, 1, '#fff0c0');  // glass doors, warm light inside
+  ctx.globalAlpha = 0.22; f(68, GR, 34, 6, '#ffcf80'); ctx.globalAlpha = 1;
+  f(114, 20, 46, GR - 20, '#2a2a3a'); f(114, 20, 46, 2, '#44445a');                // and another, older
+  f(120, 26, 34, 10, '#0c0a14'); signText(ctx, 'BAR', 131, 28, Math.sin(time * 13) > 0.7 ? '#4a2a2a' : '#ff6a3a');
+  for (let y = 42; y < 78; y += 9) for (let x = 118; x < 158; x += 9) f(x, y, 6, 6, (x * y) % 7 < 3 ? '#e8b860' : '#3a3044');
+  f(0, GR, VW, 6, '#5a5660'); f(0, GR, VW, 1, '#7a7680'); f(0, GR + 6, VW, VH - GR - 6, '#202026');  // the sidewalk; the street
+  for (let i = 0; i < 6; i++) { ctx.globalAlpha = 0.12; f(i * 30 + 4, GR + 10, 18, 3, ['#ff4fae', '#ffd24f', '#3ac8ff'][i % 3]); ctx.globalAlpha = 1; }
+  const k = clamp((time - S.walk0) / 4.2, 0, 1), w = -24 + k * 100, step = k < 1 ? 1 + Math.floor(time * 8) % 2 : 0;
+  if (!S.inside) {
+    drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], Math.round(w + 18), 70, k < 1 ? ROT.right : ROT.up, false, k < 1 ? Math.floor(time * 10) % 2 : 0);
+    drawBlaine(Math.round(w), 68, k < 1 ? 'right' : 'up', step);
+  }
+}
+async function oldStrip() {
+  await fadeTo(1, 0.8);
+  scene3 = { kind: 'strip', t0: time, walk0: time + 0.8, inside: false };
+  const S = scene3;
+  await fadeTo(0, 0.8);
+  await wait(1.2);
+  await say(['The old strip.', 'Old town Reno.']);
+  await wait(Math.max(0.2, S.walk0 + 4.4 - time));
+  await say(['Into a casino.']);
+}
+
+// ---- the casino, and craps. The table from above: the dealer behind it, with his stick; you and Brudda Blaine at the
+// end; the slot machines' screens glowing in the background. You roll: the dice hit the back wall, and come to rest.
+// The pass line, by the real rules: on the first roll, 7 or 11 wins, and 2, 3 or 12 loses ("craps"); any other number
+// is the point, and then the point again before a 7 wins (a 7 first is "seven out"). It pays even money. ----
+const BOX_X = [40, 54, 68, 82, 96, 110], BOX_N = [4, 5, 6, 8, 9, 10];
+const WALL_X = 12, JIM_X = 118;
+const YOU_DICE = [[126, 62], [127, 70]], JIM_DICE = [[118, 56], [124, 58]];
+const BET_AT = { you: [116, 76], jim: [100, 76] };
+const CALL = { 2: 'Two. Snake eyes. Craps.', 3: 'Three. Ace-deuce. Craps.', 12: 'Twelve. Boxcars. Craps.' };
+const WORD = { 4: 'Four', 5: 'Five', 6: 'Six', 8: 'Eight', 9: 'Nine', 10: 'Ten' };
+const JIM_SAYS = ['The die never lie.', 'The die always forget.', "The die don't remember.", 'Santa Cruz is full of damn hippies.', 'I roll my own.'];
+const PIPS = { 1: [[3, 3]], 2: [[1, 1], [5, 5]], 3: [[1, 1], [3, 3], [5, 5]], 4: [[1, 1], [5, 1], [1, 5], [5, 5]], 5: [[1, 1], [5, 1], [3, 3], [1, 5], [5, 5]],
+  6: [[1, 1], [5, 1], [1, 3], [5, 3], [1, 5], [5, 5]] };
+const THROW_T = 0.5, SETTLE_T = 0.6;
+let ghostCanvas = null;
+function die(x, y, n, h) {  // a red casino die, from above, white pips: x, y the middle of where it sits; h how high it is in the air
+  x = Math.round(x); y = Math.round(y);
+  ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(x - 3 + Math.round(h / 3), y - 2, 7, 7);
+  const Y = y - 3 - Math.round(h);
+  ctx.fillStyle = '#6a0c14'; ctx.fillRect(x - 4, Y, 7, 7);
+  ctx.fillStyle = '#c8202a'; ctx.fillRect(x - 4, Y, 7, 6); ctx.fillStyle = '#e8505a'; ctx.fillRect(x - 4, Y, 6, 1);
+  for (const [a, b] of PIPS[n]) px(ctx, x - 4 + a, Y + b - (b === 5 ? 1 : 0), '#ffffff');
+}
+function chipStack(x, y, n, c) {  // chips, stacked: x, y the bottom middle
+  for (let i = 0; i < n; i++) { ctx.fillStyle = '#1a1a1a'; ctx.fillRect(x - 3, y - i * 2 - 2, 7, 2); ctx.fillStyle = c; ctx.fillRect(x - 3, y - i * 2 - 2, 7, 1); px(ctx, x - 1, y - i * 2 - 2, '#ffffff'); px(ctx, x + 2, y - i * 2 - 2, '#ffffff'); }
+}
+function bottle(x, y) {  // a Sierra Nevada Pale Ale, empty, standing on the rail: green label (x, y its foot)
+  ctx.fillStyle = '#4a2a10'; ctx.fillRect(x, y - 6, 3, 6); ctx.fillRect(x + 1, y - 9, 1, 3);
+  ctx.fillStyle = '#3a8a4a'; ctx.fillRect(x, y - 5, 3, 2); px(ctx, x, y - 6, '#7a4a20');
+}
+function drawDealer(x) {  // the dealer, behind the table: white shirt, black vest, a red bow tie; x his middle
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, b, w, h); };
+  f(-4, 24, 8, 3, '#1a1414'); f(-4, 26, 8, 6, '#e0b090'); f(-4, 26, 8, 1, '#1a1414'); px(ctx, x - 2, 28, '#1a1414'); px(ctx, x + 1, 28, '#1a1414'); f(-1, 30, 2, 1, '#a8604a');
+  f(-6, 33, 12, 12, '#f4f1ea'); f(-6, 33, 3, 12, '#1a1a20'); f(3, 33, 3, 12, '#1a1a20'); f(-2, 33, 4, 2, '#c8202a');
+  f(-8, 34, 2, 10, '#f4f1ea'); f(6, 34, 2, 10, '#f4f1ea');
+}
+function drawJim(x, perk, walk, g = ctx) {  // Jim: long, white-haired, tired; a cigarette he rolled himself. x his middle
+  const f = (a, b, w, h, c) => { g.fillStyle = c; g.fillRect(x + a, b, w, h); };
+  const up = perk ? 1 : 0, bob = walk ? Math.round(Math.abs(Math.sin(time * 3))) : 0, sag = perk ? 0 : 1, y0 = 15 - up * 2 + bob + sag;
+  const hair = perk ? [-7, 14] : [-5, 10];
+  f(hair[0], y0, hair[1], 18, '#e8e6e0'); f(hair[0], y0, hair[1], 1, '#ffffff');               // long white hair
+  if (perk) for (let i = 0; i < 5; i++) px(g, x - 8 + i * 4, y0 - 1 - (i % 2), '#ffffff');      // it stands up
+  f(-3, y0 + 2, 6, 9, '#d8b090'); f(-3, y0 + 2, 6, 1, '#e8e6e0');                               // the face, long
+  if (perk) { f(-3, y0 + 4, 2, 2, '#ffffff'); f(1, y0 + 4, 2, 2, '#ffffff'); px(g, x - 2, y0 + 5, '#1a1414'); px(g, x + 2, y0 + 5, '#1a1414'); }
+  else { f(-3, y0 + 5, 2, 1, '#5a4040'); f(1, y0 + 5, 2, 1, '#5a4040'); f(-3, y0 + 6, 2, 1, '#a88078'); f(1, y0 + 6, 2, 1, '#a88078'); }  // half shut; bags under
+  for (let i = 0; i < 4; i++) px(g, x - 2 + i, y0 + 9 + (i % 2), '#c8c4bc');                   // stubble, white
+  f(perk ? -1 : 0, y0 + 8, 2, 1, '#7a4a3a');                                                    // the mouth
+  f(2, y0 + 8, 4, 1, '#f4f1ea'); px(g, x + 6, y0 + 8, '#ff8a2a');                               // the cigarette
+  for (let i = 0; i < 3; i++) { const p = (time * 0.6 + i / 3) % 1; g.globalAlpha = 0.5 * (1 - p); px(g, x + 6 + Math.round(Math.sin(p * 6 + i) * 2), Math.round(y0 + 7 - p * 12), '#c8c8d0'); }
+  g.globalAlpha = 1;
+  f(-7, y0 + 12, 14, 18, '#5a7a9a'); f(-7, y0 + 12, 14, 1, '#7a9aba'); f(-2, y0 + 12, 4, 4, '#9a9a9a');  // a faded denim shirt
+  f(-9, y0 + 13, 2, 14, '#5a7a9a'); f(7, y0 + 13, 2, 14, '#5a7a9a');
+}
+let jimCanvas = null;
+function drawJimBig(cx0, foot, sc, perk) {  // Jim, sc times his size, his middle at cx0, the bottom of him at foot
+  if (!jimCanvas) { jimCanvas = document.createElement('canvas'); jimCanvas.width = 40; jimCanvas.height = 50; }
+  const g = jimCanvas.getContext('2d'); g.clearRect(0, 0, 40, 50);
+  drawJim(20, perk, false, g);
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(jimCanvas, Math.round(cx0 - 20 * sc), Math.round(foot - 46 * sc), Math.round(40 * sc), Math.round(50 * sc));
+}
+function drawCraps() {
+  const S = scene3, d = Math.min(S.drinks, 5), quake = S.grow && time - S.grow < 2.2 ? Math.round(Math.sin(time * 50) * 2) : 0;
+  const sway = [0, 0, 0.6, 1.2, 1.8, 2.4][d], ox = Math.round(Math.sin(time * 1.1) * sway * 1.5) + quake, oy = Math.round(Math.sin(time * 0.7 + 1) * sway);
+  ctx.fillStyle = '#140e1a'; ctx.fillRect(0, 0, VW, VH);
+  ctx.save(); ctx.translate(ox, oy);
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(a, b, w, h); };
+  // in the background: rows of slot machines, their screens glowing; a haze of smoke
+  f(-4, -4, VW + 8, 46, '#1c1424');
+  for (let i = 0; i < 18; i++) { const x = i * 10 - 4, on = (Math.floor(time * 1.5) + i * 3) % 7; f(x, 6, 8, 12, '#2a2232'); f(x + 1, 8, 6, 4, ['#3ac8ff', '#ff4fae', '#ffd24f', '#7ae82a', '#c86aff', '#3ac8ff', '#ff8a2a'][on]); if ((Math.floor(time * 4) + i) % 5 === 0) px(ctx, x + 3, 5, '#ff4040'); }
+  for (let i = 0; i < 12; i++) { const x = i * 14 - 6, on = (Math.floor(time * 1.1) + i * 5) % 6; f(x, 16, 12, 24, '#2e2436'); f(x + 1, 16, 10, 1, '#4a3a52');
+    f(x + 2, 19, 8, 6, ['#ff4fae', '#ffd24f', '#3ac8ff', '#7ae82a', '#ff8a2a', '#c86aff'][on]); f(x + 3, 21, 1, 2, '#ffffff'); f(x + 5, 21, 1, 2, '#ffffff'); f(x + 7, 21, 1, 2, '#ffffff');
+    f(x + 2, 28, 8, 2, '#5a4a62'); if ((Math.floor(time * 2) + i) % 4 === 0) { ctx.globalAlpha = 0.25; f(x - 2, 14, 16, 16, '#ffe0a0'); ctx.globalAlpha = 1; } }
+  for (let i = 0; i < 4; i++) { const x = Math.round(wrapX(i * 47 + time * 3, VW + 60) - 30); ctx.globalAlpha = 0.07; f(x, 8 + i * 6, 46, 6, '#d8d4e0'); f(x + 6, 6 + i * 6, 30, 2, '#d8d4e0'); ctx.globalAlpha = 1; }
+  ctx.globalAlpha = 0.28; f(-4, -4, VW + 8, 46, '#08040e'); ctx.globalAlpha = 1;  // darkish
+  // the dealer, and Jim, behind the table
+  drawDealer(80);
+  if (S.jim && !S.grow) drawJim(Math.round(S.jim.walk ? Math.min(JIM_X, -14 + (time - S.jim.t0) * 25) : JIM_X), time - S.jim.perk < 4, S.jim.walk);
+  // the table: a wood rail, green felt; the back wall at the far end; the point boxes; the pass line
+  f(4, 44, 136, 46, '#4a2810'); f(4, 44, 136, 1, '#7a4a24'); f(5, 45, 134, 2, '#6a3a1a');
+  f(8, 48, 128, 38, '#1e6a3a');
+  for (let y = 50; y < 86; y += 4) for (let x = 10 + (y % 8); x < 136; x += 8) px(ctx, x, y, '#1a5e32');
+  f(8, 48, 4, 38, '#20242a'); for (let y = 49; y < 86; y += 2) px(ctx, 9 + (y % 4 ? 1 : 0), y, '#5a6068');  // the back wall
+  f(66, 44, 30, 3, '#1a1414'); for (let i = 0; i < 14; i++) f(67 + i * 2, 44, 1, 3, ['#c8202a', '#2a8a4a', '#1a1a1a', '#f4f1ea'][i % 4]);  // the dealer's chips
+  BOX_X.forEach((bx, i) => {
+    f(bx, 50, 14, 10, '#e8e4d0'); f(bx + 1, 51, 12, 8, '#1e6a3a');
+    const s = String(BOX_N[i]); renoText(ctx, s, bx + 7 - Math.ceil(renoW(s) / 2), 53, S.point === BOX_N[i] ? '#ffd24f' : '#f2ece0');
+  });
+  if (S.point) { const bx = BOX_X[BOX_N.indexOf(S.point)] + 7; disc(ctx, bx, 63, 5, '#1a1a1a'); disc(ctx, bx, 63, 4, '#f4f1ea'); signText(ctx, 'ON', bx - 3, 61, '#1a1a1a'); }
+  else { disc(ctx, 26, 55, 6, '#f4f1ea'); disc(ctx, 26, 55, 5, '#1a1a1a'); signText(ctx, 'OFF', 21, 53, '#f4f1ea'); }
+  f(14, 74, 120, 1, '#e8e4d0'); f(14, 82, 120, 1, '#e8e4d0'); signText(ctx, 'PASS LINE', 40, 76, '#e8e4d0');
+  // bets on the pass line; your chips; the empties on the rail; an ashtray, smoking
+  if (S.bet) chipStack(BET_AT.you[0], BET_AT.you[1] + 4, clamp(Math.ceil(S.bet / 20), 1, 8), '#c8202a');
+  if (S.jim && S.jim.bet) chipStack(BET_AT.jim[0], BET_AT.jim[1] + 4, 3, '#2a8a4a');
+  if (S.pay) {  // chips on the move: won, from the dealer; or lost, to him
+    const k = clamp((time - S.pay.t0) / 0.6, 0, 1), [bx, by] = BET_AT[S.pay.who], fx = S.pay.win ? 80 : bx, fy = S.pay.win ? 46 : by + 4, tx = S.pay.win ? bx + 6 : 80, ty = S.pay.win ? by + 4 : 46;
+    if (k < 1) chipStack(Math.round(fx + (tx - fx) * ease(k)), Math.round(fy + (ty - fy) * ease(k)), 3, S.pay.win ? '#f2c230' : '#c8202a');
+  }
+  const n = clamp(Math.ceil(S.chips / 20), 0, 24);
+  for (let s = 0; s * 6 < n; s++) chipStack(132 - (s % 2) * 7, 88 - Math.floor(s / 2) * 0, Math.min(6, n - s * 6), ['#c8202a', '#2a8a4a', '#1a1a1a', '#3a5ac8'][s % 4]);
+  for (let i = 0; i < Math.min(S.drinks, 16); i++) bottle(108 - i * 5, 90);
+  disc(ctx, 134, 47, 3, '#6a6a72'); disc(ctx, 134, 47, 2, '#3a3a40'); f(134, 46, 4, 1, '#f4f1ea');
+  for (let i = 0; i < 3; i++) { const p = (time * 0.5 + i / 3) % 1; ctx.globalAlpha = 0.45 * (1 - p); px(ctx, 137 + Math.round(Math.sin(p * 7 + i) * 2), Math.round(45 - p * 16), '#c8c8d0'); }
+  ctx.globalAlpha = 1;
+  // the dice: in the shooter's hand, flying, bouncing off the back wall, at rest; then the stick brings them back
+  const idle = S.shooter === 'jim' ? JIM_DICE : YOU_DICE, T = S.thr;
+  if (T && !T.back) {
+    const t = time - T.t0, sp = T.by === 'jim' ? 1.25 : 1;
+    for (let i = 0; i < 2; i++) {
+      const [x0, y0] = T.from[i], [wx, wy] = T.wall[i], [rx, ry] = T.rest[i];
+      let x, y, h, face;
+      if (t < THROW_T * sp) { const k = t / (THROW_T * sp); x = x0 + (wx - x0) * k; y = y0 + (wy - y0) * k; h = Math.sin(k * Math.PI) * (T.by === 'jim' ? 6 : 10); }
+      else { const k = clamp((t - THROW_T * sp) / (SETTLE_T * sp), 0, 1), e = 1 - (1 - k) * (1 - k); x = wx + (rx - wx) * e; y = wy + (ry - wy) * e; h = Math.abs(Math.sin(k * Math.PI * 2)) * 4 * (1 - k); }
+      face = t < (THROW_T + SETTLE_T) * sp ? 1 + (Math.floor(time * 16) + i * 3) % 6 : T.faces[i];
+      die(x, y, face, h);
+    }
+  } else if (T && T.back) {
+    const k = clamp((time - T.back) / 0.7, 0, 1), e = ease(k);
+    const pos = [0, 1].map(i => [T.rest[i][0] + (idle[i][0] - T.rest[i][0]) * e, T.rest[i][1] + (idle[i][1] - T.rest[i][1]) * e]);
+    pos.forEach(([x, y], i) => die(x, y, T.faces[i], 0));
+    const tip = [(pos[0][0] + pos[1][0]) / 2 - 6, (pos[0][1] + pos[1][1]) / 2 - 2];
+    line(ctx, 74, 42, Math.round(tip[0]), Math.round(tip[1]), '#c8a070'); line(ctx, 75, 42, Math.round(tip[0]) + 1, Math.round(tip[1]), '#a8804a');  // the stick
+  } else {
+    const fc = S.last || [5, 2];
+    if (!(S.shooter === 'jim' && S.jim && S.jim.walk)) idle.forEach(([x, y], i) => die(x, y, fc[i], 0));
+    line(ctx, 74, 42, 52, 64, '#c8a070'); line(ctx, 75, 42, 53, 64, '#a8804a');  // the stick, resting
+  }
+  if (S.ready && Math.floor(time * 2) % 2) renoBubble('ROLL', 126, 50, '#c8202a');
+  // you, on the end of the rail; Brudda Blaine beside you
+  const lunge = T && !T.back && T.by === 'you' && time - T.t0 < 0.25 ? -2 : 0;
+  drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], 138 + lunge, 54, ROT.left, false, 0);
+  const hopB = S.cheer && time - S.cheer < 1.2 ? Math.round(Math.abs(Math.sin((time - S.cheer) * 8)) * 3) : 0;
+  drawBlaine(144, 66 - hopB, 'left', 0);
+  if (S.jim && S.grow) {  // he enlarges, up over the table
+    const k = ease(clamp((time - S.grow) / 1.8, 0, 1));
+    drawJimBig(Math.round(JIM_X + (78 - JIM_X) * k), Math.round(46 + 70 * k), 1 + 2.0 * k, true);
+  }
+  for (const p of S.pops) { const k = (time - p.t0) / 1.2; if (k < 1) renoBubble(p.s, clamp(p.x, 14, VW - 14), Math.round(p.y - k * 8), p.c || '#2b2118'); }
+  if (S.jim && time - S.jim.perk < 1.4) for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + time * 3, r = 10 + (time - S.jim.perk) * 10; px(ctx, Math.round(JIM_X + Math.cos(a) * r), Math.round(26 + Math.sin(a) * r), '#ffd24f'); }
+  ctx.restore();
+  if (d >= 3) {  // seeing double
+    if (!ghostCanvas) { ghostCanvas = document.createElement('canvas'); ghostCanvas.width = VW; ghostCanvas.height = VH; }
+    const gg = ghostCanvas.getContext('2d'); gg.clearRect(0, 0, VW, VH); gg.drawImage(cv, 0, 0);
+    ctx.globalAlpha = d >= 4 ? 0.28 : 0.18; ctx.drawImage(ghostCanvas, Math.round(2 + Math.sin(time * 0.9) * (d - 1)), Math.round(Math.sin(time * 0.6) * 1)); ctx.globalAlpha = 1;
+  }
+  if (d >= 2) { const gr = ctx.createRadialGradient(VW / 2, VH / 2, 40, VW / 2, VH / 2, 110); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(20,0,10,' + (0.12 * d).toFixed(2) + ')'); ctx.fillStyle = gr; ctx.fillRect(0, 0, VW, VH); }
+}
+function crapsHud() {
+  const S = scene3; if (!S || S.kind !== 'craps') return;
+  hud('Chips: ' + S.chips + (S.point ? ' · Point: ' + S.point : '') + ' · Drinks: ' + S.drinks);
+}
+function crapsPop(s, x, y, c) { scene3.pops.push({ s, x, y, t0: time, c }); }
+function crapsA() {
+  const S = scene3; if (!S || S.kind !== 'craps') return;
+  if (S.ready && S.waitA) { const r = S.waitA; S.waitA = null; S.ready = false; r(); }
+}
+function updateCraps() {
+  const S = scene3;
+  S.pops = S.pops.filter(p => time - p.t0 < 1.2);
+  if (time > S.chime) { S.chime = time + 0.6 + (Math.floor(time * 17) % 7) * 0.25; slotChime(); }  // the slot machines, in the background
+}
+async function throwDice(S) {  // the shooter throws; returns the two dice
+  if (S.shooter === 'you') { S.ready = true; await new Promise(res => { S.waitA = res; }); }
+  else await wait(0.9);  // Jim takes his time
+  const faces = [1 + Math.floor(Math.random() * 6), 1 + Math.floor(Math.random() * 6)], who = S.shooter;
+  const from = who === 'jim' ? JIM_DICE : YOU_DICE, a = Math.floor(Math.random() * 4);
+  const rest = [[22 + Math.floor(Math.random() * 26), 60 + Math.floor(Math.random() * 5)]];
+  rest.push([rest[0][0] + 8 + Math.floor(Math.random() * 6), rest[0][1] + 3 + Math.floor(Math.random() * 4)]);
+  S.thr = { t0: time, by: who, faces, from, rest, wall: [[WALL_X + 2, 56 + a * 3], [WALL_X + 2, 66 + a * 2]], back: null };
+  rattle();
+  const sp = who === 'jim' ? 1.25 : 1;
+  await wait(THROW_T * sp); diceHit();
+  await wait(SETTLE_T * sp + 0.15);
+  S.rolls++; S.last = faces;
+  const n = faces[0] + faces[1];
+  crapsPop(String(n), (S.thr.rest[0][0] + S.thr.rest[1][0]) / 2, 46, '#2b2118');
+  return n;
+}
+async function diceBack(S) {  // the dealer brings the dice back with his stick, to the shooter
+  if (!S.thr) return;
+  S.thr.back = time;
+  await wait(0.75);
+  S.thr = null;
+}
+async function crapsRound(S) {  // one round on the pass line: returns true if it won
+  if (S.chips <= 0) { await say(['Out of chips.', 'Brudda Blaine slaps down another hundred.']); S.chips = 100; chipClack(5); crapsHud(); }
+  let bet = S.chips;
+  if (S.chips > 10) bet = (await ask('Bet on the pass line?', ['Bet 10', 'Bet it all'])) === 0 ? 10 : S.chips;
+  S.chips -= bet; S.bet = bet; chipClack(3); crapsHud();
+  if (S.jim) { S.jim.bet = 1; chipClack(2); }
+  if (!S.taught) { S.taught = true; await say([S.shooter === 'you' ? 'Tap A to roll.' : '']); }
+  S.point = 0; crapsHud();
+  for (;;) {
+    const n = await throwDice(S);
+    if (!S.point) {
+      if (n === 7 || n === 11) return await decide(S, true, n === 7 ? 'Dealer: "Seven. Winner."' : 'Dealer: "Yo-leven. Winner."');
+      if (CALL[n]) return await decide(S, false, 'Dealer: "' + CALL[n] + '"');
+      S.point = n; chipClack(1); crapsHud();
+      await say(['Dealer: "The point is ' + n + '."']);
+      if (!S.pointTaught) { S.pointTaught = true; await say(['Roll a ' + n + ' again before a 7, and you win.']); }
+      await diceBack(S);
+      continue;
+    }
+    if (n === S.point) return await decide(S, true, 'Dealer: "' + WORD[n] + '. Winner."');
+    if (n === 7) return await decide(S, false, 'Dealer: "Seven out."');
+    await wait(0.5);
+    await diceBack(S);
+  }
+}
+async function decide(S, win, call) {
+  const bet = S.bet, lines = [call];
+  S.pay = { t0: time, win, who: 'you' }; chipClack(win ? 4 : 2);
+  await wait(0.7);
+  if (win) S.chips += bet * 2;
+  S.bet = 0; S.pay = null; S.point = 0; crapsHud();
+  lines.push(win ? 'You win ' + bet + '.' : 'You lose ' + bet + '.');
+  if (S.jim && S.jim.bet) {
+    S.jim.bet = 0;
+    if (win) { S.jim.perk = time; S.jim.hits++; perkUp(); lines.push('Jim hits.', 'He perks up.'); }
+  }
+  if (win && S.chips >= 200 && !S.up) { S.up = true; S.cheer = time; cheer(); lines.push("You're up big.", 'Brudda Blaine: "WOO!"'); }
+  else if (S.up && S.chips < 100) { S.up = false; lines.push("And just like that, it's gone."); }
+  await say(lines);
+  await diceBack(S);
+  if (!win && call.includes('Seven out') && S.jim) {  // after a seven out, the dice pass on
+    S.shooter = S.shooter === 'you' ? 'jim' : 'you';
+    await say([S.shooter === 'jim' ? 'The dice pass to Jim.' : 'The dice come back to you.']);
+  }
+  await freeDrink(S);
+  if (S.jim) { jimSigh(); await say(['Jim: "' + S.jim.says[S.jim.said++ % S.jim.says.length] + '"']); }
+  return win;
+}
+async function freeDrink(S) {  // they keep coming
+  S.drinks++; clink(); crapsHud();
+  await wait(0.3); gulp();
+  const n = S.drinks, L = { 1: ['A free drink: a Sierra Nevada Pale Ale.', 'Brudda Blaine gets one too.'], 2: ['Another free Sierra Nevada Pale Ale.'],
+    3: ["The free drinks keep coming. You're feeling it."], 4: ['Good and drunk.'] }[n];
+  if (L) await say(L);
+}
+async function jimArrives(S) {
+  await say(['Brudda Blaine: "Brudda. We should go."']);
+  const order = JIM_SAYS.slice(2).concat(JIM_SAYS.slice(0, 2));  // his first line is the one about remembering; the rest, at random
+  const first = order.shift();
+  for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+  S.jim = { t0: time, walk: true, perk: NEVER, bet: 0, hits: 0, says: order, said: 0, rounds: 0 };
+  await wait(5.4);
+  S.jim.walk = false;
+  await say(['Right then, a man named Jim strolls in.', 'Long white hair.', 'He starts playing craps, alongside you.']);
+  S.jim.bet = 1; chipClack(2);
+  await wait(0.5);
+  jimSigh();
+  await say(['Jim: "' + first + '"', 'Slowly. Slightly stupefied, as if perpetually tired.']);
+  S.jim.bet = 0;
+}
+async function casino(jump) {
+  await fadeTo(1, 0.8);
+  musicStop(); hud(null); phase = 'cut';
+  scene3 = { kind: 'craps', t0: time, chips: 100, bet: 0, point: 0, drinks: 0, shooter: 'you', thr: null, pay: null, pops: [], jim: null,
+    ready: false, waitA: null, rolls: 0, last: null, up: false, cheer: null, taught: false, pointTaught: false, chime: time + 1 };
+  const S = scene3;
+  await fadeTo(0, 0.8);
+  if (!jump) {
+    await wait(0.6);
+    await say(['Darkish, with lights from the screens, in the background.', 'Old town Reno: a slight smell of despair, and cigarettes.']);
+    await say(['A craps table: just you, Brudda Blaine, and the dealer.', 'You roll the dice yourself.',
+      'On the first roll, 7 or 11 wins. 2, 3 or 12 loses. Any other number is your point.', 'Then roll your point again before a 7, and you win.']);
+    await say(['You buy in: 100 in chips.']); chipClack(5);
+  } else { S.drinks = 4; S.taught = true; S.pointTaught = true; }
+  phase = 'craps'; crapsHud();
+  if (jump) await jimArrives(S);
+  for (;;) {
+    await crapsRound(S);
+    if (!S.jim && S.drinks >= 4) { await jimArrives(S); continue; }
+    if (S.jim && ++S.jim.rounds >= 3 || (S.jim && S.jim.hits && S.jim.rounds >= 2)) break;
+  }
+  phase = 'cut'; hud(null);
+  await wait(0.6);
+  crapsPop('?', 150, 50); crapsPop('?', 144, 38);
+  await wait(0.8);
+  await say(['Jim. The enigma.', 'The one who claims that the dice do not, in fact, remember.']);
+  await say(['Dealer: "Oh, Jim."']);
+  S.jim.perk = time; jimSigh();
+  await wait(0.8);
+  await say(['Jim: "Santa Cruz is only for hippies. You. Are. Not. Welcome."']);
+  S.grow = time; enlargeSound();
+  await wait(2.4);
+  await say(['Jim enlarges.']);
+}
+async function reno(from = 'motel') {  // Reno, from the motel to Jim (for checks, it can start part way along)
+  if (from === 'motel') await motel();
+  if (from === 'motel' || from === 'canal') await canal();
+  if (from === 'motel' || from === 'canal' || from === 'strip') await oldStrip();
+  await casino(from === 'jim');
+}
+// ---- little sounds for Reno ----
+function rattle() { if (!ac || muted) return; makeNoise(); for (let i = 0; i < 5; i++) noiseHit(ac.currentTime + i * 0.05 + Math.random() * 0.02, 'bandpass', 2800 + Math.random() * 900, 3, 0.05, 0.03, 0, master); }
+function diceHit() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; noiseHit(t, 'bandpass', 900, 1.5, 0.07, 0.08, 0, master); for (let i = 1; i < 6; i++) noiseHit(t + i * 0.08 + Math.random() * 0.03, 'bandpass', 2600, 3, 0.04 / i, 0.03, 0, master); }
+function chipClack(n = 3) { if (!ac || muted) return; makeNoise(); for (let i = 0; i < n; i++) noiseHit(ac.currentTime + i * 0.06, 'bandpass', 3600 + (i % 2) * 500, 4, 0.04, 0.025, 0, master); }
+function slotChime() { if (!ac || muted) return; const P = [1046.5, 1174.66, 1318.51, 1567.98, 1760], k = Math.floor(Math.random() * P.length); tone(master, 'sine', P[k], ac.currentTime, 0.3, 0.006); if (Math.random() < 0.35) tone(master, 'sine', P[(k + 2) % 5], ac.currentTime + 0.11, 0.3, 0.005); }
+function jimSigh() {  // a long, tired breath out: low, falling
+  if (!ac || muted) return; makeNoise();
+  const t = ac.currentTime, o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  o.type = 'sawtooth'; o.frequency.setValueAtTime(118, t); o.frequency.exponentialRampToValueAtTime(78, t + 0.9);
+  lp.type = 'lowpass'; lp.frequency.value = 420;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.018, t + 0.15); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.0);
+  o.connect(lp); lp.connect(g); g.connect(master); o.start(t); o.stop(t + 1.05);
+  noiseHit(t, 'lowpass', 700, 0.7, 0.02, 0.8, 0, master);
+}
+function enlargeSound() {  // a low rumble, rising, and a boom
+  if (!ac || muted) return; makeNoise();
+  const t = ac.currentTime, o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  o.type = 'sawtooth'; o.frequency.setValueAtTime(40, t); o.frequency.exponentialRampToValueAtTime(160, t + 1.8);
+  lp.type = 'lowpass'; lp.frequency.value = 500;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05, t + 0.4); g.gain.exponentialRampToValueAtTime(0.0001, t + 2.0);
+  o.connect(lp); lp.connect(g); g.connect(master); o.start(t); o.stop(t + 2.05);
+  noiseHit(t, 'lowpass', 300, 0.7, 0.05, 1.8, 0, master); noiseHit(t + 1.8, 'lowpass', 200, 0.7, 0.12, 0.9, 0, master);
+}
+function perkUp() { if (!ac || muted) return; [392, 523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(master, 'triangle', f, ac.currentTime + i * 0.06, 0.18, 0.03)); }
 function finish4() {
   phase = 'done4'; lock = 0; hud(null);  // (the last scene stays on screen, behind)
   $('end4Text').textContent = 'You drove West in the U-Haul with Brudda Blaine and IzzyKat, through the oil fields, past bison ' +
@@ -8588,7 +9305,8 @@ function finish4() {
     'cheering, for a picture taken by a group of girls, obviously smitten with you and your allure. A hike through the ' +
     'smaller geysers, and a beer or two. Steam in the distance: Old Faithful. It tricked you, again and again, then ' +
     'exploded, with IzzyKat riding it, far into the air. She might be indestructible. She landed at your feet. Then on, ' +
-    'through the barren wastelands, Kyuss in Utah and Mac Miller\'s Circles in Nevada, to Reno. Next, from your story: Reno.';
+    'through the barren wastelands, Kyuss in Utah and Mac Miller\'s Circles in Nevada, to Reno.' +
+    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. Next, from your story: the fight with Jim.';
   $('end4').hidden = false;
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
@@ -8604,6 +9322,11 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   hike: () => { phase = 'cut'; musicStart(); hike().then(finish4); },
   geyser: () => { phase = 'cut'; oldFaithful().then(finish4); },
   reno: () => { phase = 'cut'; toReno().then(finish4); },
+  motel: () => { phase = 'cut'; reno('motel').then(finish4); },
+  canal: () => { phase = 'cut'; reno('canal').then(finish4); },
+  strip: () => { phase = 'cut'; reno('strip').then(finish4); },
+  casino: () => { phase = 'cut'; reno('casino').then(finish4); },
+  jim: () => { phase = 'cut'; reno('jim').then(finish4); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
@@ -8617,6 +9340,8 @@ function pressA() {
   if (phase === 'push' && !lock) { pushRock(); return; }  // level 3: helping push the boulder
   if (phase === 'whack') { whackA(); return; }  // level 4: whack-a-prairie-dog
   if (phase === 'hike') { hikeA(); return; }    // and the hike, at Yellowstone
+  if (phase === 'canal') { canalA(); return; }  // Reno: the canals,
+  if (phase === 'craps') { crapsA(); return; }  // and craps
   if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2' || phase === 'done3' || phase === 'done4') return;
   interact();
 }
@@ -8721,30 +9446,12 @@ const extraGrid = (g, rows, pal, x, y, flip) => {  // a sprite grid, onto any ca
 };
 
 // ---- extra: the tangerine scooter ----
-// Retro and rounded, tangerine, with a black seat, a round chrome headlight, chrome mirrors and a little chrome rack.
-// First, a picture of it on the apartment wall. Then, in Akumal, the real thing, parked at the end of a side street:
-// tap A on it, and ride it round town. (You hop off by yourself when the boulder needs pushing, and at the archway.)
+// Retro and rounded, tangerine, with a black seat, a round chrome headlight, chrome mirrors and a little chrome rack:
+// a picture of it on the apartment wall. (It was parked in Akumal too, to ride; taken out, so Akumal is a true run
+// and search.)
 if (EXTRAS.on && EXTRAS.scooter) {
   const PAL = { O: '#f0822a', o: '#c25f1a', h: '#ffb066', K: '#1c1c22', k: '#2c2c33', C: '#e2e6ea', c: '#98a1aa',
     W: '#fff6c8', T: '#1b1b20', R: '#b9c0c6', S: '#16161a', s: '#40404c', r: '#d9302c' };
-  const SCOOT = [  // side on, facing right: 24 by 17
-    '.............cC..cC.....',
-    '.............Cc..Cc.....',
-    '...............c.c......',
-    '.............kkhOOkk....',
-    '...............OOcCc....',
-    '..............kOOCWC....',
-    '.CC...........kOOOcC....',
-    '.C..sSSSSs....kOOOO.....',
-    '.CSSSSSSSSS...kOOOOo....',
-    '..ShhhhhhhOo..kOOOOo....',
-    '.rOOOOOOOOOo..kOOOOOo...',
-    '.OOOOOOOOOOOo.kOOOOOOo..',
-    '..oOOOOOOOOokkkhOOOOOOo.',
-    '...ooooooo..KKK.ooTTTo..',
-    '...kTTTk.........TRRRT..',
-    '...TRCRT.........TRCRT..',
-    '....TTT...........TTT...'];
   const LITTLE = [  // the same, small, for the picture: 17 by 11
     '...........c..c..',
     '..........kOOk...',
@@ -8757,9 +9464,6 @@ if (EXTRAS.on && EXTRAS.scooter) {
     '...kTTk....kTTT..',
     '...TRRT....TRRT..',
     '....TT......TT...'];
-  const HOME = { x: 13, y: 10 };  // Akumal: the end of the side street, east off the main street
-  const sc = { pic: false, met: false, riding: false, at: null };  // at: where it's parked, once you've ridden it
-  const RIDE_STEP = 0.09, WALK_STEP = 0.16;
   // the picture, in a frame on the apartment's back wall, over the bottles to the right of the futon
   {
     const g = AREAS.apartment.base.getContext('2d'), X = 16 * TS + 10, Y = 0, W = 28, H = 13;
@@ -8772,69 +9476,12 @@ if (EXTRAS.on && EXTRAS.scooter) {
     extraGrid(g, LITTLE, PAL, X + 5, Y + 1, false);
     g.fillStyle = 'rgba(255,255,255,.35)'; g.fillRect(X + W - 4, Y + 2, 1, 2);              // a glint on the glass
   }
-  const park = (x, y) => { sc.at = { x, y }; };
-  const parked = () => sc.riding ? null : (sc.at || HOME);
-  const hopOff = () => {  // parked just behind you, out of the way of the boulder
-    sc.riding = false; P.stepTime = WALK_STEP;
-    park(L3.rock.met && !L3.rock.done && walkable3(P.tx + 1, P.ty) ? P.tx + 1 : P.tx, P.ty);
-  };
-  function beep() {  // a little horn, two soft notes
-    if (!ac || muted) return;
-    for (const [d, f] of [[0, 523.25], [0.16, 659.25]]) { tone(master, 'square', f, ac.currentTime + d, 0.11, 0.025, 1800); tone(master, 'sine', f / 2, ac.currentTime + d, 0.11, 0.03); }
-  }
-  async function hopOn() {
-    lock++;
-    const pages = [];
-    if (!sc.met) {
-      pages.push('A tangerine scooter, parked at the end of the street.',
-                 'A black seat, a round chrome headlight, chrome mirrors, and a little chrome rack on the back.');
-      if (sc.pic) pages.push('Just like the picture on the wall, back in the apartment.');
-    }
-    sc.met = true;
-    if (pages.length) await say(pages);
-    const i = await ask(pages.length ? 'Ride it?' : 'The tangerine scooter. Ride it?', ['Yes', 'No']);
-    if (i === 0) {
-      sc.riding = true; sc.at = null; P.stepTime = RIDE_STEP; putt(); wait(0.5).then(beep);
-      await say(['You hop on. It putters to life.']);
-    }
-    lock--;
-  }
-  function drawScooter(X, Y, flip) {  // X, Y: the top-left of its tile; it's wider than the tile, like a bike
-    ctx.fillStyle = 'rgba(0,0,0,.22)'; ctx.fillRect(X - 1, Y + 14, 18, 2);
-    extraGrid(ctx, SCOOT, PAL, X - 4, Y - 1, flip);
-  }
   extras.parts.push({
     look(fx, fy) {
       if (level === 1 && fy === 0 && (fx === 17 || fx === 18) && P.facing === 'up') {
-        sc.pic = true; say(['A picture of a tangerine scooter, in a frame.', 'Somebody loves that scooter.']); return true;
+        say(['A picture of a tangerine scooter, in a frame.', 'Somebody loves that scooter.']); return true;
       }
-      if (level !== 3 || area !== 'akumal' || phase !== 'town' || sc.riding || L3.found) return false;
-      const at = parked();
-      if ((fx === at.x && fy === at.y) || (sc.at && P.tx === at.x && P.ty === at.y)) { hopOn(); return true; }
       return false;
-    },
-    blocks(x, y) {  // where it's first parked, it stands in your way (so you can face it, and tap A)
-      return level === 3 && area === 'akumal' && !sc.riding && !sc.at && !L3.found && x === HOME.x && y === HOME.y;
-    },
-    sprites(list, cx, cy) {
-      if (level !== 3 || area !== 'akumal' || L3.found) return;
-      const at = parked(); if (!at) return;
-      list.push([at.y * TS + 8.5, () => drawScooter(at.x * TS - cx, at.y * TS - cy, false)]);
-    },
-    rider(X, Y) {
-      if (!sc.riding || level !== 3 || area !== 'akumal') return false;
-      const flip = P.side < 0, bob = P.moving && Math.floor(P.anim * 10) % 2 ? 1 : 0;
-      drawScooter(X, Y, flip);
-      drawBlaineSit(X - 4 + (flip ? 10 : 0), Y - 8 - bob, flip);
-      const q = painter(X - 4, Y - 8 - bob, 24, flip);  // an arm, out to the handlebar
-      q.r(11, 10, 3, 2, BB.JK); q.r(14, 11, 2, 1, BB.JK); q.p(16, 11, BB.SKIN);
-      return true;
-    },
-    update() {
-      if (level !== 3 || area !== 'akumal') { if (sc.riding || sc.at) { sc.riding = false; sc.at = null; } return; }
-      if (!sc.riding) return;
-      const R = L3.rock;
-      if (L3.found || phase === 'push' || (phase === 'scene' && R.met && !R.done)) hopOff();  // off, to push, or at the end
     },
   });
 }
@@ -9069,6 +9716,8 @@ window.__sketch = {
       chug: H.chug ? { me: H.chug.me, mine: H.chug.mine, his: H.chug.his } : null, geysers: HIKE_GEYSERS.map(G => gNow(G)[0]),
       spray: HIKE_GEYSERS.map(G => { const [st, k] = gNow(G); return st === 'blow' ? k : -1; }), blaine: [H.bl.x, H.bl.y] };
   },
+  get canal() { const C = scene3; return C && C.kind === 'canal' ? { at: [C.me.tx, C.me.ty], moving: C.me.moving, hop: !!C.me.hop, live: C.live, jumped: C.jumped, grid: CANAL } : null; },
+  get craps() { const C = scene3; return C && C.kind === 'craps' ? { chips: C.chips, point: C.point, drinks: C.drinks, ready: C.ready, rolls: C.rolls, jim: !!C.jim, shooter: C.shooter } : null; },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
   get vistaState() { return vista ? { flag: !!vista.flag, latch: !!vista.latch, ride: !!vista.ride, fall: !!vista.fall, splash: !!vista.splash,
