@@ -271,8 +271,9 @@ a { color:var(--accent); }
     <p id="end4Text"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>Old Faithful (separate, you said): it almost goes, and almost goes, then explodes, with IzzyKat riding it.</li>
-      <li>Reno: a motel, a maze of canals, the old strip, a casino, Sierra Nevada Pale Ales, craps, and Jim.</li>
+      <li>Reno: a motel, a maze of canals like the LA river, the old strip, a casino, Sierra Nevada Pale Ales, craps, and Jim
+        strolling in.</li>
+      <li>The fight with Jim, where IzzyKat's powers win it.</li>
     </ol>
     <p class="small">Guesses in level 4 so far: how the oil fields look (the oil rigs drawn as nodding pumps, with drilling
       towers far off), the bison, the horses and their battle, the badlands, the park sign, the river, the mounds, the
@@ -285,8 +286,15 @@ a { color:var(--accent); }
       of dune grass, and what it feels as warm (Brudda Blaine, then a rock in the sun); the rings of "Pss, pss, pss", and
       who comes; the rock, and the beetle under it; Brudda Blaine's yell by the river; the purr; and the close-up of her
       under the U-Haul. On the road to Yellowstone: how it all looks and sounds (the park sign, the mountains and their
-      snow, the pines, the elk, the bull and his bugle, the coyotes, the photographers and their long lenses, the clicks,
-      the steam, and Old Faithful's cone and sign). The words not in your story are guesses too.</p>
+      snow, behind the elk, the pines, the elk, the bull and his bugle, the coyotes, the photographers and their long
+      lenses, the clicks). The parking lot and the picture: the lot, the cars, the U-Haul across four spaces, the sign, how
+      you hold her up and the light round her, how Brudda Blaine cheers, the girls (seen from behind, with the hearts), the
+      flash, and the picture itself; IzzyKat back in the U-Haul for a nap. The hike: the boardwalk, the hot springs, how
+      the little geysers bubble and blow, the spray knocking you back, the two benches, and chugging by tapping A. Old
+      Faithful: the crowd on the benches, how many times it tricks you, the eruption (the rainbow, the sparkles), her
+      ride, the glances, the nod, and her landing. The drive to Reno: the wastelands, the signs, the tumbleweed, the
+      sunset, Reno at night, and the music (original, in the spirit of the bands you named; real recordings can't go in
+      the game). The words not in your story are guesses too.</p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -880,6 +888,8 @@ function musicStep(n, t) {
   else if (S.kind === 'club') clubStep(S, n, t, mus.six);      // the club,
   else if (S.kind === 'town') townStep(S, n, t, mus.six);      // Akumal,
   else if (S.kind === 'reunion') reunionStep(S, n, t, mus.six);  // and finding Braydon
+  else if (S.kind === 'desert') desertStep(S, n, t, mus.six);    // level 4: Utah, on the stereo,
+  else if (S.kind === 'circles') circlesStep(S, n, t, mus.six);  // and Nevada
   else if (S === STYLES.regular) spookyStep(ch, bar, s, t, mus.six, phrase);
   else if (S === STYLES.human) gazeStep(ch, bar, s, t, mus.six, phrase);
   else pointerStep(ch, bar, s, t, mus.six, phrase);
@@ -5843,7 +5853,8 @@ async function peekIn() {
 }
 function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
-  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown })[scene3.kind]();
+  ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown,
+    lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -6124,7 +6135,7 @@ function update3(dt) {
     if (R.x <= 0.001 && !P.moving) rockDone();
   }
   const S = scene3;
-  if (S && (S.kind === 'ride' || S.kind === 'cab' || S.kind === 'drive' || S.kind === 'arrive')) {
+  if (S && (S.kind === 'ride' || S.kind === 'cab' || S.kind === 'drive' || S.kind === 'arrive' || S.kind === 'lot')) {
     if (S.vGoal != null) S.v += clamp(S.vGoal - S.v, -dt * 30, dt * 30);
     if (S.brakeTo != null) S.v = Math.min(S.v, Math.sqrt(2 * 20 * Math.max(0, S.brakeTo - S.dist)));
     S.dist += S.v * dt;
@@ -6133,6 +6144,8 @@ function update3(dt) {
   if (S && (S.kind === 'search' || S.kind === 'under')) updateSearch(dt);  // and the search for IzzyKat
   if (S && S.kind === 'dogtown') updateDogTown();  // the long view of the prairie dog town
   if (S && S.kind === 'drive' && S.pack) updateYS();  // Yellowstone: the photographers, clicking
+  if (S && S.kind === 'hike') updateHike(dt);          // the hike through the smaller geysers
+  if (S && S.kind === 'faithful') updateFaithful();     // Old Faithful (her purr, after)
 }
 
 // ---- level 3: the scenes ----
@@ -6461,14 +6474,15 @@ const JUMP3 = {
 // The final chapter: you, Brudda Blaine and IzzyKat, West in the U-Haul. Through the oil fields (large oil rigs, close
 // and far), past bison, and two horses, one black, one brown, having a slight battle; to Badlands National Park. You
 // park the U-Haul by the river, where sand-like mounds slide down into it and it bends in an S. Then whack-a-prairie-dog,
-// and IzzyKat gets out, and back on the road to Yellowstone (all below). Next, from your story: Old Faithful, which is
-// separate. (How it all looks is a guess.)
+// and IzzyKat gets out, back on the road to Yellowstone, the picture, the hike, Old Faithful, and on to Reno (all below).
+// Next, from your story: Reno itself, and Jim. (How it all looks is a guess.)
 const DRIVE_SKY = { oil: [[150, 190, 226], [238, 226, 198]], bison: [[138, 186, 228], [232, 230, 204]],
   horses: [[132, 180, 226], [238, 224, 194]], badlands: [[120, 172, 224], [246, 214, 178]],
-  park: [[112, 166, 222], [226, 234, 240]], elk: [[118, 170, 224], [230, 234, 236]], peaks: [[96, 152, 220], [222, 232, 244]],
-  coyote: [[118, 170, 224], [228, 234, 238]], basin: [[128, 168, 214], [220, 230, 238]] };
+  park: [[112, 166, 222], [226, 234, 240]], elk: [[104, 158, 220], [224, 232, 244]], coyote: [[118, 170, 224], [228, 234, 238]],
+  utah: [[150, 196, 232], [248, 232, 204]], nevada: [[70, 84, 150], [246, 170, 120]], reno: [[10, 12, 36], [44, 30, 70]] };
 const DRIVE_FIELD = { oil: ['#b9a96a', '#a8985a'], bison: ['#a9b06c', '#98a05c'], horses: ['#b4a868', '#a49858'], badlands: ['#c4a874', '#b49464'],
-  park: ['#94a05a', '#84904a'], elk: ['#aaa862', '#9a9852'], peaks: ['#7e9050', '#6e8040'], coyote: ['#a8a462', '#989452'], basin: ['#b4ad84', '#a49d74'] };
+  park: ['#94a05a', '#84904a'], elk: ['#aaa862', '#9a9852'], coyote: ['#a8a462', '#989452'],
+  utah: ['#e2d6b4', '#d2c49e'], nevada: ['#b0a27e', '#9e906c'], reno: ['#2e2a36', '#26222e'] };
 const BANDS = ['#ecdcc4', '#dcae80', '#c47c58', '#e8cca8', '#b86c4c', '#f0e4d0', '#d0966a'];  // the badlands' stripes
 function pumpjack(x, y, s, ph) {  // a large oil rig, nodding: x, y the middle of its base on the ground; s its size; facing left
   const S = v => Math.round(v * s), top = y - S(26);
@@ -6521,9 +6535,10 @@ function horse(x, y, flip, coat, rear, k) {  // a horse, from the side, facing l
 function drawDrive() {
   const S = scene3, t = time - S.t0, d = S.dist, seg = S.seg, HZ = 50, RD = 78;
   gradient(0, HZ, DRIVE_SKY[seg][0], DRIVE_SKY[seg][1]);
-  ctx.fillStyle = 'rgba(255,255,255,.8)';  // clouds, drifting by slowly
-  for (let i = 0; i < 4; i++) { const x = Math.round(wrapX(i * 53 + d * 0.04, VW + 40) - 20), y = 6 + (i * 11) % 22; ctx.fillRect(x, y, 16, 3); ctx.fillRect(x + 4, y - 2, 8, 2); }
+  ctx.fillStyle = 'rgba(255,255,255,.8)';  // clouds, drifting by slowly (none at night)
+  if (seg !== 'reno') for (let i = 0; i < 4; i++) { const x = Math.round(wrapX(i * 53 + d * 0.04, VW + 40) - 20), y = 6 + (i * 11) % 22; ctx.fillRect(x, y, 16, 3); ctx.fillRect(x + 4, y - 2, 8, 2); }
   if (YS_SEGS.has(seg)) ysFar(seg, d, HZ);  // Yellowstone: mountains, snow on the peaks, pines
+  else if (DS_SEGS.has(seg)) dsFar(seg, d, HZ);  // on to Reno: mesas, dry mountains, a sunset; then the city lights
   else for (let x = 0; x < VW; x++) {  // far off: low hills, or the badlands, striped
     const wx = x - d * 0.15;
     if (seg === 'badlands') {
@@ -6558,12 +6573,14 @@ function drawDrive() {
     const x = at(S.signAt);
     if (x > -60 && x < VW + 60) { ctx.fillStyle = '#5a3a22'; ctx.fillRect(x - 20, 58, 2, 16); ctx.fillRect(x + 18, 58, 2, 16); signBoard(ctx, 'BADLANDS', x, 52, '#5a3a22', '#f4efe6', '#3a2414'); signBoard(ctx, 'NATIONAL PARK', x, 62, '#5a3a22', '#f4efe6', '#3a2414'); }
   } else if (YS_SEGS.has(seg)) ysField(S, seg, d, HZ, RD, at);
+  else if (DS_SEGS.has(seg)) dsField(S, seg, d, HZ, RD, at);
   ctx.fillStyle = '#4a4a50'; ctx.fillRect(0, RD, VW, 12);  // the road, its lines going by
   ctx.fillStyle = '#e8e4da'; ctx.fillRect(0, RD, VW, 1); ctx.fillRect(0, RD + 11, VW, 1);
   ctx.fillStyle = '#e8c84a'; for (let i = 0; i < 9; i++) ctx.fillRect(Math.round(wrapX(i * 20 + d, VW + 20) - 10), RD + 6, 9, 1);
   const bob = S.v > 3 && Math.floor(time * 9) % 2 ? 1 : 0;
   uHaul(50, RD - 24 - bob);  // you three: Brudda Blaine driving, you, and IzzyKat in the window
   if (YS_SEGS.has(seg)) { ysNear(S, seg, d, RD); return; }  // Yellowstone: a meadow in front, no fences
+  if (DS_SEGS.has(seg)) { dsNear(S, seg, d, RD, HZ); return; }  // the desert; sagebrush; Reno at night
   ctx.fillStyle = '#7a8a46'; ctx.fillRect(0, RD + 12, VW, VH - RD - 12);  // the near verge: grass, fence posts flying by
   for (let i = 0; i < 7; i++) { const x = Math.round(wrapX(i * 26 + d * 1.6, VW + 26) - 13); ctx.fillStyle = '#6a4a2a'; ctx.fillRect(x, RD + 14, 2, 8); ctx.fillStyle = '#8a8a8a'; ctx.fillRect(x - 13, RD + 16, 26, 1); }
 }
@@ -7548,13 +7565,13 @@ function purrBreath(v = 0.09) {  // one breath of a purr: a soft, low rumble, fl
   s.connect(lp); lp.connect(am); am.connect(g); g.connect(master);
   s.start(t, Math.random() * 0.5); lfo.start(t); s.stop(t + 1.15); lfo.stop(t + 1.15);
 }
-// ---- level 4: back on the road, to Yellowstone. A scene you watch (your answer), up to Old Faithful (separate, you
-// said). The drive, seen from the side as before: the park sign; elk by the road, and a bull bugling (real: bulls bugle
-// to call to the cows and to challenge other bulls, from the National Park Service's page on Yellowstone's elk);
-// mountains; coyotes, and photographers annoyingly following them as if they're wolves ("those idiots"); then the
-// steam, and Old Faithful. How it all looks and sounds is a guess. ----
-const YS_SEGS = new Set(['park', 'elk', 'peaks', 'coyote', 'basin']);
-function ysFar(seg, d, HZ) {  // far off: mountains, snow on the peaks; closer mountains on the way through; pines
+// ---- level 4: back on the road, to Yellowstone. A scene you watch (your answer). The drive, seen from the side as
+// before: the park sign; elk by the road, the mountains behind them (your ask: no mountains scene of its own), and a
+// bull bugling (real: bulls bugle to call to the cows and to challenge other bulls, from the National Park Service's
+// page on Yellowstone's elk); coyotes, and photographers annoyingly following them as if they're wolves ("those
+// idiots"). Then into a large parking lot (below). How it all looks and sounds is a guess. ----
+const YS_SEGS = new Set(['park', 'elk', 'coyote']);
+function ysFar(seg, d, HZ) {  // far off: mountains, snow on the peaks; closer mountains behind the elk; pines
   const tri = u => 1 - 2 * Math.abs(u - Math.floor(u) - 0.5);  // a zigzag, 0 to 1: sharp peaks
   const H = wx => 9 + 17 * tri(wx / 61 + 0.3) + 8 * tri(wx / 27 + 0.1) + 2.5 * tri(wx / 9);
   for (let x = 0; x < VW; x++) {
@@ -7562,7 +7579,7 @@ function ysFar(seg, d, HZ) {  // far off: mountains, snow on the peaks; closer m
     ctx.fillStyle = lit ? '#7c8699' : '#5f697d'; ctx.fillRect(x, top, 1, HZ - top);
     if (h > 20) { ctx.fillStyle = lit ? '#f2f4f8' : '#c9d1de'; ctx.fillRect(x, top, 1, Math.round((h - 20) * 0.7) + 1); }
   }
-  if (seg === 'peaks') {  // the mountains, close: bigger, darker, more snow
+  if (seg === 'elk') {  // the mountains, close, behind the elk: bigger, darker, more snow
     const N = wx => 6 + 26 * tri(wx / 47 + 0.6) + 8 * tri(wx / 19) + 2 * tri(wx / 7);
     for (let x = 0; x < VW; x++) {
       const wx = x - d * 0.18, h = N(wx), lit = N(wx + 1) >= h, top = Math.round(HZ - 2 - h);
@@ -7573,7 +7590,7 @@ function ysFar(seg, d, HZ) {  // far off: mountains, snow on the peaks; closer m
   for (let x = 0; x < VW; x++) {  // a ridge of pines along the horizon, a tree every few pixels
     const wx = x - d * 0.25, i = Math.floor(wx / 4), lx = wx - i * 4, th = 4 + ((i * 7919) % 5 + 5) % 5;
     const top = Math.round(HZ - 1 - Math.max(0, th - Math.abs(lx - 2) * 2));
-    ctx.fillStyle = seg === 'basin' ? '#3a5442' : '#2c4634'; ctx.fillRect(x, top, 1, HZ - top);
+    ctx.fillStyle = '#2c4634'; ctx.fillRect(x, top, 1, HZ - top);
   }
 }
 function pineSide(x, base, h) {  // a pine, from the side: x its middle, base where it meets the ground, h its height
@@ -7648,24 +7665,11 @@ function shooter(x, y, c, walk, crouch) {  // a photographer with a long lens, f
     q.r(10 - f, 17, 3, 1, '#3a2a1a'); q.r(14 + f, 17, 3, 1, '#3a2a1a');
   }
 }
-function geyserCone(x, y) {  // Old Faithful's cone: a mound of pale rock, steaming. x, y the middle of its base
-  for (let j = -3; j <= 3; j++) { const w = Math.round(34 * Math.sqrt(1 - (j / 3.5) ** 2)); ctx.fillStyle = '#e4e0d2'; ctx.fillRect(x - w, y + j, w * 2, 1); }  // pale rock around it
-  ctx.fillStyle = '#c8864a'; ctx.fillRect(x - 28, y + 1, 9, 1); ctx.fillRect(x + 18, y, 10, 1); ctx.fillRect(x - 22, y + 2, 5, 1);  // runoff, streaked orange
-  ctx.fillStyle = '#d8a860'; ctx.fillRect(x + 22, y + 2, 6, 1); ctx.fillRect(x - 31, y, 4, 1);
-  for (let j = 0; j < 10; j++) {  // the cone, lumpy, shaded on the right
-    const w = Math.round(20 - j * 1.6 - (j > 6 ? (j - 6) * 1.5 : 0)), sh = Math.round(w * 0.35);
-    ctx.fillStyle = '#9a968a'; ctx.fillRect(x - w - 1, y - j - 1, w * 2 + 2, 1);
-    ctx.fillStyle = j % 2 ? '#f0ede4' : '#dedad0'; ctx.fillRect(x - w, y - j, w * 2 - sh, 1);
-    ctx.fillStyle = '#c4c0b4'; ctx.fillRect(x + w - sh, y - j, sh, 1);
-  }
-  ctx.fillStyle = '#5a564c'; ctx.fillRect(x - 2, y - 10, 4, 1);  // the vent
-  steam(x, y - 10, 40, 8, 1.6);
-}
 const packX = p => p.from != null ? p.x0 - (time - p.from) * 22 : p.x0;  // the coyote in front: where it is now
 function ysField(S, seg, d, HZ, RD, at) {  // on the far side of the road
-  if (seg === 'park' || seg === 'peaks' || seg === 'coyote') {  // pines
-    const n = seg === 'peaks' ? 9 : seg === 'park' ? 6 : 3;
-    for (let i = 0; i < n; i++) { const x = Math.round(wrapX(i * (180 / n) + 7 + d * 0.55, VW + 40) - 20); pineSide(x, HZ + 10 + (i % 3) * 3, seg === 'peaks' ? 14 + (i % 3) * 4 : 10 + (i % 3) * 3); }
+  if (seg === 'park' || seg === 'coyote') {  // pines
+    const n = seg === 'park' ? 6 : 3;
+    for (let i = 0; i < n; i++) { const x = Math.round(wrapX(i * (180 / n) + 7 + d * 0.55, VW + 40) - 20); pineSide(x, HZ + 10 + (i % 3) * 3, 10 + (i % 3) * 3); }
   }
   if (seg === 'park' && S.signAt != null) {  // the park sign, going by
     const x = at(S.signAt);
@@ -7674,18 +7678,13 @@ function ysField(S, seg, d, HZ, RD, at) {  // on the far side of the road
   if (seg === 'elk') for (const b of S.herd) {  // elk, grazing, now and then looking up
     const x = at(b.wx, b.k); if (x > -20 && x < VW + 20) elkFar(x, b.y, b.flip, (time + b.wx) % 5 < 3.5);
   }
-  if (seg === 'basin') {  // steam, rising out of the ground; then Old Faithful's cone
-    for (let i = 0; i < 4; i++) { const x = Math.round(wrapX(i * 47 + 11 + d * 0.35, VW + 40) - 20); steam(x, HZ + 3 + (i % 3) * 3, 20, 5, 0.8); }
-    const x = at(S.coneAt); if (x > -40 && x < VW + 40) geyserCone(x, 72);
-  }
 }
-function ysNear(S, seg, d, RD) {  // in front of the road: a meadow (or, by Old Faithful, pale ground)
-  const y0 = RD + 12, basin = seg === 'basin';
-  ctx.fillStyle = basin ? '#c4be9e' : '#8e9a50'; ctx.fillRect(0, y0, VW, VH - y0);
+function ysNear(S, seg, d, RD) {  // in front of the road: a meadow
+  const y0 = RD + 12;
+  ctx.fillStyle = '#8e9a50'; ctx.fillRect(0, y0, VW, VH - y0);
   for (let i = 0; i < 16; i++) {
     const x = Math.round(wrapX(i * 23 + d * 1.6, VW + 20) - 10), y = y0 + 4 + (i * 13) % (VH - y0 - 8);
-    if (basin) { ctx.fillStyle = i % 3 ? '#b4ae8e' : '#c8864a'; ctx.fillRect(x, y, 6, 1); }
-    else for (let k = 0; k < 3; k++) line(ctx, x + k, y + 3, x + k * 2 - 1, y, k % 2 ? '#a8a84a' : '#7a8a3a');
+    for (let k = 0; k < 3; k++) line(ctx, x + k, y + 3, x + k * 2 - 1, y, k % 2 ? '#a8a84a' : '#7a8a3a');
   }
   if (seg === 'elk') {  // a bull, right by the road; he lifts his head and bugles
     const x = Math.round(S.bull + d * 1.6), b = S.bugle != null ? time - S.bugle : -1;
@@ -7704,10 +7703,6 @@ function ysNear(S, seg, d, RD) {  // in front of the road: a meadow (or, by Old 
       signText(ctx, 'CLICK', x - 9, y - 27, '#2a2a30'); signText(ctx, 'CLICK', x - 10, y - 28, '#ffffff');
       ctx.fillStyle = '#ffffff'; ctx.fillRect(x - 13, y - 10, 3, 1); ctx.fillRect(x - 12, y - 11, 1, 3);
     }
-  }
-  if (basin) {  // the sign, by the road
-    const x = Math.round(S.fSign + d * 1.6);
-    if (x > -60 && x < VW + 60) { ctx.fillStyle = '#5a3a22'; ctx.fillRect(x - 18, 100, 2, 14); ctx.fillRect(x + 16, 100, 2, 14); signBoard(ctx, 'OLD FAITHFUL', x, 98, '#5a3a22', '#f4efe6', '#3a2414'); }
   }
 }
 function updateYS() {  // the photographers, clicking away, a few at a time
@@ -7759,12 +7754,6 @@ async function yellowstone() {
   await wait(3.4);
   scene3.brakeTo = null; scene3.vGoal = 38;
   await wait(1.6);
-  await fadeTo(1, 0.6);  // mountains
-  Object.assign(scene3, { seg: 'peaks', dist: 0, v: 38, vGoal: 38, brakeTo: null, bugle: null });
-  await fadeTo(0, 0.6);
-  await wait(1.6);
-  await say(['Mountains.']);
-  await wait(2.4);
   await fadeTo(1, 0.6);  // coyotes, and photographers
   const stopC = 150;
   Object.assign(scene3, { seg: 'coyote', dist: 0, v: 38, vGoal: 38, brakeTo: stopC, stopAt: stopC, pack: null });
@@ -7780,13 +7769,812 @@ async function yellowstone() {
   await say(['Those idiots.']);
   scene3.brakeTo = null; scene3.vGoal = 38;
   await wait(2.2);
-  await fadeTo(1, 0.6);  // Old Faithful
-  const stopF = 170;
-  Object.assign(scene3, { seg: 'basin', dist: 0, v: 38, vGoal: 38, brakeTo: stopF, coneAt: 26 - stopF, fSign: 126 - stopF * 1.6, pack: null });
+  await parkLot();  // then the parking lot, the picture, the hike, Old Faithful, and on to Reno (below)
+}
+// =====================================================================================================
+// ---- level 4: Yellowstone, the rest of it (your message). You park in a large parking lot. You step out of the
+// U-Haul and hold IzzyKat up to the sky, the park sign behind you, Brudda Blaine cheering, and a group of girls,
+// obviously smitten with you and your allure, takes the picture. Then a hike through the smaller geysers, something to
+// play, with a beer or two on the way. Steam in the distance: you've made it. Old Faithful tricks you, again and again
+// (real: it "plays" before it erupts, splashing up to 20 feet, and a full eruption usually begins from that play: the
+// National Park Service's page on predicting it), then explodes in a fantastic fashion, with IzzyKat riding it, far
+// into the air. Quizzical glances: she might be indestructible. She lands at your feet. Back to the U-Haul, and on
+// through the barren wastelands to Reno: Kyuss on the stereo in Utah, Mac Miller's Circles in Nevada (the music is
+// original, in their spirit; real recordings can't go in the game). How it all looks and sounds, how the hike plays,
+// and the words not in your message are guesses. ----
+// IzzyKat, small: sitting, seen from the front (11 by 13); and held up under her front legs, dangling (12 by 18)
+const CAT_SIT = [
+  '.K.......O.',
+  '.KK.....OO.',
+  '.KKKKoOOOO.',
+  '.KEPKoOEPO.',
+  '.KKKKoOOOO.',
+  '..KKNNOOO..',
+  '...KKmOO...',
+  '..KKKKOOO..',
+  '.KKKKKOOOO.',
+  '.KKKKKKOOO.',
+  '.KKKKKKOOOK',
+  '.KKKKKKKOOK',
+  '.kK.kK.oOK.'];
+const CAT_HELD = [
+  '.K........O.',
+  '.KK......OO.',
+  '.KKK....OOO.',
+  '.KKKKKoOOOO.',
+  '.KEPKKoOEPO.',
+  '.KKKKKoOOOO.',
+  '..KKKNNOOO..',
+  '...KKKmOO...',
+  '....KKOO....',
+  '...KKKKOO...',
+  '..KKKKKOOO..',
+  '..KKKKOOOO..',
+  '..KKKKKOOO..',
+  '..KKKKKOOO..',
+  '..KK.KK.OO..',
+  '..KK.KK.OO..',
+  '..kk.KK.oo..',
+  '.....KK.....'];
+// ---- the parking lot, from above: two rows of stalls, nearly all full; the U-Haul pulls in across four of them ----
+let lotCanvas = null;
+const LOT_CARS = ['#c8402a', '#2a6ab0', '#e8e4da', '#3a3a40', '#8a9a3a', '#d8a83a', '#6a3a8a', '#9aa0a8', '#2a8a7a'];
+function carTop(g, x, y, c, long) {  // a car (or a camper, long), from above, nose up: x, y its top-left, 10 wide
+  const h = long ? 28 : 20;
+  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(x + 1, y + 2, 10, h);
+  g.fillStyle = '#1d1d22'; g.fillRect(x - 1, y + 3, 12, 3); g.fillRect(x - 1, y + h - 6, 12, 3);  // the tires
+  g.fillStyle = c; g.fillRect(x, y, 10, h);
+  g.fillStyle = '#2a3a48'; g.fillRect(x + 1, y + 4, 8, 3); g.fillRect(x + 1, y + h - 5, 8, 2);    // the windshields
+  g.fillStyle = 'rgba(255,255,255,.22)'; g.fillRect(x + 1, y + 8, 8, h - 14);                     // the roof, in the sun
+  if (long) { g.fillStyle = '#7a5a3a'; g.fillRect(x, y + 12, 10, 2); }                              // a camper's stripe
+}
+function paintLot() {
+  lotCanvas = document.createElement('canvas'); lotCanvas.width = VW; lotCanvas.height = VH;
+  const g = lotCanvas.getContext('2d'), r = rng(1872);
+  g.fillStyle = '#5e5e64'; g.fillRect(0, 0, VW, VH);
+  for (let i = 0; i < 700; i++) px(g, Math.floor(r() * VW), Math.floor(r() * VH), ['#56565c', '#68686e', '#515157'][i % 3]);
+  g.fillStyle = '#6a7a42'; g.fillRect(0, 0, VW, 14); g.fillRect(0, 132, VW, 12);  // grass along the top and the bottom
+  g.fillStyle = '#c8c4b8'; g.fillRect(0, 14, VW, 1); g.fillRect(0, 131, VW, 1);   // curbs
+  for (let i = 0; i < 14; i++) { const x = (i * 23 + Math.floor(r() * 9)) % VW; if (x > 50 && x < 82) continue; disc(g, x, 5, 4, '#2c4a32'); disc(g, x - 1, 4, 2, '#3a5c3c'); }  // pines
+  for (let i = 0; i < 14; i++) { const x = (i * 23 + 11 + Math.floor(r() * 9)) % VW; disc(g, x, 139, 4, '#2c4a32'); disc(g, x - 1, 138, 2, '#3a5c3c'); }
+  signBoard(g, 'YELLOWSTONE', 66, 3, '#5a3a22', '#f4efe6', '#3a2414');  // the park sign, up on the grass
+  g.fillStyle = '#e8e6de';  // the stalls
+  for (let x = 4; x <= 158; x += 14) { g.fillRect(x, 15, 1, 28); g.fillRect(x, 103, 1, 28); }
+  g.fillRect(12, 72, 14, 1); g.fillRect(22, 70, 1, 5); g.fillRect(23, 71, 1, 3); g.fillRect(24, 72, 1, 1);  // an arrow on the lane
+  for (let i = 0; i < 11; i++) {
+    const x = 6 + i * 14;
+    if (i === 3 || i === 8) carTop(g, x, 15, '#f0ece0', true);
+    else if (r() < 0.85) carTop(g, x, 19, LOT_CARS[Math.floor(r() * LOT_CARS.length)]);
+  }
+  for (let i = 0; i < 11; i++) { if (i >= 6 && i <= 9) continue; if (r() < 0.85) carTop(g, 6 + i * 14, 107, LOT_CARS[Math.floor(r() * LOT_CARS.length)]); }
+}
+const CAT_TINY = ['K...O', 'KKoOO', 'KEoOE', '.KKO.', 'KKKOO', '.K.O.'];
+function lotPos(S) {  // where the U-Haul is: along the lane, then into four stalls at once
+  const k = S.parkT != null ? ease(clamp((time - S.parkT) / 1.6, 0, 1)) : 0;
+  return [Math.round(Math.min(92, -54 + S.dist) - k), Math.round(64 + k * 42)];
+}
+function drawLot() {
+  const S = scene3;
+  if (!lotCanvas) paintLot();
+  ctx.drawImage(lotCanvas, 0, 0);
+  const [x, y] = lotPos(S);
+  uHaulTop(x, y);
+  if (S.outT != null) {  // the doors open: Brudda Blaine, and you, with IzzyKat
+    const k = clamp((time - S.outT) / 0.9, 0, 1), st = k < 1 ? 1 + Math.floor(time * 8) % 2 : 0;
+    drawBlaine(x + 36, y - 6 - Math.round(k * 12), 'up', st);
+    drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], x + 16, y - 4 - Math.round(k * 12), ROT.up, false, k < 1 ? Math.floor(time * 8) % 2 : 0);
+    drawGrid(CAT_TINY, TORTIE, x + 31, y - 2 - Math.round(k * 12), false);
+  }
+}
+async function parkLot() {
+  await fadeTo(1, 0.8);
+  scene3 = { kind: 'lot', t0: time, dist: 0, v: 30, vGoal: 30, brakeTo: 146, parkT: null, outT: null };
+  await fadeTo(0, 0.8);
+  while (scene3.dist < 145.5) await wait(0.1);
+  await wait(0.3);
+  scene3.parkT = time;
+  await wait(1.8);
+  await say(['You park in a large parking lot.']);
+  scene3.outT = time; thump(0.05);
+  await wait(1.1);
+  await say(['You step out of the U-Haul, with IzzyKat.']);
+  await photo();
+}
+// ---- the picture: the park sign behind; you hold IzzyKat up to the sky; Brudda Blaine cheers; a group of girls, seen
+// from behind, takes it, hearts floating up off them. A flash, and there's the picture. ----
+function drawPhotoScene() {  // what's in front of the camera
+  const S = scene3;
+  gradient(0, 70, [96, 160, 226], [214, 232, 244]);
+  ysFar('park', 0, 70);  // the mountains, snow on the peaks, the pines
+  ctx.fillStyle = '#8e9a50'; ctx.fillRect(0, 70, VW, 30); ctx.fillStyle = '#7e8a44';
+  for (let i = 0; i < 24; i++) ctx.fillRect((i * 37) % VW, 72 + (i * 11) % 26, 3, 1);
+  ctx.fillStyle = '#5e5e64'; ctx.fillRect(0, 100, VW, VH - 100); ctx.fillStyle = '#c8c4b8'; ctx.fillRect(0, 100, VW, 1);  // the lot
+  const lk = S.lift != null ? ease(clamp((time - S.lift) / 0.9, 0, 1)) : 0, X = 18, Y = 66;
+  const cx = 22, cy = Math.round(50 - lk * 46 + (lk >= 1 ? Math.sin(time * 3) : 0));
+  if (lk > 0.5) {  // light, all around her (behind the sign)
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < 12; i++) {
+      const a = time * 0.4 + i * Math.PI / 6;
+      ctx.globalAlpha = 0.14 * (lk - 0.5) * 2;
+      for (let rr = 14; rr < 50; rr++) { ctx.fillStyle = '#fff2b0'; ctx.fillRect(Math.round(34 + Math.cos(a) * rr), Math.round(cy + 18 + Math.sin(a) * rr), 2, 2); }
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+  }
+  // the sign: a big board on two log posts
+  ctx.fillStyle = '#6a4a2a'; ctx.fillRect(62, 46, 5, 44); ctx.fillRect(141, 46, 5, 44);
+  ctx.fillStyle = '#4a3018'; ctx.fillRect(65, 46, 2, 44); ctx.fillRect(144, 46, 2, 44);
+  ctx.fillStyle = '#3a2414'; ctx.fillRect(54, 10, 100, 40); ctx.fillStyle = '#5a3a22'; ctx.fillRect(56, 12, 96, 36);
+  ctx.fillStyle = '#4e321c'; for (let y = 16; y < 48; y += 6) ctx.fillRect(56, y, 96, 1);  // the grain
+  bigWords('YELLOWSTONE', 104, 16, 2, '#f4efe6', '#2a1a0c');
+  bigWords('NATIONAL PARK', 104, 36, 1, '#f4efe6', '#2a1a0c');
+  // you, and IzzyKat: from your chest, up to the sky
+  drawBig(SPIDER, SPIDER_PAL[choice || 'none'], X, Y, 2, false, lk > 0 && lk < 1 ? 1 : 0);
+  line(ctx, X + 6, Y + 6, cx + 3, cy + 26, '#2b1d14'); line(ctx, X + 7, Y + 6, cx + 4, cy + 26, '#2b1d14');      // your front legs,
+  line(ctx, X + 26, Y + 6, cx + 21, cy + 26, '#2b1d14'); line(ctx, X + 25, Y + 6, cx + 20, cy + 26, '#2b1d14');  // holding her up
+  drawBig(CAT_HELD, TORTIE, cx, cy, 2);
+  if (lk >= 1) sparkleAt(cx + 4, cy + 2, ((time - S.lift) * 0.8) % 1.6 - 0.3);
+  // Brudda Blaine, cheering, arms up
+  const BX = 108, BY = 60, up = S.cheer != null, hop = up ? Math.round(Math.abs(Math.sin((time - S.cheer) * 5)) * 2) : 0;
+  const rows = BL_FRONT.concat(BL_LEGS.front[0]);
+  drawBig(up ? rows.map((r, j) => j === 11 ? r.replace(/S/g, '.') : r) : rows, BL_PAL, BX, BY - hop, 2);
+  if (up) {
+    ctx.fillStyle = BB.JK; ctx.fillRect(BX + 2, BY + 4 - hop, 4, 14); ctx.fillRect(BX + 26, BY + 4 - hop, 4, 14);
+    ctx.fillStyle = BB.SKIN; ctx.fillRect(BX + 2, BY - hop, 4, 4); ctx.fillRect(BX + 26, BY - hop, 4, 4);
+    if (time - S.cheer < 2.4) bubbleWords('WOO!', BX + 16, BY - 12 - hop, '#c81e1e');
+  }
+}
+const FANS = [{ x: 34, hair: '#e8c870', top: '#f08ab0' }, { x: 78, hair: '#6a4024', top: '#3ab0a8', cam: true }, { x: 122, hair: '#1e1a18', top: '#f2c94c', hat: true }];
+function drawFans(S) {  // the girls, from behind, swaying; one holds up the camera
+  const k = S.fans != null ? clamp((time - S.fans) / 0.6, 0, 1) : 0;
+  if (!k) return;
+  for (const [i, f] of FANS.entries()) {
+    const sway = Math.round(Math.sin(time * 2.2 + i * 1.7) * 2 * k), x = f.x + sway, y = 112 + Math.round((1 - k) * 52);
+    ctx.fillStyle = f.top; ctx.fillRect(x - 11, y + 14, 22, 20); ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.fillRect(x - 11, y + 14, 3, 20);
+    if (f.cam) {  // arms up, the camera held out in front of her
+      ctx.fillStyle = '#e2b48e'; ctx.fillRect(x - 10, y - 2, 3, 17); ctx.fillRect(x + 7, y - 2, 3, 17);
+      ctx.fillStyle = '#1e1e24'; ctx.fillRect(x - 9, y - 9, 18, 10); ctx.fillStyle = '#4a4a52'; ctx.fillRect(x - 7, y - 7, 8, 6);
+      ctx.fillStyle = '#9a9aa2'; ctx.fillRect(x + 3, y - 12, 4, 3);  // the flash, on top
+    }
+    ctx.fillStyle = '#e2b48e'; ctx.fillRect(x - 2, y + 10, 5, 5);  // her neck
+    disc(ctx, x, y + 4, 7, f.hair); ctx.fillStyle = f.hair; ctx.fillRect(x - 7, y + 4, 15, 12);  // her hair, long
+    if (f.hat) { for (let j = -2; j <= 2; j++) { const w = Math.round(13 * Math.sqrt(1 - (j / 2.6) ** 2)); ctx.fillStyle = '#d8b878'; ctx.fillRect(x - w, y - 1 + j, w * 2 + 1, 1); } disc(ctx, x, y - 3, 5, '#c8a868'); ctx.fillStyle = '#c8402a'; ctx.fillRect(x - 5, y - 1, 11, 1); }
+  }
+  for (let i = 0; i < 9; i++) {  // hearts, floating up off them: obviously smitten
+    const p = ((time - S.fans) * 0.32 + i / 9) % 1, f = FANS[i % 3];
+    const hx = Math.round(f.x + Math.sin(p * 6 + i) * 6 - p * (f.x - 40) * 0.5), hy = Math.round(108 - p * 70);
+    ctx.globalAlpha = k * (p > 0.75 ? (1 - p) / 0.25 : 1);
+    HEART.forEach((row, j) => { for (let a = 0; a < row.length; a++) if (row[a] === 'X') { ctx.fillStyle = a === 1 && j === 1 ? '#ffc2d4' : '#ff4f86'; ctx.fillRect(hx + a, hy + j, 1, 1); } });
+  }
+  ctx.globalAlpha = 1;
+}
+function drawPhoto() {
+  const S = scene3;
+  if (S.print != null) {  // the picture, on the lot
+    if (!lotCanvas) paintLot();
+    ctx.drawImage(lotCanvas, 0, 0); ctx.fillStyle = 'rgba(20,18,24,.55)'; ctx.fillRect(0, 0, VW, VH);
+    const y = Math.round(10 + (1 - ease(clamp((time - S.print) / 0.6, 0, 1))) * 60);
+    ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(11, y + 3, 144, 124);
+    ctx.fillStyle = '#f6f4ee'; ctx.fillRect(8, y, 144, 124);
+    ctx.drawImage(S.snap, 14, 0, 136, 100, 12, y + 4, 136, 100);
+    return;
+  }
+  drawPhotoScene();
+  if (S.snapAt != null && !S.snap) {  // the picture is what the camera sees: not the girls
+    S.snap = document.createElement('canvas'); S.snap.width = VW; S.snap.height = VH; S.snap.getContext('2d').drawImage(cv, 0, 0);
+  }
+  drawFans(S);
+  if (S.flash != null) { const k = (time - S.flash) / 0.5; if (k < 1) { ctx.globalAlpha = 1 - k; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; } }
+}
+function liftSound() { if (!ac || muted) return; [587.33, 739.99, 880, 1174.66].forEach((f, i) => tone(master, 'triangle', f, ac.currentTime + i * 0.09, 0.7, 0.03)); }
+async function photo() {
+  await fadeTo(1, 0.6);
+  if (!lotCanvas) paintLot();
+  scene3 = { kind: 'photo', t0: time, lift: null, cheer: null, fans: null, snapAt: null, snap: null, flash: null, print: null };
+  const S = scene3;
   await fadeTo(0, 0.6);
-  await wait(4.0);
-  await say(['Old Faithful.']);
+  await wait(0.6);
+  S.lift = time; liftSound();
+  await wait(1.2);
+  await say(['You hold IzzyKat up to the sky.']);
+  S.cheer = time; cheer();
+  await wait(0.9);
+  await say(['Brudda Blaine cheers.']);
+  S.fans = time; giggle();
+  await wait(1.6);
+  await say(['A group of girls is taking the picture.', "They're obviously smitten with you, and your allure."]);
+  await wait(0.4);
+  S.snapAt = time; S.flash = time; shutter();
+  await wait(1.1);
+  S.print = time;
+  await wait(3.0);
+  await say(['IzzyKat goes back in the U-Haul, for a nap.']);
+  await hike();
+}
+// ---- the hike, something to play: a boardwalk through the smaller geysers, up to where you can see Old Faithful's steam.
+// Stay on the boardwalk. Each little geyser bubbles for a moment, then blows: get caught in the spray, and it knocks
+// you back down the boardwalk. Two benches on the way: a beer or two (tap A fast to chug). ----
+// t pines, O the view ahead (Old Faithful's steam, far off), . the pale ground, = the boardwalk, p hot springs,
+// g the little geysers, b benches
+const HIKE = [
+  'tOOOOOOOOt',
+  'tOOOOOOOOt',
+  't.p.=..p.t',
+  't...=....t',
+  't..g=..p.t',
+  't...===..t',
+  't.....=..t',
+  't.p...=..t',
+  't.....=b.t',
+  't.....=..t',
+  't.....=g.t',
+  't.p...=..t',
+  't.....=..t',
+  't..====..t',
+  't.b=...p.t',
+  't..=.....t',
+  't..=g....t',
+  't..=.....t',
+  't..=...p.t',
+  't..=.....t',
+  't.g=.....t',
+  't..=.....t',
+  't..====..t',
+  't.p...=..t',
+  't.....=..t',
+  't.....=..t',
+  't.....=g.t',
+  't.p...=..t',
+  't.....=..t',
+  'tttttt=ttt'];
+const HIKE_H = HIKE.length * TS, HIKE_END = { x: 4, y: 2 }, HIKE_BEERS = [{ x: 3, y: 14 }, { x: 6, y: 8 }];
+const HIKE_GEYSERS = [{ x: 7, y: 26, q: 2.0, ph: 0 }, { x: 2, y: 20, q: 2.6, ph: 1.3 }, { x: 4, y: 16, q: 2.2, ph: 0.4 },
+  { x: 7, y: 10, q: 2.4, ph: 2.1 }, { x: 3, y: 4, q: 2.0, ph: 1.0 }];
+const G_WARN = 1.0, G_BLOW = 1.4;
+const hikeTile = (x, y) => (x >= 0 && y >= 0 && x < 10 && y < HIKE.length) ? HIKE[y][x] : 't';
+const inSpray = (G, x, y) => Math.abs(G.x - x) <= 1 && Math.abs(G.y - y) <= 1 && hikeTile(x, y) === '=';
+function gNow(G) {  // a little geyser: quiet, then bubbling, then blowing; and how far into it
+  const per = G.q + G_WARN + G_BLOW, c = wrapX(time - scene3.t0 + G.ph, per);
+  return c < G.q ? ['quiet', c] : c < G.q + G_WARN ? ['warn', c - G.q] : ['blow', c - G.q - G_WARN];
+}
+let hikeCanvas = null;
+function paintHike() {
+  hikeCanvas = document.createElement('canvas'); hikeCanvas.width = VW; hikeCanvas.height = HIKE_H;
+  const g = hikeCanvas.getContext('2d'), r = rng(1959);
+  g.fillStyle = '#e4dfcf'; g.fillRect(0, 0, VW, HIKE_H);  // pale ground
+  for (let i = 0; i < 1500; i++) px(g, Math.floor(r() * VW), Math.floor(r() * HIKE_H), ['#d6d0bc', '#efebdf', '#dcd5c2'][i % 3]);
+  const at = (ch, f) => { for (let y = 0; y < HIKE.length; y++) for (let x = 0; x < 10; x++) if (HIKE[y][x] === ch) f(x * TS, y * TS, x, y); };
+  at('p', (x, y) => {  // a hot spring: mats of orange and brown round it, a channel running off; then the water, blue
+    for (let i = 0; i < 7; i++) { const a = r() * Math.PI * 2, d = 3 + r() * 4; g.globalAlpha = 0.55; disc(g, Math.round(x + 8 + Math.cos(a) * d), Math.round(y + 9 + Math.sin(a) * d * 0.8), 4 + Math.floor(r() * 3), ['#d8a060', '#c8803e', '#b8743a'][i % 3]); }
+    g.globalAlpha = 1;
+    let sx = x + 9; for (let j = 0; j < 9; j++) { sx += Math.round((r() - 0.4) * 2); g.fillStyle = '#e0b070'; g.fillRect(sx - 2, y + 14 + j, 5, 1); g.fillStyle = '#c8783a'; g.fillRect(sx - 1, y + 14 + j, 3, 1); }
+    for (const [rad, c] of [[7, '#e8d070'], [6, '#7ac8c0'], [4, '#3aa0c8'], [2, '#2a78b8']]) disc(g, x + 8, y + 8, rad, c);
+    px(g, x + 6, y + 5, '#c8f0f0'); px(g, x + 7, y + 5, '#c8f0f0');
+  });
+  at('g', (x, y) => {  // a little geyser: a low, lumpy mound of pale rock, wet round its vent
+    for (let j = -5; j <= 5; j++) { const w = Math.round(7 * Math.sqrt(1 - (j / 5.5) ** 2) + Math.sin(j * 2.1) * 0.8); g.fillStyle = j < -1 ? '#f2eee2' : j < 2 ? '#dcd4c0' : '#c4bca6'; g.fillRect(x + 8 - w, y + 8 + j, w * 2, 1); }
+    for (let j = -2; j <= 2; j++) { const w = Math.round(4 * Math.sqrt(1 - (j / 2.6) ** 2)); g.fillStyle = '#a8a08a'; g.fillRect(x + 8 - w, y + 8 + j, w * 2, 1); }
+    g.fillStyle = '#3a342a'; g.fillRect(x + 7, y + 7, 3, 2); px(g, x + 8, y + 9, '#3a342a');
+  });
+  at('t', (x, y) => {  // pines, on darker ground
+    g.fillStyle = '#7a8452'; g.fillRect(x, y, TS, TS);
+    for (const [a, b] of [[5, 5], [12, 11], [4, 13]]) { disc(g, x + a, y + b, 5, '#24402c'); disc(g, x + a - 1, y + b - 1, 3, '#2e5236'); px(g, x + a - 1, y + b - 2, '#3e6644'); }
+  });
+  at('O', (x, y) => { g.fillStyle = y ? '#ece8dc' : '#f2efe6'; g.fillRect(x, y, TS, TS); });  // the basin, ahead: hazy
+  at('b', (x, y) => {  // a bench: three slats on two legs
+    g.fillStyle = 'rgba(0,0,0,.2)'; g.fillRect(x + 3, y + 5, 12, 8);
+    for (let k = 0; k < 3; k++) { g.fillStyle = '#7a5232'; g.fillRect(x + 2, y + 4 + k * 3, 12, 2); g.fillStyle = '#9a6c44'; g.fillRect(x + 2, y + 4 + k * 3, 12, 1); }
+  });
+  const walk = (x, y) => hikeTile(x, y) === '=';
+  at('=', (x, y, tx, ty) => {  // the boardwalk: planks, running along it
+    const up = walk(tx, ty - 1), dn = walk(tx, ty + 1) || ty === HIKE.length - 1, lf = walk(tx - 1, ty), rt = walk(tx + 1, ty);
+    const vert = up || dn, box = (a, b, w, h) => { g.fillStyle = '#6a4626'; g.fillRect(x + a, y + b, w, h); g.fillStyle = '#a8784a'; g.fillRect(x + a + 1, y + b + 1, w - 2, h - 2); };
+    box(2, 2, 12, 12); if (up) box(2, 0, 12, 4); if (dn) box(2, 12, 12, 4); if (lf) box(0, 2, 4, 12); if (rt) box(12, 2, 4, 12);
+    g.fillStyle = '#a8784a'; g.fillRect(x + 3, y + 3, 10, 10); if (up) g.fillRect(x + 3, y, 10, 4); if (dn) g.fillRect(x + 3, y + 12, 10, 4); if (lf) g.fillRect(x, y + 3, 4, 10); if (rt) g.fillRect(x + 12, y + 3, 4, 10);
+    g.fillStyle = '#8a5e36';
+    if (vert) for (let j = (up ? 0 : 3) + 2; j < (dn ? 16 : 13); j += 3) g.fillRect(x + 3, y + j, 10, 1);
+    else for (let i = (lf ? 0 : 3) + 2; i < (rt ? 16 : 13); i += 3) g.fillRect(x + i, y + 3, 1, 10);
+  });
+  // far off, ahead: a line of pines, and Old Faithful's cone on the far side of the basin
+  for (let x = 0; x < VW; x++) { const h = 3 + ((x * 7919) % 5 + 5) % 5 * 0.6 + Math.abs(Math.sin(x * 0.7)) * 2; g.fillStyle = '#2c4634'; g.fillRect(x, 0, 1, Math.round(h)); }
+  for (let j = 0; j < 8; j++) { const w = 18 - j * 2 - (j > 5 ? 2 : 0); g.fillStyle = '#9a968a'; g.fillRect(112 - w - 1, 26 - j, w * 2 + 2, 1); g.fillStyle = j % 2 ? '#ece8dc' : '#dcd8cc'; g.fillRect(112 - w, 26 - j, w * 2, 1); }
+  g.fillStyle = '#c8783a'; g.fillRect(96, 27, 6, 1); g.fillRect(120, 27, 7, 1); g.fillStyle = '#4a4236'; g.fillRect(111, 19, 3, 1);
+}
+function hikeMe() {  // where you are, in pixels (mid-step, or mid-knockback)
+  const m = scene3.me;
+  if (m.hop) { const k = clamp((time - m.hop.t0) / 0.35, 0, 1); return [(m.hop.fx + (m.tx - m.hop.fx) * k) * TS, (m.hop.fy + (m.ty - m.hop.fy) * k) * TS - Math.sin(k * Math.PI) * 8]; }
+  return m.moving ? [(m.tx + (m.nx - m.tx) * m.t) * TS, (m.ty + (m.ny - m.ty) * m.t) * TS] : [m.tx * TS, m.ty * TS];
+}
+function hikePop(s, x, y) { scene3.pops.push({ s, x, y, t0: time }); }
+function updateHike(dt) {
+  const H = scene3, m = H.me, bl = H.bl;
+  if (m.hop && time - m.hop.t0 >= 0.35) m.hop = null;
+  if (m.moving) {
+    m.t += dt / STEP; m.anim += dt;
+    if (m.t >= 1) { m.tx = m.nx; m.ty = m.ny; m.t = 0; m.moving = false; hikeArrive(); }
+  }
+  if (!m.moving && !m.hop && H.live && !H.chug && !box.active) {
+    const d = curDir();
+    if (d) {
+      m.facing = d;
+      const [dx, dy] = DIRS[d], nx = m.tx + dx, ny = m.ty + dy;
+      if (hikeTile(nx, ny) === '=') { bl.path.push({ x: m.tx, y: m.ty }); m.nx = nx; m.ny = ny; m.t = 0; m.moving = true; }
+      else if (time - H.said > 2.5) {
+        const words = { '.': 'Stay on the boardwalk.', p: 'A hot spring. Boiling.', g: 'A little geyser. Stay out of its way.', b: 'A bench.' }[hikeTile(nx, ny)];
+        if (words) { H.said = time; say([words]); }
+      }
+    }
+  }
+  const was = [bl.x, bl.y]; updateActor(bl, dt);  // Brudda Blaine, a step behind you
+  const dx = bl.x - was[0], dy = bl.y - was[1]; bl.moving = Math.abs(dx) + Math.abs(dy) > 0.0001;
+  if (bl.moving) bl.facing = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
+  const [, py] = hikeMe(), goal = clamp(Math.round(py + 8 - VH / 2), 0, HIKE_H - VH);
+  H.cam += (goal - H.cam) * Math.min(1, dt * 8); if (Math.abs(goal - H.cam) < 0.5) H.cam = goal;
+  HIKE_GEYSERS.forEach((G, i) => {  // the little geysers: a gurgle as they start to bubble, a spurt as they blow
+    const [st, k] = gNow(G), near = Math.abs(G.y * TS - H.cam - VH / 2) < VH;
+    if (st !== H.gs[i]) { H.gs[i] = st; if (near && st === 'warn') gurgle(0.5); if (near && st === 'blow') spurt(0.5); }
+    if (st === 'blow' && k > 0.05 && k < G_BLOW - 0.15 && !m.hop) {
+      const on = inSpray(G, m.tx, m.ty) || (m.moving && m.t > 0.5 && inSpray(G, m.nx, m.ny));
+      if (on) knockBack(G);
+    }
+  });
+  if (H.chug) {  // chugging: his goes down steadily; yours, a gulp each tap
+    const C = H.chug; C.his = Math.max(0, C.his - dt * 0.38);
+    if (C.mine <= 0 && C.his <= 0 && C.res) { const r = C.res; C.res = null; r(); }
+  }
+  H.pops = H.pops.filter(p => time - p.t0 < 1.0);
+}
+function knockBack(G) {  // caught in the spray: back down the boardwalk, out of its reach
+  const H = scene3, m = H.me;
+  if (m.moving) { m.moving = false; m.t = 0; }
+  let i = H.hist.length - 1;
+  while (i > 0 && inSpray(G, H.hist[i][0], H.hist[i][1])) i--;
+  const [x, y] = H.hist[i]; H.hist.length = i + 1;
+  const [fx, fy] = hikeMe();
+  m.hop = { t0: time, fx: fx / TS, fy: fy / TS }; m.tx = m.nx = x; m.ty = m.ny = y; m.facing = 'up';
+  const b = H.hist[Math.max(0, i - 1)], bl = H.bl; bl.path = []; bl.res = null;
+  if (i > 0) { bl.x = b[0]; bl.y = b[1]; } else { bl.x = x; bl.y = y + 1; }
+  hikePop('HOT!', fx + 8, fy - 6); sizzle(); H.hits++;
+  if (H.hits === 1) { H.live = false; wait(0.5).then(() => say(['Hot! The spray knocks you back.', 'Wait for it to stop, then go.'])).then(() => { H.live = true; }); }
+}
+function hikeArrive() {
+  const H = scene3, m = H.me;
+  H.hist.push([m.tx, m.ty]);
+  const bi = HIKE_BEERS.findIndex(b => b.x === m.tx && b.y === m.ty);
+  if (bi >= 0 && !H.stops.has(bi)) { H.stops.add(bi); beer(bi); return; }
+  if (m.tx === HIKE_END.x && m.ty === HIKE_END.y && H.done) { H.live = false; const r = H.done; H.done = null; r(); }
+}
+async function beer(n) {  // a bench: a beer, or two
+  const H = scene3;
+  H.live = false; hud(null);
+  await wait(0.5);
+  if (n === 0) await say(['A bench.', 'Brudda Blaine pulls two beers out of his jacket.']);
+  else {
+    const a = await ask('A bench. Brudda Blaine: "One more?"', ['Yes', 'No']);
+    if (a === 1) { H.chug = { mine: 0, his: 1, res: null, me: false }; await new Promise(res => { H.chug.res = res; }); H.chug = null; burp(); await say(['Brudda Blaine drinks yours, too.']); H.live = true; hud('Hike to Old Faithful'); return; }
+  }
+  await say(['Chug it! Tap A, fast.']);
+  H.chug = { mine: 1, his: 1, res: null, me: true };
+  await new Promise(res => { H.chug.res = res; });
+  H.chug = null; H.beers++; burp();
+  await say([n === 0 ? 'Ahh.' : 'Ahh. Two beers.']);
+  H.live = true; hud('Hike to Old Faithful');
+}
+function hikeA() {
+  const H = scene3; if (!H || H.kind !== 'hike') return;
+  if (H.chug) { if (H.chug.me && H.chug.mine > 0) { H.chug.mine = Math.max(0, H.chug.mine - 0.12); gulp(); } return; }
+  if (!H.live || H.me.moving || H.me.hop) return;
+  const [dx, dy] = DIRS[H.me.facing], fx = H.me.tx + dx, fy = H.me.ty + dy;
+  if (Math.round(H.bl.x) === fx && Math.round(H.bl.y) === fy) { say(['Brudda Blaine, right behind you.']); return; }
+  const words = { '.': 'Stay on the boardwalk.', p: 'A hot spring. Boiling.', g: 'A little geyser.', b: 'A bench.', O: 'Old Faithful, far off.' }[hikeTile(fx, fy)];
+  if (words) say([words]);
+}
+function drawHike() {
+  const H = scene3, cy = Math.round(H.cam);
+  if (!hikeCanvas) paintHike();
+  ctx.drawImage(hikeCanvas, 0, cy, VW, VH, 0, 0, VW, VH);
+  if (cy < 40) steam(112, 18 - cy, H.far != null ? 44 : 30, H.far != null ? 12 : 9, H.far != null ? 2.2 : 1.5);  // Old Faithful's steam, far off
+  for (let y = 0; y < HIKE.length; y++) for (let x = 0; x < 10; x++) if (HIKE[y][x] === 'p' && Math.abs(y * TS - cy - 64) < 100) steam(x * TS + 8, y * TS + 6 - cy, 14, 4, 0.7);
+  for (const G of HIKE_GEYSERS) {
+    const X = G.x * TS + 8, Y = G.y * TS + 8 - cy; if (Y < -60 || Y > VH + 30) continue;
+    const [st, k] = gNow(G);
+    if (st === 'warn' || st === 'blow') for (let y = G.y - 1; y <= G.y + 1; y++) for (let x = G.x - 1; x <= G.x + 1; x++) if (inSpray(G, x, y)) {  // where the spray will land
+      ctx.globalAlpha = st === 'warn' ? 0.12 + 0.1 * Math.sin(time * 14) : 0.4; ctx.fillStyle = st === 'warn' ? '#ffffff' : '#bfe6f4'; ctx.fillRect(x * TS + 1, y * TS + 1 - cy, 14, 14); ctx.globalAlpha = 1;
+    }
+    if (st === 'quiet') steam(X, Y - 2, 10, 3, 0.6);
+    else if (st === 'warn') {  // bubbling
+      steam(X, Y - 2, 16, 5, 0.9);
+      for (let i = 0; i < 4; i++) { const p = (time * 3 + i * 0.25) % 1; ctx.fillStyle = '#ffffff'; ctx.fillRect(Math.round(X - 3 + i * 2), Math.round(Y - 1 - Math.sin(p * Math.PI) * 3), 1, 1); }
+    } else {  // blowing: a column of water, spray falling all round it
+      const e = Math.sin(clamp(k / G_BLOW, 0, 1) * Math.PI), h = Math.round(30 * e);
+      for (let j = 0; j < h; j++) { const w = 2 + Math.round(Math.sin(j * 0.7 + time * 20) * 0.8 + j / 10); ctx.fillStyle = j > h - 4 ? '#ffffff' : (j % 3 ? '#e8f6fc' : '#bfe6f4'); ctx.fillRect(X - w, Y - j, w * 2, 1); }
+      for (let i = 0; i < 14; i++) { const p = (time * 1.4 + i / 14) % 1, a = i / 14 * Math.PI * 2, rr = 4 + p * 16; ctx.globalAlpha = e * (1 - p); ctx.fillStyle = '#e8f6fc'; ctx.fillRect(Math.round(X + Math.cos(a) * rr), Math.round(Y - h * (1 - p) * 0.6 + Math.sin(a) * rr * 0.6 + p * 6), 1, 2); }
+      ctx.globalAlpha = 1; steam(X, Y - h, 18, 6, 1.4);
+    }
+  }
+  const [mx, my] = hikeMe(), bl = H.bl, list = [];
+  list.push([bl.y * TS, () => {
+    const x = Math.round(bl.x * TS), y = Math.round(bl.y * TS) - cy - 2;
+    drawBlaine(x, y, H.chug ? 'down' : bl.facing, bl.moving ? 1 + Math.floor(bl.walkT * 8) % 2 : 0);
+    if (H.chug && H.chug.his > 0) { ctx.fillStyle = '#6a3a1a'; ctx.fillRect(x + 9, y + 1, 2, 6); ctx.fillStyle = '#e8e0d0'; ctx.fillRect(x + 9, y + 6, 2, 1); }  // his beer, tipped up
+  }]);
+  list.push([my, () => {
+    const x = Math.round(mx), y = Math.round(my) - cy;
+    drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], x, y, H.chug && H.chug.me ? ROT.down : ROT[H.me.facing], false, H.me.moving ? Math.floor(H.me.anim * 12) % 2 : 0);
+    if (H.chug && H.chug.me) {  // your beer, tipped up, bubbles going up it
+      const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+      for (let i = 0; i < 6; i++) f(9 + i, 10 - i, 2, 2, i < 2 ? '#e8e0d0' : '#6a3a1a');
+      f(11, 8, 2, 1, '#f2c94c'); if (Math.floor(time * 8) % 2) f(12, 7, 1, 1, '#fff6d0');
+    }
+  }]);
+  list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
+  for (const p of H.pops) { const k = (time - p.t0) / 1.0; bubbleWords(p.s, clamp(p.x, 12, VW - 12), Math.round(p.y - cy - k * 8), '#c81e1e'); }
+  if (H.chug && H.chug.me) {  // the beer: how much is left in yours
+    const w = 60, x = 50, y = 6;
+    ctx.fillStyle = '#2b2118'; ctx.fillRect(x - 1, y - 1, w + 2, 9); ctx.fillStyle = '#f6f3ee'; ctx.fillRect(x, y, w, 7);
+    ctx.fillStyle = '#d89a2a'; ctx.fillRect(x, y, Math.round(w * H.chug.mine), 7); ctx.fillStyle = '#fff6d8'; ctx.fillRect(x, y, Math.round(w * H.chug.mine), 2);
+    bigWords('CHUG!', VW / 2, 16, 1, '#ffffff', '#2b2118');
+  }
+}
+function gurgle(v = 1) { if (!ac || muted) return; for (let i = 0; i < 6; i++) tone(master, 'sine', 140 + Math.random() * 120, ac.currentTime + i * 0.11 + Math.random() * 0.04, 0.07, 0.035 * v, 600); }
+function spurt(v = 1) { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTime, 'bandpass', 1400, 0.6, 0.07 * v, 0.9, 0, master); noiseHit(ac.currentTime, 'lowpass', 400, 0.7, 0.05 * v, 0.6, 0, master); }
+function sizzle() { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTime, 'highpass', 3200, 0.7, 0.05, 0.45, 0, master); tone(master, 'square', 520, ac.currentTime, 0.12, 0.012, 1600); }
+function gulp() { if (!ac || muted) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain(); o.frequency.setValueAtTime(320, t); o.frequency.exponentialRampToValueAtTime(140, t + 0.09); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12); o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.14); }
+function burp() { if (!ac || muted) return; tone(master, 'sawtooth', 92, ac.currentTime, 0.28, 0.02, 420); tone(master, 'sawtooth', 78, ac.currentTime + 0.12, 0.2, 0.015, 380); }
+async function hike() {
+  await fadeTo(1, 0.8);
+  if (!hikeCanvas) paintHike();
+  const H = scene3 = { kind: 'hike', t0: time, cam: HIKE_H - VH, me: { tx: 6, ty: 29, nx: 6, ny: 29, t: 0, moving: false, facing: 'up', anim: 0, hop: null },
+    bl: { x: 6, y: 30.6, path: [{ x: 6, y: 30 }], speed: 1 / STEP, walkT: 0, face: 1, facing: 'up', res: null, moving: false },
+    hist: [[6, 29]], live: false, pops: [], hits: 0, beers: 0, chug: null, stops: new Set(), gs: HIKE_GEYSERS.map(() => 'quiet'), done: null, said: -9, far: null };
+  phase = 'hike';
+  await fadeTo(0, 0.8);
+  await say(['A hike, through the smaller geysers.', 'Stay on the boardwalk.', 'The little geysers bubble, then blow. Wait for them, then go.']);
+  H.live = true; hud('Hike to Old Faithful');
+  await new Promise(res => { H.done = res; });
+  hud(null); phase = 'cut';
+  await wait(0.4);
+  H.far = time;
+  await say(['Steam, in the distance.', "Old Faithful. You've made it."]);
+  await oldFaithful();
+}
+// ---- Old Faithful (a small cut scene): the crowd on the benches; it tricks you, again and again; then it goes, with
+// IzzyKat riding it ----
+function bigCone(x, y) {  // Old Faithful's cone, from the side: a low mound of pale rock, mottled, streaked orange. x, y the middle of its base
+  for (let j = -3; j <= 3; j++) { const w = Math.round(54 * Math.sqrt(1 - (j / 3.5) ** 2)); ctx.fillStyle = '#e6e1d2'; ctx.fillRect(x - w, y + j, w * 2, 1); }
+  for (let j = 0; j < 13; j++) {
+    const w = Math.round(32 - j * 1.4 - (j > 8 ? (j - 8) * 2.5 : 0));
+    for (let i = -w; i < w; i++) {
+      const n = Math.sin(i * 0.9 + j * 1.7) + Math.sin(i * 0.37 - j * 0.6);
+      ctx.fillStyle = i > w * 0.45 ? (n > 0.6 ? '#aaa494' : '#c2bcac') : n > 1.1 ? '#d2cab6' : n < -1.2 ? '#bcae94' : '#ebe6da';
+      ctx.fillRect(x + i, y - j, 1, 1);
+    }
+  }
+  for (const k of [-27, -15, 13, 25]) line(ctx, x + Math.round(k * 0.85), y - 4, x + k, y + 1, k > 0 ? '#c8864a' : '#d8a060');  // runoff, at its foot
+  ctx.fillStyle = '#5a564c'; ctx.fillRect(x - 3, y - 12, 6, 1);  // the vent
+}
+const OF_VENT = { x: 100, y: 80 };
+const CROWD = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ({ x: 64 + i * 10 + (i % 3), hair: ['#3a2416', '#e8c870', '#8a8a8a', '#1e1a18', '#a85a2a'][i % 5],
+  top: ['#c8402a', '#2a6ab0', '#f2c94c', '#3a8a5a', '#e8e4da', '#8a4a9a'][i % 6] }));
+function drawFaithful() {
+  const S = scene3, t = time - S.t0;
+  ctx.save();
+  if (S.shake != null && time - S.shake < 1.0) ctx.translate(Math.round(Math.sin(time * 60) * 2 * (1 - (time - S.shake))), 0);
+  gradient(0, 62, [104, 164, 226], [222, 236, 246]);
+  ysFar('park', 0, 62);
+  ctx.fillStyle = '#e4dfcf'; ctx.fillRect(0, 62, VW, VH - 62);
+  for (let i = 0; i < 40; i++) { ctx.fillStyle = i % 4 ? '#d8d2c0' : '#d8a060'; ctx.fillRect((i * 41) % VW, 64 + (i * 17) % 40, 4 + i % 5, 1); }
+  for (const [x, y] of [[20, 66], [150, 68], [44, 72]]) steam(x, y, 16, 4, 0.8);  // steam, here and there
+  bigCone(OF_VENT.x, OF_VENT.y + 13);  // (its base, just behind the crowd)
+  // the column: idle steam, a play, or the eruption
+  const V = OF_VENT;
+  let top = V.y, w = 0;
+  for (const p of S.plays) {  // the plays: splashes that almost go
+    const k = (time - p.t0) / p.d; if (k < 0 || k > 1) continue;
+    const h = p.h * Math.sin(k * Math.PI) * (0.8 + 0.2 * Math.sin(time * 23)); top = Math.min(top, V.y - h); w = Math.max(w, 2 + p.h / 10);
+  }
+  let rise = 0, wane = 1;
+  if (S.erupt != null) {
+    rise = ease(clamp((time - S.erupt) / 1.2, 0, 1)); wane = S.wane != null ? 1 - ease(clamp((time - S.wane) / 3, 0, 1)) : 1;
+    const h = 52 * rise * wane + Math.sin(time * 17) * 2 * rise * wane; top = Math.min(top, V.y - h); w = Math.max(w, (3 + 5 * rise) * Math.max(0.4, wane));
+  }
+  if (top < V.y - 1) {
+    for (let y = Math.max(-2, Math.round(top)); y < V.y; y++) {  // a column of water, white at the core
+      const ww = Math.round(w + Math.sin(y * 0.5 + time * 18) * 1.2 + (V.y - y) * 0.03 * w);
+      ctx.fillStyle = '#d4eef8'; ctx.fillRect(V.x - ww - 1, y, ww * 2 + 2, 1); ctx.fillStyle = '#ffffff'; ctx.fillRect(V.x - Math.round(ww * 0.6), y, Math.round(ww * 1.2), 1);
+    }
+    const n = S.erupt != null ? 26 : 10;
+    for (let i = 0; i < n; i++) {  // spray, falling off both sides
+      const p = (time * 0.9 + i / n) % 1, side = i % 2 ? 1 : -1, sx = V.x + side * (w + p * (12 + (i % 5) * 5)), sy = top + (V.y - top) * (0.15 + 0.5 * p) + p * p * 30;
+      ctx.globalAlpha = 1 - p; ctx.fillStyle = '#eaf8fe'; ctx.fillRect(Math.round(sx), Math.round(sy), 1, 2);
+    }
+    ctx.globalAlpha = 1;
+    steam(V.x, Math.round(top), S.erupt != null ? 40 : 14, S.erupt != null ? 12 : 5, S.erupt != null ? 3 * Math.max(0.5, wane) : 1.2);
+  } else steam(V.x, V.y - 2, 18, 6, 1.1);
+  if (S.erupt != null && rise > 0.6 && wane > 0.3) {  // a rainbow in the mist, and sparkles
+    const al = 0.22 * Math.min(1, (rise - 0.6) / 0.4) * wane;
+    RAINBOW.forEach((c, i) => { ctx.globalAlpha = al; ctx.fillStyle = c; for (let a = -1.3; a < -0.35; a += 0.02) ctx.fillRect(Math.round(V.x + 6 + Math.cos(a) * (40 - i * 2)), Math.round(V.y + 6 + Math.sin(a) * (40 - i * 2)), 2, 1); });
+    ctx.globalAlpha = 1;
+    for (let i = 0; i < 5; i++) sparkleAt(V.x - 20 + ((i * 37) % 46), Math.round(top + 10 + ((i * 23) % 40)), ((time * 0.9 + i * 0.37) % 1.4) - 0.2);
+  }
+  if (S.erupt != null && S.launch == null && rise > 0) {  // IzzyKat, riding it
+    drawGrid(CAT_SIT, TORTIE, V.x - 5, Math.round(top - 12 + Math.sin(time * 9)), false);
+  } else if (S.launch != null) {  // launched: far into the air
+    const k = time - S.launch, y = Math.round(V.y - 52 - 12 - k * 160);
+    if (y > -14) drawGrid(CAT_SIT, TORTIE, V.x - 5, y, false);
+    if (S.twinkle != null) sparkleAt(V.x + 8, 14, (time - S.twinkle) / 0.7);
+  }
+  // the crowd, on the benches, from behind: up on their feet when it splashes
+  ctx.fillStyle = '#8a5e36'; ctx.fillRect(58, 108, 102, 3); ctx.fillStyle = '#6a4626'; ctx.fillRect(58, 111, 102, 1);
+  CROWD.forEach((c, i) => {
+    const up = S.crowdUp != null && time - S.crowdUp < (S.erupt != null ? 99 : 1.6), bob = up ? Math.round(Math.abs(Math.sin(time * 6 + i)) * 1) : 0, y = up ? 96 - bob : 100;
+    ctx.fillStyle = c.top; ctx.fillRect(c.x - 3, y + 5, 7, up ? 10 : 7);
+    disc(ctx, c.x, y + 3, 3, c.hair);
+    if (up && (S.erupt != null || i % 2)) { ctx.fillStyle = '#e2b48e'; ctx.fillRect(c.x - 4, y - 2 - bob, 1, 6); ctx.fillRect(c.x + 4, y - 2 - bob, 1, 6); }
+  });
+  // the boardwalk you're on
+  ctx.fillStyle = '#a8784a'; ctx.fillRect(0, 120, VW, 8); ctx.fillStyle = '#8a5e36'; for (let x = 2; x < VW; x += 4) ctx.fillRect(x, 120, 1, 8);
+  ctx.fillStyle = '#6a4626'; ctx.fillRect(0, 128, VW, 2);
+  // Brudda Blaine and you, watching (side on, facing it); you look at each other when she goes up
+  const walk = S.walk != null ? time - S.walk : -1, off = walk > 0 ? -walk * 36 : 0, look = S.glance != null && S.fall == null;
+  const step = walk > 0 ? BL_LEGS.side[Math.floor(walk * 6) % 2] : BL_LEGS.side[0];
+  const BX = Math.round(48 + off), BY = 88 - (S.cheerUp != null && time - S.cheerUp < 1.6 ? Math.round(Math.abs(Math.sin((time - S.cheerUp) * 6)) * 3) : 0);
+  drawBig(BL_SIDE.concat(step), BL_PAL, BX, BY, 2, look || walk > 0);
+  const TX = Math.round(8 + off), nod = S.nod != null && time - S.nod < 1 ? Math.round(Math.abs(Math.sin((time - S.nod) * 9))) : 0;
+  drawBig(MINI, miniPal(), TX, 108 + nod, 2, walk > 0);
+  if (S.fall != null) {  // IzzyKat: falling out of the sky, then at your feet, wet, purring
+    const k = clamp((time - S.fall) / 1.6, 0, 1), cx = Math.round(24 + off * 1.1), y = Math.round(-30 + (110 - -30) * k * k);
+    if (k < 1) drawBig(CAT_SIT, TORTIE, cx, y, 2);
+    else {
+      drawBig(CAT_SIT, TORTIE, cx, 110, 2);
+      if (S.landed != null) { const s = time - S.landed; splash(cx + 11, 136, s / 0.6, 2); for (let i = 0; i < 3; i++) { const p = (time * 1.3 + i / 3) % 1; ctx.globalAlpha = 1 - p; ctx.fillStyle = '#9fd8ff'; ctx.fillRect(cx + 4 + i * 7, Math.round(118 + p * 16), 1, 2); } ctx.globalAlpha = 1; }
+      for (const t0 of purr.marks) { const q = (time - t0) / 1.6; ctx.globalAlpha = 1 - q; signText(ctx, 'PRR', cx + 23, Math.round(108 - q * 10), '#3a1a10'); signText(ctx, 'PRR', cx + 22, Math.round(107 - q * 10), '#fff1dc'); ctx.globalAlpha = 1; }
+    }
+  }
+  for (const b of S.bangs) {
+    if (time - b.t0 > (b.d || 1.0) || time < b.t0) continue;
+    const [x, y] = b.who === 'bl' ? [BX + 16, BY - 12] : [TX + 10, 96];
+    bubbleWords(b.s, clamp(x, signWidth(b.s) / 2 + 4, VW - signWidth(b.s) / 2 - 4), y, '#c81e1e');
+  }
+  ctx.restore();
+  ctx.fillStyle = '#000'; const lb = Math.round(Math.min(1, t / 1.2) * 9); ctx.fillRect(0, 0, VW, lb); ctx.fillRect(0, VH - lb, VW, lb);
+}
+function updateFaithful() {
+  if (purr.on && time >= purr.next) { purrBreath(); purr.next = time + 1.3; purr.marks.push(time); }
+  purr.marks = purr.marks.filter(t0 => time - t0 < 1.6);
+}
+function groan() { if (!ac || muted) return; for (const [f, d] of [[200, 0], [236, 0.03], [178, 0.06]]) { const t = ac.currentTime + d, o = ac.createOscillator(), bp = ac.createBiquadFilter(), g = ac.createGain(); o.type = 'sawtooth'; o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(f * 0.7, t + 0.6); bp.type = 'bandpass'; bp.frequency.value = 700; bp.Q.value = 3; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.025, t + 0.08); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.65); o.connect(bp); bp.connect(g); g.connect(master); o.start(t); o.stop(t + 0.7); } }
+function geyserRoar() {  // the eruption: a rushing roar, rising, then dying down
+  if (!ac || muted) return; makeNoise();
+  const t = ac.currentTime, s = ac.createBufferSource(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  s.buffer = noise; s.loop = true; lp.type = 'lowpass';
+  lp.frequency.setValueAtTime(250, t); lp.frequency.exponentialRampToValueAtTime(2200, t + 1.2); lp.frequency.setValueAtTime(2200, t + 5); lp.frequency.exponentialRampToValueAtTime(500, t + 9);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.11, t + 1.0); g.gain.setValueAtTime(0.11, t + 5); g.gain.exponentialRampToValueAtTime(0.0001, t + 9.5);
+  s.connect(lp); lp.connect(g); g.connect(master); s.start(t); s.stop(t + 9.6);
+}
+function ping() { if (!ac || muted) return; tone(master, 'sine', 2093, ac.currentTime, 0.6, 0.035); tone(master, 'sine', 3136, ac.currentTime + 0.06, 0.4, 0.015); }
+async function trick(h, d, cheerUp) {  // it bubbles, it splashes, and... no
+  const S = scene3;
+  gurgle(1);
+  await wait(0.9);
+  S.plays.push({ t0: time, h, d }); spurt(0.6 + h / 40); S.crowdUp = time;
+  if (cheerUp) { S.cheerUp = time; S.bangs.push({ who: 'bl', s: 'HERE IT GOES!', t0: time, d: 1.6 }); cheer(); }
+  await wait(d + 0.2);
+  groan();
+  await wait(0.5);
+}
+async function oldFaithful() {
+  await fadeTo(1, 0.8);
+  musicStop(); hud(null); phase = 'cut';
+  scene3 = { kind: 'faithful', t0: time, plays: [], crowdUp: null, cheerUp: null, erupt: null, wane: null, launch: null, twinkle: null,
+    glance: null, nod: null, fall: null, landed: null, walk: null, shake: null, bangs: [] };
+  const S = scene3;
+  Object.assign(purr, { on: false, marks: [] });
+  await fadeTo(0, 0.8);
   await wait(0.8);
+  await say(['Old Faithful.', 'A crowd waits on the benches.']);
+  await trick(14, 1.4);
+  await say(['It almost goes.']);
+  await trick(30, 2.0, true);
+  await say(['It almost goes, again.']);
+  await trick(10, 1.0); await trick(20, 1.3);
+  await say(['It takes a couple more.']);
+  await wait(1.0);
+  rumble(1.2, 0.16); gurgle(1.3);
+  await wait(0.8);
+  S.erupt = time; S.shake = time; S.crowdUp = time; geyserRoar();
+  await wait(1.6);
+  S.bangs.push({ who: 'bl', s: '!', t0: time, d: 1.4 }, { who: 'me', s: '!', t0: time, d: 1.4 }); cheer();
+  await say(['It explodes, in a fantastic fashion.']);
+  await wait(0.4);
+  await say(['Riding it: IzzyKat.']);
+  S.launch = time; whoosh(0.9, 0.08);
+  await wait(0.9);
+  S.twinkle = time; ping();
+  await wait(0.6);
+  await say(['She launches far into the air.']);
+  S.wane = time;
+  await wait(1.6);
+  S.glance = time;
+  S.bangs.push({ who: 'bl', s: '?', t0: time, d: 0.9 }, { who: 'me', s: '?', t0: time + 0.8, d: 0.9 }, { who: 'bl', s: '?', t0: time + 1.6, d: 0.9 });
+  await wait(2.6);
+  await say(['Brudda Blaine and you exchange quizzical glances.', 'Brudda Blaine: "IzzyKat might be indestructible."']);
+  S.nod = time;
+  await wait(0.6);
+  await say(['You nod. She might be.']);
+  S.fall = time; slideWhistle();
+  await wait(1.6);
+  S.landed = time; thump(0.07); splashSound(0.12);
+  Object.assign(purr, { on: true, next: time + 0.4, marks: [] });
+  await wait(1.2);
+  await say(['She lands at your feet.', 'Wet, and purring, as if nothing happened.']);
+  S.walk = time;
+  await wait(1.2);
+  await say(['You all walk back to the U-Haul.']);
+  purr.on = false;
+  await toReno();
+}
+// ---- on to Reno: through the barren wastelands of Utah, Kyuss on the stereo; Nevada, Mac Miller's Circles; then Reno,
+// at night. (How it all looks is a guess. The music is original, in the spirit of what you named.) ----
+const DS_SEGS = new Set(['utah', 'nevada', 'reno']);
+function dsFar(seg, d, HZ) {
+  const tri = u => 1 - 2 * Math.abs(u - Math.floor(u) - 0.5);
+  if (seg === 'utah') {
+    for (let x = 0; x < VW; x++) {  // far, pale mountains; then mesas, flat on top
+      const wx = x - d * 0.04, h = 5 + 9 * tri(wx / 70 + 0.2) + 3 * tri(wx / 23), top = Math.round(HZ - h);
+      ctx.fillStyle = '#b8b2c4'; ctx.fillRect(x, top, 1, HZ - top);
+      const mx = wrapX(x - d * 0.12, 110), mh = mx > 14 && mx < 62 ? Math.min(16, Math.min(mx - 14, 62 - mx) * 2.2) : 0;
+      if (mh > 0) { const mt = Math.round(HZ - mh); ctx.fillStyle = mx > 54 ? '#a8704a' : '#c48a5a'; ctx.fillRect(x, mt, 1, HZ - mt); if (mh >= 16) { ctx.fillStyle = '#d8a070'; ctx.fillRect(x, mt, 1, 1); ctx.fillStyle = '#b47a4a'; ctx.fillRect(x, mt + 6, 1, 1); } }
+    }
+  } else if (seg === 'nevada') {
+    disc(ctx, 34, HZ - 6, 9, '#ffb060'); disc(ctx, 34, HZ - 6, 6, '#ffe0a0');  // the sun, going down, ahead
+    for (const [k, base, amp, c, hi] of [[0.04, 6, 12, '#8a6a8a', '#c88a8a'], [0.1, 2, 9, '#6a5468', '#b07a74']]) for (let x = 0; x < VW; x++) {
+      const wx = x - d * k, h = base + amp * tri(wx / (k > 0.05 ? 41 : 63) + 0.3) + 2 * tri(wx / 11), top = Math.round(HZ - h);
+      ctx.fillStyle = c; ctx.fillRect(x, top, 1, HZ - top); ctx.fillStyle = hi; ctx.fillRect(x, top, 1, 1);
+    }
+  } else {  // Reno, at night: stars, dark mountains, and the city lit up
+    for (let i = 0; i < 40; i++) { const x = (i * 53 + 7) % VW, y = (i * 29) % 40; if ((Math.floor(time * 2) + i) % 7) { ctx.fillStyle = i % 5 ? '#c8c8e8' : '#ffffff'; ctx.fillRect(x, y, 1, 1); } }
+    for (let x = 0; x < VW; x++) { const wx = x - d * 0.04, h = 6 + 10 * tri(wx / 57) + 2 * tri(wx / 13), top = Math.round(HZ - h); ctx.fillStyle = '#1c1a30'; ctx.fillRect(x, top, 1, HZ - top); }
+    const S = scene3, cx = Math.round(S.cityX + d * 0.15);
+    const gr = ctx.createRadialGradient(cx, HZ, 2, cx, HZ, 50); gr.addColorStop(0, 'rgba(255,170,90,.35)'); gr.addColorStop(1, 'rgba(255,120,160,0)');
+    ctx.fillStyle = gr; ctx.fillRect(cx - 50, HZ - 50, 100, 50);
+    for (let i = 0; i < 9; i++) {  // the towers, lit windows, neon on top
+      const bx = cx - 40 + i * 9, bh = [10, 18, 26, 14, 30, 20, 12, 22, 9][i], c = ['#ff4fae', '#4fe0ff', '#ffd24f'][i % 3];
+      ctx.fillStyle = '#26243a'; ctx.fillRect(bx, HZ - bh, 7, bh);
+      for (let y = HZ - bh + 3; y < HZ - 1; y += 3) for (let x = bx + 1; x < bx + 6; x += 2) if ((x * 7 + y * 3 + i) % 5) { ctx.fillStyle = '#ffe8a0'; ctx.fillRect(x, y, 1, 1); }
+      if ((Math.floor(time * 3) + i) % 4) { ctx.fillStyle = c; ctx.fillRect(bx, HZ - bh - 1, 7, 1); }
+    }
+  }
+}
+function dsField(S, seg, d, HZ, RD, at) {
+  if (seg === 'utah') {
+    for (let i = 0; i < 7; i++) { const x = Math.round(wrapX(i * 41 + d * 0.3, VW + 40) - 20), y = HZ + 4 + (i * 9) % 20; ctx.fillStyle = '#f2ece0'; ctx.fillRect(x, y, 16 + i % 4 * 4, 2); }  // salt, white
+    for (let i = 0; i < 9; i++) {  // dead shrubs
+      const x = Math.round(wrapX(i * 29 + d * 0.55, VW + 20) - 10), y = HZ + 6 + (i * 13) % (RD - HZ - 8);
+      for (const [a, b] of [[-2, -3], [0, -4], [2, -3], [1, -2]]) line(ctx, x, y, x + a, y + b, '#8a7a62');
+    }
+    const tx = Math.round(wrapX(time * 46 + d * 0.6, VW + 80) - 40), ty = Math.round(RD - 5 - Math.abs(Math.sin(time * 5)) * 5);  // a tumbleweed, blowing across
+    for (let i = 0; i < 9; i++) { const a = time * 7 + i * 0.7; line(ctx, tx + Math.round(Math.cos(a) * 4), ty + Math.round(Math.sin(a) * 4), tx + Math.round(Math.cos(a + 2.4) * 4), ty + Math.round(Math.sin(a + 2.4) * 4), i % 2 ? '#a8946a' : '#8a7652'); }
+  } else if (seg === 'nevada') {
+    for (let i = 0; i < 12; i++) {  // sagebrush
+      const x = Math.round(wrapX(i * 23 + d * 0.5, VW + 20) - 10), y = HZ + 5 + (i * 11) % (RD - HZ - 7);
+      disc(ctx, x, y, 2, '#7a8a72'); px(ctx, x - 1, y - 1, '#a8b494');
+    }
+  }
+  if ((seg === 'utah' || seg === 'nevada') && S.signAt != null) {  // the state line sign, going by
+    const x = at(S.signAt);
+    if (x > -40 && x < VW + 40) { ctx.fillStyle = '#5a5a62'; ctx.fillRect(x - 10, 58, 1, 16); ctx.fillRect(x + 9, 58, 1, 16); signBoard(ctx, seg === 'utah' ? 'UTAH' : 'NEVADA', x, 54, '#2a4a8a', '#f4efe6', '#1a2a5a'); }
+  }
+}
+function dsNear(S, seg, d, RD, HZ) {
+  ctx.fillStyle = { utah: '#e6dabc', nevada: '#9a8c68', reno: '#1e1c26' }[seg]; ctx.fillRect(0, RD + 12, VW, VH - RD - 12);
+  for (let i = 0; i < 14; i++) { const x = Math.round(wrapX(i * 23 + d * 1.6, VW + 20) - 10), y = RD + 15 + (i * 13) % (VH - RD - 18); ctx.fillStyle = { utah: '#cfc2a0', nevada: '#7a8a6a', reno: '#2a2834' }[seg]; ctx.fillRect(x, y, seg === 'nevada' ? 3 : 2, seg === 'nevada' ? 2 : 1); }
+  if (seg === 'utah') for (let i = 0; i < 6; i++) {  // the ground, cracked dry
+    const x = Math.round(wrapX(i * 37 + d * 1.6, VW + 40) - 20), y = RD + 20 + (i * 17) % (VH - RD - 30);
+    for (const [a, b, c, e] of [[0, 0, 7, 2], [7, 2, 11, -1], [7, 2, 8, 7], [0, 0, -4, 4]]) line(ctx, x + a, y + b, x + c, y + e, '#c8b890');
+  }
+  if (seg === 'nevada') for (let i = 0; i < 8; i++) { const x = Math.round(wrapX(i * 29 + 9 + d * 1.6, VW + 20) - 10), y = RD + 18 + (i * 11) % (VH - RD - 24); disc(ctx, x, y, 3, '#7a8a6a'); px(ctx, x - 1, y - 2, '#a8b494'); px(ctx, x + 1, y - 1, '#a8b494'); }
+  if (seg === 'reno') {
+    ctx.fillStyle = 'rgba(14,12,40,.42)'; ctx.fillRect(0, HZ, VW, VH - HZ);  // night
+    const gr = ctx.createLinearGradient(50, 0, 0, 0); gr.addColorStop(0, 'rgba(255,240,190,.35)'); gr.addColorStop(1, 'rgba(255,240,190,0)');  // headlights
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.moveTo(50, RD - 4); ctx.lineTo(0, RD - 14); ctx.lineTo(0, RD + 12); ctx.closePath(); ctx.fill();
+    for (let i = 0; i < 4; i++) {  // street lights, going by
+      const x = Math.round(wrapX(i * 50 + d * 1.6, VW + 50) - 25);
+      ctx.fillStyle = '#4a4858'; ctx.fillRect(x, RD + 12, 1, 22); ctx.fillRect(x - 4, RD + 12, 5, 1);
+      ctx.fillStyle = '#ffe8a0'; ctx.fillRect(x - 5, RD + 13, 3, 1);
+      ctx.globalAlpha = 0.18; ctx.fillStyle = '#ffe8a0'; ctx.fillRect(x - 9, RD + 30, 11, 5); ctx.globalAlpha = 1;
+    }
+    if (S.signAt != null) {  // the sign: RENO, lit up, bulbs chasing round it
+      const x = at3(S, S.signAt);
+      if (x > -50 && x < VW + 50) {
+        ctx.fillStyle = '#4a4858'; ctx.fillRect(x - 12, 60, 2, 18); ctx.fillRect(x + 10, 60, 2, 18);
+        ctx.fillStyle = '#2a1a3a'; ctx.fillRect(x - 18, 46, 36, 15); ctx.fillStyle = '#5a2a6a'; ctx.fillRect(x - 17, 47, 34, 13);
+        bigWords('RENO', x, 49, 1, '#ffd24f', '#c81e5a');
+        for (let i = 0; i < 20; i++) { const on = (i + Math.floor(time * 8)) % 3 === 0, bx = i < 10 ? x - 17 + i * 3.6 : x + 17 - (i - 10) * 3.6, by = i < 10 ? 46 : 60; ctx.fillStyle = on ? '#fff6c8' : '#a87a2a'; ctx.fillRect(Math.round(bx), by, 1, 1); }
+      }
+    }
+  }
+  if (S.tunes) for (let i = 0; i < 4; i++) {  // the stereo, out the cab window
+    const p = (time * 0.5 + i / 4) % 1, x = Math.round(58 + p * 34 + Math.sin(p * 9 + i) * 2), y = Math.round(RD - 16 - p * 26);
+    ctx.globalAlpha = 1 - p; ctx.fillStyle = i % 2 ? '#ffffff' : '#ffe08a';
+    NOTE_GLYPH.forEach((row, j) => { for (let a = 0; a < 3; a++) if (row[a] === 'X') ctx.fillRect(x + a, y + j, 1, 1); });
+  }
+  ctx.globalAlpha = 1;
+}
+const at3 = (S, wx, k = 1) => Math.round(wx + S.dist * k);
+async function toReno() {
+  await fadeTo(1, 0.8);
+  musicStop(); purr.on = false; phase = 'cut';
+  scene3 = { kind: 'drive', t0: time, seg: 'utah', dist: 0, v: 38, vGoal: 38, signAt: null, tunes: true };
+  musicStart(DESERT);
+  await fadeTo(0, 0.8);
+  await wait(0.8);
+  await say(['Back on the road.', 'Through the barren wastelands.']);
+  scene3.signAt = -75 - scene3.dist;
+  await wait(2.6);
+  await say(['Utah. On the stereo: Kyuss, the desert rock band.']);
+  await wait(4.0);
+  await fadeTo(1, 0.8);
+  musicStop();
+  Object.assign(scene3, { seg: 'nevada', dist: 0, signAt: -68 });
+  musicStart(CIRCLES);
+  await fadeTo(0, 0.8);
+  await wait(1.6);
+  await say(['Nevada. On the stereo: Mac Miller, Circles.']);
+  await wait(4.0);
+  await fadeTo(1, 0.8);
+  const stop = 170;
+  Object.assign(scene3, { seg: 'reno', dist: 0, v: 38, vGoal: 38, brakeTo: stop, signAt: 22 - stop, cityX: 104 - stop * 0.15 });
+  await fadeTo(0, 0.8);
+  await wait(4.2);
+  await say(['You arrive in Reno.']);
+  await wait(0.6);
+}
+// ---- the stereo: all original, in the spirit of what you named (no real recordings).
+//   Utah, desert rock: slow and heavy, a fuzzed-out guitar riff in D, the bass right under it, big drums with a ride
+//     (the riff alone first, then the drums come in)
+//   Nevada, mellow: soft drums with a lazy swing, a warm electric piano, a round bass, a little celesta line ----
+const DESERT = { name: 'desert rock', kind: 'desert', bpm: 92, swing: 0, verb: 0.22, room: 2.4, gain: 1.0 };
+const CIRCLES = { name: 'circles', kind: 'circles', bpm: 80, swing: 0.14, verb: 0.3, room: 2.0, gain: 1.6, crackle: 0.015, chords: [
+  { keys: [174.61, 220, 261.63, 329.63, 392], bass: 87.31 },  // Fmaj9
+  { keys: [164.81, 196, 246.94, 293.66], bass: 82.41 },       // Em7
+  { keys: [174.61, 220, 261.63, 329.63], bass: 73.42 },       // Dm9
+  { keys: [164.81, 196, 246.94, 329.63], bass: 65.41 }] };    // Cmaj7
+const RIFF_N = { D: 73.42, F: 87.31, G: 98, A: 110, Bb: 116.54, C: 130.81 };
+const DESERT_RIFF = [
+  [[0, 'D', 3], [3, 'D', 1], [4, 'F', 2], [6, 'D', 2], [8, 'G', 3], [11, 'F', 1], [12, 'D', 2], [14, 'C', 2]],
+  [[0, 'D', 6], [6, 'F', 2], [8, 'G', 2], [10, 'Bb', 2], [12, 'A', 4]],
+  [[0, 'D', 3], [3, 'D', 1], [4, 'F', 2], [6, 'D', 2], [8, 'G', 3], [11, 'F', 1], [12, 'D', 2], [14, 'C', 2]],
+  [[0, 'D', 3], [3, 'D', 1], [4, 'F', 2], [6, 'D', 2], [8, 'C', 4], [12, 'Bb', 2], [14, 'A', 2]]];
+let fuzzCurve = null;
+function fuzz(f, t, len, v = 1) {  // a fuzzed-out guitar: a power chord (the root, the fifth, the octave), loud and woolly
+  if (!fuzzCurve) { fuzzCurve = new Float32Array(1024); for (let i = 0; i < 1024; i++) fuzzCurve[i] = Math.tanh((i / 511.5 - 1) * 6); }
+  const ws = ac.createWaveShaper(), pre = ac.createGain(), hp = ac.createBiquadFilter(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  ws.curve = fuzzCurve; pre.gain.value = 0.5; hp.type = 'highpass'; hp.frequency.value = 80; lp.type = 'lowpass'; lp.frequency.value = 1900; lp.Q.value = 0.9;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05 * v, t + 0.01);
+  g.gain.setValueAtTime(0.05 * v, t + len * 0.85); g.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.08);
+  pre.connect(ws); ws.connect(hp); hp.connect(lp); lp.connect(g); g.connect(mus.out); send(g, 0.25);
+  for (const [m, det] of [[2, -8], [2, 8], [3, 0], [4, 5]]) { const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f * m; o.detune.value = det; o.connect(pre); o.start(t); o.stop(t + len + 0.12); }
+}
+function desertStep(S, n, t, six) {
+  const bar = Math.floor(n / 16), s = n % 16;
+  for (const [at, k, len] of DESERT_RIFF[bar % 4]) if (at === s) { fuzz(RIFF_N[k], t, six * len); bass(RIFF_N[k], t, six * len, 0.2, 500); }
+  if (bar < 2) return;  // the riff alone; then the drums come in
+  if (s === 0 || s === 8 || (bar % 2 && s === 10)) dustKick(t, 1);
+  if (s === 4 || s === 12) dustSnare(t, 1);
+  if (s % 2 === 0) noiseHit(t, 'highpass', 6000, 0.8, s % 4 === 0 ? 0.05 : 0.035, 0.35, 0.2);  // the ride
+  if (s === 0 && bar % 4 === 2) noiseHit(t, 'highpass', 4500, 0.5, 0.09, 1.6, 0.4);              // a crash
+  if (bar % 8 === 1 && s >= 12) dustSnare(t, 0.5 + (s - 12) * 0.12);                             // a fill
+}
+function circlesStep(S, n, t, six) {
+  const bar = Math.floor(n / 16), s = n % 16, ch = S.chords[bar % 4], odd = bar % 2;
+  if (s === 0) rhodes(ch.keys, t, six * 10, bar === 0 ? 0.7 : 0.85, 6);
+  if (s === 10 && bar > 0) rhodes(ch.keys.slice(1), t, six * 6, 0.4, 6);
+  if (bar === 0) return;
+  if (s === 0 || s === 10 || (odd && s === 7)) dustKick(t, s === 0 ? 0.7 : 0.55);
+  if (s === 4 || s === 12) { rim(t, 0.6); noiseHit(t, 'bandpass', 2400, 0.8, 0.05, 0.18, 0.3); }  // a soft, brushed snare
+  if (s % 2 === 0) hat(t, 0.04, 0.018);
+  for (const [at, k, len] of [[0, 1, 5], [6, 1.5, 2], [10, 1, 4], [14, 2, 2]]) if (at === s) upright(ch.bass * k, t, six * len, 0.85);
+  if (bar >= 2 && bar % 2) for (const [at, i] of [[2, 3], [5, 2], [8, 1], [11, 2]]) if (at === s) bell(ch.keys[i] * 2, t, 0.03, 0.9, 0.6);  // a little celesta line
 }
 function finish4() {
   phase = 'done4'; lock = 0; hud(null);  // (the last scene stays on screen, behind)
@@ -7794,9 +8582,13 @@ function finish4() {
     'and two horses having a slight battle, to Badlands National Park, and parked by the river. Then a long view across a ' +
     'prairie dog town, and whack-a-prairie-dog, in the big field of red clay: twelve whacked, and the prairie dogs had enough. Back at the U-Haul, the door was left ' +
     'open, and IzzyKat was gone. You searched, under a rock and by the river, and decided she was gone. Then, a purr: she ' +
-    'was under the U-Haul, as if nothing happened. Then back on the road, to Yellowstone: elk by the road, and a bull ' +
-    'bugling; mountains; coyotes, and photographers annoyingly following them as if they\'re wolves (those idiots); and ' +
-    'Old Faithful. Next, from your story: Old Faithful itself, which is separate.';
+    'was under the U-Haul, as if nothing happened. Then back on the road, to Yellowstone: elk by the road, the mountains ' +
+    'behind them, and a bull bugling; coyotes, and photographers annoyingly following them as if they\'re wolves (those ' +
+    'idiots). You parked in a large parking lot, and held IzzyKat up to the sky in front of the park sign, Brudda Blaine ' +
+    'cheering, for a picture taken by a group of girls, obviously smitten with you and your allure. A hike through the ' +
+    'smaller geysers, and a beer or two. Steam in the distance: Old Faithful. It tricked you, again and again, then ' +
+    'exploded, with IzzyKat riding it, far into the air. She might be indestructible. She landed at your feet. Then on, ' +
+    'through the barren wastelands, Kyuss in Utah and Mac Miller\'s Circles in Nevada, to Reno. Next, from your story: Reno.';
   $('end4').hidden = false;
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
@@ -7807,6 +8599,11 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   town: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; musicStart(); dogTown().then(prairie); },
   search: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; phase = 'cut'; musicStart(); searchIzzy(); },
   yellowstone: () => { scene3 = { kind: 'drive', t0: time, seg: 'park', dist: 0, v: 38, vGoal: 38 }; phase = 'cut'; musicStart(); yellowstone().then(finish4); },
+  lot: () => { phase = 'cut'; musicStart(); parkLot().then(finish4); },
+  photo: () => { phase = 'cut'; musicStart(); photo().then(finish4); },
+  hike: () => { phase = 'cut'; musicStart(); hike().then(finish4); },
+  geyser: () => { phase = 'cut'; oldFaithful().then(finish4); },
+  reno: () => { phase = 'cut'; toReno().then(finish4); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
@@ -7819,6 +8616,7 @@ function pressA() {
   if (box.active) { boxA(); return; }
   if (phase === 'push' && !lock) { pushRock(); return; }  // level 3: helping push the boulder
   if (phase === 'whack') { whackA(); return; }  // level 4: whack-a-prairie-dog
+  if (phase === 'hike') { hikeA(); return; }    // and the hike, at Yellowstone
   if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2' || phase === 'done3' || phase === 'done4') return;
   interact();
 }
@@ -8246,7 +9044,7 @@ window.__sketch = {
   get feet() { return area === 'climb' ? climbFeet() : null; }, get vista() { return !!vista; },
   get brudda() { return B.here ? { x: B.tx, y: B.ty, mode: B.mode, playing: B.playing } : null; },
   get ended2() { return !$('end2').hidden; }, get stepTime() { return P.stepTime; }, get hidden() { return P.hidden; },
-  play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, clubFar: CLUB_FAR, town: TOWN_STYLE, reunion: REUNION_STYLE }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
+  play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, clubFar: CLUB_FAR, town: TOWN_STYLE, reunion: REUNION_STYLE, desert: DESERT, circles: CIRCLES }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
   get battle() { return battle ? { foe: battle.F.kind, hp: battle.hp, me: battle.me, sugar: battle.sugar, open: battle.open, cool: battle.cool } : null; },
   get foes() { return FOES.map(F => !!F.beaten); }, get pizza() { return pizzaVisited; },
   get dancers() { return night ? dancersAt(night).filter(d => time > d.at).length : 0; },
@@ -8264,6 +9062,12 @@ window.__sketch = {
     return { live: F.live, n: F.n, goal: WHACK_GOAL, at: [F.at.c, F.at.r], up: F.holes.map((H, i) => hittable(H) ? i : -1).filter(i => i >= 0),
       states: F.holes.map(H => H.st), weapon: F.weapon ? F.weapon.hits : null, sugar: F.sugar, low: F.low, wave: !!F.wave, waves: F.waves,
       ready: time >= F.hopEnd && time >= F.busyTill && time >= F.holdTill };
+  },
+  get hike() {  // level 4: the hike at Yellowstone
+    const H = scene3; if (!H || H.kind !== 'hike') return null;
+    return { at: [H.me.tx, H.me.ty], moving: H.me.moving, hop: !!H.me.hop, live: H.live, hits: H.hits, beers: H.beers,
+      chug: H.chug ? { me: H.chug.me, mine: H.chug.mine, his: H.chug.his } : null, geysers: HIKE_GEYSERS.map(G => gNow(G)[0]),
+      spray: HIKE_GEYSERS.map(G => { const [st, k] = gNow(G); return st === 'blow' ? k : -1; }), blaine: [H.bl.x, H.bl.y] };
   },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
