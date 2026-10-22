@@ -217,6 +217,32 @@ Every session reads this first and updates it last.
     walk back to the U-Haul.
   - Then driving through the barren wastelands, listening to Kyuss, "the desert rock band", in Utah, and then Mac Miller,
     the album Circles, in Nevada. You arrive in Reno, and from there, it is as you said earlier.
+- 2026-10-22, issue #1, three messages within about 30 minutes:
+  - Reno: the canal maze is thin, and you jump over a fence next to a Denny's to get into it. You walk it; a little grimy,
+    like an urban city park. At craps you roll the dice yourself, really playing, and it's just you, Brudda Blaine and the
+    dealer. Free drinks keep coming; a darkish casino, lights from screens in the background; old town Reno, a slight
+    smell of despair and cigarettes. Not until you're good and drunk does Jim show up, the enigma.
+  - The boss fight: Jim plays a few rounds of craps; the dealer says "oh Jim"; Jim says "Santa Cruz is only for hippies,
+    you. are. not. welcome." and enlarges. A more interactive fight, on a large craps table: you move, dodging the "die
+    that never lie" he throws, gambling chips spun like frisbees, and his hands, very dry, with scleroderma, slowly
+    closing round you; you jump out of them, and the further in, the faster they close. You both die, but it shouldn't
+    seem like you will; challenging enough. IzzyKat, who ate a coyote and a prairie dog, sends their spirits into you both
+    to revive you, revealing you're the true hippiest of hippies of them all, the very stereotype Jim fears for Santa
+    Cruz. Back alive, IzzyKat is alongside you, never attacking, casually dodging everything, bored, it's so easy for her.
+    The second phase: Jim even larger, swinging down like a giant. The only way to beat him (you asked for creativity
+    here): convince him that, in this case, the die do in fact lie; his whole being disintegrates, his philosophy
+    shattered, his core full of untruths.
+  - Then he melts into the Truckee River. A cigarette as long as time itself appears, full of good California weed, not
+    Milwaukee weed; you grab it and light it, and you and Brudda Blaine take a drag of time itself, and slowly walk into
+    the Truckee, as cold as the Sierra mountains. You're carried to another realm: California, as if it were in Frank
+    Herbert's The Santaroga Barrier (you wrote "santaroca barrier"). The pack of deer is there, holding Isabella. A female
+    spider, in the euphoria of the dragging of time, makes an egg sac with you: implied, kept PG (your words: nothing
+    anyone would get upset or banned over). The baby ticks from it latch onto every deer; the deer are sucked of all their
+    being and fall to the floor like rugs on a carpet. Isabella is at last free from the tyranny of the ungulate gang.
+  - The very end: a secret you plan to reveal there. It's kept out of these notes on purpose (you marked it top secret);
+    it's in your message on issue #1 of 2026-10-22, 02:39 UTC. You asked for options on how best to present it, and
+    offered two: finish with all three ticks to unlock it, or finish all the battles and mini games.
+  - About Blaine's gift: one change you asked for (done), and what you've enjoyed.
 
 ## What you've decided
 
@@ -324,8 +350,15 @@ Every session reads this first and updates it last.
   glances (she might be indestructible); she lands at your feet; back to the U-Haul.
 - Then the drive to Reno (2026-10-21, evening; built): the barren wastelands, Kyuss in Utah, Mac Miller's Circles in
   Nevada. From Reno on, as you wrote it before (see "Next to build").
+- Reno, as you wrote it (2026-10-22; built): the canal maze is something you walk, entered over a fence by a Denny's; at
+  craps you roll the dice yourself, with the real rules; Jim shows up only once you're good and drunk.
+- The fight with Jim, as you wrote it (2026-10-22; built): two phases, you both die in the first, IzzyKat's spirits bring
+  you back, and the second is won by showing him the die lie. How you show him is the assistant's idea (see "What's been
+  built"); yours to change.
+- What comes after Jim (2026-10-22): the Truckee River, the cigarette as long as time itself, the realm of California, the
+  egg sac, and Isabella free. Queued (see "Next to build"). This is where the egg sac went.
 - Blaine's gift: you said yes (2026-10-21). It's switched on in the sketch; talk about it lives in its own conversation on
-  GitHub.
+  GitHub. Still on; one part of it taken out at your word (2026-10-22).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -865,16 +898,91 @@ Every session reads this first and updates it last.
     `&at=reno` (the drive to Reno). `&at=yellowstone` still starts at the park sign.
   - Checked: the music levels match the other tracks.
 
-## Next to build (queued, in your order: Jim last)
+- 2026-10-22, sketch 2 changed (`gh-pages`, commits 1178c01, e1863d6, 0b58ed2), from your three messages:
+  - After "You arrive in Reno.": the motel 8 at night (a MOTEL 8 sign in bulbs, VACANCY in pink neon that buzzes). "You pull
+    into a motel 8." "You leave IzzyKat in the room." "She watches you go, from the window." (She's in an upstairs window.)
+  - The canals, a maze you walk, seen from above at night: you start on the sidewalk by the Denny's (its sign on a pole); the
+    fence along it sags low by the Denny's; walk up into it and you jump it ("You jump the fence, next to the Denny's." "Into
+    the canal."). The canals are thin concrete channels with a trickle down the middle, cracks, litter, graffiti on the walls,
+    patchy grass and dirt round about, street lamps (one flickers), a road overhead that you pass under through a culvert
+    (now and then a car goes over), a grate, a shopping cart on its side, an old tire, a puddle with an oil sheen, pigeons that
+    fly off as you come near, dripping. Brudda Blaine follows a step behind. At the top: stairs up to the old strip.
+  - The old strip: lit-up casinos, bulbs chasing round their signs (one letter of CASINO nearly gone), SLOTS, an old BAR sign.
+    "The old strip." "Old town Reno." "Into a casino."
+  - The casino: darkish, rows of slot machines' screens glowing in the background, smoke drifting, slot chimes now and then.
+    "Darkish, with lights from the screens, in the background." "Old town Reno: a slight smell of despair, and cigarettes."
+    The craps table from above: the dealer (white shirt, black vest, red bow tie) with his stick, the point boxes, the
+    ON/OFF puck, the pass line; you and Brudda Blaine at the end of the rail. "A craps table: just you, Brudda Blaine, and the
+    dealer." "You roll the dice yourself."
+  - Craps, by the real rules of the pass line (checked: Wikipedia, "Craps"): on the first roll, 7 or 11 wins, 2, 3 or 12
+    loses; any other number is your point, and the point again before a 7 wins; a 7 first is "seven out". It pays even money.
+    You buy in for 100 in chips; each round you bet 10, or all of it; tap A to roll (the dice hit the back wall and come to
+    rest); the dealer calls it ("Yo-leven. Winner.", "Snake eyes. Craps.", "Seven out."), and brings the dice back with his
+    stick. Out of chips: "Brudda Blaine slaps down another hundred." After every round, a free Sierra Nevada Pale Ale (the
+    empties line up on the rail); with each one the screen sways more, then you see double. At four: "Good and drunk."
+    Brudda Blaine: "Brudda. We should go." Then Jim strolls in (long white hair, a long tired face, a cigarette he rolled
+    himself, a faded denim shirt) and plays alongside you, a few rounds. After a seven out the dice pass between you. He says
+    his lines at random, slowly ("The die never lie." and the rest, from before); when he hits, he perks up. Then: "Jim. The
+    enigma." Dealer: "Oh, Jim." Jim: "Santa Cruz is only for hippies. You. Are. Not. Welcome." He enlarges, up over the table,
+    with a low rumble. "Jim enlarges."
+  - The fight, on a large craps table seen from above, Jim enlarged, leaning over the far end. Your hearts (three) and his bar
+    along the bottom. Music: the desert rock beat. "His hands are very dry, with scleroderma. When they close round you, tap A
+    to jump out."
+    - He throws the die that never lie, two at a time, at you (a shadow shows where they'll land); spins chips like frisbees,
+      curving across the table; and brings his hands down round you: pale, dry, cracked fingers in a ring that closes, flakes
+      coming off. Once it's closing you can't walk out; tap A to jump. The further in, the faster they close, and the more
+      often everything comes.
+    - His bar is his energy, and it drains as you dodge, so it looks winnable. If he runs nearly out: "He rolls the dice, on
+      the end of the table." "Seven." "Jim hits." His energy comes back, all of it; he grows; "The hands close faster." A
+      barrage, then both hands at once, round you both, too fast to jump. (Lose your three hearts first, and it ends the same.)
+    - "The hands close round you both." "You die." "Brudda Blaine, too." Darkness.
+    - IzzyKat walks in. "Then: IzzyKat." "Nobody knows how she got out of the motel." Her eyes glow. "Back in the Badlands,
+      she ate a prairie dog." (its spirit, pale blue, rises out of her, "WEE-OO!", and into you) "In Yellowstone, a coyote."
+      ("AWOO!", and into Brudda Blaine) "She sends their spirits into you." You both rise, with a glow in every color, flowers
+      round you, a flower crown on him. "You come back." "The true hippiest of hippies of them all." "The very stereotype Jim
+      fears, for Santa Cruz." Jim: "...Hippies." He grows even larger. "IzzyKat stays with you."
+    - The second phase, to your own beat: "He swings down like a giant." (a shadow across a strip of the table, then his
+      arm slams down, and the table shakes). His dice and chips keep coming. IzzyKat, beside you, never attacks: she hops
+      lazily out of the way of everything, yawns, licks a paw. If your hearts run out now, the spirits get you back up.
+    - The way to beat him (the assistant's idea, as you asked): "His dice land, and stay there." "Walk up to one, and tap A
+      to turn it over. Show him." Turned over, it shows its other side (a 6 becomes a 1). The first time: "It said 6.
+      Underneath, it says 1." "On a die, the top and the bottom add up to seven." "Whatever a die shows you, it hides
+      something else." Each one cracks him a little more (a crack across him, and his words over his head: "NO.", "THE
+      DIE...", "NEVER...", "LIE?", "THEY...", "THEY LIE?", "THE DIE LIE."). His bar is seven pieces, one gone for each.
+    - At seven: "Seven times, the die lied." Jim: "The die... lie." "His philosophy, shattered." "His core being, full of
+      untruths." He breaks up from the top down, falls to the table in bits, pools, and runs off it. "He disintegrates." "He
+      melts away, off the table." "Toward the Truckee River." Then the level 4 end screen ("Next, from your story: the
+      Truckee River.").
+    - The fact behind it, checked: "Opposite sides of a modern die traditionally add up to seven" (Wikipedia, "Dice").
+  - Blaine's gift: one part taken out, as you asked.
+  - Guesses, labeled on the end screen: how all of it looks and sounds, the bets, the buy-in, how many drinks, when Jim
+    arrives and how many rounds he plays, everything in the fight but your words (the hearts, his energy, how you die, the
+    spirits, the glow, the swing, turning the dice over, how he melts), and the words not in your messages.
+  - Links for checks: `?level=4&tick=dog&at=motel` (Reno from the start), `&at=canal`, `&at=strip`, `&at=casino`, `&at=jim`
+    (Jim arriving), `&at=fight`, `&at=fight2` (the second phase).
 
-1. Reno: the motel, the canal maze (like the LA river) to the old strip, the casino, the Sierra Nevada Pale Ales, craps
-   (win big, lose, win big, lose), and Jim strolling in.
-2. The fight with Jim, where IzzyKat's super kitty powers (from the prairie dog and the coyote) win it.
+## Next to build (queued, in your order)
+
+1. The Truckee River: Jim melts into it; the cigarette as long as time itself, full of good California weed; you light it,
+   and you and Brudda Blaine take a drag of time itself, and slowly walk into the Truckee, as cold as the Sierra mountains.
+2. The realm of California, as if it were in Frank Herbert's The Santaroga Barrier: the deer holding Isabella; the female
+   spider and the egg sac (implied, kept PG); the baby ticks on every deer, the deer falling like rugs on a carpet; Isabella
+   free.
+3. The very end: the reveal, the way you choose (see the open questions).
 
 ## Open questions
 
-- Asked 2026-10-21 (evening): in Reno, is the canal maze something you walk, like Akumal? And at craps, do you roll the dice
-  yourself, or watch?
+- Asked 2026-10-22: how to reveal the very end. Three options offered: (1) finish with all three ticks, runs two and three
+  shortened to the parts where your tick matters; (2) every fight and mini game, with each tick, opened as a menu after the
+  first ending; (3) right at the end of the first run. The assistant's pick: (1), with three tick marks filling in on the end
+  screen and a plain line that there's something left to find, and the words hidden in the game's code so nobody can read
+  them by peeking. Also asked for the words you want on screen (yours, or a draft for you to change). Said plainly: this
+  conversation is public; Blaine has agreed not to look.
+- Not checked yet, and not used: any facts about The Santaroga Barrier, the Truckee River or the Sierra. Check before
+  using them.
+- Said 2026-10-22: how you beat Jim (turning his dice over) is the assistant's idea; yours to change.
+- Answered 2026-10-22: the canal maze is something you walk, and at craps you roll the dice yourself (asked 2026-10-21,
+  evening).
 - Said 2026-10-21 (evening), checked: Old Faithful really does play before it erupts. The National Park Service's exhibit
   page on predicting it (home.nps.gov/features/yell/ofvec/exhibits/eruption/prediction/predict7.htm): "Old Faithful 'plays' prior to an eruption with
   splashes of boiling water that may reach as high as 20 feet (6 m)." "A full eruption usually begins from this play."
@@ -906,8 +1014,9 @@ Every session reads this first and updates it last.
 - Answered 2026-10-21 (afternoon): whack-a-prairie-dog first, Jim at the craps table last.
 - Answered 2026-10-21 (afternoon): Yellowstone (checked before: the National Park Service's page on Old Faithful,
   nps.gov/yell, "Old Faithful is one of nearly 500 geysers in Yellowstone").
-- Not asked yet: is the egg sack gone, now that Jim is the final boss, or part of the fight? How does the fight with Jim go
-  (like Pokémon Red, or at the craps table)? (How the ticks' gifts work in whack-a-prairie-dog: built as guesses,
+- Answered 2026-10-22: the egg sac comes after Jim, in the realm of California; the fight with Jim is on a large craps
+  table, something you move round in, not like Pokémon Red. (Asked before: is the egg sack gone, and how does the fight
+  with Jim go?) (How the ticks' gifts work in whack-a-prairie-dog: built as guesses,
   2026-10-21.)
 
 - Answered 2026-10-21 (afternoon): yes, you'll take Blaine's gift. It's switched on; any of it can be taken out at any
@@ -1094,3 +1203,8 @@ Every session reads this first and updates it last.
   with two beers), Old Faithful's tricks and eruption with IzzyKat, and the drive to Reno. Replied on issue #1 (comment
   6330228925) with what's in it, the real fact about Old Faithful's plays, where Kyuss are from, links straight to each
   part, and two questions about Reno: the canal maze, and craps.
+- 2026-10-22: three messages from you on issue #1 within about 30 minutes (answered later that night; the computer the
+  workshop runs on slept partway): Reno, the fight with Jim, what comes after, and the very end. Built Reno and the fight in
+  sketch 2, same link, and took out the part of Blaine's gift you asked. Queued the Truckee River, the realm of California
+  and the very end. Replied on issue #1 (comment 6334496527) with what's in it, the real fact about dice, links straight to
+  each part, three ways to reveal the very end with the assistant's pick, and two questions: which way, and what words.
