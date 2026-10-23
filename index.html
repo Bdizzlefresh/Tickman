@@ -5857,7 +5857,7 @@ function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown,
     lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful,
-    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee, realm: drawRealm, pageant: drawPageant, final: drawFinal, party: drawParty })[scene3.kind]();
+    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee, realm: drawRealm, pageant: drawPageant, final: drawFinal, party: drawParty, looney: drawLooney })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -11120,9 +11120,62 @@ async function party() {
   musicStart(HIP[1]);  // his track drops
   S.come = time;  // and everyone, all at once
   await wait(40);  // until the end of time; it lingers
-  hud('Tap A for the end screen'); phase = 'egg'; S.dip = {};
+  hud('Tap A'); phase = 'egg'; S.dip = {};
   await new Promise(res => { S.dip.tap = res; });
   hud(null); phase = 'cut';
+  await looneyEnd();  // then the very last scene (your ask)
+}
+// ---- the very last scene, after the dance (your ask): a Looney Tunes ending. Rings, and in the middle, the baby tick,
+// your tick, and Isabella; your words over them, "That's all folks!"; then a circle closes in on the three of them,
+// to black. (How it looks is a guess; nothing is copied from the cartoons. The little fanfare is original. Checked: the
+// line is Porky Pig's, said at the end of many of the shorts: Wikipedia, "Porky Pig".) ----
+async function looneyEnd() {
+  musicStop(); hud(null); phase = 'cut';
+  scene3 = { kind: 'looney', t0: time, words: null, iris: null };
+  const S = scene3;
+  looneyFanfare();
+  await wait(2.0);
+  S.words = time;
+  const el = document.createElement('div'); el.id = 'thatsAll';
+  el.style.cssText = 'position:absolute;left:0;right:0;bottom:9%;text-align:center;color:#fff6d8;' +
+    "font:italic 2.3rem/1 'Brush Script MT','Snell Roundhand','Segoe Script','Apple Chancery',cursive;" +
+    'text-shadow:0 2px 0 #5a1010,0 0 10px rgba(0,0,0,.6);opacity:0;transform:scale(.6);transition:opacity .8s,transform .8s cubic-bezier(.3,1.6,.5,1)';
+  el.textContent = "That's all folks!";
+  $('screen').insertBefore(el, $('hud'));
+  requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'scale(1)'; });
+  await wait(3.6);
+  S.iris = time;  // the circle closes in on the three of them
+  el.style.opacity = '0';
+  await wait(3.0);
+  el.remove();
+}
+function drawLooney() {
+  const S = scene3, t = time - S.t0, cx = 80, cy = 74;
+  ctx.fillStyle = '#1a0a18'; ctx.fillRect(0, 0, VW, VH);
+  const off = (t * 22) % 20;  // rings, spreading out from the middle
+  for (let r = 130 + off; r > 40; r -= 10) disc(ctx, cx, cy, Math.round(r), Math.floor((r - off) / 10) % 2 ? '#e8582a' : '#c8202a');
+  disc(ctx, cx, cy, 44, '#2a1a3a'); disc(ctx, cx, cy, 42, '#3a2a5a');
+  // in the middle: Isabella, your tick, and the baby tick, bouncing, waving
+  const pop = ease(clamp(t / 0.7, 0, 1)), b = k => Math.round(Math.abs(Math.sin(time * 4 + k)) * 3);
+  if (pop > 0) {
+    ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, 42, 0, Math.PI * 2); ctx.clip();
+    const up = Math.round((1 - pop) * 50);
+    drawBig(ISABELLA, ISABELLA_PAL, 44, 44 + up - b(0), 2);
+    drawBig(SPIDER, SPIDER_PAL[choice || 'none'], 84, 48 + up - b(1.3), 2, false, Math.floor(time * 4) % 2);
+    drawBabyTick(80, 100 + up - b(2.6), 2, time);
+    ctx.restore();
+  }
+  if (S.iris != null) {  // the circle closes: down onto the three of them, holds a moment, then shut
+    const k = time - S.iris, r = k < 1.6 ? 130 - 92 * ease(k / 1.6) : k < 2.3 ? 38 : Math.max(0, 38 * (1 - (k - 2.3) / 0.5));
+    ctx.fillStyle = '#000'; ctx.beginPath(); ctx.rect(0, 0, VW, VH); ctx.arc(cx, cy, Math.max(0.01, r), 0, Math.PI * 2, true); ctx.fill();
+  }
+  if (t < 0.5) { ctx.globalAlpha = 1 - t / 0.5; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }  // out of the white
+}
+function looneyFanfare() {  // a little cartoon flourish, original: up a scale, a run, and a chord
+  if (!ac || muted) return; const t = ac.currentTime;
+  [523.25, 587.33, 659.25, 698.46, 783.99, 880, 987.77].forEach((f, i) => tone(master, 'triangle', f, t + i * 0.06, 0.12, 0.02));
+  [523.25, 659.25, 783.99, 1046.5].forEach(f => tone(master, 'triangle', f, t + 0.5, 1.2, 0.016));
+  [130.81, 196].forEach(f => tone(master, 'sawtooth', f, t + 0.5, 0.9, 0.012, 600));
 }
 function partyCig() {  // Jim's cigarette, as long as time itself, along the bottom: from the filter, off the far edge, to the glow
   const y = 141;
@@ -11210,6 +11263,7 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   reveal: () => { phase = 'cut'; reveal().then(finish4); },
   baby: () => { phase = 'cut'; fadeTo(0, 0.3); babyReveal().then(reveal).then(party).then(finish4); },
   party: () => { phase = 'cut'; fadeTo(0, 0.3); party().then(finish4); },
+  looney: () => { phase = 'cut'; fadeTo(0, 0.3); looneyEnd().then(finish4); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
