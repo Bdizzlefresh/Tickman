@@ -294,6 +294,9 @@ Every session reads this first and updates it last.
   - Skip the Mac Miller part in Nevada; just have Kyuss play from Utah to Reno.
 - 2026-10-23, issue #1 (03:17 UTC): speed up the math part at the first camp: "it's getting a little long and I'm trying
   to shave a little bit off."
+- 2026-10-23, issue #1, two messages about 2 minutes apart (03:50 and 03:51 UTC):
+  - Jim's line before the fight: "You will not pass! Like Gandalf. Not You will pass."
+  - Take out the tick's line "I have a form of reveal to you" (your words: "the last line").
 
 ## What you've decided
 
@@ -437,9 +440,13 @@ Every session reads this first and updates it last.
   Jim's cigarette, lingering (2026-10-23; built).
 - The tick's speech comes right before "I have a form of reveal to you, Brother.", on every run (2026-10-23; built; on
   every run is the assistant's reading of "before").
+- "I have a form of reveal to you, Brother." is out (2026-10-23; built). The speech is the tick's last line now: runs one and
+  two fade out after it, and on the third, "I know you just revealed your junk. But I now have junk to reveal to you."
+  follows it, then the egg.
 - The very last scene, after the dance: Looney Tunes, "That's all folks!", with the baby tick, your tick and Isabella
   (2026-10-23; built).
-- Before the fight, Jim: "You smell like hippie. You will pass.", like Gandalf (2026-10-23; built).
+- Before the fight, Jim: "You smell like hippie. You will not pass!", like Gandalf (2026-10-23; built; first built as "You
+  will pass.", changed at your word).
 - The drive to Reno: the desert rock plays all the way from Utah to Reno; no Mac Miller (2026-10-23; built).
 - The math at the first camp, sped up: the same three tries and the same math, shorter (2026-10-23; built).
 - Everything else is yours to decide.
@@ -1255,17 +1262,30 @@ Every session reads this first and updates it last.
   - Gifts from Blaine: untouched.
   - Link for checks: `?level=2&tick=dog&at=camp1` (the first camp).
 
+- 2026-10-23, sketch 2 changed (`gh-pages`, commit 82652fd), from your two messages:
+  - Jim, before the fight, after the slam: Jim: "You smell like hippie. You will not pass!"
+  - At the Truckee: "I have a form of reveal to you, Brother." is gone. Your speech ends on "...for my final act, I also
+    have junk to reveal." Runs one and two fade out right after it. On the third run, "I know you just revealed your junk.
+    But I now have junk to reveal to you." follows it, then the egg, as before.
+  - The level 4 end screen's summary now ends with your speech's last words, and says Kyuss plays from Utah all the way to
+    Reno (it still named Mac Miller in Nevada; missed when that part came out).
+  - Checked, headless and muted: Jim's new line shows and the old one doesn't; a first run at the Truckee ends after your
+    speech, without the old line; the third run gets your speech, then the other line, then the egg; no errors.
+  - Gifts from Blaine: untouched.
+  - Links for checks: `?level=4&tick=dog&at=fight` (Jim), `?level=4&tick=dog&at=dip` (the speech).
+
 ## Next to build (queued, in your order)
 
 1. Your words, on the card at the very end (waiting for you).
 
 ## Open questions
 
-- Asked 2026-10-23, and again in the next reply: your speech ends "I also have junk to reveal", and the line you sent
-  before ("I know you just revealed your junk. But I now have junk to reveal to you.") still follows it on the third run.
-  Keep both, or drop that one?
-- Not asked yet: anything else running long, now that you're shaving time? (The math at the first camp is about a third
-  shorter; it can go shorter still, say by cutting one of the three tries.)
+- Asked 2026-10-23, twice: your speech ends "I also have junk to reveal", and the line you sent before ("I know you just
+  revealed your junk. But I now have junk to reveal to you.") still follows it on the third run. Keep both, or drop that
+  one? With "I have a form of reveal to you, Brother." gone, the two now sit back to back. Said 2026-10-23 (comment
+  6356964408): both stay unless you say drop one. Not to be asked again.
+- Asked 2026-10-23 (comment 6356964408): anything else feel long, now that you're shaving time? (The math at the first camp
+  is about a third shorter; it can go shorter still, say by cutting one of the three tries.)
 
 - Asked 2026-10-23: should the tick's new line and the baby tick come only on the third run, so the first two still stop at
   "I have a form of reveal to you, Brother."? (Built that way.)
@@ -1553,3 +1573,8 @@ Every session reads this first and updates it last.
   the four from last time are in (with links), a note that Jim's line and the drive were added to the reply before after
   it went up, the plan for the math, and the open question again (keep both lines?). Then built it in sketch 2, same link
   (c5bd3d8). Not posted about yet; the next reply says it's in.
+- 2026-10-23: one message from you on issue #1 (03:50): Jim says "You will not pass!", not "You will pass". A second (03:51,
+  take out "I have a form of reveal to you") came in before the reply went up, so the reply took in both. Replied (comment
+  6356964408): both changes are coming (with links), the math at the first camp is in (with a link), both junk lines stay
+  unless you say drop one, and one question: anything else feel long? Then built both in sketch 2, same link (82652fd).
+  Not posted about yet; the next reply says it's in.
