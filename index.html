@@ -272,7 +272,7 @@ a { color:var(--accent); }
     <p id="ticks4"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>Your words, on the card at the very end (it's blank until you send them).</li>
+      <li>Nothing: it's all in. (The card for words at the very end is left out, at your word.)</li>
     </ol>
     <p class="small">Guesses in level 4 so far: how the oil fields look (the oil rigs drawn as nodding pumps, with drilling
       towers far off), the bison, the horses and their battle, the badlands, the park sign, the river, the mounds, the
@@ -293,7 +293,7 @@ a { color:var(--accent); }
       Faithful: the crowd on the benches, how many times it tricks you, the eruption (the rainbow, the sparkles), her
       ride, the glances, the nod, and her landing. The drive to Reno: the wastelands, the signs, the tumbleweed, the
       sunset, Reno at night, and the music (original, in the spirit of the bands you named; real recordings can't go in
-      the game). The words not in your story are guesses too. In Reno: how it all looks and sounds (the motel, the Denny's, the fence, the canals and what's in them, the old strip, the casino, the slot machines, the table, the dealer, Jim's look); the craps table's rules are the real ones for the pass line, but the bets (10, or all of it), the buy-in, how many free drinks, when he arrives, and how many rounds he plays are guesses; and the words not in your story. The fight: all of it but your words (how he throws the dice and spins the chips, the hands and how fast they close, your hearts, his energy, how you die, the spirits, the hippie glow, the giant swing, turning the dice over to win, how he melts). From Jim's end on: how it all looks and sounds (the light from his cracks, the scream, the burst; the melt; the Truckee at night, the bridge, the Sierra; the cigarette, the drag, the cold; the realm, the deer, the female spider, the silk curtain, the egg sac, the baby ticks, the rugs; the egg sac game (how it plays: the controls, Up for the safety baby tick, the deer charging, the sac knocked rolling, Isabella swatting baby ticks away, the second wave out of the redwoods, the bubble, and every number in it); the disintegration back into the Truckee; the dip, the dolphin dives (and how he looks, diving), the shadowy character, the flash, the turn, the orchestra; the easter egg; the final scene), the music in Reno (original, in the spirit of what you named), and the words not in your messages.</p>
+      the game). The words not in your story are guesses too. In Reno: how it all looks and sounds (the motel, the Denny's, the fence, the canals and what's in them, the old strip, the casino, the slot machines, the table, the dealer, Jim's look); the craps table's rules are the real ones for the pass line, but the bets (10, or all of it), the buy-in, how many free drinks, when he arrives, and how many rounds he plays are guesses; and the words not in your story. The fight: all of it but your words (how he throws the dice and spins the chips, the hands and how fast they close, your hearts, his energy, how you die, the spirits, the hippie glow, the giant swing, turning the dice over to win, how he melts). From Jim's end on: how it all looks and sounds (the light from his cracks, the scream, the burst; the melt; the Truckee at night, the bridge, the Sierra; the cigarette, the drag, the cold; the realm, the deer, the female spider, the silk curtain, the egg sac, the baby ticks, the rugs; the egg sac game (how it plays: the controls, Up for the safety baby tick, the deer charging, the sac knocked rolling, Isabella swatting baby ticks away, the second wave out of the redwoods, the bubble, and every number in it); the disintegration back into the Truckee; the dip, the dolphin dives (and how he looks, diving), the shadowy character, the flash, the turn, the orchestra; the easter egg; the stage and the banner; the kingdom: the field, who stands where and how they dance, DJ Brudda Blaine's rock, Pride Rock, the pan, the sunbeam, and the easter eggs in the grass; the Looney Tunes ending and its banner), the music in Reno (original, in the spirit of what you named), and the words not in your messages.</p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -5857,7 +5857,7 @@ function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown,
     lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful,
-    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee, realm: drawRealm, pageant: drawPageant, final: drawFinal, party: drawParty, looney: drawLooney })[scene3.kind]();
+    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee, realm: drawRealm, pageant: drawPageant, final: drawFinal, party: drawParty, kingdom: drawKingdom, looney: drawLooney })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -10623,13 +10623,14 @@ let endsSeen = null;
 function markEnd(k) {
   if (!endsSeen) endsSeen = endsDone();
   if (TICK_WORDS[k]) endsSeen.add(k);
+  if (new URLSearchParams(location.search).get('ends') != null) return endsSeen;  // a link that acts as if: it doesn't count toward your tick marks
   try { localStorage.setItem('tickman-ends', JSON.stringify([...endsSeen])); } catch (e) {}
   return endsSeen;
 }
 const PILE_AT = [44, 120];
 const CLOTHES = ['#1a1a22', '#f2f2f2', '#3a5a8a', '#e8322a', '#f2c94c', '#2a2a2a'];  // his jacket, the tee, the jeans, the red headphones, the chain, the shoes
-async function dip() {
-  const snapIn = realmSnap; realmSnap = null;  // from the realm of California: it slowly disintegrates, back into the Truckee (your ask)
+async function dip(atTurn) {  // atTurn (?at=speech): straight to the turn, with everything before it already done
+  const snapIn = atTurn ? null : realmSnap; realmSnap = null;  // from the realm of California: it slowly disintegrates, back into the Truckee (your ask)
   if (!snapIn) await fadeTo(1, 0.6);
   if (!truckeeCanvas) paintTruckee();
   musicStop(); hud(null); phase = 'cut';
@@ -10639,8 +10640,15 @@ async function dip() {
     dip: { white: snapIn ? -99 : time, stage: 'stand', cloud: null, flying: [], pile: 0, leaps: [], rise: null, flash: null, shadow: null, recoil: null, leave: null,
       mumble: null, turn: null, box: null, egg: null, crack: null, myFlash: null } };
   const S = scene3, D = S.dip;
-  if (snapIn) { disSound(); await wait(DIS_LEN + 0.4); S.dis = null; await wait(0.6); }
+  if (atTurn) {  // he's up in the river, you're in to your knees, his things are on the bank, and the shadowy character is long gone
+    const past = time - 30;
+    Object.assign(D, { white: -99, stage: 'rise', rise: past, flash: past, recoil: past, shadow: past, leave: past, mumble: past, flying: CLOTHES.map(c => ({ c, t0: past })) });
+    S.wade = { from: 0.24, to: 0.24, t0: past, dur: 1 };
+    await fadeTo(0, 0.6); await wait(0.6);
+  }
+  else if (snapIn) { disSound(); await wait(DIS_LEN + 0.4); S.dis = null; await wait(0.6); }
   else { await fadeTo(0, 0.2); await wait(1.6); }
+  if (!atTurn) {
   await say(['Back at the Truckee River.', 'The job is complete.']);
   await say(['Brudda Blaine: "I need to take a dip, to wash off all of that stank."']);
   D.stage = 'cloud'; D.cloud = time; thump(0.04);
@@ -10680,6 +10688,7 @@ async function dip() {
   await wait(1.2);
   await say(['The shadowy character, extremely unpleased with the entire experience, walks away,', 'mumbling about how the homeless are crazier than they used to be.']);
   await wait(Math.max(0, D.leave + 4.2 - time));
+  }  // (the part before the turn)
   // you turn slowly to him; an orchestra, behind you
   S.cold = false; musicStart(BALLAD); D.box = time;
   await wait(2.4);
@@ -10712,8 +10721,7 @@ async function dip() {
   await wait(1.6);
   riverSound(0);
   await babyReveal();  // the baby tick, revealed, and your banner
-  await reveal();
-  await party();       // then the last dance
+  await kingdom();     // then the kingdom, under Pride Rock, and the Looney Tunes ending (the card is left out, at your word)
   return true;
 }
 // the realm's last moment, crumbling away in little bits, drifting off like dust, the Truckee at night showing through
@@ -11016,7 +11024,7 @@ function drawFinal() {  // up on a high rock at sunrise: Braydon and Isabella, h
 // his track drops, and every character from every scene comes in, all at once, and dances: until the end of time, the
 // time that is as long as Jim's cigarette (it lies along the bottom, still burning). It lingers. (Who stands where, how
 // they dance, the soft lights, and his track, are guesses.) ----
-const partyBeat = () => 60 / (mus && mus.style.kind === 'hip' ? mus.style.bpm : 94);
+const partyBeat = () => 60 / (mus && (mus.style.kind === 'hip' || mus.style.kind === 'club') ? mus.style.bpm : 94);
 const partyHop = (j, amp = 2) => Math.round(Math.abs(Math.sin(((time / partyBeat() + j * 0.13) % 1) * Math.PI)) * amp);
 const partyFlip = j => (Math.floor(time / partyBeat()) + j) % 2 === 1;
 const partyHue = j => i => RAINBOW[(i + j + Math.floor(time * 4)) % RAINBOW.length];
@@ -11089,7 +11097,9 @@ function partyCast() {  // everyone: where they dance (x, y: their feet), which 
   add(40, 122, (X, Y, j) => drawGrid(CAT_SIT, TORTIE, X - 5, Y - 13 - partyHop(j, 2), partyFlip(j)));
   add(55, 122, (X, Y, j) => drawGrid(TICK_ART.regular[0], TICK_ART.regular[1], X - 8, Y - 16 - partyHop(j), partyFlip(j)));
   add(72, 122, (X, Y, j) => drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], X - 8, Y - 15 - partyHop(j, 3), partyFlip(j) ? ROT.left : ROT.right, false, Math.floor(time * 6) % 2));
+  C[C.length - 1].who = 'you';       // (in the kingdom, you're up on Pride Rock instead)
   add(89, 122, (X, Y, j) => drawSprite(ctx, ISABELLA, ISABELLA_PAL, X - 8, Y - 16 - partyHop(j, 2), 0, partyFlip(j)));
+  C[C.length - 1].who = 'isabella';  // (and so is she)
   add(106, 122, (X, Y, j) => { const y = Y - 15 - partyHop(j, 2); drawSprite(ctx, SPIDER, SHE_PAL, X - 8, y, partyFlip(j) ? ROT.right : ROT.left); px(ctx, X - 1, y - 1, '#ff7ab0'); px(ctx, X, y - 2, '#ffd24f'); px(ctx, X + 1, y - 1, '#ff7ab0'); });
   add(122, 122, (X, Y, j) => drawGrid(TICK_ART.human[0], TICK_ART.human[1], X - 8, Y - 16 - partyHop(j), partyFlip(j)));
   add(138, 122, (X, Y, j) => drawGrid(TICK_ART.dog[0], TICK_ART.dog[1], X - 8, Y - 16 - partyHop(j), partyFlip(j)));
@@ -11097,6 +11107,7 @@ function partyCast() {  // everyone: where they dance (x, y: their feet), which 
   // the very front: the woodland creatures, the naked mole rat, a prairie dog, and the baby tick, in the middle
   [['elf', 12], ['gnome', 26], ['fox', 42], ['rabbit', 58], ['raccoon', 98], ['owl', 112], ['elf', 150]].forEach(([kind, x]) => add(x, 140, (X, Y, j) => drawDancer({ kind, j }, X, Y)));
   add(80, 140, (X, Y, j) => drawBabyTick(X - 1, Y - 6 - partyHop(j, 3), 1, time));
+  C[C.length - 1].who = 'baby';      // (and the baby tick, held up)
   add(128, 140, (X, Y, j) => drawGrid(Math.floor(time * 6) % 2 ? MOLE_STEP : MOLE, MOLE_PAL, X - 9, Y - 7 - partyHop(j, 1), partyFlip(j)));
   // and any gifts from Blaine that dance, too
   const gifts = []; extras.party(gifts);
@@ -11122,6 +11133,95 @@ async function party() {
   await new Promise(res => { S.dip.tap = res; });
   hud(null); phase = 'cut';
   await looneyEnd();  // then the very last scene (your ask)
+}
+// ---- the kingdom (your ask; in place of the rock and the white dance, which were two scenes). After the reveal: a slow
+// pan across a wide field under Pride Rock, every character from the game dancing in it, the club's beat going, and DJ
+// Brudda Blaine on a rock in the middle of the crowd. The pan comes round to Pride Rock: you and Isabella, up on its tip,
+// holding the baby tick out to the dancing crowd, up to the sky, like Simba. A few easter eggs from earlier in the game
+// are hidden in the field. Then the Looney Tunes ending. (How it all looks, who stands where, the easter eggs, and the
+// timing, are guesses.) ----
+const KW = 384, K_PAN = 24;                    // how wide the kingdom is (the screen is 160), and how long the pan takes
+const KX = x => Math.round(8 + x * 1.7);      // where each dancer stands across it, from where they stood at the white dance
+const kCam = S => S.pan == null ? 0 : Math.round((KW - VW) * ease(clamp((time - S.pan) / K_PAN, 0, 1)));
+async function kingdom() {
+  musicStop(); hud(null); phase = 'cut';
+  scene3 = { kind: 'kingdom', t0: time, pan: null, lift: null, toWhite: null, cast: partyCast().filter(c => !c.who) };
+  const S = scene3;
+  musicStart(CLUB_STYLE);  // the club's beat
+  await wait(3.5);
+  S.pan = time;            // a slow pan, across the crowd, round to Pride Rock
+  await wait(K_PAN + 0.3);
+  S.lift = time; spiritChime();  // and up: the baby tick, held out to the dancing crowd
+  await wait(9);
+  hud('Tap A'); phase = 'egg'; S.dip = {};
+  await new Promise(res => { S.dip.tap = res; });
+  hud(null); phase = 'cut';
+  S.toWhite = time;
+  await wait(1.2);
+  await looneyEnd();       // then the very last scene, with your banner
+}
+function kTarpTree(x, y) {  // easter egg: a spruce, the blue tarp still wrapped all the way round it (camp 1: 360 degrees)
+  ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(x - 4, y - 1, 10, 2);
+  ctx.fillStyle = '#4a3020'; ctx.fillRect(x - 1, y - 18, 3, 18);
+  for (let j = 0; j < 20; j++) {
+    const hw = Math.min(7, Math.floor((j % 5) * 0.7 + j * 0.3) + 1), yy = y - 37 + j;
+    ctx.fillStyle = j % 5 === 4 ? '#0f2c1c' : '#18402a'; ctx.fillRect(x - hw, yy, hw * 2 + 1, 1);
+    ctx.fillStyle = '#27603b'; ctx.fillRect(x - hw, yy, Math.max(1, hw - 1), 1);
+  }
+  for (let j = 0; j < 14; j++) { ctx.fillStyle = [TARP_DK, TARP, TARP_HI][j % 3]; ctx.fillRect(x - 2, y - 2 - j, 5, 1); }
+  line(ctx, x + 2, y - 9, x + 6, y - 2, ROPE); px(ctx, x + 2, y - 15, GROM);
+}
+function kCig() {  // Jim's cigarette, as long as time itself, still burning, along the bottom of the field
+  const y = 141, end = 300;
+  ctx.fillStyle = '#f2eee4'; ctx.fillRect(0, y, end - 6, 1); ctx.fillStyle = '#cfc6b4'; ctx.fillRect(0, y + 1, end - 6, 1);
+  for (let x = end - 10; x > 0; x -= 7) px(ctx, x, y + 1, '#6a9a4a');
+  ctx.fillStyle = '#d89a58'; ctx.fillRect(end - 6, y, 6, 2);
+  const g = ctx.createRadialGradient(0, y, 0, 0, y, 14); g.addColorStop(0, 'rgba(255,140,60,' + (0.45 + 0.15 * Math.sin(time * 3)).toFixed(2) + ')'); g.addColorStop(1, 'rgba(255,90,30,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, y - 14, 14, 28);
+}
+function drawKingdom() {
+  const S = scene3, t = time - S.t0, cam = kCam(S), lk = S.lift != null ? ease(clamp((time - S.lift) / 3, 0, 1)) : 0;
+  // the sky at sunrise; far hills, moving slower than the field
+  gradient(0, 62, [92, 116, 176], [250, 198, 150]);
+  disc(ctx, Math.round(132 - cam * 0.12), 52, 8, '#ffe2a0'); disc(ctx, Math.round(132 - cam * 0.12), 52, 6, '#fff2c8');
+  for (let x = 0; x < VW; x++) { const wx = x + cam * 0.4, h = 6 + 5 * Math.abs(Math.sin(wx * 0.035 + 1)) + 3 * Math.abs(Math.sin(wx * 0.09)), top = Math.round(60 - h); ctx.fillStyle = '#7a8aa8'; ctx.fillRect(x, top, 1, 61 - top); }
+  ctx.fillStyle = '#86a452'; ctx.fillRect(0, 58, VW, VH - 58);  // the field
+  ctx.fillStyle = '#9ab862'; ctx.fillRect(0, 58, VW, 2);
+  ctx.save(); ctx.translate(-cam, 0);
+  for (let i = 0; i < 70; i++) { const x = (i * 53) % KW, y = 62 + (i * 37) % 80; px(ctx, x, y, '#6e8c40'); px(ctx, x + 1, y - 1, '#6e8c40'); px(ctx, x + 2, y, '#a4c06a'); }  // tufts of grass
+  kTarpTree(10, 62);
+  kCig();
+  // DJ Brudda Blaine, on a rock in the middle of the crowd
+  ctx.fillStyle = '#7a6a5c'; ctx.fillRect(126, 55, 36, 9); ctx.fillRect(130, 53, 28, 2); ctx.fillStyle = '#9a8a7a'; ctx.fillRect(130, 53, 28, 1); ctx.fillStyle = '#5a4c40'; ctx.fillRect(126, 63, 36, 1);
+  drawDJ(136, 30, (time / partyBeat()) % 1 < 0.35 ? 1 : 0, time * 9);
+  drawDecks(136, 40, time * 6);
+  for (const layer of ['sky', 'fly']) for (const c of S.cast) if (c.layer === layer) c.draw(KX(c.x), c.y, c.j);
+  // easter eggs, in the grass among the dancers: the N.E.R.D. album case, a honeybun, an empty bottle, and one of Jim's dice, turned over to its 1
+  drawCase(126, 124); miniBun(149, 136); bottleLying(ctx, 152, 128, false); die(170, 134, 1, 0);
+  const ground = S.cast.filter(c => c.layer === 'ground').sort((a, b) => a.y - b.y || a.x - b.x);
+  for (const c of ground) c.draw(KX(c.x), c.y, c.j);
+  // Pride Rock: up from the right, its tip out over the crowd
+  const T = 60;  // the top of the rock
+  ctx.fillStyle = '#6a5a4e'; ctx.beginPath(); ctx.moveTo(286, T + 1); ctx.lineTo(362, T - 2); ctx.lineTo(372, T + 5); ctx.lineTo(KW, T + 9); ctx.lineTo(KW, VH);
+  ctx.lineTo(330, VH); ctx.lineTo(320, T + 40); ctx.lineTo(310, T + 16); ctx.lineTo(298, T + 9); ctx.lineTo(289, T + 5); ctx.closePath(); ctx.fill();  // the tip juts out, over the crowd
+  ctx.fillStyle = '#5a4c40'; ctx.beginPath(); ctx.moveTo(352, T + 4); ctx.lineTo(KW, T + 12); ctx.lineTo(KW, VH); ctx.lineTo(344, VH); ctx.closePath(); ctx.fill();  // its shaded side
+  ctx.fillStyle = '#8a7a6a'; ctx.fillRect(288, T - 1, 72, 2); ctx.fillStyle = '#4e4238'; for (let i = 0; i < 7; i++) ctx.fillRect(318 + i * 9, T + 12 + (i % 3) * 16, 6, 1);
+  ctx.fillStyle = '#4e4238'; ctx.fillRect(291, T + 5, 8, 1); ctx.fillRect(299, T + 9, 9, 1);  // the underside of the tip
+  if (lk > 0) {  // a beam of sunlight, down onto the tip
+    const beam = ctx.createLinearGradient(318, 0, 318, T + 4); beam.addColorStop(0, 'rgba(255,250,220,' + (0.5 * lk).toFixed(2) + ')'); beam.addColorStop(1, 'rgba(255,250,220,0)');
+    ctx.fillStyle = beam; ctx.beginPath(); ctx.moveTo(312, 0); ctx.lineTo(324, 0); ctx.lineTo(340, T + 4); ctx.lineTo(296, T + 4); ctx.closePath(); ctx.fill();
+  }
+  // up on the tip: Isabella, and you, holding the baby tick out to the dancing crowd, up to the sky
+  const lift = Math.round(lk * 12), bx = 318 - Math.round(lk * 3), by = T - 39 - lift;
+  drawBig(ISABELLA, ISABELLA_PAL, 298, T - 32, 2);
+  drawBig(SPIDER, SPIDER_PAL[choice || 'none'], 322, T - 29, 2);
+  line(ctx, 308, T - 13, bx - 3, by + 7, ISABELLA_PAL.s); line(ctx, 309, T - 13, bx - 2, by + 7, ISABELLA_PAL.s);  // her arms, up
+  line(ctx, 330, T - 21, bx + 4, by + 7, '#2b1d14'); line(ctx, 336, T - 21, bx + 5, by + 6, '#2b1d14');            // your front legs, up
+  ctx.save(); ctx.translate(bx * 2, 0); ctx.scale(-1, 1); drawBabyTick(bx, by + 3, 1, time); ctx.restore();  // facing the crowd
+  if (lk >= 1) for (let i = 0; i < 6; i++) sparkleAt(bx + Math.round(Math.cos(i * 1.3 + time) * 12), by + 3 + Math.round(Math.sin(i * 2.1 + time) * 8), (time * 0.9 + i * 0.2) % 1);
+  ctx.restore();
+  if (t < 1.6) { ctx.globalAlpha = 1 - t / 1.6; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }  // out of the white
+  if (S.toWhite != null) { ctx.globalAlpha = clamp((time - S.toWhite) / 1.1, 0, 1); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }  // and into it
 }
 // ---- the very last scene, after the dance (your ask): a Looney Tunes ending. Rings, and in the middle, the baby tick,
 // your tick, and Isabella; your words over them, "That's all folks!", and above, a banner with more of your words (kept in
@@ -11271,9 +11371,11 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   realm: () => { phase = 'cut'; theEnd('realm').then(finish4); },
   sac: () => { phase = 'cut'; theEnd('sac').then(finish4); },
   dip: () => { phase = 'cut'; theEnd('dip').then(finish4); },
-  reveal: () => { phase = 'cut'; reveal().then(finish4); },
-  baby: () => { phase = 'cut'; fadeTo(0, 0.3); babyReveal().then(reveal).then(party).then(finish4); },
-  party: () => { phase = 'cut'; fadeTo(0, 0.3); party().then(finish4); },
+  speech: () => { phase = 'cut'; dip(true).then(finish4); },  // from your speech at the Truckee to the very end (add &ends=regular,human for the third run)
+  reveal: () => { phase = 'cut'; fadeTo(0, 0.3); kingdom().then(finish4); },  // (the rock is in the kingdom now)
+  baby: () => { phase = 'cut'; fadeTo(0, 0.3); babyReveal().then(kingdom).then(finish4); },
+  kingdom: () => { phase = 'cut'; fadeTo(0, 0.3); kingdom().then(finish4); },
+  party: () => { phase = 'cut'; fadeTo(0, 0.3); kingdom().then(finish4); },  // (the dance is in the kingdom now)
   looney: () => { phase = 'cut'; fadeTo(0, 0.3); looneyEnd().then(finish4); },
 };
 
@@ -11679,6 +11781,7 @@ window.__sketch = {
   get realm() { const S = scene3; return S && S.kind === 'realm' ? { she: S.she != null, veil: S.veil != null, sac: S.sac != null, burst: S.burst != null, rugs: S.rugged.size, free: S.free != null } : null; },
   get sac() { const G = scene3 && scene3.kind === 'realm' && scene3.game; if (!G) return null; const [ix, iy] = isaPos(G); return { x: G.x, stun: G.stun != null && time - G.stun < 1.2, shots: G.shots.length, safety: !!G.safety, safeReady: !G.safety && time >= G.safeBack, bubbled: G.bubbled != null, isa: [ix, iy], wave: !!G.wave, won: G.won != null, playing: phase === 'sacgame', deer: G.deer.map(d => ({ x: d.x, y: d.y, state: d.state, e0: d.e0 || 0 })) }; },
   get dis() { return !!(scene3 && scene3.dis); },
+  get kingdom() { const S = scene3; return S && S.kind === 'kingdom' ? { cam: kCam(S), end: KW - VW, pan: S.pan != null, lift: S.lift != null, cast: S.cast.length } : null; },
   get truckee() { const S = scene3; return S && S.kind === 'truckee' ? { melt: !!S.melt, cig: !!S.cig, lit: !!(S.cig && S.cig.lit), drag: S.drag != null, moon: S.moonK, wade: Math.round(wadeK(S) * 100) / 100, under: !!S.under, warp: !!S.warp } : null; },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
