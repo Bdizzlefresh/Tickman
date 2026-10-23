@@ -264,6 +264,9 @@ Every session reads this first and updates it last.
     casino.
 - 2026-10-23, issue #1: "Balotelli" meant Bocelli. On the assistant's question (whether the first two runs stop at the
   tick's line), you trust its pick.
+- 2026-10-23, issue #1: make the trip to Yellowstone all one scene: the elk and the mountains, and the annoying tourists
+  taking photos of the coyote. Keep the script the same. Make the trip to the Badlands combined: the oil rigs stay the
+  same; combine the bison and the fighting horses into the scene of entering Badlands National Park.
 
 ## What you've decided
 
@@ -390,6 +393,10 @@ Every session reads this first and updates it last.
 - Jim's end and the Truckee River, then the realm of California (2026-10-22; built), as you wrote it. All of the flashing
   to come is metaphorical: no explicit imagery.
 - The orchestra behind the tick's line: like a Bocelli ballad (2026-10-23), original.
+- The trip to Yellowstone is one scene, with the same words: the park sign, the elk with the mountains behind them, and the
+  coyotes with the photographers (2026-10-23; built).
+- Entering the Badlands is one scene: the oil rigs as before, then the bison and the two horses in the scene of entering
+  Badlands National Park (2026-10-23; built).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1058,6 +1065,22 @@ Every session reads this first and updates it last.
   - Links for checks: `?level=4&tick=dog&at=dip` (back at the Truckee); adding `&ends=regular,human` acts as if those two
     are already finished, so the egg comes; `&at=reveal` goes straight to the final scene.
 
+- 2026-10-23, sketch 2 changed (`gh-pages`, commit ae03227), from your one message:
+  - The trip to Yellowstone, all one scene, no cuts, the words the same. The snowy mountains are behind you the whole way.
+    "Back on the road, to Yellowstone." You stop by the park sign: "Yellowstone National Park." Then on, and the elk come
+    up, grazing on the far side of the road; you stop by the bull: "Elk, grazing by the road." He bugles. While you're
+    stopped there, with the elk still grazing behind, the two coyotes come trotting along the meadow, the photographers
+    creeping after them; they pass in front of the bull. "Coyotes." and the rest, then "Those idiots.", and on to the
+    parking lot.
+  - Entering the Badlands, one scene: the oil fields as before. Then into the striped buttes, the bison right by the road
+    as you go ("Bison, right by the road."); the park sign comes up, and you stop with it just ahead and the two horses
+    having their slight battle right beside the U-Haul ("Two horses, one black, one brown, having a slight battle.",
+    "Badlands National Park."). Then parking by the river, as before.
+  - Guesses: where everything stands in the two scenes (the horses beside the U-Haul, the sign just ahead), and the timing.
+  - Gifts from Blaine: untouched, still on.
+  - Links for checks: `?level=4&tick=dog&at=yellowstone` (the trip to Yellowstone); `?level=4&tick=dog&at=badlands`
+    (entering the Badlands).
+
 ## Next to build (queued, in your order)
 
 1. Your words, on the card at the very end (waiting for you).
@@ -1315,3 +1338,7 @@ Every session reads this first and updates it last.
   2, same link. One more message from you (Bocelli; you trust the pick); replied (comment 6355353886) with what's in and
   links. Then built the rest in sketch 2, same link: back at the Truckee, the three runs, the egg, and the final scene with
   a blank card for your words. Not posted about yet (one reply per message); the next reply says it's in.
+- 2026-10-23: one message from you on issue #1: Yellowstone as one scene, and entering the Badlands as one scene. Replied
+  first (comment 6355741965) with the plan, and that back at the Truckee, the tick marks, the egg and the final scene are
+  in (with a link straight there, and one as if it's your third run), and that the last card waits for your words. Then
+  built both in sketch 2, same link (ae03227). Not posted about yet; the next reply says it's in.
