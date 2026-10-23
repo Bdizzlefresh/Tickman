@@ -293,7 +293,7 @@ a { color:var(--accent); }
       Faithful: the crowd on the benches, how many times it tricks you, the eruption (the rainbow, the sparkles), her
       ride, the glances, the nod, and her landing. The drive to Reno: the wastelands, the signs, the tumbleweed, the
       sunset, Reno at night, and the music (original, in the spirit of the bands you named; real recordings can't go in
-      the game). The words not in your story are guesses too. In Reno: how it all looks and sounds (the motel, the Denny's, the fence, the canals and what's in them, the old strip, the casino, the slot machines, the table, the dealer, Jim's look); the craps table's rules are the real ones for the pass line, but the bets (10, or all of it), the buy-in, how many free drinks, when he arrives, and how many rounds he plays are guesses; and the words not in your story. The fight: all of it but your words (how he throws the dice and spins the chips, the hands and how fast they close, your hearts, his energy, how you die, the spirits, the hippie glow, the giant swing, turning the dice over to win, how he melts). From Jim's end on: how it all looks and sounds (the light from his cracks, the scream, the burst; the melt; the Truckee at night, the bridge, the Sierra; the cigarette, the drag, the cold; the realm, the deer, the female spider, the silk curtain, the egg sac, the baby ticks, the rugs; the dip, the dolphin dives, the shadowy character, the flash, the turn, the orchestra; the easter egg; the final scene), the music in Reno (original, in the spirit of what you named), and the words not in your messages.</p>
+      the game). The words not in your story are guesses too. In Reno: how it all looks and sounds (the motel, the Denny's, the fence, the canals and what's in them, the old strip, the casino, the slot machines, the table, the dealer, Jim's look); the craps table's rules are the real ones for the pass line, but the bets (10, or all of it), the buy-in, how many free drinks, when he arrives, and how many rounds he plays are guesses; and the words not in your story. The fight: all of it but your words (how he throws the dice and spins the chips, the hands and how fast they close, your hearts, his energy, how you die, the spirits, the hippie glow, the giant swing, turning the dice over to win, how he melts). From Jim's end on: how it all looks and sounds (the light from his cracks, the scream, the burst; the melt; the Truckee at night, the bridge, the Sierra; the cigarette, the drag, the cold; the realm, the deer, the female spider, the silk curtain, the egg sac, the baby ticks, the rugs; the egg sac game (how it plays: the controls, Up for the safety baby tick, the deer charging, the sac knocked rolling, Isabella swatting baby ticks away, the second wave out of the redwoods, the bubble, and every number in it); the disintegration back into the Truckee; the dip, the dolphin dives (and how he looks, diving), the shadowy character, the flash, the turn, the orchestra; the easter egg; the final scene), the music in Reno (original, in the spirit of what you named), and the words not in your messages.</p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -6153,7 +6153,7 @@ function update3(dt) {
   if (S && S.kind === 'craps') updateCraps();           // and craps
   if (S && S.kind === 'fight') updateFight(dt);         // and the fight with Jim
   if (S && S.kind === 'truckee') updateTruckee(dt);     // the Truckee River
-  if (S && S.kind === 'realm') updateRealm();           // the realm of California
+  if (S && S.kind === 'realm') updateRealm(dt);         // the realm of California (and the egg sac, as a game)
 }
 
 // ---- level 3: the scenes ----
@@ -10212,6 +10212,7 @@ function drawTruckee() {
     for (let y = 0; y < VH; y++) ctx.drawImage(S.warpBuf, 0, y, VW, 1, Math.round(Math.sin(y * 0.15 + time * 6) * k * 7), y, VW, 1);
     ctx.globalAlpha = k; ctx.fillStyle = '#fffaf0'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1;
   }
+  if (S.dis) drawDis(S.dis);  // the realm, disintegrating, back into the Truckee
 }
 function meltSound() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; noiseHit(t, 'lowpass', 500, 0.7, 0.06, 2.6, 0.3, master); for (let i = 0; i < 10; i++) noiseHit(t + 0.6 + i * 0.22, 'bandpass', 900 + (i % 3) * 300, 3, 0.025, 0.12, 0.2, master); }
 function matchStrike() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; noiseHit(t, 'highpass', 2500, 0.8, 0.06, 0.12, 0, master); noiseHit(t + 0.1, 'bandpass', 900, 0.7, 0.04, 0.5, 0, master); }
@@ -10237,7 +10238,7 @@ function coldSound() { if (!ac || muted) return; const t = ac.currentTime, o = a
 const REALM_DEER = [[44, 84, 1], [58, 76, 1], [72, 71, 1], [90, 71, -1], [104, 76, -1], [118, 84, -1], [46, 99, 1], [116, 99, -1], [62, 105, 1], [100, 105, -1]];
 const ISA_AT = [80, 87], SAC_AT = [52, 131];
 const SHE_PAL = { C: '#3a2a20', A: '#9a3a7a', M: '#f2a0d0', L: '#2b1d14', e: '#ffe0f0', f: '#2b1d14' };  // the female spider (her colors: a guess)
-let realmCanvas = null, deerImgs = null;
+let realmCanvas = null, deerImgs = null, realmSnap = null;  // realmSnap: the realm's last moment, to disintegrate back into the Truckee
 function paintRealm() {
   realmCanvas = document.createElement('canvas'); realmCanvas.width = VW; realmCanvas.height = VH;
   const g = realmCanvas.getContext('2d'), r = rng(19), f = (a, b, w, h, c) => { g.fillStyle = c; g.fillRect(a, b, w, h); };
@@ -10280,13 +10281,14 @@ function drawRug(x, y, dir) {  // flat out on the ground, like a rug on a carpet
   const hx = dir > 0 ? 15 : -2; f(hx, 13, 3, 2, '#7a4a28'); f(dir > 0 ? hx + 2 : hx, 11, 1, 2, '#d9c7a0');  // the head, an antler
   f(dir > 0 ? 11 : 3, 13, 2, 1, '#c8102e');  // the bandana
 }
-async function realm() {
+async function realm(toSac = false) {  // toSac: for checks, straight to the egg sac
   if (!realmCanvas) paintRealm();
   riverSound(0); musicStop(); hud(null); phase = 'cut';
   scene3 = { kind: 'realm', t0: time, euph: null, she: null, hearts: null, veil: null, veilUp: null, sac: null, burst: null, babies: [], arriveBy: 0,
-    suck: null, rugged: new Set(), free: null };
+    suck: null, rugged: new Set(), free: null, game: null };
   const S = scene3;
   musicStart(REUNION_STYLE);
+  if (toSac) { Object.assign(S, { euph: time - 9, she: time - 9, veil: time - 4, veilUp: time - 2, sac: time }); await wait(1.8); return sacPart(S); }
   await wait(2.2);
   await say(["You're carried to another realm: California.", "As if it were in Frank Herbert's The Santaroga Barrier."]);
   await say(['A valley of farms, ringed by redwoods.', 'Up the hill, the cheese cooperative, and the caves behind it.']);
@@ -10302,30 +10304,24 @@ async function realm() {
   S.veilUp = time; S.sac = time; spiritChime();
   await wait(1.2);
   await say(['An egg sac.']);
-  S.burst = time; sacBurst();
-  const r = rng(5);
-  for (let n = 0; n < 320; n++) {
-    const i = n % REALM_DEER.length, d = r() * 1.4, dur = 1.1 + r() * 1.2;
-    S.babies.push({ i, ox: 3 + r() * 10, oy: 5 + r() * 7, d, dur, arc: 6 + r() * 16 });
-    S.arriveBy = Math.max(S.arriveBy, time + d + dur);
-  }
-  skitter(2.6);
-  await wait(1.2);
-  await say(['It bursts: thousands of baby ticks.']);
-  await wait(Math.max(0, S.arriveBy - time) + 0.3);
-  await say(['They latch onto every deer.']);
-  S.suck = time; slurp();
-  await wait(1.6);
-  await say(['The deer are sucked of all their being.']);
-  await wait(Math.max(0, S.suck + 3.4 - time));
-  await say(['They fall to the floor, like rugs on a carpet.']);
+  await sacPart(S);
+}
+async function sacPart(S) {  // the egg sac, as a game like Galaga (your ask); then Isabella, free
+  skitter(1.2);
+  await say(['It is full of baby ticks. Millions of them.']);
+  await say(['Left and right: move the egg sac.', 'A: shoot baby ticks at the deer.',
+    'Up: the safety baby tick. Shoot it at Isabella, to keep her safe.', 'Get every deer.']);
+  await sacGame(S);
+  await say(['The deer, sucked of all their being.', 'On the floor, like rugs on a carpet.']);
   S.free = time; perkUp();
   await wait(1.6);
   await say(['Isabella is at last free from the tyranny of the ungulate gang.']);
-  await wait(0.8);
+  await wait(1.4);
+  realmSnap = document.createElement('canvas'); realmSnap.width = VW; realmSnap.height = VH; realmSnap.getContext('2d').drawImage(cv, 0, 0);  // to disintegrate, back into the Truckee
 }
-function updateRealm() {
+function updateRealm(dt) {
   const S = scene3;
+  if (S.game) updateSacGame(S.game, dt || 0);
   if (S.suck != null) REALM_DEER.forEach((_, i) => { if (rugNow(S, i) && !S.rugged.has(i)) { S.rugged.add(i); thump(0.05); } });
 }
 function drawRealm() {
@@ -10336,6 +10332,7 @@ function drawRealm() {
     ctx.globalAlpha = 0.35 + 0.3 * Math.sin(time * 2 + i); px(ctx, x, y, '#fff6c8');
   }
   ctx.globalAlpha = 1;
+  if (S.game) { drawSacGame(S, S.game); return; }  // the egg sac, as a game like Galaga
   const slow = S.euph != null && S.burst == null ? 0.3 : 1, bob = Math.round(Math.sin(time * 3 * slow));  // the deer, as one
   const list = [];
   REALM_DEER.forEach(([x, y, dir], i) => list.push([y, () => {
@@ -10393,10 +10390,198 @@ function slurp() {  // the deer, sucked of all their being: low, falling, one af
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.012, t + 0.1); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.3);
     o.connect(lp); lp.connect(g); g.connect(master); o.start(t); o.stop(t + 1.35); });
 }
+// ---- the egg sac, as a game like Galaga (your ask. Galaga: Namco's 1981 arcade game; your ship at the bottom of the
+// screen, the enemies flying into formation and diving at you: Wikipedia, "Galaga"). You move the egg sac along the
+// bottom (left and right) and shoot baby ticks up at the deer (A). One baby tick latches on, and the deer is sucked of
+// all its being and falls to the floor, like a rug on a carpet. The deer sway as one; now and then one breaks off and
+// charges at you, and if it hits the sac, the sac goes rolling for a moment. Isabella swats away any baby tick that
+// comes at her. When the pack is down to four, more deer come swooping in out of the redwoods. The safety baby tick
+// (Up) is for Isabella: it flies straight through the deer, and bubbles her; if it misses, it comes back. Every deer
+// down, and Isabella bubbled: done. (How it all plays, how it looks and sounds, and every number in it, are guesses.) ----
+const SAC_Y = 136, SAC_MIN = 8, SAC_MAX = 152, SAC_SPEED = 72, SHOT_SPEED = 150, SAFE_SPEED = 110, MAX_SHOTS = 2;
+const WAVE2 = [[24, 64, 1], [42, 58, 1], [62, 54, 1], [98, 54, -1], [118, 58, -1], [134, 64, -1]];  // where the new deer stand
+const ROPE_DEER = 2;  // the deer holding Isabella's rope
+const sacSway = () => Math.round(Math.sin(time * 0.9) * 8);  // the pack, swaying as one
+function sacGame(S) {
+  const G = S.game = { t0: time, x: SAC_AT[0], stun: null, fired: -9, shots: [], safety: null, safeBack: 0, bubbled: null, isaAt: null,
+    lastDir: null, nextDive: time + 3.2, wave: null, won: null, done: null, fx: [], hudText: null,
+    deer: REALM_DEER.map(([x, y, dir]) => ({ hx: x, hy: y, dir, state: 'home', x, y, hit: null, marks: [] })) };
+  phase = 'sacgame'; sacHud(G);
+  return new Promise(res => { G.done = res; });
+}
+const sacLive = d => d.state !== 'hit' && d.state !== 'rug';
+function isaPos(G) {  // where Isabella is: in the middle of the pack, swaying with it; once she's bubbled, she floats where she is
+  if (G.bubbled != null) return [G.isaAt[0], G.isaAt[1] + Math.round(Math.sin(time * 2) * 1.2)];
+  return [ISA_AT[0] + sacSway(), ISA_AT[1] + Math.round(Math.sin(time * 3))];
+}
+function sacHud(G) {
+  const n = G.deer.filter(sacLive).length;  // the deer here now (more may come)
+  const t = n === 0 && G.bubbled == null ? 'Isabella still needs her safety baby tick: Up' :
+    'Deer left: ' + n + (G.bubbled != null ? '  ·  Isabella: bubbled' : '  ·  Up: the safety baby tick');
+  if (t !== G.hudText) { G.hudText = t; hud(t); }
+}
+function sacA() {  // A: a baby tick, straight up
+  const G = scene3 && scene3.game; if (!G || G.won != null) return;
+  if ((G.stun != null && time - G.stun < 1.2) || G.shots.length >= MAX_SHOTS) return;
+  G.shots.push({ x: G.x, y: SAC_Y - 7 }); G.fired = time; pew();
+}
+function sacUp(G) {  // Up: the safety baby tick
+  if (G.won != null || G.bubbled != null || G.safety || time < G.safeBack || (G.stun != null && time - G.stun < 1.2)) return;
+  G.safety = { x: G.x, y: SAC_Y - 7 }; G.fired = time; pew(1.6);
+}
+function updateSacGame(G, dt) {
+  if (phase !== 'sacgame' && G.won == null) return;
+  const sw = sacSway(), bob = Math.round(Math.sin(time * 3)), stunned = G.stun != null && time - G.stun < 1.2;
+  // you: left and right; Up, once per press
+  const dir = phase === 'sacgame' ? curDir() : null;
+  if (!stunned && G.won == null) {
+    if (dir === 'left') G.x = Math.max(SAC_MIN, G.x - SAC_SPEED * dt);
+    if (dir === 'right') G.x = Math.min(SAC_MAX, G.x + SAC_SPEED * dt);
+  }
+  if (dir === 'up' && G.lastDir !== 'up') sacUp(G);
+  G.lastDir = dir;
+  // the deer
+  for (const d of G.deer) {
+    if (d.state === 'home') { d.x = d.hx + sw; d.y = d.hy + bob; }
+    else if (d.state === 'enter') {  // swooping in out of the redwoods, in a curve, to their place
+      const k = (time - d.e0) / 2.4;
+      if (k < 0) { d.x = d.sx; d.y = d.sy; continue; }
+      if (k >= 1) { d.state = 'home'; continue; }
+      const e = ease(k), ex = d.hx + sw, ey = d.hy;
+      d.x = (1 - e) * (1 - e) * d.sx + 2 * (1 - e) * e * d.cx + e * e * ex; d.y = (1 - e) * (1 - e) * d.sy + 2 * (1 - e) * e * d.cy + e * e * ey;
+    } else if (d.state === 'dive') {  // a little hop up and out, then a charge, down at the sac
+      const k = (time - d.d0) / 0.6;
+      if (k < 1) { d.x = d.sx + d.side * 16 * Math.sin(k * Math.PI / 2); d.y = d.sy - 12 * Math.sin(k * Math.PI); }
+      else {
+        d.y += 80 * dt; d.x += clamp(G.x - 8 - d.x, -30 * dt, 30 * dt);
+        if (d.y > VH + 4) { d.state = 'back'; d.y = -18; }
+      }
+    } else if (d.state === 'back') {  // back in from the top, to its place
+      d.x = d.hx + sw; d.y += 60 * dt;
+      if (d.y >= d.hy + bob) d.state = 'home';
+    } else if (d.state === 'hit' && time - d.hit > 1.6) { d.state = 'rug'; thump(0.05); }
+    // a charging deer that runs into the sac sends it rolling
+    if ((d.state === 'dive' || d.state === 'back') && !stunned && G.won == null && Math.abs(d.x + 8 - G.x) < 9 && Math.abs(d.y + 10 - SAC_Y) < 9) {
+      G.stun = time; thump(0.09); G.fx.push({ kind: 'knock', t0: time });
+    }
+  }
+  // now and then, a deer breaks off and charges (more often as the pack thins; two at once, near the end)
+  const live = G.deer.filter(sacLive);
+  if (time >= G.nextDive && G.won == null) {
+    const home = live.filter(d => d.state === 'home');
+    const n = live.length <= 5 && Math.random() < 0.5 ? 2 : 1;
+    for (let j = 0; j < n && home.length; j++) {
+      const d = home.splice(Math.floor(Math.random() * home.length), 1)[0];
+      Object.assign(d, { state: 'dive', d0: time, sx: d.x, sy: d.y, side: d.x + 8 < 80 ? -1 : 1 }); diveWhistle();
+    }
+    const down = G.deer.length - live.length;
+    G.nextDive = time + Math.max(1.3, 3.2 - down * 0.12);
+  }
+  // more deer, out of the redwoods, when the pack is down to four
+  if (!G.wave && live.length <= 4) {
+    G.wave = time; waveCall(); G.fx.push({ kind: 'more', t0: time });
+    WAVE2.forEach(([x, y, dirn], i) => {
+      const left = i < 3, sx = left ? -18 : VW + 2, sy = 34 + (i % 3) * 6;
+      G.deer.push({ hx: x, hy: y, dir: dirn, state: 'enter', e0: time + (i % 3) * 0.35 + (left ? 0 : 0.2), sx, sy, cx: left ? 112 : 48, cy: 118, x: sx, y: sy, hit: null, marks: [] });
+    });
+  }
+  // the baby ticks, flying up
+  const [ix, iy] = isaPos(G);
+  for (const s of G.shots) {
+    s.y -= SHOT_SPEED * dt;
+    if (s.x >= ix + 3 && s.x <= ix + 13 && s.y >= iy && s.y <= iy + 16) { s.gone = true; G.fx.push({ kind: 'swat', x: s.x, y: s.y, t0: time }); swatSound(); continue; }  // she swats it away
+    for (const d of G.deer) {
+      if (!sacLive(d) || d.state === 'enter' && time < d.e0) continue;
+      if (s.x >= d.x + 2 && s.x <= d.x + 14 && s.y >= d.y + 3 && s.y <= d.y + 15) {  // it latches on
+        d.state = 'hit'; d.hit = time; d.marks.push([s.x - d.x, s.y - d.y]); s.gone = true; suckOne(); break;
+      }
+    }
+    if (s.y < -4) s.gone = true;
+  }
+  G.shots = G.shots.filter(s => !s.gone);
+  if (G.safety) {  // the safety baby tick: through the deer, to Isabella
+    const s = G.safety; s.y -= SAFE_SPEED * dt;
+    if (s.x >= ix + 1 && s.x <= ix + 15 && s.y >= iy - 1 && s.y <= iy + 16) { G.safety = null; G.bubbled = time; G.isaAt = [ix, iy]; spiritChime(); }
+    else if (s.y < -4) { G.safety = null; G.safeBack = time + 1.0; }  // missed: it comes back to the sac
+  }
+  G.fx = G.fx.filter(f => time - f.t0 < 2.4);
+  if (phase === 'sacgame') sacHud(G);
+  // every deer down, and Isabella bubbled
+  if (G.won == null && G.wave && live.length === 0 && G.bubbled != null) G.won = time;
+  if (G.won != null && phase === 'sacgame' && time - G.won > 0.2 && G.deer.every(d => d.state === 'rug' || time - d.hit > 1.7)) {
+    phase = 'cut'; hud(null); const r = G.done; G.done = null; if (r) r();
+  }
+}
+function drawSacGame(S, G) {
+  const [ix, iy] = isaPos(G), list = [];
+  for (const d of G.deer) {
+    if (d.state === 'rug') { list.push([-1, () => drawRug(Math.round(d.x), Math.round(d.y), d.dir)]); continue; }  // on the floor, first
+    if (d.state === 'enter' && time < d.e0) continue;
+    list.push([d.y, () => {
+      const k = d.hit != null ? clamp((time - d.hit) / 1.4, 0, 1) : 0, q = 1 - 0.78 * ease(k), h = Math.max(3, Math.round(16 * q));
+      const face = d.state === 'dive' ? (G.x - 8 >= d.x ? 1 : -1) : d.dir, x = Math.round(d.x), y = Math.round(d.y) + 16 - h;
+      ctx.globalAlpha = 0.45 + 0.55 * q; ctx.drawImage(deerImg(face), x, y, 16, h); ctx.globalAlpha = 1;
+      for (const [mx, my] of d.marks) { px(ctx, x + Math.round(mx), Math.round(d.y) + 16 - Math.round((16 - my) * q), '#2a1a14'); px(ctx, x + Math.round(mx) + 1, Math.round(d.y) + 16 - Math.round((16 - my) * q), '#7a1a1a'); }
+    }]);
+  }
+  const hop = S.free != null && time - S.free < 1.6 ? Math.round(Math.abs(Math.sin((time - S.free) * 6)) * 3) : 0;
+  list.push([iy, () => drawSprite(ctx, ISABELLA, ISABELLA_PAL, ix, iy - hop)]);
+  list.push([118, () => drawBlaine(14, 118, 'right', 0)]);
+  list.push([122, () => drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], 34, 122, ROT.right)]);
+  list.push([123, () => { drawSprite(ctx, SPIDER, SHE_PAL, 54, 122, ROT.left); px(ctx, 61, 121, '#ff7ab0'); px(ctx, 62, 120, '#ffd24f'); px(ctx, 63, 121, '#ff7ab0'); }]);
+  list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
+  const fl = G.deer[4]; if (sacLive(fl) && fl.state === 'home') caFlag(Math.round(fl.x) + 6, Math.round(fl.y) - 22, time);  // the California flag, still with them
+  const holder = G.deer[ROPE_DEER];  // the rope: they hold her, until that deer is down, or she's bubbled
+  if (sacLive(holder) && holder.state === 'home' && G.bubbled == null) line(ctx, Math.round(holder.x) + 14, Math.round(holder.y) + 6, ix + 3, iy + 10, '#8a6a3a');
+  if (G.bubbled != null) {  // the bubble, round her: shimmering, every color
+    const k = clamp((time - G.bubbled) / 0.5, 0, 1), r = Math.round(4 + 8 * ease(k)), cx = ix + 8, cy = iy + 8;
+    for (let j = 0; j < 44; j++) { const a = j / 44 * Math.PI * 2; ctx.globalAlpha = 0.9; px(ctx, Math.round(cx + Math.cos(a) * r), Math.round(cy + Math.sin(a) * r), RAINBOW[(j + Math.floor(time * 8)) % RAINBOW.length]); }
+    ctx.globalAlpha = 0.2; disc(ctx, cx, cy, r, '#e8f4ff'); ctx.globalAlpha = 1;
+    px(ctx, cx - Math.round(r * 0.5), cy - Math.round(r * 0.6), '#ffffff'); px(ctx, cx - Math.round(r * 0.5) + 1, cy - Math.round(r * 0.6), '#ffffff');
+    if (time - G.bubbled < 1.2) for (let i = 0; i < 6; i++) sparkleAt(cx + Math.round(Math.cos(i) * (r + 3)), cy + Math.round(Math.sin(i) * (r + 3)), clamp((time - G.bubbled) / 1.2, 0, 1));
+  }
+  if (S.free != null) for (let i = 0; i < 6; i++) sparkleAt(ix + 8 + Math.round(Math.cos(i + time) * 13), iy + 6 + Math.round(Math.sin(i * 2 + time) * 10), (time * 0.8 + i * 0.17) % 1);
+  // the baby ticks in the air
+  for (const s of G.shots) { const x = Math.round(s.x), y = Math.round(s.y); ctx.fillStyle = '#2a1a14'; ctx.fillRect(x - 1, y, 2, 2); px(ctx, x, y, '#7a1a1a'); px(ctx, x - 2, y + 1, '#2a1a14'); px(ctx, x + 1, y + 1, '#2a1a14'); }
+  if (G.safety) { const x = Math.round(G.safety.x), y = Math.round(G.safety.y); ctx.fillStyle = '#ffd24f'; ctx.fillRect(x - 1, y, 3, 3); px(ctx, x, y + 1, '#fff6c8'); sparkleAt(x, y + 5, (time * 3) % 1); }
+  // the egg sac
+  const stunned = G.stun != null && time - G.stun < 1.2, wob = stunned ? Math.round(Math.sin((time - G.stun) * 30) * 2) : 0;
+  const sx = Math.round(G.x) + wob, pulse = time - G.fired < 0.08 ? 1 : 0, sy = Math.round(SAC_AT[1] + (SAC_Y - SAC_AT[1]) * ease(clamp((time - G.t0) / 0.5, 0, 1)));
+  ctx.globalAlpha = 0.3; ctx.fillStyle = '#2a3a1a'; ctx.fillRect(sx - 5, sy + 5, 11, 2); ctx.globalAlpha = 1;  // its shadow
+  disc(ctx, sx, sy, 5 + pulse, '#f4f0e8'); disc(ctx, sx + 1, sy + 1, 3, '#dcd4cc'); px(ctx, sx - 2, sy - 3, '#ffffff');
+  px(ctx, sx, sy - 5 - pulse, '#5a4a3a');  // the opening, at the top
+  for (let i = 0; i < 4; i++) px(ctx, sx - 3 + i * 2, sy + 2 + (i % 2), '#2a1a14');  // baby ticks, inside, showing through
+  if (G.bubbled == null && !G.safety && time >= G.safeBack) sparkleAt(sx + 4, sy - 5, (time * 0.9) % 1);  // the safety baby tick, ready
+  if (stunned) renoBubble('!', sx, sy - 18, '#c8202a');
+  // a swat, a knock, more deer
+  for (const f of G.fx) {
+    const k = (time - f.t0);
+    if (f.kind === 'swat' && k < 0.4) for (let i = 0; i < 4; i++) px(ctx, Math.round(f.x + Math.cos(i * 1.6) * (1 + k * 10)), Math.round(f.y + Math.sin(i * 1.6) * (1 + k * 10)), '#ffffff');
+    if (f.kind === 'more' && k < 2.4 && Math.floor(k * 4) % 2 === 0) { const w = signWidth('MORE DEER!'), x = Math.round(VW / 2 - w / 2); signText(ctx, 'MORE DEER!', x + 1, 9, '#2a1a14'); signText(ctx, 'MORE DEER!', x, 8, '#fff6d8'); }
+  }
+}
+function pew(lift = 1) {  // a baby tick, out of the sac: a quick little chirp
+  if (!ac || muted) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  o.type = 'square'; o.frequency.setValueAtTime(900 * lift, t); o.frequency.exponentialRampToValueAtTime(1800 * lift, t + 0.06);
+  g.gain.setValueAtTime(0.008, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.09); o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.1);
+}
+function suckOne() {  // one deer, sucked of all its being: low, falling
+  if (!ac || muted) return; const t = ac.currentTime, o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  o.type = 'sawtooth'; o.frequency.setValueAtTime(220, t); o.frequency.exponentialRampToValueAtTime(60, t + 1.2); lp.type = 'lowpass'; lp.frequency.value = 500;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.012, t + 0.1); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.3);
+  o.connect(lp); lp.connect(g); g.connect(master); o.start(t); o.stop(t + 1.35);
+}
+function diveWhistle() {  // a deer, charging: a falling whistle
+  if (!ac || muted) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  o.type = 'sine'; o.frequency.setValueAtTime(1400, t); o.frequency.exponentialRampToValueAtTime(420, t + 0.9);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.008, t + 0.1); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.95); o.connect(g); g.connect(master); o.start(t); o.stop(t + 1);
+}
+function swatSound() { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTime, 'highpass', 2200, 0.8, 0.02, 0.06, 0, master); }
+function waveCall() { if (!ac || muted) return; [523.25, 659.25, 783.99, 659.25, 1046.5].forEach((f, i) => tone(master, 'triangle', f, ac.currentTime + i * 0.09, 0.14, 0.014)); }
 // ---- back at the Truckee River (your message). The job is complete. Brudda Blaine needs to take a dip, to wash off all
 // of that stank: his clothes come off (in a cartoon cloud; nothing shown), and he dives among the rocky water like a
 // dolphin, here, there, everywhere, so unsophisticated it comes across as beauty and grace. You follow, slowly,
-// hesitantly, up to your knees ("aint no way Bish", "this shit cray"). Behind you, under the bridge, a shadowy character
+// hesitantly, up to your knees: "He is incredible. He is truly from the North." (In place of the other two lines.) Behind you, under the bridge, a shadowy character
 // comes for all of your belongings; Brudda Blaine flashes him, with vigor (metaphorical: a burst of light, nothing
 // explicit), and he walks off, extremely unpleased, mumbling. Then you turn slowly to Brudda Blaine, an orchestra behind
 // you like a Bocelli ballad (original), and say your line. The first two runs end there, and a tick mark fills in. On the
@@ -10439,17 +10624,18 @@ function markEnd(k) {
 const PILE_AT = [44, 120];
 const CLOTHES = ['#1a1a22', '#f2f2f2', '#3a5a8a', '#e8322a', '#f2c94c', '#2a2a2a'];  // his jacket, the tee, the jeans, the red headphones, the chain, the shoes
 async function dip() {
-  await fadeTo(1, 0.6);
+  const snapIn = realmSnap; realmSnap = null;  // from the realm of California: it slowly disintegrates, back into the Truckee (your ask)
+  if (!snapIn) await fadeTo(1, 0.6);
   if (!truckeeCanvas) paintTruckee();
   musicStop(); hud(null); phase = 'cut';
   scene3 = { kind: 'truckee', t0: time, flow: 0, rate: 0.7, goal: 0.7, moonK: 0.6, smoke: [], nextSmoke: 0, nextBreath: 0, river: 0.05,
-    melt: null, pour: null, cig: null, drag: null, wade: null, cold: false, under: null, warp: null,
+    melt: null, pour: null, cig: null, drag: null, wade: null, cold: false, under: null, warp: null, dis: snapIn ? startDis(snapIn) : null,
     me: { x: 116, y: 100, face: 'up' }, bl: { x: 92, y: 98, face: 'left' },
-    dip: { white: time, stage: 'stand', cloud: null, flying: [], pile: 0, leaps: [], rise: null, flash: null, shadow: null, recoil: null, leave: null,
+    dip: { white: snapIn ? -99 : time, stage: 'stand', cloud: null, flying: [], pile: 0, leaps: [], rise: null, flash: null, shadow: null, recoil: null, leave: null,
       mumble: null, turn: null, box: null, egg: null, crack: null, myFlash: null } };
   const S = scene3, D = S.dip;
-  await fadeTo(0, 0.2);
-  await wait(1.6);
+  if (snapIn) { disSound(); await wait(DIS_LEN + 0.4); S.dis = null; await wait(0.6); }
+  else { await fadeTo(0, 0.2); await wait(1.6); }
   await say(['Back at the Truckee River.', 'The job is complete.']);
   await say(['Brudda Blaine: "I need to take a dip, to wash off all of that stank."']);
   D.stage = 'cloud'; D.cloud = time; thump(0.04);
@@ -10518,6 +10704,35 @@ async function dip() {
   riverSound(0);
   await reveal();
   return true;
+}
+// the realm's last moment, crumbling away in little bits, drifting off like dust, the Truckee at night showing through
+const DIS_LEN = 5.4;  // seconds, all told
+function startDis(img) {
+  const c = document.createElement('canvas'); c.width = VW; c.height = VH;
+  const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+  const data = g.getImageData(0, 0, VW, VH).data, bits = [];
+  for (let by = 0; by < VH; by += 2) for (let bx = 0; bx < VW; bx += 2) {
+    const i = (by * VW + bx) * 4;
+    bits.push({ bx, by, c: 'rgb(' + data[i] + ',' + data[i + 1] + ',' + data[i + 2] + ')', at: 0.3 + 3.9 * (0.6 * Math.random() + 0.4 * (by / VH)),
+      vx: (Math.random() - 0.5) * 16, vy: -5 - Math.random() * 14 });
+  }
+  bits.sort((a, b) => a.at - b.at);
+  return { c, g, bits, next: 0, t0: time, live: [] };
+}
+function drawDis(D) {
+  const t = time - D.t0;
+  while (D.next < D.bits.length && D.bits[D.next].at <= t) { const b = D.bits[D.next++]; D.g.clearRect(b.bx, b.by, 2, 2); D.live.push(b); }
+  ctx.drawImage(D.c, 0, 0);
+  D.live = D.live.filter(b => t - b.at < 1.1);
+  for (const b of D.live) { const k = (t - b.at) / 1.1; ctx.globalAlpha = 1 - k; ctx.fillStyle = b.c; ctx.fillRect(Math.round(b.bx + b.vx * k), Math.round(b.by + b.vy * k), 2, 2); }
+  ctx.globalAlpha = 1;
+}
+function disSound() {  // a long, soft crumble
+  if (!ac || muted) return; makeNoise(); const t = ac.currentTime, s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+  s.buffer = noise; s.loop = true; f.type = 'bandpass'; f.frequency.value = 2400; f.Q.value = 0.6;
+  g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.012, t + 1.2); g.gain.linearRampToValueAtTime(0.0001, t + DIS_LEN);
+  s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + DIS_LEN + 0.05);
+  [659.25, 587.33, 523.25, 440].forEach((fq, i) => tone(master, 'sine', fq, t + 0.4 + i * 1.1, 1.4, 0.01));  // and four soft notes, falling
 }
 function eggA() { const D = scene3 && scene3.dip; if (D && D.tap) { const r = D.tap; D.tap = null; r(); } }
 function diver(cx, cy, ang, dir) {  // Brudda Blaine, diving, drawn along the way he's going (ang): cx, cy his middle
@@ -10676,7 +10891,7 @@ function drawFinal() {  // up on a high rock at sunrise: Braydon and Isabella, h
 }
 async function theEnd(from = 'truckee') {  // after Jim: the Truckee River, the realm of California, back at the Truckee (and the reveal)
   if (from === 'truckee') await truckee();
-  if (from === 'truckee' || from === 'realm') await realm();
+  if (from === 'truckee' || from === 'realm' || from === 'sac') await realm(from === 'sac');
   await dip();
 }
 function finish4() {
@@ -10692,7 +10907,7 @@ function finish4() {
     'smaller geysers, and a beer or two. Steam in the distance: Old Faithful. It tricked you, again and again, then ' +
     'exploded, with IzzyKat riding it, far into the air. She might be indestructible. She landed at your feet. Then on, ' +
     'through the barren wastelands, Kyuss in Utah and Mac Miller\'s Circles in Nevada, to Reno.' +
-    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered. Light broke out of every crack in him, and he screamed at the top of his lungs, "THE DIE.....THEY LIE.... I CANNOT.... BE.....", and came apart. The whole scene melted, and ran into the Truckee River, at night: rocky, with slight rapids, a bridge overhead on the left, the Sierra Nevada behind. A cigarette appeared, as long as time itself, full of good California weed, not Milwaukee weed. You grabbed it and lit it, and you and Brudda Blaine took a drag of time itself, and slowly walked into the Truckee, as cold as the Sierra mountains themselves. You were carried to another realm: California, as if it were in Frank Herbert\'s The Santaroga Barrier, a valley of farms ringed by redwoods, the cheese cooperative up the hill. The pack of deer, holding Isabella hostage, moving as one. Then another spider, a female, in the euphoria of the dragging of time; a curtain of silk; an egg sac. It burst: thousands of baby ticks latched onto every deer, and the deer, sucked of all their being, fell to the floor like rugs on a carpet. Isabella is at last free from the tyranny of the ungulate gang. Back at the Truckee River, Brudda Blaine took a dip, to wash off all of that stank, diving like a dolphin, here, there, everywhere; you followed, slowly, up to your knees. A shadowy character came for your belongings, under the bridge; Brudda Blaine flashed him, with vigor, and he walked off, extremely unpleased, mumbling. And you turned, slowly, to Brudda Blaine: "I have a form of reveal to you, Brother."';
+    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered. Light broke out of every crack in him, and he screamed at the top of his lungs, "THE DIE.....THEY LIE.... I CANNOT.... BE.....", and came apart. The whole scene melted, and ran into the Truckee River, at night: rocky, with slight rapids, a bridge overhead on the left, the Sierra Nevada behind. A cigarette appeared, as long as time itself, full of good California weed, not Milwaukee weed. You grabbed it and lit it, and you and Brudda Blaine took a drag of time itself, and slowly walked into the Truckee, as cold as the Sierra mountains themselves. You were carried to another realm: California, as if it were in Frank Herbert\'s The Santaroga Barrier, a valley of farms ringed by redwoods, the cheese cooperative up the hill. The pack of deer, holding Isabella hostage, moving as one. Then another spider, a female, in the euphoria of the dragging of time; a curtain of silk; an egg sac. It was full of baby ticks: you shot them at every deer, like Galaga, and the safety baby tick at Isabella, to bubble her. The deer, sucked of all their being, fell to the floor like rugs on a carpet. Isabella is at last free from the tyranny of the ungulate gang. Then it all slowly disintegrated, back into the Truckee River. Back at the Truckee River, Brudda Blaine took a dip, to wash off all of that stank, diving like a dolphin, here, there, everywhere; you followed, slowly, up to your knees: "He is incredible. He is truly from the North." A shadowy character came for your belongings, under the bridge; Brudda Blaine flashed him, with vigor, and he walked off, extremely unpleased, mumbling. And you turned, slowly, to Brudda Blaine: "I have a form of reveal to you, Brother."';
   const done = endsSeen || endsDone(), el = $('ticks4'); el.innerHTML = '';
   if (done.size) {
     for (const k of ['regular', 'human', 'dog']) { const sp = document.createElement('span'); sp.textContent = (done.has(k) ? '\u2713 ' : '\u25CB ') + TICK_WORDS[k]; sp.style.marginRight = '1em'; sp.style.whiteSpace = 'nowrap'; el.appendChild(sp); }
@@ -10722,6 +10937,7 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   fight2: () => { phase = 'cut'; jimFight(2).then(finish4); },
   truckee: () => { phase = 'cut'; theEnd('truckee').then(finish4); },
   realm: () => { phase = 'cut'; theEnd('realm').then(finish4); },
+  sac: () => { phase = 'cut'; theEnd('sac').then(finish4); },
   dip: () => { phase = 'cut'; theEnd('dip').then(finish4); },
   reveal: () => { phase = 'cut'; reveal().then(finish4); },
 };
@@ -10741,6 +10957,7 @@ function pressA() {
   if (phase === 'craps') { crapsA(); return; }  // and craps
   if (phase === 'fight') { fightA(); return; }  // and the fight with Jim
   if (phase === 'egg') { eggA(); return; }      // the egg, at the very end
+  if (phase === 'sacgame') { sacA(); return; }  // the egg sac, as a game like Galaga
   if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2' || phase === 'done3' || phase === 'done4') return;
   interact();
 }
@@ -11121,6 +11338,8 @@ window.__sketch = {
   get dip() { const S = scene3; return S && S.dip ? { stage: S.dip.stage, egg: S.dip.egg != null, phase, ends: [...(endsSeen || endsDone())] } : null; },
   get final() { return scene3 && scene3.kind === 'final' ? { card: scene3.card != null, words: LAST_WORDS.length } : null; },
   get realm() { const S = scene3; return S && S.kind === 'realm' ? { she: S.she != null, veil: S.veil != null, sac: S.sac != null, burst: S.burst != null, rugs: S.rugged.size, free: S.free != null } : null; },
+  get sac() { const G = scene3 && scene3.kind === 'realm' && scene3.game; if (!G) return null; const [ix, iy] = isaPos(G); return { x: G.x, stun: G.stun != null && time - G.stun < 1.2, shots: G.shots.length, safety: !!G.safety, safeReady: !G.safety && time >= G.safeBack, bubbled: G.bubbled != null, isa: [ix, iy], wave: !!G.wave, won: G.won != null, playing: phase === 'sacgame', deer: G.deer.map(d => ({ x: d.x, y: d.y, state: d.state, e0: d.e0 || 0 })) }; },
+  get dis() { return !!(scene3 && scene3.dis); },
   get truckee() { const S = scene3; return S && S.kind === 'truckee' ? { melt: !!S.melt, cig: !!S.cig, lit: !!(S.cig && S.cig.lit), drag: S.drag != null, moon: S.moonK, wade: Math.round(wadeK(S) * 100) / 100, under: !!S.under, warp: !!S.warp } : null; },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
