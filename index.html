@@ -890,6 +890,8 @@ function musicStep(n, t) {
   else if (S.kind === 'reunion') reunionStep(S, n, t, mus.six);  // and finding Braydon
   else if (S.kind === 'desert') desertStep(S, n, t, mus.six);    // level 4: Utah, on the stereo,
   else if (S.kind === 'circles') circlesStep(S, n, t, mus.six);  // and Nevada
+  else if (S.kind === 'swing') swingStep(S, n, t, mus.six);      // Reno: the swing,
+  else if (S.kind === 'nola') nolaStep(S, n, t, mus.six);        // and New Orleans jazz in the canals
   else if (S === STYLES.regular) spookyStep(ch, bar, s, t, mus.six, phrase);
   else if (S === STYLES.human) gazeStep(ch, bar, s, t, mus.six, phrase);
   else pointerStep(ch, bar, s, t, mus.six, phrase);
@@ -8526,6 +8528,7 @@ async function toReno() {
   await say(['Nevada. On the stereo: Mac Miller, Circles.']);
   await wait(4.0);
   await fadeTo(1, 0.8);
+  musicStop(); musicStart(SWING);  // into Reno: the swing
   const stop = 170;
   Object.assign(scene3, { seg: 'reno', dist: 0, v: 38, vGoal: 38, brakeTo: stop, signAt: 22 - stop, cityX: 104 - stop * 0.15 });
   await fadeTo(0, 0.8);
@@ -8581,6 +8584,127 @@ function circlesStep(S, n, t, six) {
   if (s % 2 === 0) hat(t, 0.04, 0.018);
   for (const [at, k, len] of [[0, 1, 5], [6, 1.5, 2], [10, 1, 4], [14, 2, 2]]) if (at === s) upright(ch.bass * k, t, six * len, 0.85);
   if (bar >= 2 && bar % 2) for (const [at, i] of [[2, 3], [5, 2], [8, 1], [11, 2]]) if (at === s) bell(ch.keys[i] * 2, t, 0.03, 0.9, 0.6);  // a little celesta line
+}
+// ---- Reno's music (your message): old-time Rat Pack swing as you pull into Reno, New Orleans jazz down in the canals,
+// and the swing again in the casino. All original, in that spirit (no real recordings; the styles are guesses).
+//   the swing: a lounge band in F, 132 beats a minute, swung: a walking upright bass, a ride cymbal and brushes, a piano
+//     comping, a muted trumpet on the tune; the second time round, a tenor sax takes it, and the brass shout
+//   New Orleans jazz: a brass band in B-flat, 104, swung: a tuba on one and three, a banjo on every beat, a parade snare,
+//     a trumpet on the tune, a clarinet weaving round it, a trombone sliding in ----
+const SWING = { name: 'rat pack swing', kind: 'swing', bpm: 132, swing: 0, verb: 0.22, room: 1.6, gain: 1.4 };
+const NOLA = { name: 'new orleans jazz', kind: 'nola', bpm: 104, swing: 0, verb: 0.18, room: 1.4, gain: 2.6 };
+const swung = (s, t, six) => s % 4 === 2 ? t + six * 0.62 : t;  // the offbeat eighth, a touch late: the swing
+const SWING_BARS = [  // the chord (voiced without the root), the walking bass (four to the bar), the tune: [sixteenth, note, length]
+  { ch: [57, 60, 64, 67], walk: [41, 45, 48, 49], tune: [[0, 69, 4], [4, 72, 2], [6, 74, 2], [8, 72, 6]] },    // Fmaj9
+  { ch: [54, 57, 60, 64], walk: [50, 48, 45, 44], tune: [[0, 74, 4], [4, 72, 2], [6, 69, 2], [8, 66, 6]] },    // D9
+  { ch: [58, 62, 65, 69], walk: [43, 46, 50, 49], tune: [[0, 67, 4], [4, 70, 2], [6, 74, 2], [8, 77, 6]] },    // Gm9
+  { ch: [58, 62, 64, 69], walk: [48, 52, 50, 46], tune: [[0, 76, 6], [6, 74, 2], [8, 72, 4], [12, 70, 4]] },   // C13
+  { ch: [55, 60, 64, 67], walk: [45, 48, 52, 51], tune: [[0, 69, 4], [4, 72, 2], [6, 76, 2], [8, 79, 6]] },    // Am7
+  { ch: [54, 57, 60, 64], walk: [50, 48, 45, 44], tune: [[0, 78, 4], [4, 76, 2], [6, 74, 2], [8, 72, 6]] },    // D9
+  { ch: [58, 62, 65, 69], ch2: [58, 62, 64, 69], walk: [43, 46, 48, 52], tune: [[0, 70, 4], [4, 69, 4], [8, 67, 4], [12, 64, 4]] },  // Gm9, C13
+  { ch: [57, 60, 62, 65], walk: [41, 45, 48, 40], tune: [[0, 65, 10]] }];                                      // F6
+function swingStep(S, n, t, six) {
+  const bar = Math.floor(n / 16), s = n % 16, B = SWING_BARS[bar % 8], round = Math.floor(bar / 8) % 2, ch = s >= 8 && B.ch2 ? B.ch2 : B.ch;
+  if (s % 4 === 0) upright(mtof(B.walk[s / 4]), t, six * 3.4, 0.95);                 // the walking bass
+  if (s % 4 === 0 || s === 6 || s === 14) ride(swung(s, t, six), s % 4 ? 0.6 : 1);  // the ride: ding, ding-a-ding
+  if (s === 4 || s === 12) { hat(t, 0.03, 0.05); brush(t); }                         // the hi-hat, and the brushes, on two and four
+  if (s === 0 || s === 6 || (bar % 2 && s === 10)) lounge(ch, swung(s, t, six), six * (s ? 2 : 3), s ? 0.7 : 0.9);  // the piano
+  for (const [p, m, len] of B.tune) if (p === s) {
+    const d = six * len * 0.92;
+    if (!round) cup(mtof(m), swung(s, t, six), d); else reed(mtof(m - 12), swung(s, t, six), d);
+  }
+  if (round && bar % 4 === 3 && (s === 12 || s === 14)) for (const m of ch.slice(1)) trumpet(mtof(m + 12), swung(s, t, six), six * 1.2, 0.3);  // the brass, shouting
+}
+const NOLA_BARS = [  // the chord (for the banjo), the tuba (on one, then three), the tune
+  { ch: [58, 62, 65], tuba: [46, 41], tune: [[0, 74, 2], [2, 77, 2], [4, 79, 4], [8, 77, 4], [12, 74, 4]] },       // B-flat
+  { ch: [58, 62, 65], tuba: [46, 41], tune: [[0, 72, 2], [2, 70, 6], [10, 74, 2], [12, 77, 4]] },
+  { ch: [57, 60, 63, 65], tuba: [41, 48], tune: [[0, 81, 4], [4, 79, 2], [6, 77, 2], [8, 75, 4], [12, 72, 4]] },  // F7
+  { ch: [57, 60, 63, 65], tuba: [41, 48], tune: [[0, 77, 8], [10, 75, 2], [12, 72, 4]] },
+  { ch: [57, 60, 63, 65], tuba: [41, 36], tune: [[0, 72, 2], [2, 74, 2], [4, 75, 4], [8, 77, 4], [12, 81, 4]] },
+  { ch: [57, 60, 63, 65], tuba: [41, 48], tune: [[0, 79, 6], [6, 77, 2], [8, 75, 8]] },
+  { ch: [58, 62, 65], tuba: [46, 41], tune: [[0, 74, 2], [2, 72, 2], [4, 70, 4], [8, 74, 4], [12, 77, 4]] },
+  { ch: [58, 62, 65], tuba: [46, 45], tune: [[0, 70, 10]] },
+  { ch: [58, 62, 65], tuba: [46, 41], tune: [[0, 77, 4], [4, 82, 4], [8, 81, 2], [10, 82, 2], [12, 77, 4]] },
+  { ch: [56, 58, 62, 65], tuba: [46, 44], tune: [[0, 80, 4], [4, 77, 4], [8, 74, 4], [12, 68, 4]] },             // B-flat 7
+  { ch: [55, 58, 63], tuba: [39, 46], tune: [[0, 79, 6], [6, 75, 2], [8, 79, 4], [12, 82, 4]] },                 // E-flat
+  { ch: [55, 58, 61, 64], tuba: [40, 46], tune: [[0, 79, 4], [4, 76, 4], [8, 73, 4], [12, 70, 4]] },             // E diminished
+  { ch: [58, 62, 65], tuba: [41, 46], tune: [[0, 77, 4], [4, 74, 4], [8, 70, 4], [12, 74, 4]] },                 // B-flat, over F
+  { ch: [57, 60, 63, 65], tuba: [41, 36], tune: [[0, 72, 4], [4, 75, 2], [6, 74, 2], [8, 72, 4], [12, 69, 4]] },  // F7
+  { ch: [58, 62, 65], tuba: [46, 41], tune: [[0, 70, 4], [4, 74, 4], [8, 77, 6]] },
+  { ch: [58, 62, 65], tuba: [46, 41], tune: [[0, 82, 4], [4, 70, 8]] }];
+const CLAR = [0, 1, 2, 3, 4, 3, 2, 1];  // the clarinet's run, up and down the chord
+function nolaStep(S, n, t, six) {
+  const bar = Math.floor(n / 16), s = n % 16, B = NOLA_BARS[bar % 16];
+  if (s === 0 || s === 8) tuba(mtof(B.tuba[s ? 1 : 0]), t, six * 3.5);                                   // the tuba, on one and three
+  if (s % 4 === 0) B.ch.forEach((m, i) => nylon(mtof(m), t + i * 0.008, s % 8 ? 0.5 : 0.35, 0.12));       // the banjo, every beat
+  if (s === 0 && bar % 4 === 0) noiseHit(t, 'highpass', 4500, 0.5, 0.05, 1.2, 0.3);                      // a cymbal
+  if (s === 0 || s === 8) dustKick(t, 0.45);                                                             // the bass drum
+  if (s === 4 || s === 12) dustSnare(t, 0.5);                                                            // the parade snare,
+  if (s === 6 || s === 14 || (bar % 2 && s === 10)) dustSnare(swung(s, t, six), 0.2);                    // and its ghost notes
+  for (const [p, m, len] of B.tune) if (p === s) trumpet(mtof(m), swung(s, t, six), six * len * 0.9, 0.85);
+  if (s % 2 === 0 && (bar + s / 2) % 6) {                                                                // the clarinet, in eighths
+    const ns = B.ch.concat([B.ch[0] + 12]), m = ns[CLAR[(s / 2 + bar) % 8] % ns.length] + 12;
+    clarinet(mtof(m), swung(s, t, six), six * 1.7, 0.6);
+  }
+  if (s === 12 && bar % 2 === 1) bone(mtof(B.tuba[0] + 12), t, six * 4);                                  // the trombone, sliding in
+}
+function ride(t, v = 1) { noiseHit(t, 'highpass', 5200, 0.6, 0.04 * v, 0.55, 0.3); tone(mus.out, 'triangle', 3150, t, 0.3, 0.005 * v); }
+function brush(t) { noiseHit(t, 'bandpass', 2600, 0.5, 0.035, 0.24, 0.2); }
+function lounge(midis, t, len, v = 1) {  // a soft piano chord, comping
+  const lp = ac.createBiquadFilter(), g = ac.createGain();
+  lp.type = 'lowpass'; lp.frequency.setValueAtTime(2600, t); lp.frequency.exponentialRampToValueAtTime(900, t + len);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.022 * v, t + 0.005);
+  g.gain.exponentialRampToValueAtTime(0.007 * v, t + 0.2); g.gain.exponentialRampToValueAtTime(0.0001, t + len + 0.1);
+  lp.connect(g); g.connect(mus.out); send(g, 0.4);
+  for (const m of midis) for (const [k, a, type] of PIANO_PARTS) {
+    const o = ac.createOscillator(), og = ac.createGain(); o.type = type; o.frequency.value = mtof(m) * k; og.gain.value = a;
+    o.connect(og); og.connect(lp); o.start(t); o.stop(t + len + 0.15);
+  }
+}
+function cup(f, t, len, v = 1) {  // a muted trumpet: soft, a little nasal
+  const o1 = ac.createOscillator(), o2 = ac.createOscillator(), bp = ac.createBiquadFilter(), lp = ac.createBiquadFilter(), g = ac.createGain();
+  const vib = ac.createOscillator(), vg = ac.createGain(), end = t + Math.max(0.08, len);
+  o1.type = o2.type = 'sawtooth'; o1.frequency.value = o2.frequency.value = f; o2.detune.value = 5;
+  vib.frequency.value = 5; vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(f * 0.006, t + 0.35); vib.connect(vg); vg.connect(o1.frequency); vg.connect(o2.frequency);
+  bp.type = 'bandpass'; bp.frequency.value = 1300; bp.Q.value = 1.2; lp.type = 'lowpass'; lp.frequency.value = 2400;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07 * v, t + 0.03); g.gain.setValueAtTime(0.058 * v, end - 0.04); g.gain.exponentialRampToValueAtTime(0.0001, end + 0.06);
+  o1.connect(bp); o2.connect(bp); bp.connect(lp); lp.connect(g); g.connect(mus.out); send(g, 0.35);
+  for (const o of [o1, o2, vib]) { o.start(t); o.stop(end + 0.1); }
+}
+function reed(f, t, len, v = 1) {  // a tenor sax, breathy and warm
+  const o = ac.createOscillator(), o2 = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain(), vib = ac.createOscillator(), vg = ac.createGain();
+  const end = t + Math.max(0.08, len);
+  o.type = 'sawtooth'; o2.type = 'square'; o.frequency.value = o2.frequency.value = f; o2.detune.value = -4;
+  vib.frequency.value = 4.8; vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(f * 0.008, t + 0.3); vib.connect(vg); vg.connect(o.frequency); vg.connect(o2.frequency);
+  lp.type = 'lowpass'; lp.Q.value = 2; lp.frequency.setValueAtTime(700, t); lp.frequency.exponentialRampToValueAtTime(1700, t + 0.06); lp.frequency.exponentialRampToValueAtTime(1200, t + 0.4);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.03 * v, t + 0.04); g.gain.setValueAtTime(0.026 * v, end - 0.05); g.gain.exponentialRampToValueAtTime(0.0001, end + 0.08);
+  o.connect(lp); o2.connect(lp); lp.connect(g); g.connect(mus.out); send(g, 0.35);
+  noiseHit(t, 'bandpass', f * 3, 2, 0.012 * v, 0.1, 0.2);  // a breath
+  for (const x of [o, o2, vib]) { x.start(t); x.stop(end + 0.12); }
+}
+function tuba(f, t, len, v = 1) {  // a tuba, marching: round and buzzy
+  const o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain(), end = t + len;
+  o.type = 'sawtooth'; o.frequency.value = f;
+  lp.type = 'lowpass'; lp.Q.value = 1; lp.frequency.setValueAtTime(250, t); lp.frequency.exponentialRampToValueAtTime(700, t + 0.04); lp.frequency.exponentialRampToValueAtTime(400, t + 0.3);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.16 * v, t + 0.03); g.gain.setTargetAtTime(0.0001, end - 0.05, 0.05);
+  o.connect(lp); lp.connect(g); g.connect(mus.out); o.start(t); o.stop(end + 0.3);
+}
+function clarinet(f, t, len, v = 1) {  // a clarinet: woody, hollow
+  const o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain(), vib = ac.createOscillator(), vg = ac.createGain(), end = t + Math.max(0.06, len);
+  o.type = 'square'; o.frequency.value = f; vib.frequency.value = 5.5; vg.gain.value = f * 0.004; vib.connect(vg); vg.connect(o.frequency);
+  lp.type = 'lowpass'; lp.frequency.value = 2200; lp.Q.value = 0.7;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.014 * v, t + 0.02); g.gain.setValueAtTime(0.012 * v, end - 0.03); g.gain.exponentialRampToValueAtTime(0.0001, end + 0.04);
+  o.connect(lp); lp.connect(g); g.connect(mus.out); send(g, 0.3);
+  o.start(t); vib.start(t); o.stop(end + 0.08); vib.stop(end + 0.08);
+}
+function bone(f, t, len, v = 1) {  // a trombone, sliding up into the note
+  const o = ac.createOscillator(), o2 = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain(), end = t + len;
+  o.type = o2.type = 'sawtooth'; o2.detune.value = 7;
+  for (const x of [o, o2]) { x.frequency.setValueAtTime(f * 0.75, t); x.frequency.exponentialRampToValueAtTime(f, t + len * 0.45); }
+  lp.type = 'lowpass'; lp.frequency.setValueAtTime(600, t); lp.frequency.exponentialRampToValueAtTime(1600, t + len * 0.5);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.03 * v, t + 0.08); g.gain.setValueAtTime(0.03 * v, end - 0.08); g.gain.exponentialRampToValueAtTime(0.0001, end + 0.05);
+  o.connect(lp); o2.connect(lp); lp.connect(g); g.connect(mus.out); send(g, 0.3);
+  for (const x of [o, o2]) { x.start(t); x.stop(end + 0.1); }
 }
 // ---- Reno (your message). A motel 8, where IzzyKat stays. Then the canals: thin, a little grimy, like an urban city
 // park; you get in by jumping a fence next to a Denny's, and walk them, to the old strip. A darkish casino, lights from
@@ -8668,7 +8792,8 @@ function drawMotel() {
 }
 async function motel() {
   await fadeTo(1, 0.8);
-  musicStop(); hud(null); phase = 'cut';
+  if (!mus || mus.style !== SWING) { musicStop(); musicStart(SWING); }  // the swing plays on, from the drive in
+  hud(null); phase = 'cut';
   scene3 = { kind: 'motel', t0: time, out: null, left: null, walk: null };
   const S = scene3;
   await fadeTo(0, 0.8);
@@ -8921,6 +9046,7 @@ function drawCanal() {
 }
 async function canal() {
   await fadeTo(1, 0.8);
+  musicStop(); musicStart(NOLA);  // down in the canals: New Orleans jazz
   if (!canalCanvas) paintCanal();
   scene3 = { kind: 'canal', t0: time, cam: CANAL_H - VH, live: false, jumped: false, inSaid: false, said: -9, seen: new Set(), done: null,
     pigeons: null, car: { t0: null, next: time + 3, dir: -1 }, drip: time + 2,
@@ -8968,6 +9094,7 @@ function drawStrip() {
 }
 async function oldStrip() {
   await fadeTo(1, 0.8);
+  if (!mus) musicStart(NOLA);  // the jazz follows you up the stairs
   scene3 = { kind: 'strip', t0: time, walk0: time + 0.8, inside: false };
   const S = scene3;
   await fadeTo(0, 0.8);
@@ -9233,7 +9360,7 @@ async function jimArrives(S) {
 }
 async function casino(jump) {
   await fadeTo(1, 0.8);
-  musicStop(); hud(null); phase = 'cut';
+  musicStop(); musicStart(SWING); hud(null); phase = 'cut';  // in the casino: the swing again
   scene3 = { kind: 'craps', t0: time, chips: 100, bet: 0, point: 0, drinks: 0, shooter: 'you', thr: null, pay: null, pops: [], jim: null,
     ready: false, waitA: null, rolls: 0, last: null, up: false, cheer: null, taught: false, pointTaught: false, chime: time + 1 };
   const S = scene3;
@@ -9258,6 +9385,7 @@ async function casino(jump) {
   await wait(0.8);
   await say(['Jim. The enigma.', 'The one who claims that the dice do not, in fact, remember.']);
   await say(['Dealer: "Oh, Jim."']);
+  musicStop();  // the band stops
   S.jim.perk = time; jimSigh();
   await wait(0.8);
   await say(['Jim: "Santa Cruz is only for hippies. You. Are. Not. Welcome."']);
@@ -10199,7 +10327,7 @@ window.__sketch = {
   get feet() { return area === 'climb' ? climbFeet() : null; }, get vista() { return !!vista; },
   get brudda() { return B.here ? { x: B.tx, y: B.ty, mode: B.mode, playing: B.playing } : null; },
   get ended2() { return !$('end2').hidden; }, get stepTime() { return P.stepTime; }, get hidden() { return P.hidden; },
-  play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, clubFar: CLUB_FAR, town: TOWN_STYLE, reunion: REUNION_STYLE, desert: DESERT, circles: CIRCLES }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
+  play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, clubFar: CLUB_FAR, town: TOWN_STYLE, reunion: REUNION_STYLE, desert: DESERT, circles: CIRCLES, swing: SWING, nola: NOLA }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
   get battle() { return battle ? { foe: battle.F.kind, hp: battle.hp, me: battle.me, sugar: battle.sugar, open: battle.open, cool: battle.cool } : null; },
   get foes() { return FOES.map(F => !!F.beaten); }, get pizza() { return pizzaVisited; },
   get dancers() { return night ? dancersAt(night).filter(d => time > d.at).length : 0; },
