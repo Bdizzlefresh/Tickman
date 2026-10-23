@@ -322,6 +322,9 @@ Every session reads this first and updates it last.
 - 2026-10-23, issue #1, two messages (14:19, 27 seconds apart), on your first banner: "Have it come out over pride rock.",
   then "Eliminate the banner actually." The last bit will be the banner over "That's all folks!".
 - 2026-10-23, issue #1 (20:49 UTC): "Finalize it as not a sketch, but as a game. This has been a fantastic experience."
+- 2026-10-23, issue #1 (23:12 UTC): rename it "RENDEZVOUS OF THE ARACHNID TICKMAN!". Make it old timey in font, with an intro
+  as an opening page. The opening, right at the beginning: a spider, rearing its head and body and legs upward toward the
+  camera; then it pans back to a tick, staring at the spider.
 
 ## What you've decided
 
@@ -496,6 +499,9 @@ Every session reads this first and updates it last.
 - The math at the first camp, sped up: the same three tries and the same math, shorter (2026-10-23; built).
 - It's a game now, not a sketch (2026-10-23, 20:49 UTC; built). Nothing on screen calls it a sketch or lists guesses any
   more. These notes still say which parts began as the assistant's guesses, so you can see them.
+- The game's name is RENDEZVOUS OF THE ARACHNID TICKMAN! (2026-10-23; built). Old timey, with an opening right at the
+  start: a spider rearing up toward the camera, then the view pulling back to a tick staring at it (built; "old timey" read
+  as an old silent movie, asked).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1419,14 +1425,45 @@ Every session reads this first and updates it last.
     ends of levels 2, 3 and 4 are reached and show their buttons; the title screen fits a small phone; no errors. The
     level 4 screen's words are long, so it scrolls to its buttons, as before.
 
+- 2026-10-23, the new name and the opening (`gh-pages`, commit fa86701), from your message (23:12 UTC):
+  - The name, RENDEZVOUS OF THE ARACHNID TICKMAN!, on the browser tab, at the top of the screen, and on the title card.
+  - The opening plays first thing, before the title card, like an old silent movie: sepia, film grain, flicker, dust,
+    scratches running down the film, dark at the edges, the picture jumping now and then, 18 frames a second, and it opens
+    with a circle widening out of black.
+    - Close up, a spider at the mouth of its tunnel, on a sheet of silk, a light behind it in the dark. It rears up: its
+      head and body rise, its front legs go up and toward the camera, out past the top of the screen, waving. Its eyes
+      stare out; its fangs come out from under its jaws, curving in, a drop on each tip. It holds there a couple of seconds.
+    - Then the view pulls back, slowly: the spider gets smaller, reared up over its tunnel, and in front, low on the left, a
+      tick, side on, its front legs held out, its eye wide, staring up at the spider.
+    - About ten seconds in all. Then the title card fades up over that last shot.
+  - The title card, old timey: dark, with a thin gold double border, the name in tall movie lettering (RENDEZVOUS / OF
+    THE / ARACHNID / TICKMAN!, a little star rule above and below), and the rest in an old printer's type. "How to play",
+    Start and the three "Skip to level" buttons are as before, in the same colors. It sits low, so the last shot stays in
+    view above it on a phone.
+  - The two fonts are Limelight (the name) and IM Fell English, free fonts from Google Fonts. Without a connection the
+    page falls back to plain serif letters.
+  - The opening is silent: phones play no sound until the screen is tapped (said in the reply).
+  - A tap on the screen, A, or Space skips ahead to the title card. "Start over" plays the opening again. The links for
+    checks that go straight to a level skip it.
+  - Unchanged: everything after Start, and every level.
+  - Checked, headless and muted: the opening plays to the title card, which comes up only at the end; a tap and Space
+    each skip ahead; Start goes into level 1 as before; "Skip to level", "Back" and picking a tick work; a link straight
+    to a level has no opening; the three fonts load; the name fits on a phone-sized and a small screen; the ends of
+    levels 2, 3 and 4 are still reached; no errors.
+  - Guesses: all of it but your words (the old movie look, how the spider and the tick look, the tunnel, the silk, the
+    light, the fangs, the timing, the fonts, the title card).
+  - Gifts from Blaine: untouched, still on.
+
 ## Next to build
 
 Nothing queued.
 
 ## Open questions
 
+- Asked 2026-10-23 (comment 6376634964): is an old silent movie the "old timey" you meant, or something else (an old
+  western poster, say)? (Built as a silent movie.)
 - Asked 2026-10-23 (comment 6375843278): should the title screen say who made it ("A game by" and your name), or stay
-  as it is?
+  as it is? (No answer yet; not asked again.)
 - Said 2026-10-23 (comment 6375843278): the secret ending opens after finishing level 4 with all three ticks, on the same
   phone or computer; after the first ending, "Try another tick" plays level 4 again with a new one.
 - Answered 2026-10-23: eliminate your first banner; the last bit is the banner over "That's all folks!" (asked, comment
@@ -1760,3 +1797,6 @@ Nothing queued.
   6375843278) with what finalizing changes, how the secret ending opens when playing it with Blaine, and one question: a
   "by" line on the title screen? Then built it, same link (gh-pages 17231fa): the sketch labels, the guesses, the levels
   list and the feedback lines are off the screens; the game itself is unchanged.
+- 2026-10-23: one message from you on issue #1 (23:12): the new name, old timey, and the opening with the spider and the
+  tick. Replied first (comment 6376634964) with the plan, that the opening plays silent, and one question: is a silent
+  movie the old timey you meant? Then built it, same link (gh-pages fa86701).
