@@ -284,6 +284,14 @@ Every session reads this first and updates it last.
     character from every single scene comes in, all at once, and dances, until the end of time, the time that is as long
     as Jim's cigarette. Have it linger. Every character from each scene: Phil, the woodland creatures, the salmon, the
     Edmund Fitzgerald, the Gales of November, and the rest.
+- 2026-10-23, issue #1, three messages (03:02 to 03:13 UTC):
+  - Before the tick's line about the reveal, the tick says: "Brudda. We've traversed the North Shore. We've rode a salmon
+    to the great clubs of the South. We've saved my babygurl Isabella. We have done it all. You have revealed your junk as
+    your final act and for my final act, I also have junk to reveal."
+  - The last scene, after the dance: a Looney Tunes "that's all folks!", with the baby tick, whichever tick you chose, and
+    Isabella in the scene.
+  - Before the boss fight engages, Jim says: "You smell like hippie. You will pass" (similar to Gandalf).
+  - Skip the Mac Miller part in Nevada; just have Kyuss play from Utah to Reno.
 
 ## What you've decided
 
@@ -425,6 +433,12 @@ Every session reads this first and updates it last.
   run: the assistant's pick, asked.
 - After the final scene: a fade to white, DJ Brudda Blaine back on the turntables, and every character dancing, as long as
   Jim's cigarette, lingering (2026-10-23; built).
+- The tick's speech comes right before "I have a form of reveal to you, Brother.", on every run (2026-10-23; built; on
+  every run is the assistant's reading of "before").
+- The very last scene, after the dance: Looney Tunes, "That's all folks!", with the baby tick, your tick and Isabella
+  (2026-10-23; built).
+- Before the fight, Jim: "You smell like hippie. You will pass.", like Gandalf (2026-10-23; built).
+- The drive to Reno: the desert rock plays all the way from Utah to Reno; no Mac Miller (2026-10-23; built).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1197,11 +1211,38 @@ Every session reads this first and updates it last.
     host character; the quote site ithinkyoushouldquote.me ("Baby of the Year"); Den of Geek on Sam Richardson and the
     sketch. Nothing from the sketch is quoted in the game.
 
+- 2026-10-23, sketch 2 changed (`gh-pages`, commits 4ed3d2e and e93f4ea), from your three messages:
+  - At the Truckee, after the turn (the letterbox, the orchestra), the tick's speech, your words exactly, five pages:
+    "Brudda. We've traversed the North Shore." / "We've rode a salmon to the great clubs of the South." / "We've saved my
+    babygurl Isabella." / "We have done it all." / "You have revealed your junk as your final act and for my final act, I
+    also have junk to reveal." Then "I have a form of reveal to you, Brother." On every run; on the third, the line you
+    sent before still follows (asked whether to keep both).
+  - Jim, before the fight: as the fight scene opens, before the words about how to play, a low growl, then a slam that
+    shakes the whole table, with a boom (like Gandalf's staff on the bridge, a guess at what you meant), and: Jim: "You
+    smell like hippie. You will pass."
+  - The drive to Reno: the desert rock plays from Utah all the way to Reno, and the swing starts when you arrive, as
+    before. The Nevada stretch of road stays (the sunset, the sign), with just "Nevada." on it; the Mac Miller line and
+    music are gone.
+  - The very last scene: after the dance has gone on a while, "Tap A". Then, out of the white: red and orange rings,
+    spreading out from the middle; in a round window in the middle, Isabella, your tick and the baby tick, bouncing; a
+    little fanfare (original); then "That's all folks!" in big script letters over them. Then a circle closes in, down
+    onto the three of them, holds a moment, and shuts to black. Then the end screen.
+  - Guesses: the growl, the slam, how the last scene looks (the rings, the window, the script, the closing circle), and
+    the fanfare.
+  - Checked: the line is Porky Pig's, said at the end of many of the shorts, and it was also used at the end of Looney
+    Tunes cartoons (Wikipedia, "Porky Pig"). The game shows your words. Nothing else from the cartoons is used.
+  - Gifts from Blaine: untouched.
+  - Links for checks: `?level=4&tick=dog&at=fight` (Jim's line, then the fight), `&at=reno` (the drive to Reno),
+    `&at=looney` (straight to the very last scene).
+
 ## Next to build (queued, in your order)
 
 1. Your words, on the card at the very end (waiting for you).
 
 ## Open questions
+
+- Asked 2026-10-23: your speech ends "I also have junk to reveal", and the line you sent before ("I know you just revealed
+  your junk. But I now have junk to reveal to you.") still follows it on the third run. Keep both, or drop that one?
 
 - Asked 2026-10-23: should the tick's new line and the baby tick come only on the third run, so the first two still stop at
   "I have a form of reveal to you, Brother."? (Built that way.)
@@ -1479,3 +1520,9 @@ Every session reads this first and updates it last.
   the new ones, and one question (only on the third run?). The reply was edited a minute later to take in your second
   message. Then built both in sketch 2, same link: the line, the stage and your banner (e3395a6), then the last dance
   (28bae99). Not posted about yet; the next reply says it's in.
+- 2026-10-23: one message from you on issue #1 (03:02), then two more (03:13) that came in seconds before and after the
+  reply went up. Replied (comment 6356488746): the baby tick and the last dance are in (with links), a note that the reply
+  before had been added to after your 02:51 message, the plan for the speech and the last scene, and one question (keep
+  both lines?). The reply was edited twice in the next minute to take in your two 03:13 messages (Jim before the fight,
+  and the drive to Reno). Then built all four in sketch 2, same link: the speech, Jim's line and the drive (4ed3d2e), and
+  the very last scene (e93f4ea). Not posted about yet; the next reply says it's in.
