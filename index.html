@@ -97,7 +97,7 @@ a { color:var(--accent); }
 <body>
 <div id="app">
   <div id="top">
-    <span id="badge">Tickman &middot; sketch 2 &middot; levels 1 to 3, and the start of 4<br>a sketch to react to, not the game</span>
+    <span id="badge">Tickman &middot; sketch 2 &middot; levels 1 to 4<br>a sketch to react to, not the game</span>
     <button id="mute" aria-label="Sound on or off" title="Sound">&#9834;</button>
   </div>
   <div id="screen">
@@ -269,10 +269,10 @@ a { color:var(--accent); }
   <div class="card">
     <h2>Level 4, so far</h2>
     <p id="end4Text"></p>
+    <p id="ticks4"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>Back at the Truckee River: Brudda Blaine's dip, the shadowy character, and the tick's turn.</li>
-      <li>The very end, as you want it.</li>
+      <li>Your words, on the card at the very end (it's blank until you send them).</li>
     </ol>
     <p class="small">Guesses in level 4 so far: how the oil fields look (the oil rigs drawn as nodding pumps, with drilling
       towers far off), the bison, the horses and their battle, the badlands, the park sign, the river, the mounds, the
@@ -293,7 +293,7 @@ a { color:var(--accent); }
       Faithful: the crowd on the benches, how many times it tricks you, the eruption (the rainbow, the sparkles), her
       ride, the glances, the nod, and her landing. The drive to Reno: the wastelands, the signs, the tumbleweed, the
       sunset, Reno at night, and the music (original, in the spirit of the bands you named; real recordings can't go in
-      the game). The words not in your story are guesses too. In Reno: how it all looks and sounds (the motel, the Denny's, the fence, the canals and what's in them, the old strip, the casino, the slot machines, the table, the dealer, Jim's look); the craps table's rules are the real ones for the pass line, but the bets (10, or all of it), the buy-in, how many free drinks, when he arrives, and how many rounds he plays are guesses; and the words not in your story. The fight: all of it but your words (how he throws the dice and spins the chips, the hands and how fast they close, your hearts, his energy, how you die, the spirits, the hippie glow, the giant swing, turning the dice over to win, how he melts).</p>
+      the game). The words not in your story are guesses too. In Reno: how it all looks and sounds (the motel, the Denny's, the fence, the canals and what's in them, the old strip, the casino, the slot machines, the table, the dealer, Jim's look); the craps table's rules are the real ones for the pass line, but the bets (10, or all of it), the buy-in, how many free drinks, when he arrives, and how many rounds he plays are guesses; and the words not in your story. The fight: all of it but your words (how he throws the dice and spins the chips, the hands and how fast they close, your hearts, his energy, how you die, the spirits, the hippie glow, the giant swing, turning the dice over to win, how he melts). From Jim's end on: how it all looks and sounds (the light from his cracks, the scream, the burst; the melt; the Truckee at night, the bridge, the Sierra; the cigarette, the drag, the cold; the realm, the deer, the female spider, the silk curtain, the egg sac, the baby ticks, the rugs; the dip, the dolphin dives, the shadowy character, the flash, the turn, the orchestra; the easter egg; the final scene), the music in Reno (original, in the spirit of what you named), and the words not in your messages.</p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -891,6 +891,7 @@ function musicStep(n, t) {
   else if (S.kind === 'circles') circlesStep(S, n, t, mus.six);  // and Nevada
   else if (S.kind === 'swing') swingStep(S, n, t, mus.six);      // Reno: the swing,
   else if (S.kind === 'nola') nolaStep(S, n, t, mus.six);        // and New Orleans jazz in the canals
+  else if (S.kind === 'ballad') balladStep(S, n, t, mus.six);    // the orchestra, at the very end
   else if (S === STYLES.regular) spookyStep(ch, bar, s, t, mus.six, phrase);
   else if (S === STYLES.human) gazeStep(ch, bar, s, t, mus.six, phrase);
   else pointerStep(ch, bar, s, t, mus.six, phrase);
@@ -5856,7 +5857,7 @@ function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown,
     lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful,
-    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee, realm: drawRealm })[scene3.kind]();
+    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee, realm: drawRealm, final: drawFinal })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -10111,7 +10112,7 @@ function updateTruckee(dt) {
     S.smoke.push({ x: 1, y: 103, vx: 5 + Math.random() * 4, vy: -3 - Math.random() * 3, t0: time, life: 4, r: 1 }); S.nextSmoke = time + 0.3;
   }
   if (S.cold && !S.under && time > S.nextBreath) {  // your breath, in the cold
-    for (const a of [S.me, S.bl]) S.smoke.push({ x: a.x + 8, y: Math.round(a.y - wadeK(S) * 14) + 3, vx: 1 + Math.random() * 2, vy: -6, t0: time, life: 1.1, r: 1, breath: true });
+    for (const a of S.dip ? [S.me] : [S.me, S.bl]) S.smoke.push({ x: a.x + 8, y: Math.round(a.y - wadeK(S) * 14) + 3, vx: 1 + Math.random() * 2, vy: -6, t0: time, life: 1.1, r: 1, breath: true });
     S.nextBreath = time + 0.9;
   }
   for (const p of S.smoke) if (time >= p.t0) { p.x += p.vx * dt; p.y += p.vy * dt; p.r = 1 + (time - p.t0) * (p.breath ? 1.5 : 1.1); }
@@ -10167,7 +10168,7 @@ function drawTruckee() {
     ctx.save(); ctx.beginPath(); ctx.rect(0, 0, VW, y + h - sub); ctx.clip(); draw(a.x + shiver, y); ctx.restore();
     if (wk > 0.02) for (let i = -1; i < 19; i += 2) if ((i + Math.floor(time * 6)) % 4) px(ctx, a.x + i, y + h - sub, '#9ab8d8');  // the waterline round you
   };
-  wader(S.bl, 16, (x, y) => drawBlaine(x, y, S.bl.face, moving ? 1 + Math.floor(time * 4) % 2 : 0));
+  if (!S.dip) wader(S.bl, 16, (x, y) => drawBlaine(x, y, S.bl.face, moving ? 1 + Math.floor(time * 4) % 2 : 0));
   wader(S.me, 15, (x, y) => drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], x, y, ROT[S.me.face], false, moving ? Math.floor(time * 6) % 2 : 0));
   if (S.cold && wk > 0.05) for (let i = 0; i < 4; i++) sparkleAt(Math.round(S.me.x - 20 + i * 14 + Math.sin(i * 3) * 4), Math.round(S.me.y + 8 - wk * 14 + (i % 2) * 3), (time * 0.7 + i * 0.27) % 1);  // frost, glinting
   if (S.under) for (const a of [S.me, S.bl]) {  // where you went under: rings, spreading
@@ -10198,6 +10199,7 @@ function drawTruckee() {
   }
   for (const p of S.smoke) if (time >= p.t0) { ctx.globalAlpha = (1 - (time - p.t0) / p.life) * (p.breath ? 0.55 : 0.32); disc(ctx, Math.round(p.x), Math.round(p.y), Math.round(p.r), '#d4d4e4'); }
   ctx.globalAlpha = 1;
+  if (S.dip) drawDip(S);  // back at the Truckee: the dip, the shadowy character, the turn, the egg
   // the casino melting away, into the river (the whole scene of his disintegration)
   if (S.melt) for (let x = 0; x < VW; x++) {
     const k = Math.max(0, (time - S.melt.t0 - S.melt.d[x]) / 1.7), off = Math.round(k * k * 150);
@@ -10394,9 +10396,278 @@ function slurp() {  // the deer, sucked of all their being: low, falling, one af
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.012, t + 0.1); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.3);
     o.connect(lp); lp.connect(g); g.connect(master); o.start(t); o.stop(t + 1.35); });
 }
-async function theEnd(from = 'truckee') {  // after Jim: the Truckee River, then the realm of California
+// ---- back at the Truckee River (your message). The job is complete. Brudda Blaine needs to take a dip, to wash off all
+// of that stank: his clothes come off (in a cartoon cloud; nothing shown), and he dives among the rocky water like a
+// dolphin, here, there, everywhere, so unsophisticated it comes across as beauty and grace. You follow, slowly,
+// hesitantly, up to your knees ("aint no way Bish", "this shit cray"). Behind you, under the bridge, a shadowy character
+// comes for all of your belongings; Brudda Blaine flashes him, with vigor (metaphorical: a burst of light, nothing
+// explicit), and he walks off, extremely unpleased, mumbling. Then you turn slowly to Brudda Blaine, an orchestra behind
+// you like a Bocelli ballad (original), and say your line. The first two runs end there, and a tick mark fills in. On the
+// third, an easter egg manifests: tap it, and you flash too (metaphorical), and it cuts to the final scene, as you wrote
+// it, where your words go. (How it all looks and sounds, and the words not in your message, are guesses.) ----
+const BALLAD = { name: 'ballad', kind: 'ballad', bpm: 60, swing: 0, verb: 0.55, room: 3.4, gain: 2.5 };
+const BALLAD_CH = [[58, 62, 65], [57, 60, 63, 65], [55, 58, 62], [55, 58, 63]];  // B-flat, F7, G minor, E-flat
+const BALLAD_TUNE = [[[0, 70, 8], [8, 74, 4], [12, 77, 4]], [[0, 75, 12], [12, 72, 4]], [[0, 74, 6], [6, 72, 2], [8, 70, 8]], [[0, 67, 4], [4, 70, 4], [8, 75, 8]]];
+const BALLAD_BASS = [46, 41, 43, 39];
+function balladStep(S, n, t, six) {  // an orchestra: strings, a harp, a low swell, and a tenor voice on the tune (no words)
+  const bar = Math.floor(n / 16), s = n % 16, i = bar % 4, ch = BALLAD_CH[i];
+  if (s === 0) { for (const m of ch) violin(mtof(m), t, six * 15.5, 0.5); upright(mtof(BALLAD_BASS[i]), t, six * 12, 0.7); swell(mtof(BALLAD_BASS[i] - 12), t, six * 16); }
+  if (s % 2 === 0) nylon(mtof(ch[(s / 2) % ch.length] + 12 + (s >= 8 ? 12 : 0)), t, 0.32, 0.7);  // the harp, rippling up
+  if (bar >= 1) for (const [p, m, len] of BALLAD_TUNE[i]) if (p === s) tenor(mtof(m - 12), t, six * len * 0.95);
+  if (bar % 4 === 3 && s >= 12) tom(98, t, 0.12);  // the timpani, rolling into the top again
+}
+function tenor(f, t, len, v = 1) {  // a tenor voice, singing "ah": a buzz through the shapes of the mouth, with vibrato
+  const o = ac.createOscillator(), vib = ac.createOscillator(), vg = ac.createGain(), out = ac.createGain(), end = t + Math.max(0.2, len);
+  o.type = 'sawtooth'; o.frequency.value = f; vib.frequency.value = 5.6; vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(f * 0.012, t + 0.4);
+  vib.connect(vg); vg.connect(o.frequency);
+  for (const [fq, q, a] of [[700, 6, 1.6], [1150, 8, 1.0], [2600, 10, 0.5]]) { const b = ac.createBiquadFilter(), g = ac.createGain(); b.type = 'bandpass'; b.frequency.value = fq; b.Q.value = q; g.gain.value = a; o.connect(b); b.connect(g); g.connect(out); }
+  out.gain.setValueAtTime(0.0001, t); out.gain.exponentialRampToValueAtTime(0.09 * v, t + 0.12); out.gain.setValueAtTime(0.08 * v, end - 0.1); out.gain.exponentialRampToValueAtTime(0.0001, end + 0.15);
+  out.connect(mus.out); send(out, 0.6);
+  o.start(t); vib.start(t); o.stop(end + 0.2); vib.stop(end + 0.2);
+}
+// which ticks you've finished with (kept in this browser), for the reveal
+const TICK_WORDS = { regular: 'the regular tick', human: 'the human-blood tick', dog: 'the pointer' };
+function endsDone() {
+  const q = new URLSearchParams(location.search).get('ends');  // for checks: ?ends=dog,human
+  if (q != null) return new Set(q.split(',').filter(k => TICK_WORDS[k]));
+  try { return new Set(JSON.parse(localStorage.getItem('tickman-ends') || '[]').filter(k => TICK_WORDS[k])); } catch (e) { return new Set(); }
+}
+let endsSeen = null;
+function markEnd(k) {
+  if (!endsSeen) endsSeen = endsDone();
+  if (TICK_WORDS[k]) endsSeen.add(k);
+  try { localStorage.setItem('tickman-ends', JSON.stringify([...endsSeen])); } catch (e) {}
+  return endsSeen;
+}
+const PILE_AT = [44, 120];
+const CLOTHES = ['#1a1a22', '#f2f2f2', '#3a5a8a', '#e8322a', '#f2c94c', '#2a2a2a'];  // his jacket, the tee, the jeans, the red headphones, the chain, the shoes
+async function dip() {
+  await fadeTo(1, 0.6);
+  if (!truckeeCanvas) paintTruckee();
+  musicStop(); hud(null); phase = 'cut';
+  scene3 = { kind: 'truckee', t0: time, flow: 0, rate: 0.7, goal: 0.7, moonK: 0.6, smoke: [], nextSmoke: 0, nextBreath: 0, river: 0.05,
+    melt: null, pour: null, cig: null, drag: null, wade: null, cold: false, under: null, warp: null,
+    me: { x: 116, y: 100, face: 'up' }, bl: { x: 92, y: 98, face: 'left' },
+    dip: { white: time, stage: 'stand', cloud: null, flying: [], pile: 0, leaps: [], rise: null, flash: null, shadow: null, recoil: null, leave: null,
+      mumble: null, turn: null, box: null, egg: null, crack: null, myFlash: null } };
+  const S = scene3, D = S.dip;
+  await fadeTo(0, 0.2);
+  await wait(1.6);
+  await say(['Back at the Truckee River.', 'The job is complete.']);
+  await say(['Brudda Blaine: "I need to take a dip, to wash off all of that stank."']);
+  D.stage = 'cloud'; D.cloud = time; thump(0.04);
+  for (let i = 0; i < CLOTHES.length; i++) { D.flying.push({ c: CLOTHES[i], t0: time + 0.2 + i * 0.25 }); }
+  await wait(2.0);
+  await say(['He gets naked.']);
+  D.stage = 'gone'; plunge();
+  const spots = [[64, 94], [86, 84], [126, 96], [104, 78], [70, 82], [140, 88], [96, 92]];
+  spots.forEach(([x, y], i) => D.leaps.push({ x, y, t0: time + 0.6 + i * 1.15, dir: i % 2 ? -1 : 1, slow: i === 4 }));
+  for (let i = 0; i < spots.length; i++) setTimeout(() => { if (scene3 === S) wadeSplash(); }, (0.6 + i * 1.15) * 1000);
+  await wait(2.6);
+  await say(['He dives among the rocky water, like a dolphin.', 'Here. There. Everywhere.']);
+  await wait(Math.max(0, D.leaps[D.leaps.length - 1].t0 + 1.4 - time));
+  await say(['So unsophisticated, it comes across as beauty, and grace.']);
+  // you follow, slowly, hesitantly, up to your knees
+  S.wade = { from: 0, to: 0.12, t0: time, dur: 1.4 }; wadeSplash();
+  await wait(1.6);
+  await say(['You follow. Slowly. Hesitantly.']);
+  S.wade = { from: wadeK(S), to: 0.05, t0: time, dur: 0.8 };
+  await wait(1.0);
+  await say(['You: "aint no way Bish"']);
+  S.wade = { from: wadeK(S), to: 0.24, t0: time, dur: 2.2 }; S.cold = true; wadeSplash();
+  await wait(2.4);
+  await say(['Up to your knees.', 'You: "this shit cray"']);
+  // behind you, under the bridge
+  D.shadow = time;
+  await wait(3.2);
+  await say(['Behind you, under the bridge: a shadowy character.', 'Here to steal all of your belongings.']);
+  D.rise = time; D.stage = 'rise'; wadeSplash();
+  await wait(1.4);
+  await say(['Brudda Blaine stands up in the river, and turns toward the bridge.']);
+  D.flash = time; flashSound();
+  await wait(0.7);
+  D.recoil = time;
+  await wait(1.2);
+  await say(['He flashes him. With vigor.', 'A last surprise. A last-ditch effort.']);
+  D.leave = time; D.mumble = time;
+  await wait(1.2);
+  await say(['The shadowy character, extremely unpleased with the entire experience, walks away,', 'mumbling about how the homeless are crazier than they used to be.']);
+  await wait(Math.max(0, D.leave + 4.2 - time));
+  // you turn slowly to him; an orchestra, behind you
+  S.cold = false; musicStart(BALLAD); D.box = time;
+  await wait(2.4);
+  D.turn = time;
+  await wait(2.6);
+  S.me.face = 'left';
+  await wait(1.6);
+  await say(['You: "I have a form of reveal to you, Brother."']);
+  const done = markEnd(choice);
+  if (done.size < 3) {  // the first two runs end here, with a tick mark
+    await wait(2.4);
+    await fadeTo(1, 1.4);
+    musicStop(); riverSound(0);
+    return false;
+  }
+  // the third: an easter egg manifests
+  await wait(1.2);
+  D.egg = time; spiritChime();
+  await wait(2.2);
+  hud('Tap A'); phase = 'egg';
+  await new Promise(res => { D.tap = res; });
+  hud(null); phase = 'cut';
+  D.crack = time; crackSound(3);
+  await wait(1.2);
+  D.myFlash = time; flashSound();
+  await wait(1.6);
+  riverSound(0);
+  await reveal();
+  return true;
+}
+function eggA() { const D = scene3 && scene3.dip; if (D && D.tap) { const r = D.tap; D.tap = null; r(); } }
+function drawDip(S) {  // drawn in the Truckee scene, after the bridge
+  const D = S.dip;
+  // the pile of belongings, on the bank, by the dark under the bridge
+  const landed = D.flying.filter(c => time - c.t0 > 0.6);
+  landed.forEach((c, i) => { ctx.fillStyle = c.c; ctx.fillRect(PILE_AT[0] - 4 + (i % 3) * 3, PILE_AT[1] - Math.floor(i / 2) * 2, i === 4 ? 2 : 6, 2); });
+  if (D.leave == null || time - D.leave < 0.5) for (const c of D.flying) {  // flying through the air, onto the pile
+    const k = (time - c.t0) / 0.6; if (k < 0 || k >= 1) continue;
+    const x = S.bl.x + 8 + (PILE_AT[0] - S.bl.x - 8) * k, y = S.bl.y + 4 + (PILE_AT[1] - S.bl.y - 4) * k - Math.sin(k * Math.PI) * 18;
+    ctx.fillStyle = c.c; ctx.fillRect(Math.round(x) - 2, Math.round(y), 5, 3);
+  }
+  // Brudda Blaine
+  if (D.stage === 'stand') drawBlaine(S.bl.x, S.bl.y, 'left', 0);
+  if (D.stage === 'cloud') {  // a cartoon cloud, clothes flying out of it
+    for (let i = 0; i < 9; i++) disc(ctx, S.bl.x + 8 + Math.round(Math.cos(i * 0.7 + time * 9) * 7), S.bl.y + 8 + Math.round(Math.sin(i * 1.3 + time * 7) * 6), 4 + (i % 3), i % 2 ? '#d8d4dc' : '#b8b4c4');
+  }
+  for (const L of D.leaps) {  // like a dolphin: an arc out of the water, and back in
+    const dur = L.slow ? 1.6 : 0.9, k = (time - L.t0) / dur; if (k < 0 || k > 1.4) continue;
+    if (k <= 1) {
+      const pts = []; for (let j = 0; j < 7; j++) { const u = clamp(k - j * 0.045, 0, 1); pts.push([L.x + L.dir * (u - 0.5) * 22, L.y - Math.sin(u * Math.PI) * 14]); }
+      pts.forEach(([x, y], j) => { if (y < L.y) { ctx.fillStyle = j === 0 ? '#5a3a20' : '#e2b08a'; ctx.fillRect(Math.round(x) - 1, Math.round(y) - 1, 3, 2); } });
+      if (L.slow) for (let j = 0; j < 3; j++) sparkleAt(Math.round(pts[0][0] + j * 5 - 5), Math.round(pts[0][1] - 4 - j * 2), (k * 2 + j * 0.3) % 1);  // beauty, and grace
+    }
+    for (const e of [0, 1]) { const ex = L.x + L.dir * (e - 0.5) * 22, sk = (time - L.t0 - e * dur) / 0.5; if (sk < 0 || sk > 1) continue;
+      for (let j = 0; j < 6; j++) px(ctx, Math.round(ex + Math.cos(j) * (2 + sk * 5)), Math.round(L.y - Math.abs(Math.sin(j * 2)) * (1 + sk * 6) * (1 - sk)), '#e8f0f8'); }
+  }
+  if (D.stage === 'rise') {  // standing up in the river, facing the bridge: wet hair, his shades, bare shoulders; the water to his waist
+    const k = clamp((time - D.rise) / 0.8, 0, 1), X = 66, W = 92 - Math.round(k * 10), f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X + a, W + b, w, h); };
+    const arms = D.flash != null && time - D.flash < 4 && D.leave == null ? 1 : 0;
+    f(3, 0, 6, 2, '#2a1a10'); f(3, 2, 6, 5, '#e2b08a'); f(2, 3, 4, 1, '#111'); px(ctx, X + 2, W + 3, '#9fd8ff');  // his head, the shades
+    f(1, 7, 10, 4, '#e2b08a'); f(4, 7, 4, 1, '#c8946e');
+    if (arms) { f(-6, 5, 7, 2, '#e2b08a'); f(11, 5, 7, 2, '#e2b08a'); } else { f(0, 8, 1, 3, '#e2b08a'); f(11, 8, 1, 3, '#e2b08a'); }
+    for (let i = -2; i < 15; i += 2) if ((i + Math.floor(time * 6)) % 4) px(ctx, X + i, W + 11, '#9ab8d8');
+  }
+  if (D.flash != null && time - D.flash < 1.6) {  // the flash: a burst of light, toward the bridge (and nothing else)
+    const k = (time - D.flash) / 1.6, ox = 66, oy = 98;
+    ctx.globalAlpha = 0.75 * (1 - k); ctx.fillStyle = '#fffbe8'; ctx.beginPath(); ctx.moveTo(ox, oy - 2); ctx.lineTo(0, oy - 34 - k * 20); ctx.lineTo(0, oy + 28 + k * 20); ctx.closePath(); ctx.fill();
+    ctx.globalAlpha = 1; if (k < 0.15) { ctx.globalAlpha = 0.8 * (1 - k / 0.15); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }
+    sparkleAt(ox - 2, oy, clamp(k * 2, 0, 1));
+  }
+  if (D.shadow != null) {  // the shadowy character: in from the dark under the bridge, toward the pile; then off, unpleased
+    const inK = ease(clamp((time - D.shadow) / 3, 0, 1)), outK = D.leave != null ? clamp((time - D.leave) / 4.2, 0, 1) : 0;
+    const x = Math.round(-14 + inK * 44 - outK * 52), y = 108 + (D.recoil != null && time - D.recoil < 0.4 ? -3 : 0), step = (inK < 1 || (outK > 0 && outK < 1)) ? Math.floor(time * 5) % 2 : 0;
+    const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+    f(2, 0, 6, 3, '#0c0a14'); f(1, 2, 8, 9, '#0c0a14'); f(0, 4, 10, 7, '#120e1c'); f(3, 11, 2, 4 + step, '#0c0a14'); f(6, 11, 2, 5 - step, '#0c0a14');
+    f(2, 1, 1, 9, '#22202c');  // the edge of his hood, catching a little light
+    if (Math.floor(time * 1.3) % 5) { px(ctx, x + (outK > 0 ? 3 : 5), y + 3, '#c8c890'); px(ctx, x + (outK > 0 ? 5 : 7), y + 3, '#c8c890'); }  // his eyes
+    if (D.recoil != null && time - D.recoil < 1.4 && D.leave == null) renoBubble('!', x + 5, y - 12, '#c8202a');
+    if (D.mumble != null && outK < 1) renoBubble(Math.floor(time * 1.5) % 2 ? 'MUMBLE' : 'MUMBLE MUMBLE', clamp(x + 5, 30, 130), y - 12, '#4a4458');
+  }
+  // the turn: a letterbox comes down, a soft light on you
+  if (D.box != null) {
+    const k = ease(clamp((time - D.box) / 1.6, 0, 1)), lb = Math.round(k * 12);
+    if (D.turn != null) { const g = ctx.createRadialGradient(S.me.x + 8, S.me.y + 4, 2, S.me.x + 8, S.me.y + 4, 26); g.addColorStop(0, 'rgba(255,240,200,' + (0.28 * clamp((time - D.turn) / 2, 0, 1)).toFixed(2) + ')'); g.addColorStop(1, 'rgba(255,240,200,0)'); ctx.fillStyle = g; ctx.fillRect(S.me.x - 20, S.me.y - 24, 56, 56); }
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, lb); ctx.fillRect(0, VH - lb, VW, lb);
+  }
+  if (D.egg != null) {  // an easter egg, manifesting out of the night, over the river
+    const k = clamp((time - D.egg) / 2, 0, 1), cx = 100, cy = 70 + Math.round(Math.sin(time * 2) * 2);
+    if (k < 1) for (let i = 0; i < 10; i++) { const a = i * 0.63 + time, r = (1 - k) * 30; sparkleAt(Math.round(cx + Math.cos(a) * r), Math.round(cy + Math.sin(a) * r * 0.7), (time * 1.5 + i * 0.1) % 1); }
+    if (k > 0.3) {
+      const a = clamp((k - 0.3) / 0.7, 0, 1), crk = D.crack != null ? clamp((time - D.crack) / 1.2, 0, 1) : 0;
+      const halo = ctx.createRadialGradient(cx, cy, 2, cx, cy, 20 + crk * 60); halo.addColorStop(0, 'rgba(255,248,220,' + (0.5 * a + 0.5 * crk).toFixed(2) + ')'); halo.addColorStop(1, 'rgba(255,248,220,0)');
+      ctx.fillStyle = halo; ctx.fillRect(cx - 80, cy - 80, 160, 160);
+      ctx.globalAlpha = a;
+      for (let y = -6; y <= 6; y++) {  // the egg: pastel bands, a zigzag, dots
+        const w = Math.round(Math.sqrt(Math.max(0, 1 - Math.pow((y + 0.8) / 6.6, 2))) * (y < 0 ? 4.2 : 5)), band = y < -3 ? '#f8b4cc' : y < -1 ? '#fff2a8' : y < 2 ? '#b8e8d0' : y < 4 ? '#c8b8f0' : '#f8b4cc';
+        ctx.fillStyle = band; ctx.fillRect(cx - w, cy + y, w * 2 + 1, 1);
+      }
+      for (let x = -4; x <= 4; x++) px(ctx, cx + x, cy - 1 + (x % 2 ? 0 : 1), '#e86a9a');
+      px(ctx, cx - 2, cy + 3, '#ffffff'); px(ctx, cx + 2, cy + 3, '#ffffff'); px(ctx, cx, cy - 4, '#ffffff');
+      if (crk > 0) { line(ctx, cx - 4, cy - 2, cx, cy + 1, '#5a3a2a'); line(ctx, cx, cy + 1, cx + 4, cy - 3, '#5a3a2a'); }
+      ctx.globalAlpha = 1;
+    }
+  }
+  if (D.myFlash != null) {  // and you flash, too (metaphorical): a burst of light in every color, then white
+    const k = clamp((time - D.myFlash) / 1.4, 0, 1), ox = S.me.x + 8, oy = S.me.y + 6;
+    for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2, len = 10 + k * 160; ctx.globalAlpha = 0.7; line(ctx, ox, oy, Math.round(ox + Math.cos(a) * len), Math.round(oy + Math.sin(a) * len), RAINBOW[i % RAINBOW.length]); }
+    ctx.globalAlpha = k; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1;
+  }
+  if (time - D.white < 1.6) { ctx.globalAlpha = 1 - (time - D.white) / 1.6; ctx.fillStyle = '#fffaf0'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }  // out of the white
+}
+function flashSound() { if (!ac || muted) return; const t = ac.currentTime; makeNoise(); noiseHit(t, 'highpass', 3000, 0.7, 0.05, 0.4, 0.5, master); [1046.5, 1318.51, 1567.98, 2093].forEach((f, i) => tone(master, 'sine', f, t + i * 0.04, 0.8, 0.02)); }
+
+// ---- the final scene of them all, as you wrote it. Your words go on the card at the end; until you send them, it's
+// blank. (The words will be kept in the game's code in a form that can't be read by peeking.) ----
+const LAST_WORDS = [];  // your words, one line each, hidden (see lastWords)
+const lastWords = () => LAST_WORDS.map(s => { const b = atob(s); let o = ''; for (let i = 0; i < b.length; i++) o += String.fromCharCode(b.charCodeAt(i) ^ (23 + i % 7)); return decodeURIComponent(escape(o)); });
+async function reveal() {
+  scene3 = { kind: 'final', t0: time, card: null };
+  const S = scene3; phase = 'cut'; hud(null);
+  if (!mus || mus.style !== BALLAD) { musicStop(); musicStart(BALLAD); }
+  await wait(9);
+  S.card = time;
+  const card = document.createElement('div'); card.id = 'lastCard';
+  card.style.cssText = 'position:absolute;left:12%;right:12%;top:14%;bottom:14%;background:#fbf7ec;color:#2b2118;border-radius:8px;' +
+    'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5em;padding:1em;text-align:center;' +
+    'font:1.05rem/1.4 Georgia,serif;opacity:0;transition:opacity 1.6s;box-shadow:0 4px 18px rgba(0,0,0,.35)';
+  $('screen').appendChild(card);
+  requestAnimationFrame(() => { card.style.opacity = '1'; });
+  await wait(2.4);
+  for (const line0 of lastWords()) { const p = document.createElement('p'); p.style.cssText = 'margin:0;opacity:0;transition:opacity 1.8s'; p.textContent = line0; card.appendChild(p); requestAnimationFrame(() => { p.style.opacity = '1'; }); await wait(3.2); }
+  await wait(2.0);
+  hud('Tap A'); phase = 'egg'; S.dip = {};
+  await new Promise(res => { S.dip.tap = res; });
+  hud(null); phase = 'cut';
+  card.remove();
+}
+function drawFinal() {  // up on a high rock at sunrise: Braydon and Isabella, holding the child up to the sky; everyone below
+  const S = scene3, t = time - S.t0;
+  gradient(0, VH, [250, 196, 150], [120, 150, 200]);
+  ctx.globalAlpha = 0.9; gradient(0, 70, [90, 110, 170], [250, 200, 150]); ctx.globalAlpha = 1;
+  const sx = 94, sy = 24, open = ease(clamp(t / 4, 0, 1));
+  for (let i = 0; i < 14; i++) { const a = -Math.PI / 2 + (i - 6.5) * 0.11, len = 160; ctx.globalAlpha = 0.12 * open; line(ctx, sx, -10, Math.round(sx + Math.cos(a) * len * 0.3), Math.round(-10 + Math.sin(a + Math.PI) * -len), '#fff6d0'); }
+  ctx.globalAlpha = 1;
+  for (const [cx, cy, w] of [[30, 20, 26], [140, 16, 30], [60, 34, 20], [124, 36, 22]]) { const dx = Math.round((cx < 94 ? -1 : 1) * open * 14); for (let i = 0; i < 5; i++) disc(ctx, cx + dx + (i - 2) * Math.round(w / 5), cy + (i % 2), Math.round(w / 5) + 1, '#f4e4e0'); }  // clouds, parting
+  const beam = ctx.createLinearGradient(sx, 0, sx, 80); beam.addColorStop(0, 'rgba(255,250,220,' + (0.5 * open).toFixed(2) + ')'); beam.addColorStop(1, 'rgba(255,250,220,0)');
+  ctx.fillStyle = beam; ctx.beginPath(); ctx.moveTo(sx - 4, 0); ctx.lineTo(sx + 4, 0); ctx.lineTo(sx + 16, 80); ctx.lineTo(sx - 16, 80); ctx.closePath(); ctx.fill();
+  for (let x = 0; x < VW; x++) { const h = 8 + 6 * Math.abs(Math.sin(x * 0.03 + 1)), top = Math.round(96 - h); ctx.fillStyle = '#7a8aa8'; ctx.fillRect(x, top, 1, VH - top); }  // far hills
+  ctx.fillStyle = '#7a9a5a'; ctx.fillRect(0, 100, VW, VH - 100);  // the land below
+  // the high rock: up from the right, its tip out over the land
+  ctx.fillStyle = '#6a5a4e'; ctx.beginPath(); ctx.moveTo(66, 80); ctx.lineTo(118, 78); ctx.lineTo(150, 96); ctx.lineTo(VW, 100); ctx.lineTo(VW, VH); ctx.lineTo(100, VH); ctx.lineTo(84, 104); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#8a7a6a'; ctx.fillRect(66, 79, 52, 2); ctx.fillStyle = '#4e4238'; for (let i = 0; i < 6; i++) ctx.fillRect(84 + i * 9, 86 + (i % 2) * 6, 6, 1);
+  // everyone, gathered below: Brudda Blaine, IzzyKat, prairie dogs, fairies
+  drawBlaine(30, 104, 'up', 0);
+  drawGrid(CAT_SIT, TORTIE, 50, 112, false);
+  for (const [x, y] of [[12, 118], [64, 120], [22, 128], [72, 130]]) { const up = Math.floor(time * 1.5 + x) % 4 ? 0 : 1, f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b - up, w, h); };
+    f(1, 0, 3, 3, '#b08050'); f(0, 3, 5, 5, '#b08050'); f(1, 4, 3, 3, '#d8b080'); px(ctx, x + 2, y + 1 - up, '#2a1a10'); }
+  for (let i = 0; i < 6; i++) { const x = Math.round(20 + i * 22 + Math.sin(time * 1.4 + i) * 6), y = Math.round(100 + Math.cos(time * 1.1 + i * 2) * 6); ctx.globalAlpha = 0.6 + 0.4 * Math.sin(time * 4 + i); px(ctx, x, y, '#fff6a0'); px(ctx, x + 1, y, RAINBOW[i % RAINBOW.length]); ctx.globalAlpha = 1; }
+  // up on the tip: Isabella, and Braydon, holding the child up to the sky
+  const lift = Math.round(ease(clamp((t - 1.5) / 3, 0, 1)) * 12);
+  drawBig(ISABELLA, ISABELLA_PAL, 72, 47, 2);
+  drawBig(SPIDER, SPIDER_PAL[choice || 'none'], 96, 50, 2);
+  const bx = 92, by = 40 - lift;
+  line(ctx, 82, 66, bx - 3, by + 6, ISABELLA_PAL.s); line(ctx, 83, 66, bx - 2, by + 6, ISABELLA_PAL.s);  // her arms, up
+  line(ctx, 104, 58, bx + 4, by + 6, '#2b1d14'); line(ctx, 110, 58, bx + 5, by + 5, '#2b1d14');      // his front legs, up
+  ctx.fillStyle = '#f4ecdc'; ctx.fillRect(bx - 4, by, 9, 7); ctx.fillRect(bx - 3, by - 1, 7, 9); ctx.fillStyle = '#d8ccb8'; ctx.fillRect(bx - 4, by + 5, 9, 1);  // the child, swaddled
+  ctx.fillStyle = '#f0c8a8'; ctx.fillRect(bx - 1, by + 1, 3, 3); px(ctx, bx, by + 2, '#2a1a14');
+  if (lift >= 12) for (let i = 0; i < 5; i++) sparkleAt(bx + Math.round(Math.cos(i * 1.3 + time) * 10), by + 3 + Math.round(Math.sin(i * 2.1 + time) * 7), (time * 0.9 + i * 0.2) % 1);
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, 10); ctx.fillRect(0, VH - 10, VW, 10);  // a letterbox, like a film
+  if (t < 1.6) { ctx.globalAlpha = 1 - t / 1.6; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }  // out of the white
+}
+async function theEnd(from = 'truckee') {  // after Jim: the Truckee River, the realm of California, back at the Truckee (and the reveal)
   if (from === 'truckee') await truckee();
-  await realm();
+  if (from === 'truckee' || from === 'realm') await realm();
+  await dip();
 }
 function finish4() {
   phase = 'done4'; lock = 0; hud(null);  // (the last scene stays on screen, behind)
@@ -10411,7 +10682,12 @@ function finish4() {
     'smaller geysers, and a beer or two. Steam in the distance: Old Faithful. It tricked you, again and again, then ' +
     'exploded, with IzzyKat riding it, far into the air. She might be indestructible. She landed at your feet. Then on, ' +
     'through the barren wastelands, Kyuss in Utah and Mac Miller\'s Circles in Nevada, to Reno.' +
-    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered. Light broke out of every crack in him, and he screamed at the top of his lungs, "THE DIE.....THEY LIE.... I CANNOT.... BE.....", and came apart. The whole scene melted, and ran into the Truckee River, at night: rocky, with slight rapids, a bridge overhead on the left, the Sierra Nevada behind. A cigarette appeared, as long as time itself, full of good California weed, not Milwaukee weed. You grabbed it and lit it, and you and Brudda Blaine took a drag of time itself, and slowly walked into the Truckee, as cold as the Sierra mountains themselves. You were carried to another realm: California, as if it were in Frank Herbert\'s The Santaroga Barrier, a valley of farms ringed by redwoods, the cheese cooperative up the hill. The pack of deer, holding Isabella hostage, moving as one. Then another spider, a female, in the euphoria of the dragging of time; a curtain of silk; an egg sac. It burst: thousands of baby ticks latched onto every deer, and the deer, sucked of all their being, fell to the floor like rugs on a carpet. Isabella is at last free from the tyranny of the ungulate gang. Next, from your story: back at the Truckee River, and the very end.';
+    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered. Light broke out of every crack in him, and he screamed at the top of his lungs, "THE DIE.....THEY LIE.... I CANNOT.... BE.....", and came apart. The whole scene melted, and ran into the Truckee River, at night: rocky, with slight rapids, a bridge overhead on the left, the Sierra Nevada behind. A cigarette appeared, as long as time itself, full of good California weed, not Milwaukee weed. You grabbed it and lit it, and you and Brudda Blaine took a drag of time itself, and slowly walked into the Truckee, as cold as the Sierra mountains themselves. You were carried to another realm: California, as if it were in Frank Herbert\'s The Santaroga Barrier, a valley of farms ringed by redwoods, the cheese cooperative up the hill. The pack of deer, holding Isabella hostage, moving as one. Then another spider, a female, in the euphoria of the dragging of time; a curtain of silk; an egg sac. It burst: thousands of baby ticks latched onto every deer, and the deer, sucked of all their being, fell to the floor like rugs on a carpet. Isabella is at last free from the tyranny of the ungulate gang. Back at the Truckee River, Brudda Blaine took a dip, to wash off all of that stank, diving like a dolphin, here, there, everywhere; you followed, slowly, up to your knees. A shadowy character came for your belongings, under the bridge; Brudda Blaine flashed him, with vigor, and he walked off, extremely unpleased, mumbling. And you turned, slowly, to Brudda Blaine: "I have a form of reveal to you, Brother."';
+  const done = endsSeen || endsDone(), el = $('ticks4'); el.innerHTML = '';
+  if (done.size) {
+    for (const k of ['regular', 'human', 'dog']) { const sp = document.createElement('span'); sp.textContent = (done.has(k) ? '\u2713 ' : '\u25CB ') + TICK_WORDS[k]; sp.style.marginRight = '1em'; sp.style.whiteSpace = 'nowrap'; el.appendChild(sp); }
+    const d = document.createElement('div'); d.textContent = done.size < 3 ? 'Something is left to find. Finish with each tick.' : 'All three ticks.'; el.appendChild(d);
+  }
   $('end4').hidden = false;
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
@@ -10436,6 +10712,8 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   fight2: () => { phase = 'cut'; jimFight(2).then(finish4); },
   truckee: () => { phase = 'cut'; theEnd('truckee').then(finish4); },
   realm: () => { phase = 'cut'; theEnd('realm').then(finish4); },
+  dip: () => { phase = 'cut'; theEnd('dip').then(finish4); },
+  reveal: () => { phase = 'cut'; reveal().then(finish4); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
@@ -10452,6 +10730,7 @@ function pressA() {
   if (phase === 'canal') { canalA(); return; }  // Reno: the canals,
   if (phase === 'craps') { crapsA(); return; }  // and craps
   if (phase === 'fight') { fightA(); return; }  // and the fight with Jim
+  if (phase === 'egg') { eggA(); return; }      // the egg, at the very end
   if (lock || P.moving || fade.tween || phase === 'done' || phase === 'done2' || phase === 'done3' || phase === 'done4') return;
   interact();
 }
@@ -10801,7 +11080,7 @@ window.__sketch = {
   get feet() { return area === 'climb' ? climbFeet() : null; }, get vista() { return !!vista; },
   get brudda() { return B.here ? { x: B.tx, y: B.ty, mode: B.mode, playing: B.playing } : null; },
   get ended2() { return !$('end2').hidden; }, get stepTime() { return P.stepTime; }, get hidden() { return P.hidden; },
-  play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, clubFar: CLUB_FAR, town: TOWN_STYLE, reunion: REUNION_STYLE, desert: DESERT, circles: CIRCLES, swing: SWING, nola: NOLA }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
+  play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, clubFar: CLUB_FAR, town: TOWN_STYLE, reunion: REUNION_STYLE, desert: DESERT, circles: CIRCLES, swing: SWING, nola: NOLA, ballad: BALLAD }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
   get battle() { return battle ? { foe: battle.F.kind, hp: battle.hp, me: battle.me, sugar: battle.sugar, open: battle.open, cool: battle.cool } : null; },
   get foes() { return FOES.map(F => !!F.beaten); }, get pizza() { return pizzaVisited; },
   get dancers() { return night ? dancersAt(night).filter(d => time > d.at).length : 0; },
@@ -10829,6 +11108,8 @@ window.__sketch = {
   get canal() { const C = scene3; return C && C.kind === 'canal' ? { at: [C.me.tx, C.me.ty], moving: C.me.moving, hop: !!C.me.hop, live: C.live, jumped: C.jumped, grid: CANAL } : null; },
   get craps() { const C = scene3; return C && C.kind === 'craps' ? { chips: C.chips, point: C.point, drinks: C.drinks, ready: C.ready, rolls: C.rolls, jim: !!C.jim, shooter: C.shooter } : null; },
   get fight() { return fightState(); },
+  get dip() { const S = scene3; return S && S.dip ? { stage: S.dip.stage, egg: S.dip.egg != null, phase, ends: [...(endsSeen || endsDone())] } : null; },
+  get final() { return scene3 && scene3.kind === 'final' ? { card: scene3.card != null, words: LAST_WORDS.length } : null; },
   get realm() { const S = scene3; return S && S.kind === 'realm' ? { she: S.she != null, veil: S.veil != null, sac: S.sac != null, burst: S.burst != null, rugs: S.rugged.size, free: S.free != null } : null; },
   get truckee() { const S = scene3; return S && S.kind === 'truckee' ? { melt: !!S.melt, cig: !!S.cig, lit: !!(S.cig && S.cig.lit), drag: S.drag != null, moon: S.moonK, wade: Math.round(wadeK(S) * 100) / 100, under: !!S.under, warp: !!S.warp } : null; },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
