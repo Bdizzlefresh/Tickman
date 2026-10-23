@@ -274,6 +274,16 @@ Every session reads this first and updates it last.
   - Brudda Blaine, when diving: more human-like, less like a worm.
   - The tick says, in place of the other sayings, "He is incredible. He is truly from the North" when it makes it into
     the water.
+- 2026-10-23, issue #1, two messages about 4 minutes apart:
+  - The line after, for the tick: "I know you just revealed your junk. But I know have junk to reveal to you." (read as
+    "I now have"; said so). A baby tick is revealed the way "Blake Harvey Jarvis" (Bart Harley Jarvis, in the show) is
+    revealed, from Tim Robinson's I Think You Should Leave.
+  - Above the baby tick, a banner with your words (kept out of these notes, like the secret; they're in your message on
+    issue #1 of 2026-10-23, 02:51 UTC). Let that scene stretch and pause, for Blaine to read it and take it in.
+  - Then the last scene fades into a blank white scene: DJ Brudda Blaine hops back on the turntables, and every single
+    character from every single scene comes in, all at once, and dances, until the end of time, the time that is as long
+    as Jim's cigarette. Have it linger. Every character from each scene: Phil, the woodland creatures, the salmon, the
+    Edmund Fitzgerald, the Gales of November, and the rest.
 
 ## What you've decided
 
@@ -410,6 +420,11 @@ Every session reads this first and updates it last.
 - Brudda Blaine dives as a person, not a worm (2026-10-23; built).
 - In the water, the tick says "He is incredible. He is truly from the North." The lines "aint no way Bish" and "this shit
   cray" are gone (2026-10-23; built).
+- On the third run, after "I have a form of reveal to you, Brother.", the tick's next line, then a baby tick revealed the
+  way Bart Harley Jarvis is, with your banner above it, held for Blaine to read (2026-10-23; built). Only on the third
+  run: the assistant's pick, asked.
+- After the final scene: a fade to white, DJ Brudda Blaine back on the turntables, and every character dancing, as long as
+  Jim's cigarette, lingering (2026-10-23; built).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1135,11 +1150,63 @@ Every session reads this first and updates it last.
     "The player controls Gyaraga at the bottom of the screen"; enemies "fly into formation from the top and sides of the
     screen" and some "dive towards the player"; it is "the sequel to 1979's Galaxian".
 
+- 2026-10-23, sketch 2 changed (`gh-pages`, commits e3395a6 and 28bae99), from your two messages:
+  - The third run, after "I have a form of reveal to you, Brother.": You: "I know you just revealed your junk. But I now
+    have junk to reveal to you." Then the easter egg manifests, as before; tap A, it cracks, and you flash (metaphorical).
+    The first two runs still stop at the first line.
+  - The baby tick, revealed (part 1): a stage, out of the white. A drumroll; red velvet curtains part; a spotlight; on a
+    velvet cushion on a little pedestal, a baby tick: round, small, six little legs, a big eye, an underbite with two
+    little teeth, and a flat back of the head (the doctor in the sketch describes Bart Harley Jarvis with both). A host in
+    a black suit stands at the side with a microphone (a nod to the sketch's host). The crowd, seen from behind, boos,
+    thumbs down, BOO bubbles.
+  - Then your banner comes down from the top, cloth-like, with your words in red, and the crowd goes quiet. The baby tick
+    bounces a little in the spotlight, sparkles round it; the orchestra comes in. It holds for at least ten seconds, then
+    waits for a tap of A ("Tap A"), as long as the player likes. Then the banner fades, everything goes white, and the
+    final scene, as before. Your words are kept in the game's code in a scrambled form, like your final words, so nobody
+    can read them by peeking at it.
+  - The last dance (part 2): when the final scene's card is done, it fades into a blank white. A pair of turntables
+    appears; DJ Brudda Blaine hops in from the side, up and over, onto them; his track drops (the camp 2 track, the 80s
+    drum machine one). Then everyone rushes in from the edges, all at once, and dances on his beat:
+    - In the sky: the Gales of November (the storm cloud, eyes and all) and the Edmund Fitzgerald, bobbing; flying round:
+      the eagle, the gull, the rainbow bugs, the massive mosquitoes, two sea turtles, two salmon leaping across, and three
+      fairies looping round the decks.
+    - The back row: Phil, Jim (perking up on the beat, with legs now, out from behind the craps table), the bull elk
+      (bugling now and then), and two of the deer gang in their bandanas.
+    - Then: the bison, the two horses (their slight battle, a dance now: they take turns rearing), the dealer, Karill, the
+      two promoters, and Patrick.
+    - Then: the hunter, the shadowy character from under the bridge, Shawn, the three girls from Yellowstone, the three
+      locals from Akumal, and two photographers (crouching on the beat).
+    - Then: two coyotes, a prairie dog, IzzyKat, the three ticks from the web, you (Braydon), Isabella, and the female
+      spider.
+    - In front: the woodland creatures (two elves, a gnome, a fox, a rabbit, a raccoon, an owl), the naked mole rat, and
+      the baby tick, in the middle.
+    - Jim's cigarette, as long as time, lies along the bottom: the filter at the right edge, the far end off the left edge,
+      glowing, smoke curling up. Soft, faint lights sweep over the white.
+    - It goes on: after forty seconds, "Tap A for the end screen", and it keeps going until then.
+  - Gifts from Blaine: still on; untouched, except as you asked in your message.
+  - Left out of the dance, for now: the cab driver, the man on the roof in Akumal, the dancer at the strip club, and the
+    crowds (Old Faithful's, the club's, the stage's). Easy to add.
+  - Guesses: how all of it looks and sounds (the stage, the host, the crowd, the boos, the banner's look, the hold, the
+    white, who stands where, how each dances, the lights), and the words not in your messages.
+  - Links for checks: `?level=4&tick=dog&at=dip&ends=regular,human` (back at the Truckee, as if it's the third run),
+    `&at=baby` (straight to the stage), `&at=party` (straight to the dance).
+  - Checked, about the sketch (and used only as the look): "Baby of the Year", in I Think You Should Leave with Tim
+    Robinson, season 1, episode 1 ("Has This Ever Happened to You?", 2019); Sam Richardson plays the host of a baby
+    pageant; Bart Harley Jarvis is the "bad boy" among the three finalists, heckled by the crowd from the moment he
+    appears; the doctor describes his underbite and the flat back of his head. Sources: IMDb's page for the episode's
+    host character; the quote site ithinkyoushouldquote.me ("Baby of the Year"); Den of Geek on Sam Richardson and the
+    sketch. Nothing from the sketch is quoted in the game.
+
 ## Next to build (queued, in your order)
 
 1. Your words, on the card at the very end (waiting for you).
 
 ## Open questions
+
+- Asked 2026-10-23: should the tick's new line and the baby tick come only on the third run, so the first two still stop at
+  "I have a form of reveal to you, Brother."? (Built that way.)
+- Not asked yet: anyone missing from the last dance, or anyone you'd rather leave out? Should the crowd at the stage boo,
+  as in the sketch, or cheer?
 
 - Asked 2026-10-23: did "Galactica" mean Galaga, the arcade game? (Built as a game like Galaga.)
 - Not asked yet: the egg sac game's feel. Too easy, too hard? (A bot clears it in about 10 to 20 seconds; a person, a
@@ -1406,3 +1473,9 @@ Every session reads this first and updates it last.
   water. Replied first (comment 6355929759): Yellowstone and the Badlands are in (with links), and the plan for this, with
   one question (Galaga?). Then built it in sketch 2, same link: the dives and your line (365cfe0), then the egg sac game
   and the disintegration (fa10bfe). Not posted about yet; the next reply says it's in.
+- 2026-10-23: two messages from you on issue #1, about 4 minutes apart (the second came in seconds before the reply went
+  up): the tick's next line and the baby tick revealed like Bart Harley Jarvis; then the banner with your words, the
+  pause, and the last dance. Replied (comment 6356222297): the egg sac game and the rest are in (with links), the plan for
+  the new ones, and one question (only on the third run?). The reply was edited a minute later to take in your second
+  message. Then built both in sketch 2, same link: the line, the stage and your banner (e3395a6), then the last dance
+  (28bae99). Not posted about yet; the next reply says it's in.
