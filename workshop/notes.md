@@ -325,6 +325,7 @@ Every session reads this first and updates it last.
 - 2026-10-23, issue #1 (23:12 UTC): rename it "RENDEZVOUS OF THE ARACHNID TICKMAN!". Make it old timey in font, with an intro
   as an opening page. The opening, right at the beginning: a spider, rearing its head and body and legs upward toward the
   camera; then it pans back to a tick, staring at the spider.
+- 2026-10-23, issue #1 (23:49 UTC), on old timey: "Like a buster Keaton Film".
 
 ## What you've decided
 
@@ -500,8 +501,8 @@ Every session reads this first and updates it last.
 - It's a game now, not a sketch (2026-10-23, 20:49 UTC; built). Nothing on screen calls it a sketch or lists guesses any
   more. These notes still say which parts began as the assistant's guesses, so you can see them.
 - The game's name is RENDEZVOUS OF THE ARACHNID TICKMAN! (2026-10-23; built). Old timey, with an opening right at the
-  start: a spider rearing up toward the camera, then the view pulling back to a tick staring at it (built; "old timey" read
-  as an old silent movie, asked).
+  start: a spider rearing up toward the camera, then the view pulling back to a tick staring at it (built). Old timey is
+  like a Buster Keaton film (2026-10-23, your answer): a silent movie, as built.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1460,8 +1461,12 @@ Nothing queued.
 
 ## Open questions
 
-- Asked 2026-10-23 (comment 6376634964): is an old silent movie the "old timey" you meant, or something else (an old
-  western poster, say)? (Built as a silent movie.)
+- Asked 2026-10-23 (comment 6377080877): the opening is sepia; Keaton's films are black and white. Make it black and
+  white, like his? Checked: Wikipedia lists The General (1926) and Sherlock Jr. in its category "American black-and-white
+  films", and a critic quoted in The General's article mentions "its spare, grey photography". Neither article mentions
+  tinting.
+- Answered 2026-10-23: like a Buster Keaton film (asked, comment 6376634964: is an old silent movie the "old timey" you
+  meant, or something else?).
 - Asked 2026-10-23 (comment 6375843278): should the title screen say who made it ("A game by" and your name), or stay
   as it is? (No answer yet; not asked again.)
 - Said 2026-10-23 (comment 6375843278): the secret ending opens after finishing level 4 with all three ticks, on the same
@@ -1800,3 +1805,5 @@ Nothing queued.
 - 2026-10-23: one message from you on issue #1 (23:12): the new name, old timey, and the opening with the spider and the
   tick. Replied first (comment 6376634964) with the plan, that the opening plays silent, and one question: is a silent
   movie the old timey you meant? Then built it, same link (gh-pages fa86701).
+- 2026-10-23: one message from you on issue #1 (23:49): like a Buster Keaton film. Replied (comment 6377080877) that it's
+  built as that kind of silent movie, and one question: black and white, like his films, instead of sepia? Nothing built.
