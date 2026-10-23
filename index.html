@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#1d1712">
-<title>Tickman</title>
+<title>RENDEZVOUS OF THE ARACHNID TICKMAN!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Limelight&display=swap">
 <style>
 :root { --bg:#1d1712; --paper:#f3ead6; --paper2:#e6d9bc; --ink:#2b2118; --muted:#6a5946; --accent:#7a4e2d; --soft:#cbb994; }
 * { box-sizing:border-box; }
@@ -15,7 +18,7 @@ body { display:flex; justify-content:center; }
 #app { width:100%; max-width:440px; padding:10px 12px calc(14px + env(safe-area-inset-bottom));
   display:flex; flex-direction:column; gap:10px; user-select:none; -webkit-user-select:none; }
 #top { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:38px; }
-#badge { font-size:13px; line-height:1.3; color:var(--soft); }
+#badge { font-size:12px; line-height:1.3; color:var(--soft); font-family:"Limelight","IM Fell English SC",Georgia,serif; letter-spacing:.04em; }
 #mute { flex:none; width:38px; height:38px; border-radius:50%; border:none; background:rgba(243,234,214,.9);
   font:inherit; font-size:18px; color:var(--ink); cursor:pointer; }
 #mute.off { opacity:.45; text-decoration:line-through; }
@@ -92,12 +95,30 @@ h2 { margin:0; font-size:23px; }
 .pickbtns { display:flex; flex-direction:column; gap:8px; margin-top:12px; }
 a { color:var(--accent); }
 [hidden] { display:none !important; }
+/* the title card, old timey, like an old silent movie's (it comes up after the opening) */
+#title.old { align-items:flex-end; background:linear-gradient(to bottom, rgba(12,8,4,0) 0%, rgba(12,8,4,0) 42%, rgba(12,8,4,.8) 62%); }
+#title.old .card { background:#17100a; color:#efdcae; text-align:center; border:2px solid #8f6d44;
+  box-shadow:inset 0 0 0 4px #17100a, inset 0 0 0 5px #6e5131, 0 8px 30px rgba(0,0,0,.5);
+  font-family:"IM Fell English","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
+#title.old .marquee { font-family:"Limelight","IM Fell English SC",Georgia,serif; font-weight:normal; line-height:1.04;
+  margin:4px 0; color:#f4e6c2; text-shadow:0 2px 0 #3a2817; }
+.marquee span { display:block; }
+.marquee .m1, .marquee .m3 { font-size:clamp(24px, 8.4vw, 36px); letter-spacing:.04em; }
+.marquee .m2 { font-family:"IM Fell English SC",Georgia,serif; font-size:16px; letter-spacing:.32em; margin:6px 0 4px;
+  color:#d4b884; text-shadow:none; }
+.marquee .m4 { font-size:clamp(32px, 11.2vw, 48px); letter-spacing:.02em; color:#efdcae; }
+#title.old .rule { display:flex; align-items:center; gap:10px; color:#b3915f; font-size:13px; margin:2px 10px; }
+#title.old .rule::before, #title.old .rule::after { content:''; flex:1; height:1px; background:#6e5131; }
+#title.old .sub { color:#b3915f; margin:10px 0 4px; }
+#title.old .card p { color:#e3cc9a; }
+#title.old .btn { background:#b3915f; color:#17100a; font-family:"IM Fell English",Georgia,serif; font-size:17px; }
+#title.old .btn.alt { background:#2a1d12; color:#e3cc9a; box-shadow:inset 0 0 0 1px #6e5131; font-size:15px; }
 </style>
 </head>
 <body>
 <div id="app">
   <div id="top">
-    <span id="badge">Tickman</span>
+    <span id="badge">RENDEZVOUS OF THE ARACHNID TICKMAN!</span>
     <button id="mute" aria-label="Sound on or off" title="Sound">&#9834;</button>
   </div>
   <div id="screen">
@@ -125,9 +146,11 @@ a { color:var(--accent); }
   <p id="hint">On a computer: arrow keys to move, Space for A.</p>
 </div>
 
-<div id="title" class="panel">
+<div id="title" class="panel old" hidden>
   <div class="card">
-    <h1>Tickman</h1>
+    <div class="rule"><span>&#10022;</span></div>
+    <h1 class="marquee"><span class="m1">RENDEZVOUS </span><span class="m2">OF THE </span><span class="m3">ARACHNID </span><span class="m4">TICKMAN!</span></h1>
+    <div class="rule"><span>&#10022;</span></div>
     <div class="sub">Level 1: the apartment &middot; Level 2: the North Shore &middot; Level 3: Mexico &middot; Level 4: West</div>
     <p><b>How to play:</b> move with the arrows under the screen. Tap <b>A</b> to look at things, and to read on.</p>
     <div class="btns"><button class="btn" id="start">Start</button></div>
@@ -1658,6 +1681,7 @@ function update(dt) {
     fade.v = f.from + (f.to - f.from) * k; $('fade').style.opacity = fade.v;
     if (k >= 1) { fade.tween = null; f.res(); }
   }
+  updatePrelude();  // the opening, then the title card
   if (wrap) {  // the bug wriggles, working the silk loose
     wrap.silk -= GRIP[wrap.g.kind] * dt; silkMeter();
     if (wrap.silk <= 0) wriggleFree();
@@ -1851,6 +1875,7 @@ function drawBundle(b, cx, cy) {
   }
 }
 function draw() {
+  if (prelude && phase === 'title') { drawPrelude(); return; }  // the opening, like an old silent movie
   if (vista) { drawVista(); return; }
   if (battle) { drawBattle(); return; }
   if (scene3) { drawScene3(); return; }
@@ -11464,12 +11489,192 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   looney: () => { phase = 'cut'; fadeTo(0, 0.3); looneyEnd().then(finish4); },
 };
 
+// ---- the opening: RENDEZVOUS OF THE ARACHNID TICKMAN!, old timey, like an old silent movie (sepia, grain, flicker,
+// scratches, 18 frames a second). Right at the beginning: close up, a spider rears its head, body and legs up toward
+// the camera, fangs out; then the view pulls back to a tick, staring at the spider. Then the title card comes up.
+// Silent: there's no sound before a tap. A tap on the screen, A or Space skips ahead to the title card.
+// (How it all looks is a guess at "old timey"; the spider rears up out of the mouth of its tunnel.) ----
+const PRE = { iris: 1.2, rear0: 0.8, rear1: 2.6, fangs: 2.8, pull0: 5.6, pull1: 9.2, card: 9.8 };
+const SEP = ['#120b06', '#241810', '#3a2817', '#523a22', '#6e5131', '#8f6d44', '#b3915f', '#d4b884', '#efdcae'];  // sepia, dark to light
+let prelude = null, preVig = null, preZ = 1;
+function startPrelude() { prelude = { t0: time, done: false, skipped: false }; $('title').hidden = true; }
+function preludeCard(quick) {  // the title card fades up over the last shot
+  if (!prelude || prelude.done) return;
+  prelude.done = true;
+  const el = $('title'); el.style.transition = 'opacity ' + (quick ? 0.35 : 1.4) + 's'; el.style.opacity = '0'; el.hidden = false;
+  requestAnimationFrame(() => requestAnimationFrame(() => { el.style.opacity = '1'; }));
+}
+function skipPrelude() {
+  if (!prelude || prelude.done) return;
+  prelude.skipped = true; prelude.t0 = Math.min(prelude.t0, time - PRE.pull1 - 0.1); preludeCard(true);
+}
+function updatePrelude() {
+  if (prelude && !prelude.done && phase === 'title' && time - prelude.t0 >= PRE.card) preludeCard(false);
+}
+$('screen').addEventListener('pointerdown', () => { if (phase === 'title') skipPrelude(); });
+function clipSeg(a, b, p, q, m) {  // the part of a line that's on screen (with a margin m), as [from, to], or null
+  let t0 = 0, t1 = 1; const dx = p - a, dy = q - b;
+  for (const [pp, qq] of [[-dx, a + m], [dx, VW + m - a], [-dy, b + m], [dy, VH + m - b]]) {
+    if (pp === 0) { if (qq < 0) return null; continue; }
+    const r = qq / pp;
+    if (pp < 0) { if (r > t1) return null; if (r > t0) t0 = r; } else { if (r < t0) return null; if (r < t1) t1 = r; }
+  }
+  return [t0, t1];
+}
+function preEll(S, Z, x, y, rx, ry, c) {  // a filled ellipse, in the opening's world, through its camera
+  const [cx, cy] = S(x, y), RX = rx * Z, RY = ry * Z;
+  ctx.fillStyle = c;
+  if (RX < 0.75 && RY < 0.75) { ctx.fillRect(Math.round(cx - 0.5), Math.round(cy - 0.5), 1, 1); return; }
+  const y0 = Math.max(0, Math.ceil(cy - RY - 0.5)), y1 = Math.min(VH - 1, Math.floor(cy + RY - 0.5));
+  for (let yy = y0; yy <= y1; yy++) {
+    const d = (yy + 0.5 - cy) / RY; if (d <= -1 || d >= 1) continue;
+    const hw = RX * Math.sqrt(1 - d * d), a = Math.max(0, Math.round(cx - hw)), b = Math.min(VW, Math.round(cx + hw));
+    if (b > a) ctx.fillRect(a, yy, b - a, 1);
+  }
+}
+function preSeg(S, Z, x1, y1, x2, y2, w1, w2, c) {  // a stroke that tapers from w1 to w2
+  const [a, b] = S(x1, y1), [p, q] = S(x2, y2), cl = clipSeg(a, b, p, q, Math.max(w1, w2) * Z + 2);
+  if (!cl) return;
+  const n = Math.max(1, Math.ceil(Math.hypot(p - a, q - b) * (cl[1] - cl[0]) * 1.4));
+  ctx.fillStyle = c;
+  for (let i = 0; i <= n; i++) {
+    const k = cl[0] + (cl[1] - cl[0]) * i / n, x = a + (p - a) * k, y = b + (q - b) * k;
+    const s = Math.max(1, Math.round((w1 + (w2 - w1) * k) * Z));
+    ctx.fillRect(Math.round(x - s / 2), Math.round(y - s / 2), s, s);
+  }
+}
+function preLeg(E, L, b, k, f, w) {  // a hairy spider's leg: two long joints, a light along the top, bristles
+  L(b[0], b[1], k[0], k[1], w, w * 0.85, SEP[1]);
+  L(k[0], k[1], f[0], f[1], w * 0.8, w * 0.35, SEP[1]);
+  L(b[0], b[1] - w * 0.3, k[0], k[1] - w * 0.3, w * 0.3, w * 0.25, SEP[3]);
+  L(k[0], k[1] - w * 0.25, f[0], f[1] - w * 0.2, w * 0.22, w * 0.1, SEP[3]);
+  E(k[0], k[1], w * 0.55, w * 0.55, SEP[4]);
+  if (preZ < 0.75) return;  // (far off, the bristles would only be noise)
+  for (const [a, c, n] of [[b, k, 4], [k, f, 5]]) for (let i = 1; i <= n; i++) {
+    const q = i / (n + 1), x = a[0] + (c[0] - a[0]) * q, y = a[1] + (c[1] - a[1]) * q;
+    const dx = c[0] - a[0], dy = c[1] - a[1], m = Math.hypot(dx, dy) || 1, nx = -dy / m, ny = dx / m, h = w * 0.7, sg = i % 2 ? 1 : -1;
+    L(x + nx * sg * w * 0.4, y + ny * sg * w * 0.4, x + nx * sg * (w * 0.4 + h) + dx / m * h * 0.6, y + ny * sg * (w * 0.4 + h) + dy / m * h * 0.6, 0.8, 0.6, SEP[0]);
+  }
+}
+function drawPreSpider(E, L, tq) {
+  const r = ease(clamp((tq - PRE.rear0) / (PRE.rear1 - PRE.rear0), 0, 1));  // rearing up
+  const fk = ease(clamp((tq - PRE.fangs) / 0.6, 0, 1));                      // the fangs come out
+  const flex = fk * (0.82 + 0.18 * Math.sin(tq * 5.1));
+  const w1 = r * Math.sin(tq * 2.4), w2 = r * Math.sin(tq * 1.9 + 1.3);       // the raised legs, waving
+  const cy = 6 - 18 * r + Math.sin(tq * 3) * 0.6 * r;                         // the body, rising
+  const mix = (a, b) => a + (b - a) * r;
+  const legs = s => [  // [base, knee, foot, width]: the back two pairs on the ground, the front two raised as it rears
+    [[s * 12, cy + 10], [s * 50, 22], [s * 76, 62], 4],
+    [[s * 15, cy + 6], [s * 62, mix(6, 0)], [s * 88, 54], 5],
+    [[s * 17, cy + 2], [s * mix(56, 62), mix(-4, cy - 34)], [s * mix(70, 86 + w2 * 3), mix(48, cy - 56 + w2 * 4)], 6],
+    [[s * 15, cy - 2], [s * mix(40, 44), mix(-10, cy - 52)], [s * mix(32, 26 + w1 * 3), mix(40, cy - 86 + w1 * 5)], 7]];
+  const L1 = legs(-1), L2 = legs(1);
+  E(0, 27, 27, 15, SEP[0]); E(0, 24, 22, 9, SEP[1]);  // the abdomen, behind, low, in shadow
+  for (const i of [0, 1]) { preLeg(E, L, ...L1[i]); preLeg(E, L, ...L2[i]); }
+  E(0, cy - 1.5, 21, 18 + 3 * r, SEP[4]); E(0, cy, 20, 17 + 3 * r, SEP[2]);    // the head and body, a light along the top
+  const hr = rng(5);
+  for (let i = 0; i < 16; i++) { const x = (hr() * 2 - 1) * 15, y = cy + (hr() * 2 - 1) * 11; L(x, y, x + 1, y + 2.5, 1, 0.6, SEP[1]); }
+  for (const s of [-1, 1]) {  // the palps
+    L(s * 10, cy + 8, s * mix(19, 23), cy + mix(20, 9), 4, 3.5, SEP[1]);
+    L(s * mix(19, 23), cy + mix(20, 9), s * mix(15, 21), cy + mix(30, 0), 3.5, 2.5, SEP[1]);
+  }
+  for (const s of [-1, 1]) {  // the jaws, and the fangs: tucked under at first, then out, curving in
+    E(s * 7, cy + 13, 7.5, 11, SEP[1]); E(s * 6.5, cy + 9, 5, 6, SEP[3]); E(s * 7, cy + 14, 6, 8, SEP[2]);
+    const mx = s * (9 - 1 * flex), my = cy + 22 + 6 * flex, tx = s * (5 - 3 * flex), ty = cy + 24 + 12 * flex;
+    L(s * 7, cy + 21, mx, my, 3.2, 2.6, SEP[0]);
+    L(mx, my, tx, ty, 2.6, 0.8, SEP[0]);
+    L(mx - s * 0.6, my - 0.6, tx - s * 0.3, ty - 1, 0.8, 0.5, SEP[6]);
+    if (fk > 0.9) E(tx, ty + 1.4, 0.9 + 0.3 * Math.sin(tq * 3), 1.2, SEP[7]);  // a drop, on the tip
+  }
+  for (const s of [-1, 1]) {  // the eyes: two big ones in front, staring, and the rest
+    E(s * 5, cy - 7, 3.8, 3.8, SEP[0]); E(s * 5 - 1.2, cy - 8.3, 1.1, 1.1, SEP[8]);
+    E(s * 11, cy - 9, 2.2, 2.2, SEP[0]); E(s * 11 - 0.6, cy - 9.8, 0.6, 0.6, SEP[7]);
+    E(s * 3.5, cy - 13, 1.7, 1.7, SEP[0]); E(s * 9, cy - 15, 1.5, 1.5, SEP[0]);
+  }
+  for (const i of [2, 3]) { preLeg(E, L, ...L1[i]); preLeg(E, L, ...L2[i]); }
+}
+function drawPreTick(E, L, tq) {  // in front, low on the left, side on, staring up at the spider
+  const X = -96, Y = 140, tw = Math.floor(tq * 1.3) % 4 === 3 ? 2 : 0;  // its front leg twitches, now and then
+  const leg = (b, k, f, c) => { L(b[0], b[1], k[0], k[1], 4.5, 4, c); L(k[0], k[1], f[0], f[1], 4, 1.6, c); L(f[0], f[1], f[0] + 3, f[1] - 2.5, 1.6, 1, c); };
+  E(X + 6, Y + 36, 52, 6, SEP[2]);  // its shadow
+  // its legs all come from the front half; the front pair held out ahead, toward the spider
+  const legs = [[[X + 26, Y + 6], [X + 44, Y - 6], [X + 62, Y - 16 - tw]], [[X + 20, Y + 12], [X + 34, Y + 2], [X + 44, Y + 34]],
+    [[X + 12, Y + 14], [X + 14, Y + 2], [X + 16, Y + 36]], [[X + 4, Y + 14], [X - 10, Y + 2], [X - 20, Y + 34]]];
+  for (const [b, k, f] of legs) leg([b[0] + 6, b[1] - 4], [k[0] + 6, k[1] - 4], [f[0] + 6, f[1] - 4], SEP[0]);  // the far side
+  E(X - 8, Y, 36, 25, SEP[0]); E(X + 18, Y - 4, 22, 18, SEP[0]);  // the body, like a swollen teardrop
+  E(X - 8, Y - 1, 34, 23, SEP[2]); E(X + 18, Y - 5, 20, 16, SEP[2]); E(X - 14, Y - 11, 18, 6, SEP[4]);
+  for (let i = 0; i < 6; i++) E(X - 34 + i * 8, Y + 17 - Math.abs(i - 2.5) * 1.5, 3.5, 2.5, SEP[1]);  // the scalloped edge, behind
+  E(X + 24, Y - 7, 14, 12, SEP[1]); E(X + 21, Y - 13, 7, 2.5, SEP[4]);  // the shield, in front
+  L(X + 36, Y - 10, X + 46, Y - 17, 7, 4, SEP[1]);  // the mouthparts, small, barbed, pointed up at the spider
+  L(X + 45, Y - 16, X + 51, Y - 20, 2.6, 1, SEP[0]);
+  for (let i = 0; i < 3; i++) L(X + 46 + i * 2, Y - 18 - i * 1.2, X + 45 + i * 2, Y - 15.5 - i * 1.2, 1, 0.6, SEP[0]);
+  L(X + 37, Y - 13, X + 47, Y - 20, 2.4, 1.6, SEP[1]); L(X + 39, Y - 8, X + 49, Y - 14, 2.4, 1.6, SEP[1]);  // the palps, held close
+  E(X + 31, Y - 11, 4.4, 4.4, SEP[8]); E(X + 32.8, Y - 12.8, 2.1, 2.1, SEP[0]);  // the eye, wide, fixed on the spider
+  for (const [b, k, f] of legs) leg(b, k, f, SEP[1]);  // the near side
+}
+function preVignette() {
+  if (preVig) return preVig;
+  const c = document.createElement('canvas'); c.width = VW; c.height = VH;
+  const g = c.getContext('2d'), gr = g.createRadialGradient(80, 72, 40, 80, 72, 112);
+  gr.addColorStop(0, 'rgba(10,6,3,0)'); gr.addColorStop(0.6, 'rgba(10,6,3,0.25)'); gr.addColorStop(1, 'rgba(10,6,3,0.85)');
+  g.fillStyle = gr; g.fillRect(0, 0, VW, VH);
+  return (preVig = c);
+}
+function filmFx(t, f) {  // the old film: dark at the edges, grain, dust, scratches, flicker, and an iris opening at the start
+  const r = rng(f * 7919 + 13);
+  ctx.drawImage(preVignette(), 0, 0);
+  for (let i = 0; i < 70; i++) { ctx.fillStyle = r() < 0.5 ? 'rgba(239,220,174,0.2)' : 'rgba(18,11,6,0.32)'; ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1, 1); }
+  if (r() < 0.3) { ctx.fillStyle = 'rgba(18,11,6,0.75)'; ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1 + Math.floor(r() * 2), 1 + Math.floor(r() * 2)); }
+  if (r() < 0.07) { ctx.fillStyle = 'rgba(18,11,6,0.6)'; let x = r() * VW, y = r() * VH; for (let i = 0; i < 9; i++) { ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1); x += r() * 2 - 0.4; y += 1; } }
+  const sr = rng(Math.floor(t * 3) * 31 + 7);  // scratches stay a little while
+  for (let i = 0; i < 2; i++) {
+    if (sr() > 0.55) continue;
+    const x = Math.floor(sr() * VW); ctx.fillStyle = sr() < 0.7 ? 'rgba(239,220,174,0.3)' : 'rgba(18,11,6,0.4)';
+    for (let y = 0; y < VH;) { const len = 5 + Math.floor(r() * 36); if (r() < 0.85) ctx.fillRect(x + (r() < 0.2 ? 1 : 0), y, 1, len); y += len + Math.floor(r() * 6); }
+  }
+  ctx.fillStyle = 'rgba(0,0,0,' + (0.02 + r() * 0.1).toFixed(3) + ')'; ctx.fillRect(0, 0, VW, VH);
+  if (t < PRE.iris + 0.05) {
+    ctx.fillStyle = '#000'; ctx.beginPath(); ctx.rect(0, 0, VW, VH);
+    ctx.arc(80, 72, Math.max(0.01, 112 * ease(clamp(t / PRE.iris, 0, 1))), 0, Math.PI * 2, true); ctx.fill('evenodd');
+  }
+}
+function drawPrelude() {
+  const t = time - prelude.t0, f = Math.floor(t * 18), tq = f / 18;
+  const pk = ease(clamp((tq - PRE.pull0) / (PRE.pull1 - PRE.pull0), 0, 1));  // the view pulls back
+  const Z = 1.25 * Math.pow(0.5 / 1.25, pk), CX = -20 * pk, CY = -6 + 46 * pk;
+  const jy = f % 29 === 11 ? 1 : 0;  // the picture jumps a little, now and then
+  preZ = Z;
+  const S = (x, y) => [80 + (x - CX) * Z, 72 + jy + (y - CY) * Z];
+  const E = (x, y, rx, ry, c) => preEll(S, Z, x, y, rx, ry, c);
+  const L = (x1, y1, x2, y2, a, b, c) => preSeg(S, Z, x1, y1, x2, y2, a, b, c);
+  ctx.fillStyle = SEP[1]; ctx.fillRect(0, 0, VW, VH);
+  E(0, -14, 120, 96, SEP[2]); E(0, -14, 84, 68, SEP[3]); E(0, -14, 52, 44, SEP[4]);  // a light behind the spider
+  for (const [x1, y1, x2, y2] of [[-200, -150, -40, 40], [200, -150, 40, 40], [-260, -40, -60, 44], [260, -60, 60, 44], [0, -200, 0, -70]]) L(x1, y1, x2, y2, 0.9, 0.9, SEP[4]);
+  const gy = Math.round(S(0, 44)[1]);  // the ground: a sheet of silk, strands running out from the mouth of the tunnel
+  if (gy < VH) { ctx.fillStyle = SEP[3]; ctx.fillRect(0, Math.max(0, gy), VW, VH); }
+  const gr = rng(23);
+  for (let i = 0; i < 9; i++) E(gr() * 600 - 300, 60 + gr() * 160, 20 + gr() * 40, 3 + gr() * 6, SEP[2]);  // patches of dirt
+  const spokes = [];  // the silk: uneven strands running out from the tunnel, and threads strung between them, sagging
+  for (let i = 0; i < 13; i++) spokes.push(-1.25 + i * 0.208 + (gr() - 0.5) * 0.12);
+  for (const a of spokes) L(Math.sin(a) * 50, 44 + Math.cos(a) * 12, Math.sin(a) * 520, 44 + Math.cos(a) * 300, 0.9, 1.8, gr() < 0.5 ? SEP[5] : SEP[4]);
+  for (let j = 0; j < 11; j++) {
+    const i = Math.floor(gr() * (spokes.length - 1)), d = 70 + gr() * 220, a = spokes[i], b = spokes[i + 1], sag = 3 + gr() * 8;
+    const p = [Math.sin(a) * d, 44 + Math.cos(a) * d * 0.58], q = [Math.sin(b) * d, 44 + Math.cos(b) * d * 0.58];
+    const m = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2 + sag];
+    L(p[0], p[1], m[0], m[1], 0.8, 0.8, SEP[5]); L(m[0], m[1], q[0], q[1], 0.8, 0.8, SEP[5]);
+  }
+  E(0, 44, 58, 16, SEP[5]); E(0, 44, 52, 13, SEP[0]);  // the mouth of the tunnel
+  drawPreSpider(E, L, tq);
+  drawPreTick(E, L, tq);
+  filmFx(t, f);
+}
+
 // ---- input: the pad, the A button, and the keyboard ----
 const held = []; let padDir = null;
 const curDir = () => padDir || held[held.length - 1] || null;
 function pressA() {
   audio();
-  if (phase === 'title') return;
+  if (phase === 'title') { skipPrelude(); return; }  // (a tap skips ahead, past the opening)
   if (wrap) { spinSilk(); return; }
   if (box.active) { boxA(); return; }
   if (phase === 'push' && !lock) { pushRock(); return; }  // level 3: helping push the boulder
@@ -11794,6 +11999,7 @@ placeCase();
   if (lv === '2') { if (TICKS[q.get('tick')]) level2(q.get('tick')); else showPick('title', 2); }
   if (lv === '3') { if (TICKS[q.get('tick')]) level3(q.get('tick')); else showPick('title', 3); }
   if (lv === '4') { if (TICKS[q.get('tick')]) level4(q.get('tick')); else showPick('title', 4); }
+  if (!['2', '3', '4'].includes(lv)) startPrelude();  // from the start: the opening, then the title card
 }
 let last = performance.now();
 function frame(now) {
@@ -11866,6 +12072,7 @@ window.__sketch = {
   get realm() { const S = scene3; return S && S.kind === 'realm' ? { she: S.she != null, veil: S.veil != null, sac: S.sac != null, burst: S.burst != null, rugs: S.rugged.size, free: S.free != null } : null; },
   get sac() { const G = scene3 && scene3.kind === 'realm' && scene3.game; if (!G) return null; const [ix, iy] = isaPos(G); return { x: G.x, stun: G.stun != null && time - G.stun < 1.2, shots: G.shots.length, safety: !!G.safety, safeReady: !G.safety && time >= G.safeBack, bubbled: G.bubbled != null, isa: [ix, iy], wave: !!G.wave, won: G.won != null, playing: phase === 'sacgame', deer: G.deer.map(d => ({ x: d.x, y: d.y, state: d.state, e0: d.e0 || 0 })) }; },
   get dis() { return !!(scene3 && scene3.dis); },
+  get prelude() { return prelude ? { t: time - prelude.t0, done: prelude.done, skipped: prelude.skipped, title: !$('title').hidden } : null; },
   get kingdom() { const S = scene3; return S && S.kind === 'kingdom' ? { cam: kCam(S), end: KW - VW, pan: S.pan != null, lift: S.lift != null, drop: S.drop != null, calm: partyCalm, music: mus ? mus.style.kind : null, cast: S.cast.length } : null; },
   get steak() { const S = scene3; if (!S || S.kind !== 'steak') return null; const g = glassNow(S); return { scoop: S.scoop != null, pour: S.pour != null, put: S.put != null, white: S.toWhite != null, fill: g.fill, tilt: g.tilt, hand: g.hand, under: g.under }; },
   get truckee() { const S = scene3; return S && S.kind === 'truckee' ? { melt: !!S.melt, cig: !!S.cig, lit: !!(S.cig && S.cig.lit), drag: S.drag != null, moon: S.moonK, wade: Math.round(wadeK(S) * 100) / 100, under: !!S.under, warp: !!S.warp } : null; },
