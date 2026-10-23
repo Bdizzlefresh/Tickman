@@ -326,6 +326,7 @@ Every session reads this first and updates it last.
   as an opening page. The opening, right at the beginning: a spider, rearing its head and body and legs upward toward the
   camera; then it pans back to a tick, staring at the spider.
 - 2026-10-23, issue #1 (23:49 UTC), on old timey: "Like a buster Keaton Film".
+- 2026-10-23, issue #1 (23:52 UTC), on the opening being sepia: "lets try black and white".
 
 ## What you've decided
 
@@ -502,7 +503,8 @@ Every session reads this first and updates it last.
   more. These notes still say which parts began as the assistant's guesses, so you can see them.
 - The game's name is RENDEZVOUS OF THE ARACHNID TICKMAN! (2026-10-23; built). Old timey, with an opening right at the
   start: a spider rearing up toward the camera, then the view pulling back to a tick staring at it (built). Old timey is
-  like a Buster Keaton film (2026-10-23, your answer): a silent movie, as built.
+  like a Buster Keaton film (2026-10-23, your answer): a silent movie, as built. In black and white, not sepia
+  (2026-10-23, "lets try black and white"; built, the title card too).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1455,14 +1457,23 @@ Every session reads this first and updates it last.
     light, the fangs, the timing, the fonts, the title card).
   - Gifts from Blaine: untouched, still on.
 
+- 2026-10-23, black and white (`gh-pages`, commit bdf3aff), from your message (23:52 UTC): the opening is black and white
+  now, like a Buster Keaton film, not sepia: the same shades of the same scene, in grays; the grain, dust, scratches and
+  edges in black and white too. The title card to match: white letters on black, a gray double border, light gray and dark
+  buttons. Nothing else changed.
+  - Checked, headless and muted: no sepia colors left in the opening or the card; the opening plays to the title card; a
+    tap and Space skip ahead; Start, "Skip to level" and "Back" work; the fonts load; no errors.
+  - Guesses: the exact grays, and the card in black and white too (you said black and white for the opening).
+  - Gifts from Blaine: untouched, still on.
+
 ## Next to build
 
 Nothing queued.
 
 ## Open questions
 
-- Asked 2026-10-23 (comment 6377080877): the opening is sepia; Keaton's films are black and white. Make it black and
-  white, like his? Checked: Wikipedia lists The General (1926) and Sherlock Jr. in its category "American black-and-white
+- Answered 2026-10-23: "lets try black and white" (asked, comment 6377080877: the opening is sepia; Keaton's films are
+  black and white. Make it black and white, like his?). Checked: Wikipedia lists The General (1926) and Sherlock Jr. in its category "American black-and-white
   films", and a critic quoted in The General's article mentions "its spare, grey photography". Neither article mentions
   tinting.
 - Answered 2026-10-23: like a Buster Keaton film (asked, comment 6376634964: is an old silent movie the "old timey" you
@@ -1807,3 +1818,6 @@ Nothing queued.
   movie the old timey you meant? Then built it, same link (gh-pages fa86701).
 - 2026-10-23: one message from you on issue #1 (23:49): like a Buster Keaton film. Replied (comment 6377080877) that it's
   built as that kind of silent movie, and one question: black and white, like his films, instead of sepia? Nothing built.
+- 2026-10-23: one message from you on issue #1 (23:52, half a minute after that reply): let's try black and white.
+  Replied first (comment 6377098334) that it's on its way, the title card to match. No question. Then built it, same link
+  (gh-pages bdf3aff).
