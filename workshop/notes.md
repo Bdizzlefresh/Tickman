@@ -309,6 +309,16 @@ Every session reads this first and updates it last.
     pick where).
 - 2026-10-23, issue #1 (04:10 UTC): leave the card out. To affirm the order: the second round of the Truckee River, then the
   kingdom, then the Looney Tunes scene with the banner.
+- 2026-10-23, issue #1 (14:13 UTC), one message:
+  - Take out the last line of your speech: it's a repeat.
+  - Take out the image of a baby after, and replace it with an image of "sloppy steaks", from Tim Robinson's I Think You
+    Should Leave. The steak appears, water from the Truckee is scooped and poured over it, then Brudda Blaine and you both
+    say "Let's slop em up!!" Then you say "they can't stop us from ordering a steak AND a glass of Truckee water". Then it
+    fades into the kingdom.
+  - In the kingdom, not the club music right away: slow music, like the scene in The Lion King. When the baby tick is
+    revealed, the club music drops, and it pauses there.
+  - Eliminate the Bart Harley Jarvis scene (you wrote "Blake Harvey Jarvis") altogether. "Thank you for making that."
+  - Switch the order of the fights: the Edmund Fitzgerald, then the Gales of November.
 
 ## What you've decided
 
@@ -361,7 +371,7 @@ Every session reads this first and updates it last.
   is violent rapids; an enemy between each camp, killed only by your tick's own gifts; the climb is a long road through
   giant redwoods, with few turns.
 - The two enemies in level 2 (2026-10-16; built): the Gales of November (in place of the gull), then the Edmund Fitzgerald
-  (in place of the bear).
+  (in place of the bear). (Order switched 2026-10-23, below: the Edmund Fitzgerald first.)
 - The pointer's "Point": a hunter comes out and shoots. (2026-10-16; built.)
 - Camp 1: the weed from Milwaukee, really emphasized, and Brudda Blaine's line, "lets smoke the whole branch brosef!"
   (2026-10-16; built, his line word for word.)
@@ -447,7 +457,8 @@ Every session reads this first and updates it last.
   cray" are gone (2026-10-23; built).
 - On the third run, after "I have a form of reveal to you, Brother.", the tick's next line, then a baby tick revealed the
   way Bart Harley Jarvis is, with your banner above it, held for Blaine to read (2026-10-23; built). Only on the third
-  run: the assistant's pick, asked.
+  run: the assistant's pick, asked. (The stage, and the banner on it, are gone since 2026-10-23, at your word; see the
+  sloppy steak, below.)
 - After the final scene: a fade to white, DJ Brudda Blaine back on the turntables, and every character dancing, as long as
   Jim's cigarette, lingering (2026-10-23; built).
 - The tick's speech comes right before "I have a form of reveal to you, Brother.", on every run (2026-10-23; built; on
@@ -460,8 +471,19 @@ Every session reads this first and updates it last.
 - The ending, as one scene (2026-10-23; built): after the stage, the kingdom. A field under Pride Rock, every character
   dancing in it to the club's beat, DJ Brudda Blaine on a rock in the crowd, a slow pan round to Pride Rock, and you and
   Isabella up on its tip holding the baby tick out to the crowd (the baby tick, from your 03:59 words; easy to change).
-  Then the Looney Tunes ending. The rock and the white dance as two separate scenes are gone.
+  Then the Looney Tunes ending. The rock and the white dance as two separate scenes are gone. (Since 2026-10-23 the
+  stage is gone too: the sloppy steak comes before the kingdom, and the kingdom opens on slow music, below.)
 - The card for final words is left out (2026-10-23, your word). The banners say it.
+- Your speech at the Truckee ends on "We have done it all." (2026-10-23; built): its last line is out, a repeat. Runs one
+  and two fade out there; on the third, "I know you just revealed your junk. But I now have junk to reveal to you."
+  follows, then the egg.
+- The Bart Harley Jarvis stage is gone, and the banner over it with it (2026-10-23; built). In its place, out of the flash:
+  a sloppy steak. Water from the Truckee scooped and poured all over it; Brudda Blaine and you: "Let's slop em up!!"; you:
+  "They can't stop us from ordering a steak AND a glass of Truckee water."; then it fades into the kingdom.
+- The kingdom (2026-10-23; built): slow music while the view pans (original, like the opening of The Lion King); when the
+  baby tick goes up on Pride Rock, the club's beat drops, and it pauses there until A is tapped.
+- Level 2's fights, in the new order (2026-10-23; built): the Edmund Fitzgerald between camps 1 and 2, then the Gales of
+  November between camps 2 and 3.
 - Before the fight, Jim: "You smell like hippie. You will not pass!", like Gandalf (2026-10-23; built; first built as "You
   will pass.", changed at your word).
 - The drive to Reno: the desert rock plays all the way from Utah to Reno; no Mac Miller (2026-10-23; built).
@@ -1333,16 +1355,60 @@ Every session reads this first and updates it last.
   - Gifts from Blaine: untouched.
   - Links for checks: `?level=4&tick=dog&at=speech&ends=regular,human` (the whole ending), `&at=kingdom` (the kingdom alone).
 
+- 2026-10-23, sketch 2 changed (`gh-pages`, commit b2cb626), from your one message (14:13 UTC):
+  - Your speech at the Truckee: the last line is out. It ends "We have done it all." Runs one and two fade out there. On the
+    third: "I know you just revealed your junk. But I now have junk to reveal to you.", then the egg, as before.
+  - The stage with the baby tick (Bart Harley Jarvis) is out of the ending, and the banner over it with it. (Its code is
+    kept, unused, in case it's wanted back.)
+  - The sloppy steak, in its place: you flash, and out of the white, a close-up by the river at night, the letterbox still
+    on. On a flat rock: a white plate, and on it a steak (a T-bone: seared, grill marks, a strip of fat, the bone), with
+    sparkles as it appears; an empty glass stands beside it. Brudda Blaine's arm reaches in from the left, takes the
+    glass, dips it into the Truckee (rings on the water, a splash and a glug), lifts it out full and dripping, tips it over
+    the steak, and pours: a stream, a splash, the water spreading over the steak and the plate, over the edge and down the
+    rock (a running-water sound, glugs as it empties). He sets the glass back down, empty, and his arm goes. Then: "A
+    sloppy steak." / 'Brudda Blaine and you: "Let's slop em up!!"' / 'You: "They can't stop us from ordering a steak AND a
+    glass of Truckee water."' Then a fade to white, into the kingdom. The orchestra from the turn plays on through it.
+  - The kingdom: no club music at first. Slow music, original, in the spirit of the opening of The Lion King (66 beats a
+    minute, in D: a voice calling out alone over a low swell; then strings, a round bass, slow hand drums and a high plucked
+    line; then a choir holding each chord). Everyone in the field sways slowly, and DJ Brudda Blaine waits at his decks.
+    After the pan, you and Isabella lift the baby tick up on Pride Rock, in the sunbeam; the music stops for a breath, then
+    the club's beat drops (a flash of light), everyone dances, and it pauses there: at least twelve seconds, then "Tap A",
+    as long as you like. Then the Looney Tunes ending with your banner, as before.
+  - Level 2: the Edmund Fitzgerald is the first fight now, out on the lake where the gale was (between camps 1 and 2), and
+    the Gales of November the second, near the falls (between camps 2 and 3), with the day going dark and the sleet as you
+    ride up to it. Each keeps its own look, moves and words; the regular tick still latches onto a gull at the ship and a
+    fish at the gale. How-to-play words still come at the first fight. The level 2 end screen says it in the new order.
+  - The level 4 end screen: its summary ends on "We have done it all."; the guesses list has the sloppy steak and the slow
+    music.
+  - Checked, headless and muted: the third run from your speech goes the Truckee, the steak, the kingdom (slow music, then
+    the drop), the Looney Tunes ending, to the end screen, with no stage, no old line and no errors; a first run ends on
+    "We have done it all." and saves one tick mark; the steak alone at a small screen size, no errors; both fights in level
+    2, in the new order, played to a win with two ticks each, no errors. The steak and the words stay clear of the text
+    box. The slow music is a little softer than the orchestra and the club, on purpose, so the drop lands.
+  - Checked, about the sketch (used only as the idea): "Sloppy Steaks", in I Think You Should Leave with Tim Robinson,
+    season 2, episode 2 (Netflix's sketch list names it "Baby Cries": "A man who holds a crying baby is determined to
+    change, while trying to enjoy a sloppy steak."); sloppy steaks are steaks with water poured all over them, at a
+    restaurant called Truffoni's. Sources: Netflix Tudum, "I Think You Should Leave Sketch Names By Episode"; Den of Geek,
+    "I Think You Should Leave Season 2: Ranking Every Sketch". Nothing from the show is quoted or drawn from it; the lines
+    are yours.
+  - Gifts from Blaine: untouched, still on.
+  - Links for checks: `?level=4&tick=dog&at=speech&ends=regular,human` (the whole ending), `&at=steak` (the sloppy steak,
+    then the kingdom), `&at=kingdom` (the kingdom alone), `?level=2&tick=dog&at=fight1` and `&at=fight2` (the two fights).
+
 ## Next to build
 
 Nothing queued.
 
 ## Open questions
 
-- Asked 2026-10-23, twice: your speech ends "I also have junk to reveal", and the line you sent before ("I know you just
-  revealed your junk. But I now have junk to reveal to you.") still follows it on the third run. Keep both, or drop that
-  one? With "I have a form of reveal to you, Brother." gone, the two now sit back to back. Said 2026-10-23 (comment
-  6356964408): both stay unless you say drop one. Not to be asked again.
+- Asked 2026-10-23 (comment 6367023021): your first banner was over the stage, so it's gone with it. Should it come down
+  over Pride Rock during the pause instead, or stay out? (Its words are still kept, scrambled, in the game's code.)
+- Said 2026-10-23 (comment 6367023021): "the last line of my speech" was read as the speech's own last line ("You have
+  revealed your junk as your final act..."), so the third run keeps "I know you just revealed your junk. But I now have
+  junk to reveal to you." Easy to swap if you meant the other.
+- Answered 2026-10-23: take out the last line of your speech (asked twice: keep both junk lines, or drop one?).
+- Answered 2026-10-23: eliminate the stage altogether (asked, comment 6359036142: keep the stage with your first banner
+  between the egg and the kingdom?).
 - Asked 2026-10-23 (comment 6356964408): anything else feel long, now that you're shaving time? (The math at the first camp
   is about a third shorter; it can go shorter still, say by cutting one of the three tries.)
 
@@ -1357,7 +1423,8 @@ Nothing queued.
   button for the safety baby tick?
 
 - Asked 2026-10-23 (comment 6359036142): your order was the Truckee, then the kingdom, then the Looney Tunes ending. The
-  stage with the baby tick and your first banner still comes between the egg and the kingdom. Keep it?
+  stage with the baby tick and your first banner still comes between the egg and the kingdom. Keep it? (Answered, above:
+  gone.)
 - Answered 2026-10-23: leave the card out (asked: send your final words, or leave the card out now that your banners say
   it?). Before: waiting (asked 2026-10-22) for your final words for the last scene.
 - Not said yet: runs two and three are level 4 again, with another tick ("Try another tick" on the end screen), not the
@@ -1652,3 +1719,8 @@ Nothing queued.
 - 2026-10-23: replied to your 04:10 message (comment 6359036142): the card is out and the kingdom is in, with the link to
   the whole ending as a third run, the order, and one check: keep the stage with your first banner between the egg and the
   kingdom? Nothing new built for it (the card was already out in 68549ec).
+- 2026-10-23: one message from you on issue #1 (14:13): the speech's last line out, sloppy steaks in place of the stage, slow
+  music in the kingdom until the baby tick and then the club's drop, the stage gone, and the fights in level 2 switched.
+  Replied first (comment 6367023021) with the plan for all five, and one question: your first banner went with the stage;
+  bring it back over Pride Rock in the pause, or leave it out? Then built all five in sketch 2, same link (b2cb626). Not
+  posted about yet; the next reply says it's in.
