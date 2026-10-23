@@ -321,6 +321,7 @@ Every session reads this first and updates it last.
   - Switch the order of the fights: the Edmund Fitzgerald, then the Gales of November.
 - 2026-10-23, issue #1, two messages (14:19, 27 seconds apart), on your first banner: "Have it come out over pride rock.",
   then "Eliminate the banner actually." The last bit will be the banner over "That's all folks!".
+- 2026-10-23, issue #1 (20:49 UTC): "Finalize it as not a sketch, but as a game. This has been a fantastic experience."
 
 ## What you've decided
 
@@ -493,6 +494,8 @@ Every session reads this first and updates it last.
   will pass.", changed at your word).
 - The drive to Reno: the desert rock plays all the way from Utah to Reno; no Mac Miller (2026-10-23; built).
 - The math at the first camp, sped up: the same three tries and the same math, shorter (2026-10-23; built).
+- It's a game now, not a sketch (2026-10-23, 20:49 UTC; built). Nothing on screen calls it a sketch or lists guesses any
+  more. These notes still say which parts began as the assistant's guesses, so you can see them.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1400,12 +1403,32 @@ Every session reads this first and updates it last.
   - Links for checks: `?level=4&tick=dog&at=speech&ends=regular,human` (the whole ending), `&at=steak` (the sloppy steak,
     then the kingdom), `&at=kingdom` (the kingdom alone), `?level=2&tick=dog&at=fight1` and `&at=fight2` (the two fights).
 
+- 2026-10-23, finalized as a game, not a sketch (`gh-pages`, commit 17231fa), from your message (20:49 UTC):
+  - The page's name, and the line at the top of the screen, now say just "Tickman" (before: "sketch 2", "levels 1 to 4",
+    and "a sketch to react to, not the game").
+  - The title screen: the line about it being a sketch, and its guesses, is gone; "Level 4: West" no longer says "(just
+    begun)". "How to play", Start, and the three "Skip to level" buttons stay.
+  - The level screens: each keeps its heading, the words about what you did, and its buttons. Gone from all four: the list
+    of the levels from your story, the line naming the final boss (so whoever plays isn't told what's ahead), the lists of
+    guesses, and the line asking what's right and wrong, with its link here. Level 4's heading is "Level 4 done" (before:
+    "Level 4, so far"), and its "still to come" list is gone. The tick marks and "Something is left to find. Finish with
+    each tick." stay.
+  - Everything you play is the same: no change to any level, scene, sound or word in the game itself. The links for
+    checks still work.
+  - Checked, headless and muted: the title screen and every level screen have no "sketch", no guesses and no link; the
+    ends of levels 2, 3 and 4 are reached and show their buttons; the title screen fits a small phone; no errors. The
+    level 4 screen's words are long, so it scrolls to its buttons, as before.
+
 ## Next to build
 
 Nothing queued.
 
 ## Open questions
 
+- Asked 2026-10-23 (comment 6375843278): should the title screen say who made it ("A game by" and your name), or stay
+  as it is?
+- Said 2026-10-23 (comment 6375843278): the secret ending opens after finishing level 4 with all three ticks, on the same
+  phone or computer; after the first ending, "Try another tick" plays level 4 again with a new one.
 - Answered 2026-10-23: eliminate your first banner; the last bit is the banner over "That's all folks!" (asked, comment
   6367023021: bring it back over Pride Rock in the pause, or leave it out?). Not shown anywhere. Its words still sit,
   scrambled, in the unused stage code; not said to you.
@@ -1433,9 +1456,9 @@ Nothing queued.
   gone.)
 - Answered 2026-10-23: leave the card out (asked: send your final words, or leave the card out now that your banners say
   it?). Before: waiting (asked 2026-10-22) for your final words for the last scene.
-- Not said yet: runs two and three are level 4 again, with another tick ("Try another tick" on the end screen), not the
-  whole game; the tick marks are kept in the browser, so all three runs need the same phone or computer. The egg is the
-  assistant's reading of "a manifested easter egg". Both are yours to change.
+- Said 2026-10-23 (see above): runs two and three are level 4 again, with another tick ("Try another tick" on the end
+  screen), not the whole game; the tick marks are kept in the browser, so all three runs need the same phone or computer.
+  Not said: the egg is the assistant's reading of "a manifested easter egg". Both are yours to change.
 - Answered 2026-10-23: the orchestra is like a Bocelli ballad (asked: did "Balotelli" mean Andrea Bocelli?), and you
   trust the assistant's pick on runs one and two.
 - Answered 2026-10-22: option 1 (asked below).
@@ -1733,3 +1756,7 @@ Nothing queued.
 - 2026-10-23: two messages from you on issue #1 (14:19, a minute after that reply): over Pride Rock, then no, eliminate the
   banner. Replied (comment 6367487125): no banner over Pride Rock, and everything from your last message is in, with links
   to the whole ending as a third run, the sloppy steak, and the first fight. No question. Nothing new built.
+- 2026-10-23: one message from you on issue #1 (20:49): finalize it as a game, not a sketch. Replied first (comment
+  6375843278) with what finalizing changes, how the secret ending opens when playing it with Blaine, and one question: a
+  "by" line on the title screen? Then built it, same link (gh-pages 17231fa): the sketch labels, the guesses, the levels
+  list and the feedback lines are off the screens; the game itself is unchanged.
