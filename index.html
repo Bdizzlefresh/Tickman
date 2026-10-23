@@ -2679,8 +2679,8 @@ function drawTarp(x, y, C) {
     return;
   }
   if (s === 'tarpShort') {  // the first try: tied to one tree, it doesn't reach the other; it strains, slips, and drops
-    const open = ease(clamp(k / 1.2, 0, 1)), strain = k > 1.2 && k < 2.4 ? Math.sin((k - 1.2) * 16) * 1.5 : 0;
-    const drop = clamp((k - 2.4) / 0.45, 0, 1);
+    const open = ease(clamp(k / 0.7, 0, 1)), strain = k > 0.7 && k < 1.4 ? Math.sin((k - 0.7) * 22) * 1.5 : 0;
+    const drop = clamp((k - 1.4) / 0.3, 0, 1);
     if (drop >= 1) { tarpHeap(x, y, false); return; }
     const w = Math.max(1, 14 * open + strain), dy = drop * 11;
     const tr = [L + w, top + 2 + dy * 0.9];
@@ -2691,7 +2691,7 @@ function drawTarp(x, y, C) {
     return;
   }
   if (s === 'tarpSpin' || s === 'tarpWrapped') {  // the second try: 360 degrees, all the way round the tree
-    const t = s === 'tarpWrapped' ? 1 : clamp(k / 2.0, 0, 1), tx = x + TREE_L, wrapped = Math.round(16 * t);
+    const t = s === 'tarpWrapped' ? 1 : clamp(k / 1.2, 0, 1), tx = x + TREE_L, wrapped = Math.round(16 * t);
     for (let j = 0; j < wrapped; j++) { ctx.fillStyle = [TARP_DK, TARP, TARP_HI][j % 3]; ctx.fillRect(tx - 2, y - 1 - j, 5, 1); }
     if (t < 1) {  // the loose end, whipping round and round the trunk
       const a = t * Math.PI * 8, len = 3 + 15 * (1 - t), ex = tx + 0.5 + Math.cos(a) * len, yb = y - 2 - wrapped;
@@ -2699,10 +2699,10 @@ function drawTarp(x, y, C) {
     } else { line(ctx, tx + 2, y - 16, tx + 6, y - 9, ROPE); px(ctx, tx + 2, y - 15, GROM); }  // a rope end, dangling
     return;
   }
-  if (s === 'tarpRise') { full(Math.max(1, Math.round(13 * ease(clamp(k / 1.2, 0, 1)))), 0); if (k >= 1.2) { tieL(); tieR(); } return; }
+  if (s === 'tarpRise') { full(Math.max(1, Math.round(13 * ease(clamp(k / 0.8, 0, 1)))), 0); if (k >= 0.8) { tieL(); tieR(); } return; }
   if (s === 'tarpUp') { full(13, 0); tieL(); tieR(); return; }
   if (s === 'tarpSag') {  // the third try, y = x squared: a bowl. It catches the rain, and the middle sags lower and lower
-    const f = clamp(k / 3.0, 0, 1), sag = Math.round(2 + 7 * f), mx = Math.round((L + R) / 2), my = top + sag;
+    const f = clamp(k / 2.0, 0, 1), sag = Math.round(2 + 7 * f), mx = Math.round((L + R) / 2), my = top + sag;
     full(13, sag); tieL(); tieR();
     if (f > 0.4) disc(ctx, mx, my + 3, Math.round(1 + 3 * f), TARP_DK);  // the weight of it, bulging
     const pw = Math.round(2 + 8 * f);                                      // the pool of rain in the bowl
@@ -2710,12 +2710,12 @@ function drawTarp(x, y, C) {
     return;
   }
   if (s === 'tarpDump') {  // it dumps all of it, then comes down
-    const c = clamp((k - 0.35) / 0.5, 0, 1);
+    const c = clamp((k - 0.2) / 0.35, 0, 1);
     if (c < 1) full(Math.max(1, Math.round(13 * (1 - c))), Math.round(9 * (1 - c))); else tarpHeap(x, y, true);
-    if (k < 0.9) {  // the water, pouring out of the bowl
-      const mx = Math.round((L + R) / 2) + 3, fall = Math.round(clamp(k / 0.2, 0, 1) * 13);
+    if (k < 0.6) {  // the water, pouring out of the bowl
+      const mx = Math.round((L + R) / 2) + 3, fall = Math.round(clamp(k / 0.15, 0, 1) * 13);
       ctx.fillStyle = '#9fd0ee'; ctx.fillRect(mx - 3, top + 9, 6, fall); ctx.fillStyle = '#e8f4f8'; ctx.fillRect(mx - 1, top + 9, 2, fall);
-      splash(mx, y - 1, k / 0.9, 1.6);
+      splash(mx, y - 1, k / 0.6, 1.6);
     }
     return;
   }
@@ -2740,7 +2740,7 @@ const MATH_FONT = {
 const mathWidth = s => [...s].reduce((w, ch) => w + MATH_FONT[ch][0].length + 1, -1);
 function drawMath(sx, sy) {  // sx, sy: you, on screen (the top-left of your tile)
   const k = time - tarp.mathT0;
-  const s = tarp.math === 'reach' ? '8 > 10' : tarp.math === 'angle' ? ['45°', '90°', '360°'][Math.min(2, Math.floor(k / 1.1))] : 'y = x²';
+  const s = tarp.math === 'reach' ? '8 > 10' : tarp.math === 'angle' ? ['45°', '90°', '360°'][Math.min(2, Math.floor(k / 0.55))] : 'y = x²';
   const graph = tarp.math === 'curve', w = mathWidth(s) + (graph ? 15 : 0) + 8, h = 13, sway = Math.round(Math.sin(time * 1.3) * 2);
   const bx = clamp(Math.round(sx + 8 - w / 2) + sway, 2, VW - w - 2), by = sy - 25;
   ctx.globalAlpha = clamp(k / 0.3, 0, 1);
@@ -3250,44 +3250,44 @@ async function camp(i) {
     rain.on = true;
     await wait(1.2);
     await say(['Clouds roll in off the lake. It starts to rain.']);
+    // the math, sped up (2026-10-23, his word: "it's getting a little long"): the same three tries and the same math,
+    // in about half the pages, and the tarp moves faster
     C.tent = 'tarpRoll'; rustle(); P.facing = 'left'; P.side = -1;
-    await say(['No tent tonight: a tarp.', "You'll tie it up between two trees, as a lean-to, to keep off the rain."]);
+    await say(['No tent tonight: a tarp, tied between two trees as a lean-to.']);
     // the first try: how long it has to be
     tarp.math = 'reach'; tarp.mathT0 = time;
-    await say(['First, the math.', 'The tarp is 8 feet across. The trees are 10 feet apart.', '8 is more than 10. Easy.']);
+    await say(['The math: the tarp is 8 feet across. The trees are 10 feet apart.', '8 is more than 10. Easy.']);
     tarp.math = null;
     C.tent = 'tarpShort'; C.tentT0 = time; creak();
-    await wait(1.3); creak(); await wait(1.1); whoosh(0.35, 0.05); await wait(0.5); flop();
+    await wait(0.75); creak(); await wait(0.65); whoosh(0.25, 0.05); await wait(0.3); flop();
     C.tent = 'tarpHeap';
-    await say(["It doesn't reach. It slips off the tree.", "It doesn't go very well."]);
+    await say(["It doesn't reach. It doesn't go very well."]);
     // the second try: the angle
     tarp.math = 'angle'; tarp.mathT0 = time;
-    await say(['Again. For the rain to run off, it needs an angle.', '45 degrees. No, 90. No: 360. All the way round.']);
+    await say(['Again, with an angle. 45 degrees. No, 90. No: 360. All the way round.']);
     tarp.math = null;
-    C.tent = 'tarpSpin'; C.tentT0 = time; whoosh(1.8, 0.06);
-    await wait(2.1); C.tent = 'tarpWrapped'; rain.heavy = true;
-    await say(['You wrap it all the way round the tree.', 'The rain comes down harder. Right on you.']);
+    C.tent = 'tarpSpin'; C.tentT0 = time; whoosh(1.1, 0.06);
+    await wait(1.3); C.tent = 'tarpWrapped'; rain.heavy = true;
+    await say(['You wrap it round the tree. The rain comes down harder. Right on you.']);
     // the third try: a curve
     C.tent = 'tarpHeap'; rustle();
-    await say(['You unwind it. One more try.']);
     tarp.math = 'curve'; tarp.mathT0 = time;
-    await say(['This time, a curve, so the rain runs off.', 'You work it out: y = x².']);
+    await say(['One more try: a curve, so the rain runs off. y = x².']);
     tarp.math = null;
     C.tent = 'tarpRise'; C.tentT0 = time; creak();
-    await wait(1.4); C.tent = 'tarpUp';
-    await say(['It goes up. It holds!']);
+    await wait(0.9); C.tent = 'tarpUp';
     tarp.under = true; await stepTo(C.cx + 1, 'left');
-    await say(['You crawl under it, out of the rain.', 'Dry. For a moment.']);
+    await say(['It holds! You crawl under it. Dry. For a moment.']);
     C.tent = 'tarpSag'; C.tentT0 = time; creak();
-    await wait(1.4);
-    await say(['y = x² is a bowl.', 'It catches every drop. The middle sags lower, and lower...']);
+    await wait(0.9);
+    await say(['y = x² is a bowl. It catches every drop. The middle sags, and sags...']);
     C.tent = 'tarpDump'; C.tentT0 = time; splashSound(0.4);
-    await wait(0.4); flop(); await wait(0.5);
+    await wait(0.25); flop(); await wait(0.35);
     C.tent = 'tarpSoggy'; P.hidden = true; tarp.soaked = true;
-    await say(['...and dumps all of it on you. Then the whole tarp comes down on top of you.', "It doesn't go well at all."]);
+    await say(['...and dumps it all on you. Then the tarp comes down on top of you.', "It doesn't go well at all."]);
     P.hidden = false;
     await stepTo(C.cx + 2, 'right'); P.facing = 'left'; P.side = -1; tarp.under = false;
-    await say(['You wriggle out, soaked through.', 'The weed from Milwaukee did the math.']);
+    await say(['You wriggle out, soaked. The weed from Milwaukee did the math.']);
   } else {
     await say(['You pitch the tent.']);
     C.tent = 'rise'; C.tentT0 = time;
