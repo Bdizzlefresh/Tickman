@@ -6487,9 +6487,10 @@ const JUMP3 = {
 const DRIVE_SKY = { oil: [[150, 190, 226], [238, 226, 198]], bison: [[138, 186, 228], [232, 230, 204]],
   horses: [[132, 180, 226], [238, 224, 194]], badlands: [[120, 172, 224], [246, 214, 178]],
   park: [[112, 166, 222], [226, 234, 240]], elk: [[104, 158, 220], [224, 232, 244]], coyote: [[118, 170, 224], [228, 234, 238]],
+  ys: [[104, 158, 220], [224, 232, 244]],
   utah: [[150, 196, 232], [248, 232, 204]], nevada: [[70, 84, 150], [246, 170, 120]], reno: [[10, 12, 36], [44, 30, 70]] };
 const DRIVE_FIELD = { oil: ['#b9a96a', '#a8985a'], bison: ['#a9b06c', '#98a05c'], horses: ['#b4a868', '#a49858'], badlands: ['#c4a874', '#b49464'],
-  park: ['#94a05a', '#84904a'], elk: ['#aaa862', '#9a9852'], coyote: ['#a8a462', '#989452'],
+  park: ['#94a05a', '#84904a'], elk: ['#aaa862', '#9a9852'], coyote: ['#a8a462', '#989452'], ys: ['#aaa862', '#9a9852'],
   utah: ['#e2d6b4', '#d2c49e'], nevada: ['#b0a27e', '#9e906c'], reno: ['#2e2a36', '#26222e'] };
 const BANDS = ['#ecdcc4', '#dcae80', '#c47c58', '#e8cca8', '#b86c4c', '#f0e4d0', '#d0966a'];  // the badlands' stripes
 function pumpjack(x, y, s, ph) {  // a large oil rig, nodding: x, y the middle of its base on the ground; s its size; facing left
@@ -6563,14 +6564,8 @@ function drawDrive() {
     for (let i = 0; i < 5; i++) { const x = Math.round(wrapX(i * 61 + 20 + d * 0.3, VW + 60) - 30); pumpjack(x, HZ + 4, 0.35, time * 2.2 + i); }
     for (let i = 0; i < 4; i++) { const x = Math.round(wrapX(i * 83 + 10 + d * 0.55, VW + 80) - 40); pumpjack(x, HZ + 14, 0.6, time * 2 + i * 1.7); }
     for (const wx of S.rigs) { const x = at(wx); if (x > -40 && x < VW + 40) pumpjack(x, RD - 2, 1, time * 1.8 + wx); }
-  } else if (seg === 'bison') {
-    for (const b of S.herd) { const x = at(b.wx, b.k); if (x > -20 && x < VW + 20) bison(x, b.y, b.flip, (time + b.wx) % 5 < 3.5, time + b.wx); }
-  } else if (seg === 'horses') {
-    const x = at(S.horseAt), k = (t % 2.6) / 2.6;
-    const r1 = k > 0.15 && k < 0.5, r2 = k > 0.4 && k < 0.8;  // they take turns going up at each other
-    horse(x - 11, 70, true, 'black', r1, time); horse(x + 11, 70, false, 'brown', r2, time + 0.5);
-    for (const [on, hx] of [[r1, x - 6], [r2, x + 6]]) if (!on) { ctx.fillStyle = 'rgba(220,200,160,.5)'; ctx.fillRect(hx - 3 + Math.floor(time * 6) % 3, 69, 3, 1); }  // a little dust
-  } else if (seg === 'badlands') {
+  } else if (seg === 'badlands') {  // entering Badlands National Park, all one scene (your ask): the buttes, the bison
+    // by the road, then the two horses having a slight battle, by the park sign
     for (let i = 0; i < 3; i++) {  // closer, bigger buttes, striped
       const cx = Math.round(wrapX(i * 70 + 30 + d * 0.45, VW + 80) - 40);
       for (let x = cx - 18; x < cx + 18; x++) {
@@ -6578,8 +6573,19 @@ function drawDrive() {
         for (let y = HZ + 6 - h; y < HZ + 6; y++) { ctx.fillStyle = BANDS[wrapX(Math.floor(y / 2) + i, BANDS.length)]; ctx.fillRect(x, y, 1, 1); }
       }
     }
-    const x = at(S.signAt);
-    if (x > -60 && x < VW + 60) { ctx.fillStyle = '#5a3a22'; ctx.fillRect(x - 20, 58, 2, 16); ctx.fillRect(x + 18, 58, 2, 16); signBoard(ctx, 'BADLANDS', x, 52, '#5a3a22', '#f4efe6', '#3a2414'); signBoard(ctx, 'NATIONAL PARK', x, 62, '#5a3a22', '#f4efe6', '#3a2414'); }
+    if (S.herd) for (const b of S.herd) { const x = at(b.wx, b.k); if (x > -20 && x < VW + 20) bison(x, b.y, b.flip, (time + b.wx) % 5 < 3.5, time + b.wx); }  // bison
+    if (S.signAt != null) {  // the park sign
+      const x = at(S.signAt);
+      if (x > -60 && x < VW + 60) { ctx.fillStyle = '#5a3a22'; ctx.fillRect(x - 20, 58, 2, 16); ctx.fillRect(x + 18, 58, 2, 16); signBoard(ctx, 'BADLANDS', x, 52, '#5a3a22', '#f4efe6', '#3a2414'); signBoard(ctx, 'NATIONAL PARK', x, 62, '#5a3a22', '#f4efe6', '#3a2414'); }
+    }
+    if (S.horseAt != null) {  // two horses, one black, one brown
+      const x = at(S.horseAt), k = (t % 2.6) / 2.6;
+      const r1 = k > 0.15 && k < 0.5, r2 = k > 0.4 && k < 0.8;  // they take turns going up at each other
+      if (x > -40 && x < VW + 40) {
+        horse(x - 11, 70, true, 'black', r1, time); horse(x + 11, 70, false, 'brown', r2, time + 0.5);
+        for (const [on, hx] of [[r1, x - 6], [r2, x + 6]]) if (!on) { ctx.fillStyle = 'rgba(220,200,160,.5)'; ctx.fillRect(hx - 3 + Math.floor(time * 6) % 3, 69, 3, 1); }  // a little dust
+      }
+    }
   } else if (YS_SEGS.has(seg)) ysField(S, seg, d, HZ, RD, at);
   else if (DS_SEGS.has(seg)) dsField(S, seg, d, HZ, RD, at);
   ctx.fillStyle = '#4a4a50'; ctx.fillRect(0, RD, VW, 12);  // the road, its lines going by
@@ -6664,32 +6670,28 @@ async function driveWest() {
   await wait(1.2);
   await say(['Oil fields. Large oil rigs, close and far.']);
   await wait(2.5);
+  await badlands();
+}
+async function untilStopped() {  // until the U-Haul has pulled up where it's braking to
+  while (scene3 && scene3.brakeTo != null && scene3.brakeTo - scene3.dist > 0.3) await wait(0.1);
+}
+async function badlands() {  // entering Badlands National Park, all one scene (your ask): the buttes, the bison by the
+  // road, then the two horses having a slight battle, by the park sign. You slow, and stop beside them.
   await fadeTo(1, 0.6);
-  Object.assign(scene3, { seg: 'bison', dist: 0, herd: [-20, -70, -95, -160, -230, -260].map((wx, i) => ({ wx, k: i % 2 ? 0.75 : 1, y: i % 2 ? 64 : 74, flip: i === 2 })) });
+  const stop = 360;  // where you pull up: the park sign just ahead, the horses right beside you (the bison have gone by)
+  Object.assign(scene3, { seg: 'badlands', dist: 0, v: 38, vGoal: 38, brakeTo: stop, signAt: 27 - stop, horseAt: 134 - stop,
+    herd: [[-20, 1, false], [70, 1, true], [-120, 1, false], [-170, 1, true], [-10, 0.75, true], [90, 0.75, false], [-80, 0.75, false]]
+      .map(([wx, k, flip]) => ({ wx, k, y: k < 1 ? 64 : 74, flip })) });
   await fadeTo(0, 0.6);
   await wait(1.0);
   await say(['Bison, right by the road.']);
   await wait(2.2);
-  await horses();
-}
-async function horses() {
-  await fadeTo(1, 0.6);
-  const stop = 150; Object.assign(scene3, { seg: 'horses', dist: 0, v: 38, vGoal: 38, brakeTo: stop, horseAt: 24 - stop });
-  await fadeTo(0, 0.6);
-  await wait(3.2);
+  await untilStopped();
   await say(['Two horses, one black, one brown, having a slight battle.']);
-  await wait(2.4);
-  scene3.brakeTo = null; scene3.vGoal = 38;
-  await wait(1.6);
-  await badlands();
-}
-async function badlands() {
-  await fadeTo(1, 0.6);
-  const stop = 170; Object.assign(scene3, { seg: 'badlands', dist: 0, v: 38, vGoal: 38, brakeTo: null, signAt: 30 - stop });
-  await fadeTo(0, 0.6);
-  await wait(3.8);
+  await wait(1.2);
   await say(['Badlands National Park.']);
-  await wait(0.6);
+  scene3.brakeTo = null; scene3.vGoal = 38;
+  await wait(1.0);
   await fadeTo(1, 0.8);
   scene3 = { kind: 'arrive', t0: time, dist: 0, v: 26, vGoal: 26, brakeTo: 84, outT: 0 };
   await fadeTo(0, 0.8);
@@ -7578,7 +7580,7 @@ function purrBreath(v = 0.09) {  // one breath of a purr: a soft, low rumble, fl
 // bull bugling (real: bulls bugle to call to the cows and to challenge other bulls, from the National Park Service's
 // page on Yellowstone's elk); coyotes, and photographers annoyingly following them as if they're wolves ("those
 // idiots"). Then into a large parking lot (below). How it all looks and sounds is a guess. ----
-const YS_SEGS = new Set(['park', 'elk', 'coyote']);
+const YS_SEGS = new Set(['park', 'elk', 'coyote', 'ys']);  // 'ys': the whole trip, all one scene (your ask)
 function ysFar(seg, d, HZ) {  // far off: mountains, snow on the peaks; closer mountains behind the elk; pines
   const tri = u => 1 - 2 * Math.abs(u - Math.floor(u) - 0.5);  // a zigzag, 0 to 1: sharp peaks
   const H = wx => 9 + 17 * tri(wx / 61 + 0.3) + 8 * tri(wx / 27 + 0.1) + 2.5 * tri(wx / 9);
@@ -7587,7 +7589,7 @@ function ysFar(seg, d, HZ) {  // far off: mountains, snow on the peaks; closer m
     ctx.fillStyle = lit ? '#7c8699' : '#5f697d'; ctx.fillRect(x, top, 1, HZ - top);
     if (h > 20) { ctx.fillStyle = lit ? '#f2f4f8' : '#c9d1de'; ctx.fillRect(x, top, 1, Math.round((h - 20) * 0.7) + 1); }
   }
-  if (seg === 'elk') {  // the mountains, close, behind the elk: bigger, darker, more snow
+  if (seg === 'elk' || seg === 'ys') {  // the mountains, close, behind the elk: bigger, darker, more snow
     const N = wx => 6 + 26 * tri(wx / 47 + 0.6) + 8 * tri(wx / 19) + 2 * tri(wx / 7);
     for (let x = 0; x < VW; x++) {
       const wx = x - d * 0.18, h = N(wx), lit = N(wx + 1) >= h, top = Math.round(HZ - 2 - h);
@@ -7675,15 +7677,15 @@ function shooter(x, y, c, walk, crouch) {  // a photographer with a long lens, f
 }
 const packX = p => p.from != null ? p.x0 - (time - p.from) * 22 : p.x0;  // the coyote in front: where it is now
 function ysField(S, seg, d, HZ, RD, at) {  // on the far side of the road
-  if (seg === 'park' || seg === 'coyote') {  // pines
-    const n = seg === 'park' ? 6 : 3;
+  if (seg === 'park' || seg === 'coyote' || seg === 'ys') {  // pines
+    const n = seg === 'park' ? 6 : seg === 'ys' ? 4 : 3;
     for (let i = 0; i < n; i++) { const x = Math.round(wrapX(i * (180 / n) + 7 + d * 0.55, VW + 40) - 20); pineSide(x, HZ + 10 + (i % 3) * 3, 10 + (i % 3) * 3); }
   }
-  if (seg === 'park' && S.signAt != null) {  // the park sign, going by
+  if ((seg === 'park' || seg === 'ys') && S.signAt != null) {  // the park sign, going by
     const x = at(S.signAt);
     if (x > -60 && x < VW + 60) { ctx.fillStyle = '#5a3a22'; ctx.fillRect(x - 24, 58, 2, 16); ctx.fillRect(x + 22, 58, 2, 16); signBoard(ctx, 'YELLOWSTONE', x, 52, '#5a3a22', '#f4efe6', '#3a2414'); signBoard(ctx, 'NATIONAL PARK', x, 62, '#5a3a22', '#f4efe6', '#3a2414'); }
   }
-  if (seg === 'elk') for (const b of S.herd) {  // elk, grazing, now and then looking up
+  if ((seg === 'elk' || seg === 'ys') && S.herd) for (const b of S.herd) {  // elk, grazing, now and then looking up
     const x = at(b.wx, b.k); if (x > -20 && x < VW + 20) elkFar(x, b.y, b.flip, (time + b.wx) % 5 < 3.5);
   }
 }
@@ -7694,20 +7696,25 @@ function ysNear(S, seg, d, RD) {  // in front of the road: a meadow
     const x = Math.round(wrapX(i * 23 + d * 1.6, VW + 20) - 10), y = y0 + 4 + (i * 13) % (VH - y0 - 8);
     for (let k = 0; k < 3; k++) line(ctx, x + k, y + 3, x + k * 2 - 1, y, k % 2 ? '#a8a84a' : '#7a8a3a');
   }
-  if (seg === 'elk') {  // a bull, right by the road; he lifts his head and bugles
+  const who = [];  // drawn back to front
+  if ((seg === 'elk' || seg === 'ys') && S.bull != null) {  // a bull, right by the road; he lifts his head and bugles
     const x = Math.round(S.bull + d * 1.6), b = S.bugle != null ? time - S.bugle : -1;
-    if (x > -30 && x < VW + 30) elk(x, 124, true, b >= 0 && b < 2.6 ? 'bugle' : 'up');
+    if (x > -30 && x < VW + 30) who.push({ y: 124, f: () => elk(x, 124, true, b >= 0 && b < 2.6 ? 'bugle' : 'up') });
   }
-  if (seg === 'coyote' && S.pack) {  // two coyotes, trotting along; photographers creeping after them, lenses up
+  if ((seg === 'coyote' || seg === 'ys') && S.pack) {  // two coyotes, trotting along; photographers creeping after them, lenses up
     const p = S.pack, X = Math.round(packX(p) + (S.dist - S.stopAt) * 1.6), look = p.look != null, trot = p.from != null;
-    const who = [{ y: 118, f: () => coyote(X, 118, look, trot, time) }, { y: 124, f: () => coyote(X + 13, 124, look, trot, time + 0.3) }];
+    const L = seg === 'ys' ? 6 : 0;  // in the one scene, a little nearer than the bull, so they pass in front of him
+    who.push({ y: 118 + L, f: () => coyote(X, 118 + L, look, trot, time) }, { y: 124 + L, f: () => coyote(X + 13, 124 + L, look, trot, time + 0.3) });
     for (let i = 0; i < 4; i++) {
-      const x = X + 42 + i * 16, y = i % 2 ? 126 : 120, c = SHOOTERS[i];
+      const x = X + 42 + i * 16, y = (i % 2 ? 126 : 120) + L, c = SHOOTERS[i];
       who.push({ y, f: () => shooter(x, y, c, trot ? time + i * 0.3 : null, look && time - p.look > 0.3 + i * 0.12) });
     }
-    who.sort((a, b) => a.y - b.y).forEach(w => w.f());
+  }
+  who.sort((a, b) => a.y - b.y).forEach(w => w.f());
+  if ((seg === 'coyote' || seg === 'ys') && S.pack) {
+    const p = S.pack, X = Math.round(packX(p) + (S.dist - S.stopAt) * 1.6);
     for (const m of p.marks) {  // CLICK, and a glint off the lens
-      const x = X + 42 + m.i * 16, y = m.i % 2 ? 126 : 120;
+      const x = X + 42 + m.i * 16, y = (m.i % 2 ? 126 : 120) + (seg === 'ys' ? 6 : 0);
       signText(ctx, 'CLICK', x - 9, y - 27, '#2a2a30'); signText(ctx, 'CLICK', x - 10, y - 28, '#ffffff');
       ctx.fillStyle = '#ffffff'; ctx.fillRect(x - 13, y - 10, 3, 1); ctx.fillRect(x - 12, y - 11, 1, 3);
     }
@@ -7737,37 +7744,27 @@ function bugle() {  // a bull elk's bugle: low, rising to a high whistle, then a
   o.connect(lp); lp.connect(g); g.connect(master); o.start(t); vib.start(t); o.stop(t + 2.1); vib.stop(t + 2.1);
   for (const dt of [2.3, 2.6, 2.9]) tone(master, 'sawtooth', 110, t + dt, 0.12, 0.02, 500);  // grunts
 }
-async function yellowstone() {
+async function yellowstone() {  // all one scene, no cuts (your ask): the park sign; on, to the elk, the mountains
+  // behind them, and the bull; and while you're stopped there, the coyotes, and the photographers. The words are the same.
   phase = 'cut';
   await fadeTo(1, 0.8);
-  scene3 = { kind: 'drive', t0: time, seg: 'park', dist: 0, v: 38, vGoal: 38, signAt: null };
+  scene3 = { kind: 'drive', t0: time, seg: 'ys', dist: 0, v: 38, vGoal: 38, signAt: null, herd: [], bull: null, bugle: null, pack: null };
   await fadeTo(0, 0.8);
   await wait(0.8);
   await say(['Back on the road, to Yellowstone.']);
   Object.assign(scene3, { signAt: -70 - scene3.dist, brakeTo: scene3.dist + 97 });  // the park sign comes up; you slow, and stop by it
   await wait(3.4);
   await say(['Yellowstone National Park.']);
-  scene3.brakeTo = null; scene3.vGoal = 38;
-  await wait(1.4);
-  await fadeTo(1, 0.6);  // elk
-  const stopE = 160;
-  Object.assign(scene3, { seg: 'elk', dist: 0, v: 38, vGoal: 38, brakeTo: stopE, bull: 34 - stopE * 1.6, bugle: null,
-    herd: [[100, 1, 70, false], [40, 0.75, 62, true], [14 - stopE, 1, 70, false], [128 - stopE, 1, 72, true], [146 - 120, 0.75, 62, false],
-      [30 - 120, 0.75, 61, true], [-40 - 120, 0.75, 63, false]].map(([wx, k, y, flip]) => ({ wx, k, y, flip })) });
-  await fadeTo(0, 0.6);
-  await wait(3.4);
+  const stopE = scene3.dist + 220;  // on, and the elk come up, grazing, the mountains behind them; you stop by the bull
+  Object.assign(scene3, { brakeTo: stopE, vGoal: 38, bull: 34 - stopE * 1.6, stopAt: stopE,  // (where each one is, once you stop)
+    herd: [[196, 1, 70, false], [176, 1, 73, true], [128, 1, 72, true], [142, 0.75, 62, false], [30, 0.75, 61, true], [14, 1, 70, false]]
+      .map(([sx, k, y, flip]) => ({ wx: sx - stopE * k, k, y, flip })) });
+  await untilStopped();
   await say(['Elk, grazing by the road.']);
   await wait(0.6);
   scene3.bugle = time; bugle();  // the bull lifts his head, and bugles
-  await wait(3.4);
-  scene3.brakeTo = null; scene3.vGoal = 38;
-  await wait(1.6);
-  await fadeTo(1, 0.6);  // coyotes, and photographers
-  const stopC = 150;
-  Object.assign(scene3, { seg: 'coyote', dist: 0, v: 38, vGoal: 38, brakeTo: stopC, stopAt: stopC, pack: null });
-  await fadeTo(0, 0.6);
   await wait(3.0);
-  const p = scene3.pack = { x0: 186, from: time, look: null, clickAt: 0, n: 0, marks: [] };  // they come trotting in
+  const p = scene3.pack = { x0: 186, from: time, look: null, clickAt: 0, n: 0, marks: [] };  // coyotes come trotting along the meadow
   await wait(5.6);
   Object.assign(p, { x0: packX(p), from: null, look: time, clickAt: time + 0.5 });  // the coyotes stop and look back; click, click
   await wait(0.8);
@@ -10692,8 +10689,8 @@ function finish4() {
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
   field: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; musicStart(); prairie(); },
-  bison: () => { driveWest(); },
-  horses: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); horses(); },
+  bison: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); badlands(); },
+  horses: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); badlands(); },
   badlands: () => { scene3 = { kind: 'drive', t0: time, seg: 'oil', dist: 0, v: 38, vGoal: 38, rigs: [] }; musicStart(); badlands(); },
   town: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; musicStart(); dogTown().then(prairie); },
   search: () => { scene3 = { kind: 'arrive', t0: time, dist: 84, v: 0, vGoal: 0, brakeTo: 84, outT: time }; phase = 'cut'; musicStart(); searchIzzy(); },
