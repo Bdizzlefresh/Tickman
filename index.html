@@ -10468,12 +10468,11 @@ async function dip() {
   S.wade = { from: 0, to: 0.12, t0: time, dur: 1.4 }; wadeSplash();
   await wait(1.6);
   await say(['You follow. Slowly. Hesitantly.']);
-  S.wade = { from: wadeK(S), to: 0.05, t0: time, dur: 0.8 };
+  S.wade = { from: wadeK(S), to: 0.05, t0: time, dur: 0.8 };  // a step back
   await wait(1.0);
-  await say(['You: "aint no way Bish"']);
-  S.wade = { from: wadeK(S), to: 0.24, t0: time, dur: 2.2 }; S.cold = true; wadeSplash();
+  S.wade = { from: wadeK(S), to: 0.24, t0: time, dur: 2.2 }; S.cold = true; wadeSplash();  // then in, up to your knees
   await wait(2.4);
-  await say(['Up to your knees.', 'You: "this shit cray"']);
+  await say(['Up to your knees.', 'You: "He is incredible. He is truly from the North."']);  // (your words, in place of the other two)
   // behind you, under the bridge
   D.shadow = time;
   await wait(3.2);
@@ -10521,6 +10520,18 @@ async function dip() {
   return true;
 }
 function eggA() { const D = scene3 && scene3.dip; if (D && D.tap) { const r = D.tap; D.tap = null; r(); } }
+function diver(cx, cy, ang, dir) {  // Brudda Blaine, diving, drawn along the way he's going (ang): cx, cy his middle
+  const ux = Math.cos(ang), uy = Math.sin(ang), b = dir > 0 ? -1 : 1, nx = -uy * b, ny = ux * b;  // n: toward his back
+  const dot = (s, w, c) => { ctx.fillStyle = c; ctx.fillRect(Math.round(cx + ux * s + nx * w), Math.round(cy + uy * s + ny * w), 1, 1); };
+  const SK = '#e2b08a', SH = '#c8946e', HAIR = '#2a1a10';
+  for (let s = -10; s < -4; s += 0.5) { dot(s, 0.5, SH); dot(s, -0.4, SK); }                      // his legs, together
+  dot(-10.5, 1, SH); dot(-11, 1.5, SH);                                                           // his feet, pointed
+  for (let s = -4; s < 1; s += 0.5) { dot(s, 1.2, SH); dot(s, 0.4, SK); dot(s, -0.4, SK); dot(s, -1.2, SK); }  // his body, broad at the shoulders
+  for (let s = 1; s < 4; s += 0.5) { dot(s, 1.2, HAIR); dot(s, 0.4, HAIR); dot(s, -0.4, SK); dot(s, -1.2, SK); }  // his head: dark hair on the back of it
+  dot(2.5, -1.2, '#111'); dot(3, -1.2, '#111');                                                   // his shades, still on
+  for (let s = 4; s < 8; s += 0.5) { dot(s, -0.4, SK); dot(s, 0.4, SH); }                         // his arms, out ahead
+  dot(8, 0, SK);                                                                                  // his hands, together
+}
 function drawDip(S) {  // drawn in the Truckee scene, after the bridge
   const D = S.dip;
   // the pile of belongings, on the bank, by the dark under the bridge
@@ -10536,15 +10547,17 @@ function drawDip(S) {  // drawn in the Truckee scene, after the bridge
   if (D.stage === 'cloud') {  // a cartoon cloud, clothes flying out of it
     for (let i = 0; i < 9; i++) disc(ctx, S.bl.x + 8 + Math.round(Math.cos(i * 0.7 + time * 9) * 7), S.bl.y + 8 + Math.round(Math.sin(i * 1.3 + time * 7) * 6), 4 + (i % 3), i % 2 ? '#d8d4dc' : '#b8b4c4');
   }
-  for (const L of D.leaps) {  // like a dolphin: an arc out of the water, and back in
-    const dur = L.slow ? 1.6 : 0.9, k = (time - L.t0) / dur; if (k < 0 || k > 1.4) continue;
-    if (k <= 1) {
-      const pts = []; for (let j = 0; j < 7; j++) { const u = clamp(k - j * 0.045, 0, 1); pts.push([L.x + L.dir * (u - 0.5) * 22, L.y - Math.sin(u * Math.PI) * 14]); }
-      pts.forEach(([x, y], j) => { if (y < L.y) { ctx.fillStyle = j === 0 ? '#5a3a20' : '#e2b08a'; ctx.fillRect(Math.round(x) - 1, Math.round(y) - 1, 3, 2); } });
-      if (L.slow) for (let j = 0; j < 3; j++) sparkleAt(Math.round(pts[0][0] + j * 5 - 5), Math.round(pts[0][1] - 4 - j * 2), (k * 2 + j * 0.3) % 1);  // beauty, and grace
+  for (const L of D.leaps) {  // like a dolphin: an arc out of the water, and back in. A person diving (your ask: more
+    // human, less like a worm): arms out ahead of him, hands together, head down between them, legs together
+    const dur = L.slow ? 1.6 : 1.0, k = (time - L.t0) / dur, W = 30, H = 17; if (k < -0.25 || k > 1.4) continue;
+    if (k <= 1.25) {
+      const u = k, cx = L.x + L.dir * (u - 0.5) * W, cy = L.y - Math.sin(u * Math.PI) * H;
+      const ang = Math.atan2(-H * Math.PI * Math.cos(u * Math.PI), L.dir * W);  // which way he's going: head first
+      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, VW, L.y); ctx.clip(); diver(cx, cy, ang, L.dir); ctx.restore();  // only what's out of the water
+      if (L.slow && k > 0 && k < 1) for (let j = 0; j < 3; j++) sparkleAt(Math.round(cx + j * 6 - 6), Math.round(cy - 8 - j * 2), (k * 2 + j * 0.3) % 1);  // beauty, and grace
     }
-    for (const e of [0, 1]) { const ex = L.x + L.dir * (e - 0.5) * 22, sk = (time - L.t0 - e * dur) / 0.5; if (sk < 0 || sk > 1) continue;
-      for (let j = 0; j < 6; j++) px(ctx, Math.round(ex + Math.cos(j) * (2 + sk * 5)), Math.round(L.y - Math.abs(Math.sin(j * 2)) * (1 + sk * 6) * (1 - sk)), '#e8f0f8'); }
+    for (const e of [0, 1]) { const ex = L.x + L.dir * (e - 0.5) * W, sk = (time - L.t0 - e * dur) / 0.5; if (sk < 0 || sk > 1) continue;
+      for (let j = 0; j < 7; j++) px(ctx, Math.round(ex + Math.cos(j) * (2 + sk * 6)), Math.round(L.y - Math.abs(Math.sin(j * 2)) * (1 + sk * 7) * (1 - sk)), '#e8f0f8'); }
   }
   if (D.stage === 'rise') {  // standing up in the river, facing the bridge: wet hair, his shades, bare shoulders; the water to his waist
     const k = clamp((time - D.rise) / 0.8, 0, 1), X = 66, W = 92 - Math.round(k * 10), f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X + a, W + b, w, h); };
