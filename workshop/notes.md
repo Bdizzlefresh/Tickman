@@ -299,6 +299,16 @@ Every session reads this first and updates it last.
   - Take out the tick's line "I have a form of reveal to you" (your words: "the last line").
 - 2026-10-23, issue #1 (03:53 UTC): with "That's all folks!", a banner above it with your words (kept out of these notes,
   like the secret; they're in your message on issue #1 of 2026-10-23, 03:53 UTC).
+- 2026-10-23, issue #1, two messages (03:59 and 04:04 UTC):
+  - In answer to "anything else feel long?": "Everything else feels good." You wanted to see the ending in one go: from the
+    tick saying he has something to reveal, to the holding of the baby tick on Pride Rock, like Simba, to the Looney Tunes
+    outro. "Then we can officially finalize the game."
+  - Then: after the reveal, a slow pan with every character from the game dancing in the field under Pride Rock, "the
+    kingdom that exists". Easter eggs, if the assistant wants. The pan comes round to reveal the tick and Isabella holding a
+    baby out to the dancing crowd. The club's beat going, and Brudda Blaine DJing somewhere in the scene (the assistant's
+    pick where).
+- 2026-10-23, issue #1 (04:10 UTC): leave the card out. To affirm the order: the second round of the Truckee River, then the
+  kingdom, then the Looney Tunes scene with the banner.
 
 ## What you've decided
 
@@ -447,6 +457,11 @@ Every session reads this first and updates it last.
   follows it, then the egg.
 - The very last scene, after the dance: Looney Tunes, "That's all folks!", with the baby tick, your tick and Isabella
   (2026-10-23; built). Above it, a banner with your words (2026-10-23, 03:53 UTC; built).
+- The ending, as one scene (2026-10-23; built): after the stage, the kingdom. A field under Pride Rock, every character
+  dancing in it to the club's beat, DJ Brudda Blaine on a rock in the crowd, a slow pan round to Pride Rock, and you and
+  Isabella up on its tip holding the baby tick out to the crowd (the baby tick, from your 03:59 words; easy to change).
+  Then the Looney Tunes ending. The rock and the white dance as two separate scenes are gone.
+- The card for final words is left out (2026-10-23, your word). The banners say it.
 - Before the fight, Jim: "You smell like hippie. You will not pass!", like Gandalf (2026-10-23; built; first built as "You
   will pass.", changed at your word).
 - The drive to Reno: the desert rock plays all the way from Utah to Reno; no Mac Miller (2026-10-23; built).
@@ -1287,9 +1302,40 @@ Every session reads this first and updates it last.
   - Gifts from Blaine: untouched.
   - Link for checks: `?level=4&tick=dog&at=looney` (the very last scene).
 
-## Next to build (queued, in your order)
+- 2026-10-23, sketch 2 changed (`gh-pages`, commit 68549ec), from your two messages (03:59 and 04:04):
+  - The kingdom, a new scene in place of the rock and the white dance. Out of the white after the stage: a wide field at
+    sunrise, about two and a half screens across, far hills, the sun low. Everyone from the white dance is there, dancing,
+    spread across it (the Gales of November and the Edmund Fitzgerald in the sky; the birds, bugs, mosquitoes, turtles,
+    salmon and fairies flying; Phil, Jim, the elk, the deer gang, the bison, the horses, the dealer, Karill, the promoters,
+    Patrick, the hunter, the shadowy character, Shawn, the girls from Yellowstone, the locals from Akumal, the
+    photographers, the coyotes, a prairie dog, IzzyKat, the three ticks from the web, the female spider, the woodland
+    creatures, and the naked mole rat). Jim's cigarette lies along the bottom, still
+    burning. The club's Latin house plays, and everyone dances on its beat.
+  - DJ Brudda Blaine, on his turntables, on a low rock in the middle of the crowd, the fairies looping round him.
+  - After a few seconds, the view pans slowly right, about 24 seconds, across the crowd, to Pride Rock: a big rock rising on
+    the right, its tip jutting out over the crowd. You and Isabella stand on the tip. A beam of sunlight comes down, and you
+    lift the baby tick up and out toward the crowd (turned to face them), with sparkles. It holds; then "Tap A", a fade to
+    white, and the Looney Tunes ending with your banner.
+  - Easter eggs from earlier in the game, hidden in the field: a spruce at the far left with the blue tarp still wrapped
+    all the way round it (camp 1's 360 degrees); in the grass up front, the N.E.R.D. album case, a honeybun, an empty green
+    bottle, and one of Jim's dice, turned over to its 1.
+  - The card for final words is gone from the ending (your 04:10 message came in before this was built).
+  - A new link that starts at your speech at the Truckee: `?level=4&tick=dog&at=speech`. With `&ends=regular,human` it plays
+    as your third run, through the egg, the stage, the kingdom and the Looney Tunes ending.
+  - Links that act as if (`&ends=...`) no longer save tick marks in the browser. Before this, opening one could leave all
+    three marked in that browser.
+  - The level 4 end screen: nothing left to come; the guesses list has the kingdom.
+  - Checked, headless and muted: the third run from the speech plays the Truckee, the stage, the kingdom and the Looney Tunes
+    ending, to the end screen, with no card and no errors, and saves no marks; a first run from the speech ends after it and
+    saves one mark; the kingdom alone at a small screen size, no errors.
+  - Guesses: all of it but your words (the field, the sunrise, who stands where, the DJ's rock, Pride Rock's look, the pan's
+    speed, the sunbeam, the easter eggs, the timing).
+  - Gifts from Blaine: untouched.
+  - Links for checks: `?level=4&tick=dog&at=speech&ends=regular,human` (the whole ending), `&at=kingdom` (the kingdom alone).
 
-1. Your words, on the card at the very end (waiting for you).
+## Next to build
+
+Nothing queued.
 
 ## Open questions
 
@@ -1310,7 +1356,8 @@ Every session reads this first and updates it last.
   good deal longer.) Should the deer do more, like Galaga's (shoot back, or try to take Isabella back)? Is Up the right
   button for the safety baby tick?
 
-- Waiting (asked 2026-10-22): your final words for the last scene. Until then it holds a blank card.
+- Answered 2026-10-23: leave the card out (asked: send your final words, or leave the card out now that your banners say
+  it?). Before: waiting (asked 2026-10-22) for your final words for the last scene.
 - Not said yet: runs two and three are level 4 again, with another tick ("Try another tick" on the end screen), not the
   whole game; the tick marks are kept in the browser, so all three runs need the same phone or computer. The egg is the
   assistant's reading of "a manifested easter egg". Both are yours to change.
@@ -1595,3 +1642,8 @@ Every session reads this first and updates it last.
   "That's all folks!". Replied (comment 6357012516) that it's coming, with a link straight to the very last scene, and that
   the words will be scrambled in the code. No question. Then built it in sketch 2, same link (4e85000). Not posted about
   yet; the next reply says it's in, along with the two changes in 82652fd.
+- 2026-10-23: two messages from you on issue #1 (03:59: "Everything else feels good", and seeing the ending in one go; 04:04,
+  which came in before the reply went up: the kingdom). Replied (comment 6357113163) with the plan for the kingdom, a link
+  that plays the whole ending from your speech as a third run (working once it's in), and one question: the card. Then
+  built it in sketch 2, same link (68549ec; the computer the workshop runs on slept partway through). Your 04:10 message
+  (leave the card out) came in before the build, so the card is out.
