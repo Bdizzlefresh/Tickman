@@ -271,7 +271,6 @@ a { color:var(--accent); }
     <p id="end4Text"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>The Truckee River: Jim melts into it; the cigarette as long as time itself; you and Brudda Blaine walk in.</li>
       <li>The realm of California: the deer, Isabella, the egg sac, and Isabella free at last.</li>
       <li>The very end, as you want it.</li>
     </ol>
@@ -5857,7 +5856,7 @@ function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown,
     lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful,
-    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight })[scene3.kind]();
+    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -6152,6 +6151,7 @@ function update3(dt) {
   if (S && S.kind === 'canal') updateCanal(dt);         // Reno: the canals,
   if (S && S.kind === 'craps') updateCraps();           // and craps
   if (S && S.kind === 'fight') updateFight(dt);         // and the fight with Jim
+  if (S && S.kind === 'truckee') updateTruckee(dt);     // the Truckee River
 }
 
 // ---- level 3: the scenes ----
@@ -9704,6 +9704,7 @@ function drawFight() {
   if (!fightCanvas) paintFightTable();
   ctx.save();
   if (time - S.shake < 0.5) ctx.translate(Math.round(Math.sin(time * 60) * 3 * (1 - (time - S.shake) / 0.5)), 0);
+  else if (S.quake) ctx.translate(Math.round(Math.sin(time * 50) * 1.5), Math.round(Math.cos(time * 41)));  // the table shakes as he screams
   ctx.fillStyle = '#120c18'; ctx.fillRect(-4, 0, VW + 8, VH);
   for (let i = 0; i < 18; i++) { const x = i * 10 - 4, on = (Math.floor(time * 1.5) + i * 3) % 7; ctx.fillStyle = '#241c2c'; ctx.fillRect(x, 4, 8, 12); ctx.fillStyle = ['#3ac8ff', '#ff4fae', '#ffd24f', '#7ae82a', '#c86aff', '#3ac8ff', '#ff8a2a'][on]; ctx.fillRect(x + 1, 6, 6, 4); }
   ctx.globalAlpha = 0.45; ctx.fillStyle = '#08040e'; ctx.fillRect(-4, 0, VW + 8, 46); ctx.globalAlpha = 1;
@@ -9711,7 +9712,7 @@ function drawFight() {
   const gk = S.grow ? ease(clamp((time - S.grow) / 1.6, 0, 1)) : (S.ph === 2 ? 1 : 0), sc = 1.75 + 0.5 * gk, foot = 64 + 8 * gk;
   const perk = time - S.perk < 3 || S.ph === 2;
   if (!S.bits) {
-    const wob = time - S.crack < 0.5 ? Math.round(Math.sin(time * 70) * 2) : 0;
+    const wob = time - S.crack < 0.5 || S.quake ? Math.round(Math.sin(time * 70) * 2) : 0;
     drawJimFight(80 + wob, foot, sc, perk, S.lies);
   }
   ctx.drawImage(fightCanvas, 0, 0);
@@ -9791,6 +9792,7 @@ function drawFight() {
   ctx.fillStyle = '#2a2a30'; ctx.fillRect(98, 139, 58, 4);
   if (S.ph === 1) { ctx.fillStyle = S.energy > 0.3 ? '#f2c230' : '#e8782a'; ctx.fillRect(98, 139, Math.round(58 * S.energy), 4); }
   else for (let i = 0; i < 7; i++) { ctx.fillStyle = i < 7 - S.lies ? '#f2c230' : '#4a2a2a'; ctx.fillRect(98 + i * 8 + 1, 139, 7, 4); }
+  drawScream(S);
 }
 function drawJimFight(cx0, foot, sc, perk, lies) {  // Jim, big, with a crack for every lie
   if (!jimCanvas) { jimCanvas = document.createElement('canvas'); jimCanvas.width = 40; jimCanvas.height = 50; }
@@ -9903,10 +9905,8 @@ async function jimFight(from) {
   musicStop();
   await say(['Seven times, the die lied.', 'Jim: "The die... lie."']);
   await say(['His philosophy, shattered.', 'His core being, full of untruths.']);
-  crumbleJim(S); crumbleSound();
-  await wait(3.6);
-  await say(['He disintegrates.', 'He melts away, off the table.', 'Toward the Truckee River.']);
-  await wait(0.8);
+  await jimScreams(S);  // more dramatic: he screams, and comes apart
+  await truckee();     // and the whole scene turns into the Truckee River
   phase = 'cut';
 }
 
@@ -9926,6 +9926,306 @@ function coyoteHowl() { if (!ac || muted) return; const t = ac.currentTime, o = 
   o.type = 'sine'; o.frequency.setValueAtTime(520, t); o.frequency.linearRampToValueAtTime(880, t + 0.5); o.frequency.linearRampToValueAtTime(700, t + 1.3);
   g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.03, t + 0.2); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.4);
   o.connect(g); g.connect(master); o.start(t); o.stop(t + 1.45); }
+// ---- the end of Jim, more dramatic (your message): light breaks out of every crack in him, and he screams at the top
+// of his lungs, "THE DIE..... THEY LIE.... I CANNOT.... BE.....", and comes apart. (How it looks and sounds: guesses.) ----
+const SCREAM = ['THE DIE.....', 'THEY LIE....', 'I CANNOT....', 'BE.....'];
+async function jimScreams(S) {
+  await say(['Light breaks out of every crack in him.', 'He screams, at the top of his lungs.']);
+  S.beams = time; S.quake = time; rumble(1.4, 0.2);
+  for (let i = 0; i < SCREAM.length; i++) {
+    S.scream = { w: SCREAM[i], t0: time }; S.shake = time; S.flash = time; screamSound(i);
+    await wait(i === SCREAM.length - 1 ? 2.6 : 1.7);
+  }
+  S.scream = null;
+  crumbleJim(S);
+  for (const b of S.bits) { b.vx *= 4; b.vy = b.vy * 3 - 40; b.at = time + 0.05 + (b.at - time) * 0.35; }  // he bursts apart
+  crumbleSound(); boom(); S.burst = time; S.shake = time;
+  await wait(2.6);
+  S.quake = null;
+  await say(['He disintegrates.']);
+  await wait(0.4);
+}
+function drawScream(S) {  // drawn over the fight: the light out of his cracks, and his words, huge, shaking
+  if (S.beams) {
+    const k = clamp((time - S.beams) / 2, 0, 1), out = S.burst ? clamp(1 - (time - S.burst) / 1.6, 0, 1) : 1, cx = 80, cy = 34;
+    for (let i = 0; i < 9; i++) {
+      const a = i * 0.7 + Math.sin(time * 3 + i) * 0.08, len = (20 + (i % 3) * 18) * k * (S.burst ? 1 + (time - S.burst) * 3 : 1);
+      ctx.globalAlpha = (0.35 + 0.25 * Math.sin(time * 20 + i)) * out; line(ctx, cx, cy, Math.round(cx + Math.cos(a) * len), Math.round(cy + Math.sin(a) * len), i % 2 ? '#fff6c8' : '#ffffff');
+    }
+    ctx.globalAlpha = 1;
+  }
+  if (S.burst && time - S.burst < 1.2) { ctx.globalAlpha = 0.85 * (1 - (time - S.burst) / 1.2); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }
+  if (S.scream) {
+    const k = time - S.scream.t0, j = Math.round(Math.sin(time * 70) * 2), sc = k < 0.15 ? 3 : 2;
+    bigWords(S.scream.w, 80 + j, 10 + Math.round(Math.cos(time * 60) * 1.5), sc, '#ffffff', '#c8202a');
+  }
+}
+function screamSound(i) {  // Jim, screaming at the top of his lungs: a raw, voice-like roar, wilder each time (no words)
+  if (!ac || muted) return;
+  const t = ac.currentTime + 0.02, d = i === 3 ? 2.0 : 1.15, f0 = 150 + i * 28;
+  const o = ac.createOscillator(), o2 = ac.createOscillator(), sh = ac.createWaveShaper(), f1 = ac.createBiquadFilter(), f2 = ac.createBiquadFilter();
+  const g1 = ac.createGain(), g2 = ac.createGain(), out = ac.createGain(), vib = ac.createOscillator(), vg = ac.createGain();
+  const echo = ac.createDelay(), fb = ac.createGain(), lp = ac.createBiquadFilter(), curve = new Float32Array(512);
+  for (let k = 0; k < 512; k++) curve[k] = Math.tanh((k / 255.5 - 1) * 3); sh.curve = curve;
+  o.type = 'sawtooth'; o2.type = 'square'; o2.detune.value = 18;
+  for (const x of [o, o2]) { x.frequency.setValueAtTime(f0 * 0.8, t); x.frequency.linearRampToValueAtTime(f0 * 1.5, t + 0.15); x.frequency.linearRampToValueAtTime(f0 * 1.35, t + d * 0.7); x.frequency.exponentialRampToValueAtTime(f0 * 0.7, t + d); }
+  vib.frequency.value = 7; vg.gain.value = f0 * 0.06; vib.connect(vg); vg.connect(o.frequency); vg.connect(o2.frequency);
+  f1.type = f2.type = 'bandpass'; f1.Q.value = 4; f2.Q.value = 6; f1.frequency.value = 700; f2.frequency.value = 1150;  // an open "AH"
+  g1.gain.value = 2; g2.gain.value = 1.4;
+  out.gain.setValueAtTime(0.0001, t); out.gain.exponentialRampToValueAtTime(0.16, t + 0.06); out.gain.setValueAtTime(0.15, t + d * 0.75); out.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  echo.delayTime.value = 0.33; fb.gain.value = 0.3; lp.type = 'lowpass'; lp.frequency.value = 1800;
+  o.connect(sh); o2.connect(sh); sh.connect(f1); sh.connect(f2); f1.connect(g1); f2.connect(g2); g1.connect(out); g2.connect(out);
+  out.connect(master); out.connect(echo); echo.connect(lp); lp.connect(fb); fb.connect(echo); lp.connect(master);
+  for (const x of [o, o2, vib]) { x.start(t); x.stop(t + d + 0.05); }
+  setTimeout(() => { try { out.disconnect(); lp.disconnect(); fb.disconnect(); } catch (e) {} }, (d + 3) * 1000);
+}
+
+// ---- the Truckee River, at night (your message). The whole scene of Jim's disintegration melts away and turns into the
+// river: rocky, with slight rapids; a bridge overhead, on the left; the Sierra Nevada behind. Jim melts into it. Then a
+// cigarette as long as time itself, full of good California weed, not Milwaukee weed: you grab it, light it, and you and
+// Brudda Blaine take a drag of time itself (the sky wheels round, and the moon crosses it, while the river all but
+// stops), and slowly walk into the Truckee, as cold as the Sierra mountains themselves. (How it all looks and sounds,
+// and the words not in your message, are guesses.) ----
+const TK = { far: 66, near: 112 };  // the river, from the far bank to the near one
+const TK_ROCKS = [[58, 92, 3], [72, 79, 4], [92, 99, 4], [104, 73, 3], [120, 104, 3], [134, 86, 5], [151, 98, 3]];  // x, y, size
+const tkTop = x => 8 + x * 46 / 80, tkBot = x => 30 + x * 28 / 80;  // the bridge's deck: overhead on the left, out to the far bank
+const TK_PIERS = [[2, 134, 12], [26, 104, 8], [52, 86, 5], [78, 68, 3]];  // x, where it meets the bank or the water, width
+const TK_LAMPS = [12, 41, 66];
+let truckeeCanvas = null, bridgeCanvas = null;
+const TK_SKY = new Array(VW).fill(0);  // the skyline: stars only above it
+function paintTruckee() {
+  truckeeCanvas = document.createElement('canvas'); truckeeCanvas.width = VW; truckeeCanvas.height = VH;
+  const g = truckeeCanvas.getContext('2d'), r = rng(77), f = (a, b, w, h, c) => { g.fillStyle = c; g.fillRect(a, b, w, h); };
+  for (let y = 0; y < TK.far; y++) { const k = y / TK.far; f(0, y, VW, 1, 'rgb(' + Math.round(6 + 16 * k) + ',' + Math.round(8 + 14 * k) + ',' + Math.round(26 + 30 * k) + ')'); }
+  const tri = u => 1 - 2 * Math.abs(u - Math.floor(u) - 0.5);
+  const far = x => 14 + 15 * tri(x / 53 + 0.15) + 6 * tri(x / 17 + 0.4) + 2 * tri(x / 5);
+  for (let x = 0; x < VW; x++) {  // the Sierra Nevada: jagged peaks, snow on top, the slopes toward the moon catching its light
+    const h = far(x), top = Math.round(TK.far - 6 - h), lit = far(x + 1) < h;
+    TK_SKY[x] = top;
+    f(x, top, 1, TK.far - top, lit ? '#46507a' : '#343c60');
+    const snow = Math.max(0, Math.round((h - 17) * 0.7));
+    for (let y = top; y < top + snow; y++) if (y - top < 2 || r() < 0.75) f(x, y, 1, 1, lit ? '#dfe6f6' : '#9aa6c8');
+  }
+  for (let x = 0; x < VW; x++) {  // nearer ridges, dark
+    const h = 5 + 7 * tri(x / 31 + 0.6) + 3 * tri(x / 9 + 0.2), top = Math.round(TK.far - h);
+    f(x, top, 1, TK.far - top, '#1c2238'); TK_SKY[x] = Math.min(TK_SKY[x], top);
+  }
+  for (let i = 0; i < 46; i++) {  // pines, along the ridges and the far bank
+    const x = Math.round(r() * VW), h = 3 + Math.round(r() * 5), base = TK.far + 1 - Math.round(r() * 6);
+    for (let j = 0; j < h; j++) { const w = Math.floor(j / 2) * 2 + 1; f(x - Math.floor(j / 2), base - h + j, w, 1, '#121828'); }
+    for (let k = -2; k <= 2; k++) if (x + k >= 0 && x + k < VW) TK_SKY[x + k] = Math.min(TK_SKY[x + k], base - h);
+  }
+  f(0, TK.far - 1, VW, 3, '#141a2a');  // the far bank
+  for (let y = TK.far + 2; y < TK.near; y++) { const k = (y - TK.far) / (TK.near - TK.far); f(0, y, VW, 1, 'rgb(' + Math.round(16 + 12 * k) + ',' + Math.round(28 + 24 * k) + ',' + Math.round(52 + 32 * k) + ')'); }
+  f(0, TK.near, VW, VH - TK.near, '#2e2a28');  // the near bank: river stones, round, the moonlight on their tops
+  for (let i = 0; i < 150; i++) {
+    const x = Math.round(r() * VW), y = TK.near + 2 + Math.round(r() * (VH - TK.near)), s = 1 + Math.round(r() * 2);
+    disc(g, x, y, s, ['#4a4440', '#5a524a', '#3e3a38', '#62584c', '#4e4a50'][i % 5]); f(x + (s > 1 ? 1 : 0), y - s, 1, 1, '#7a7470');
+  }
+  for (let x = 0; x < VW; x++) if (r() < 0.45) f(x, TK.near - 1 + Math.round(r()), 1, 1, '#4a5a6a');  // the wet edge
+  disc(g, 146, 126, 8, '#3a3634'); disc(g, 145, 124, 6, '#4e4846'); f(143, 118, 3, 1, '#8a8480');     // a big rock, on the bank
+  for (let i = 0; i < 9; i++) { const x = 126 + Math.round(r() * 30), y = 134 + Math.round(r() * 8); f(x, y - 3, 1, 3, '#2a3a2a'); f(x + 1, y - 2, 1, 2, '#344a34'); }
+  for (const [x, y, s] of TK_ROCKS) { disc(g, x, y, s, '#24242c'); disc(g, x - 1, y - 1, s - 1, '#3a3a46'); f(x, y - s, 2, 1, '#8a8aa0'); }  // rocks in the river
+  // the bridge, overhead on the left, its far end on the far bank (a layer of its own, over the water)
+  bridgeCanvas = document.createElement('canvas'); bridgeCanvas.width = VW; bridgeCanvas.height = VH;
+  const b = bridgeCanvas.getContext('2d'), F = (a, c, w, h, col) => { b.fillStyle = col; b.fillRect(a, c, w, h); };
+  b.fillStyle = 'rgba(4,4,12,.62)'; b.beginPath(); b.moveTo(0, TK.near - 3); b.lineTo(44, TK.near - 3); b.lineTo(60, VH); b.lineTo(0, VH); b.fill();  // the dark under it
+  for (const [x, base, w] of TK_PIERS) { const top = Math.round(tkBot(x)); F(Math.round(x - w / 2), top, w, base - top, '#3a3640'); F(Math.round(x - w / 2), top, 1, base - top, '#5a5462'); F(Math.round(x - w / 2), base - 2, w, 2, '#5a6a80'); }
+  for (let x = 0; x < 80; x++) {
+    const t = Math.round(tkTop(x)), bt = Math.round(tkBot(x));
+    let drop = 0;  // the arches: between the piers, the stone comes down lower near each pier
+    for (let i = 0; i < TK_PIERS.length - 1; i++) { const a = TK_PIERS[i][0], c = TK_PIERS[i + 1][0]; if (x >= a && x < c) drop = Math.round((1 - Math.sin((x - a) / (c - a) * Math.PI)) * (14 - i * 4)); }
+    F(x, t, 1, bt - t + drop, '#4a4452'); F(x, t, 1, 2, '#6a6272'); F(x, bt + drop - 1, 1, 1, '#24202c');
+    if (x % 6 === 0) F(x, t + 2, 1, bt - t + drop - 3, '#3e3846');
+    if (x % 3 === 0) F(x, t - 3, 1, 3, '#2a2632');
+    F(x, t - 3, 1, 1, '#3a3442');  // the railing
+  }
+  for (const x of TK_LAMPS) { const t = Math.round(tkTop(x)); F(x, t - 10, 1, 10, '#1e1a24'); F(x - 1, t - 12, 3, 2, '#ffd890'); }
+}
+let riverSnd = null;
+function riverSound(v) {  // the river, running over the rocks
+  if (!ac) return;
+  if (!riverSnd) {
+    makeNoise();
+    const s = ac.createBufferSource(), bp = ac.createBiquadFilter(), hp = ac.createBiquadFilter(), g = ac.createGain();
+    s.buffer = noise; s.loop = true; bp.type = 'bandpass'; bp.frequency.value = 700; bp.Q.value = 0.6; hp.type = 'highpass'; hp.frequency.value = 220; g.gain.value = 0;
+    s.connect(bp); bp.connect(hp); hp.connect(g); g.connect(master); s.start();
+    riverSnd = { s, g, level: 0 };
+  }
+  v = muted ? 0 : v;
+  if (Math.abs(v - riverSnd.level) > 0.002) { riverSnd.level = v; riverSnd.g.gain.setTargetAtTime(v, ac.currentTime, 0.4); }
+}
+const wadeK = S => S.wade ? S.wade.from + (S.wade.to - S.wade.from) * ease(clamp((time - S.wade.t0) / S.wade.dur, 0, 1)) : 0;
+async function truckee() {
+  let snap = null;
+  if (scene3 && scene3.kind === 'fight') { snap = document.createElement('canvas'); snap.width = VW; snap.height = VH; snap.getContext('2d').drawImage(cv, 0, 0); }
+  else await fadeTo(1, 0.6);
+  if (!truckeeCanvas) paintTruckee();
+  musicStop(); hud(null); phase = 'cut';
+  scene3 = { kind: 'truckee', t0: time, flow: 0, rate: 1, goal: 1, moonK: 0, smoke: [], nextSmoke: 0, nextBreath: 0, river: 0.05,
+    melt: snap ? { img: snap, t0: time, d: Array.from({ length: VW }, (_, x) => 0.55 * (0.5 + 0.5 * Math.sin(x * 0.17)) + 0.45 * Math.random()) } : null,
+    pour: snap ? 0 : null, me: { x: 116, y: 100, face: 'up' }, bl: { x: 92, y: 98, face: 'up' }, cig: null, drag: null, exhale: null,
+    wade: null, cold: false, under: null, warp: null };
+  const S = scene3;
+  if (!snap) await fadeTo(0, 0.8);
+  else { meltSound(); await wait(3.0); S.melt = null; }
+  await say(['Everything melts, and runs into the Truckee River.', 'Jim, too.']);
+  await say(['At night. A rocky river, with slight rapids.', 'A bridge overhead, on the left.', 'The Sierra Nevada, behind.']);
+  await wait(0.8);
+  S.cig = { t0: time, held: null, lit: null, gone: null }; spiritChime();
+  await wait(1.8);
+  await say(['Then a cigarette appears, as long as time itself.', 'Full of good California weed. Not Milwaukee weed.']);
+  S.me.face = 'left'; S.bl.face = 'right'; S.cig.held = time; thump(0.04);
+  await say(['You grab it.']);
+  S.cig.lit = time; matchStrike();
+  await wait(1.8);
+  await say(['You light it.', 'Far off, at the other end of it, a glow.']);
+  await say(['You and Brudda Blaine take a drag of time itself.']);
+  S.drag = time; S.goal = 0.08; inhale(4.2);
+  await wait(4.6);
+  S.exhale = time; S.goal = 0.5; exhale();
+  for (const a of [S.me, S.bl]) for (let i = 0; i < 14; i++) S.smoke.push({ x: a.x + 8, y: a.y + 5, vx: (Math.random() - 0.3) * 10, vy: -4 - Math.random() * 8, t0: time + i * 0.05, life: 3.2, r: 1 });
+  await wait(2.2);
+  S.cig.gone = time;
+  await wait(1.0);
+  await say(['Then, slowly, you walk into the Truckee.']);
+  S.me.face = 'up'; S.bl.face = 'up'; S.wade = { from: 0, to: 0.45, t0: time, dur: 3.2 }; S.cold = true; wadeSplash();
+  await wait(3.4);
+  coldSound();
+  await say(['It is as cold as the Sierra mountains themselves.']);
+  S.wade = { from: wadeK(S), to: 1.15, t0: time, dur: 4.4 }; wadeSplash();
+  await wait(4.6);
+  S.under = time; S.cold = false; plunge();
+  await wait(1.8);
+  S.warp = time; S.river = 0;
+  await wait(2.6);
+  riverSound(0);
+}
+function updateTruckee(dt) {
+  const S = scene3;
+  S.rate += (S.goal - S.rate) * Math.min(1, dt * 1.5); S.flow += dt * S.rate;
+  if (S.drag != null) S.moonK = ease(clamp((time - S.drag) / 4.2, 0, 1));
+  riverSound(S.river * (0.35 + 0.65 * S.rate));
+  if (S.cig && S.cig.lit && time - S.cig.lit > 1.2 && !S.cig.gone && time > S.nextSmoke) {  // smoke, drifting in from the far end
+    S.smoke.push({ x: 1, y: 103, vx: 5 + Math.random() * 4, vy: -3 - Math.random() * 3, t0: time, life: 4, r: 1 }); S.nextSmoke = time + 0.3;
+  }
+  if (S.cold && !S.under && time > S.nextBreath) {  // your breath, in the cold
+    for (const a of [S.me, S.bl]) S.smoke.push({ x: a.x + 8, y: Math.round(a.y - wadeK(S) * 14) + 3, vx: 1 + Math.random() * 2, vy: -6, t0: time, life: 1.1, r: 1, breath: true });
+    S.nextBreath = time + 0.9;
+  }
+  for (const p of S.smoke) if (time >= p.t0) { p.x += p.vx * dt; p.y += p.vy * dt; p.r = 1 + (time - p.t0) * (p.breath ? 1.5 : 1.1); }
+  S.smoke = S.smoke.filter(p => time - p.t0 < p.life);
+}
+function drawTruckee() {
+  const S = scene3, span = TK.near - TK.far;
+  ctx.drawImage(truckeeCanvas, 0, 0);
+  // the stars and the moon: in the drag of time itself, the sky wheels round, and the moon crosses it
+  const m = S.moonK, rot = m * 1.7, spin = S.drag != null && m > 0.02 && m < 0.98;
+  for (let i = 0; i < 46; i++) {
+    const a0 = i * 2.39996, rr = 14 + (i * 37) % 170, n = spin ? 14 : 1;
+    for (let j = 0; j < n; j++) {
+      const a = a0 + rot - j * 0.025, x = Math.round(30 + Math.cos(a) * rr), y = Math.round(-8 + Math.sin(a) * rr * 0.55);
+      if (x < 0 || x >= VW || y < 0 || y >= TK_SKY[x] - 1) continue;
+      ctx.globalAlpha = (j ? 0.5 * (1 - j / n) : ((Math.floor(time * 2) + i) % 6 ? 1 : 0.4)); px(ctx, x, y, i % 4 ? '#b8b8e0' : '#ffffff');
+    }
+  }
+  ctx.globalAlpha = 1;
+  const mx = Math.round(132 - 104 * m), my = Math.round(15 - 9 * Math.sin(m * Math.PI));
+  const gr = ctx.createRadialGradient(mx, my, 2, mx, my, 18); gr.addColorStop(0, 'rgba(240,236,210,.35)'); gr.addColorStop(1, 'rgba(240,236,210,0)');
+  ctx.fillStyle = gr; ctx.fillRect(mx - 18, my - 18, 36, 36); disc(ctx, mx, my, 5, '#f4f0d8'); px(ctx, mx - 2, my - 1, '#dcd6b8'); px(ctx, mx + 1, my + 2, '#dcd6b8');
+  // the water: the current, the moon on it, the lamps on it
+  for (let i = 0; i < 64; i++) {
+    const y = TK.far + 3 + (i * 29) % (span - 4), k = (y - TK.far) / span, sp = 8 + 26 * k, len = 2 + Math.round(3 * k);
+    const x = Math.round(wrapX(i * 47 + S.flow * sp, VW + 20) - 10);
+    ctx.globalAlpha = 0.3 + 0.3 * k; ctx.fillStyle = i % 3 ? '#4a6890' : '#6a8ab0'; ctx.fillRect(x, y, len, 1);
+  }
+  for (let y = TK.far + 2; y < TK.near; y += 2) {
+    const k = (y - TK.far) / span;
+    if ((y + Math.floor(S.flow * 3)) % 4 < 2) { const w = 2 + Math.round(k * 4), x = Math.round(mx + Math.sin(y * 0.9 + S.flow * 2) * (1 + k * 2) - w / 2); ctx.globalAlpha = 0.6 - 0.3 * k; ctx.fillStyle = '#efe8c8'; ctx.fillRect(x, y, w, 1); }
+  }
+  for (const lx of TK_LAMPS.slice(1)) for (let y = TK.far + 3; y < TK.far + 22; y += 2) if ((y + Math.floor(S.flow * 4) + lx) % 4 < 2) { ctx.globalAlpha = 0.4; ctx.fillStyle = '#ffb060'; ctx.fillRect(Math.round(lx + Math.sin(y + S.flow * 3)) - 1, y, 2, 1); }
+  ctx.globalAlpha = 1;
+  for (const [x, y, s] of TK_ROCKS) {  // slight rapids: white water round the rocks, a V downstream
+    for (let j = 0; j < 6; j++) { const fy = y - s + Math.round(j / 5 * s * 2); if ((j + Math.floor(S.flow * 6)) % 3) px(ctx, x - s - 1 + Math.round(Math.sin(S.flow * 5 + j * 2)), fy, '#dfe8f4'); }
+    for (let j = 1; j < 5; j++) if ((j + S.flow * 2) % 5 < 3) { px(ctx, x + s + j * 2, y - Math.round(j * 0.8), '#a8bcd8'); px(ctx, x + s + j * 2, y + Math.round(j * 0.8), '#a8bcd8'); }
+  }
+  for (let i = 0; i < 26; i++) { const x = Math.round(wrapX(i * 13 + S.flow * 22, 70) + 84), y = 86 + Math.round(Math.sin(i * 1.7) * 3 + (x - 84) * 0.12); if ((i + Math.floor(S.flow * 8)) % 3 === 0) px(ctx, x, y, '#e8f0f8'); }  // a riffle, across
+  if (S.pour != null && time - S.t0 < 14) for (let i = 0; i < 40; i++) {  // Jim, in bits, carried off downstream
+    const y = TK.far + 6 + (i * 17) % (span - 10), x = Math.round(-6 + S.flow * (12 + (i % 5) * 5) - (i * 9) % 50);
+    if (x < 0 || x >= VW) continue;
+    ctx.globalAlpha = clamp(1 - (time - S.t0 - 9) / 5, 0, 1); px(ctx, x, y, ['#e8e6e0', '#6a8aa8', '#c9ab95', '#8ab0c8'][i % 4]);
+  }
+  ctx.globalAlpha = 1;
+  ctx.drawImage(bridgeCanvas, 0, 0);
+  for (const lx of TK_LAMPS) { const ly = Math.round(tkTop(lx)) - 11, g2 = ctx.createRadialGradient(lx, ly, 1, lx, ly, 11); g2.addColorStop(0, 'rgba(255,214,140,.45)'); g2.addColorStop(1, 'rgba(255,180,100,0)'); ctx.fillStyle = g2; ctx.fillRect(lx - 11, ly - 11, 22, 22); }
+  // you, and Brudda Blaine: on the bank; then, slowly, into the water
+  const wk = wadeK(S), shiver = S.cold && wk > 0.05 ? Math.round(Math.sin(time * 45)) : 0, moving = S.wade && time - S.wade.t0 < S.wade.dur;
+  const wader = (a, h, draw) => {
+    const y = Math.round(a.y - wk * 14), sub = Math.round(wk * 19);
+    if (sub > h + 1) return;
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, VW, y + h - sub); ctx.clip(); draw(a.x + shiver, y); ctx.restore();
+    if (wk > 0.02) for (let i = -1; i < 19; i += 2) if ((i + Math.floor(time * 6)) % 4) px(ctx, a.x + i, y + h - sub, '#9ab8d8');  // the waterline round you
+  };
+  wader(S.bl, 16, (x, y) => drawBlaine(x, y, S.bl.face, moving ? 1 + Math.floor(time * 4) % 2 : 0));
+  wader(S.me, 15, (x, y) => drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], x, y, ROT[S.me.face], false, moving ? Math.floor(time * 6) % 2 : 0));
+  if (S.cold && wk > 0.05) for (let i = 0; i < 4; i++) sparkleAt(Math.round(S.me.x - 20 + i * 14 + Math.sin(i * 3) * 4), Math.round(S.me.y + 8 - wk * 14 + (i % 2) * 3), (time * 0.7 + i * 0.27) % 1);  // frost, glinting
+  if (S.under) for (const a of [S.me, S.bl]) {  // where you went under: rings, spreading
+    const k = clamp((time - S.under) / 2.4, 0, 1), cx = a.x + 8, cy = Math.round(a.y - 14) + 14, rx = 2 + k * 16;
+    ctx.globalAlpha = 1 - k; for (let j = 0; j < 24; j++) { const t = j / 24 * Math.PI * 2; px(ctx, Math.round(cx + Math.cos(t) * rx), Math.round(cy + Math.sin(t) * rx * 0.3), '#b8d0e8'); } ctx.globalAlpha = 1;
+  }
+  // the cigarette, as long as time itself: from here, off the edge of the screen, and on
+  if (S.cig) {
+    const C = S.cig, y = 104, x1 = 112, k = ease(clamp((time - C.t0) / 1.4, 0, 1)), gone = C.gone ? clamp((time - C.gone) / 1.5, 0, 1) : 0;
+    const left = Math.round(x1 - k * (x1 + 30)), lift = C.held ? 0 : Math.round(Math.sin(time * 2) * 1.5) - 3;
+    ctx.globalAlpha = 1 - gone;
+    ctx.fillStyle = '#f2eee4'; ctx.fillRect(left, y + lift, x1 - 5 - left, 1); ctx.fillStyle = '#cfc6b4'; ctx.fillRect(left, y + 1 + lift, x1 - 5 - left, 1);
+    for (let x = x1 - 9; x > left; x -= 7) px(ctx, x, y + 1 + lift, '#6a9a4a');   // the weed: a fleck of green
+    for (let x = x1 - 12; x > left; x -= 10) px(ctx, x, y + lift, '#b4aa98');      // marks along it, like the ticks of a clock
+    ctx.fillStyle = '#d89a58'; ctx.fillRect(x1 - 5, y + lift, 5, 2); px(ctx, x1 - 3, y + lift, '#b8783a'); px(ctx, x1 - 1, y + 1 + lift, '#b8783a');  // the filter
+    if (k < 1 || (gone > 0 && gone < 1)) for (let i = 0; i < 6; i++) sparkleAt(Math.round(left + (x1 - left) * ((i * 0.17 + time * 0.8) % 1)), y - 1 + lift, (time * 2 + i * 0.3) % 1);
+    if (C.lit) {
+      const sk = (time - C.lit) / 1.2;
+      if (time - C.lit < 0.7) { const fl = Math.floor(time * 20) % 2; px(ctx, x1 - 7, y - 2, '#fff6a0'); px(ctx, x1 - 7, y - 3 - fl, '#ffb040'); px(ctx, x1 - 8, y - 2, '#ff7a20'); }  // the match
+      if (sk < 1) { const sx = Math.round(x1 - 6 - sk * (x1 + 20)); px(ctx, sx, y, '#fff6a0'); px(ctx, sx + 1, y, '#ffb040'); px(ctx, sx + 2, y, '#ff7a20'); }  // a spark, running off along it
+      else {  // far off, at the other end, a glow; bright as you draw on it
+        const pulse = S.drag != null && time - S.drag < 4.4 ? 0.75 + 0.25 * Math.sin((time - S.drag) * 2) : 0.4 + 0.1 * Math.sin(time * 3);
+        const g3 = ctx.createRadialGradient(0, y, 0, 0, y, 18); g3.addColorStop(0, 'rgba(255,140,60,' + pulse.toFixed(2) + ')'); g3.addColorStop(1, 'rgba(255,90,30,0)');
+        ctx.fillStyle = g3; ctx.fillRect(0, y - 18, 18, 36);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  for (const p of S.smoke) if (time >= p.t0) { ctx.globalAlpha = (1 - (time - p.t0) / p.life) * (p.breath ? 0.55 : 0.32); disc(ctx, Math.round(p.x), Math.round(p.y), Math.round(p.r), '#d4d4e4'); }
+  ctx.globalAlpha = 1;
+  // the casino melting away, into the river (the whole scene of his disintegration)
+  if (S.melt) for (let x = 0; x < VW; x++) {
+    const k = Math.max(0, (time - S.melt.t0 - S.melt.d[x]) / 1.7), off = Math.round(k * k * 150);
+    if (off >= VH) continue;
+    ctx.drawImage(S.melt.img, x, 0, 1, VH - off, x, off, 1, VH - off);
+    if (off > 0) { px(ctx, x, off, '#8ab0d0'); if (x % 3 === 0) px(ctx, x, off + 1, '#6a90b8'); }
+  }
+  // carried off: everything ripples, and goes white
+  if (S.warp) {
+    const k = clamp((time - S.warp) / 2.4, 0, 1);
+    if (!S.warpBuf) { S.warpBuf = document.createElement('canvas'); S.warpBuf.width = VW; S.warpBuf.height = VH; }
+    const wb = S.warpBuf.getContext('2d'); wb.clearRect(0, 0, VW, VH); wb.drawImage(cv, 0, 0);
+    for (let y = 0; y < VH; y++) ctx.drawImage(S.warpBuf, 0, y, VW, 1, Math.round(Math.sin(y * 0.15 + time * 6) * k * 7), y, VW, 1);
+    ctx.globalAlpha = k; ctx.fillStyle = '#fffaf0'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1;
+  }
+}
+function meltSound() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; noiseHit(t, 'lowpass', 500, 0.7, 0.06, 2.6, 0.3, master); for (let i = 0; i < 10; i++) noiseHit(t + 0.6 + i * 0.22, 'bandpass', 900 + (i % 3) * 300, 3, 0.025, 0.12, 0.2, master); }
+function matchStrike() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; noiseHit(t, 'highpass', 2500, 0.8, 0.06, 0.12, 0, master); noiseHit(t + 0.1, 'bandpass', 900, 0.7, 0.04, 0.5, 0, master); }
+function inhale(d) { if (!ac || muted) return; makeNoise(); const t = ac.currentTime, s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+  s.buffer = noise; s.loop = true; f.type = 'bandpass'; f.Q.value = 1.2; f.frequency.setValueAtTime(500, t); f.frequency.linearRampToValueAtTime(1500, t + d);
+  g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.03, t + d * 0.8); g.gain.linearRampToValueAtTime(0.0001, t + d);
+  s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + d + 0.05);
+  [196, 246.94, 293.66, 392].forEach((fq, i) => tone(master, 'sine', fq, t + i * (d / 4), d / 2, 0.012)); }  // and a slow, rising shimmer
+function exhale() { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTime, 'bandpass', 700, 0.8, 0.04, 1.6, 0.4, master); }
+function wadeSplash() { if (!ac || muted) return; makeNoise(); for (let i = 0; i < 4; i++) noiseHit(ac.currentTime + i * 0.45, 'lowpass', 1400, 0.6, 0.03, 0.3, 0.2, master); }
+function plunge() { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTime, 'lowpass', 600, 0.6, 0.07, 0.9, 0.3, master); tone(master, 'sine', 180, ac.currentTime, 0.6, 0.03); }
+function coldSound() { if (!ac || muted) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(1900, t); o.frequency.linearRampToValueAtTime(2300, t + 1.6);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.5); g.gain.exponentialRampToValueAtTime(0.0001, t + 2.0); o.connect(g); g.connect(master); o.start(t); o.stop(t + 2.05);
+  makeNoise(); noiseHit(t, 'highpass', 4000, 0.5, 0.02, 1.8, 0.4, master); }  // a thin, cold wind
 function finish4() {
   phase = 'done4'; lock = 0; hud(null);  // (the last scene stays on screen, behind)
   $('end4Text').textContent = 'You drove West in the U-Haul with Brudda Blaine and IzzyKat, through the oil fields, past bison ' +
@@ -9939,7 +10239,7 @@ function finish4() {
     'smaller geysers, and a beer or two. Steam in the distance: Old Faithful. It tricked you, again and again, then ' +
     'exploded, with IzzyKat riding it, far into the air. She might be indestructible. She landed at your feet. Then on, ' +
     'through the barren wastelands, Kyuss in Utah and Mac Miller\'s Circles in Nevada, to Reno.' +
-    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered, and he melted away, toward the Truckee River. Next, from your story: the Truckee River.';
+    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered. Light broke out of every crack in him, and he screamed at the top of his lungs, "THE DIE.....THEY LIE.... I CANNOT.... BE.....", and came apart. The whole scene melted, and ran into the Truckee River, at night: rocky, with slight rapids, a bridge overhead on the left, the Sierra Nevada behind. A cigarette appeared, as long as time itself, full of good California weed, not Milwaukee weed. You grabbed it and lit it, and you and Brudda Blaine took a drag of time itself, and slowly walked into the Truckee, as cold as the Sierra mountains themselves. Next, from your story: the realm of California.';
   $('end4').hidden = false;
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
@@ -9962,6 +10262,7 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   jim: () => { phase = 'cut'; reno('jim').then(jimFight).then(finish4); },
   fight: () => { phase = 'cut'; jimFight().then(finish4); },
   fight2: () => { phase = 'cut'; jimFight(2).then(finish4); },
+  truckee: () => { phase = 'cut'; truckee().then(finish4); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
@@ -10355,6 +10656,7 @@ window.__sketch = {
   get canal() { const C = scene3; return C && C.kind === 'canal' ? { at: [C.me.tx, C.me.ty], moving: C.me.moving, hop: !!C.me.hop, live: C.live, jumped: C.jumped, grid: CANAL } : null; },
   get craps() { const C = scene3; return C && C.kind === 'craps' ? { chips: C.chips, point: C.point, drinks: C.drinks, ready: C.ready, rolls: C.rolls, jim: !!C.jim, shooter: C.shooter } : null; },
   get fight() { return fightState(); },
+  get truckee() { const S = scene3; return S && S.kind === 'truckee' ? { melt: !!S.melt, cig: !!S.cig, lit: !!(S.cig && S.cig.lit), drag: S.drag != null, moon: S.moonK, wade: Math.round(wadeK(S) * 100) / 100, under: !!S.under, warp: !!S.warp } : null; },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
   get vistaState() { return vista ? { flag: !!vista.flag, latch: !!vista.latch, ride: !!vista.ride, fall: !!vista.fall, splash: !!vista.splash,
