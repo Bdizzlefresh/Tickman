@@ -267,6 +267,13 @@ Every session reads this first and updates it last.
 - 2026-10-23, issue #1: make the trip to Yellowstone all one scene: the elk and the mountains, and the annoying tourists
   taking photos of the coyote. Keep the script the same. Make the trip to the Badlands combined: the oil rigs stay the
   same; combine the bison and the fighting horses into the scene of entering Badlands National Park.
+- 2026-10-23, issue #1, one message:
+  - Make the spreading of baby ticks from the egg sac a game like "Galactica" (read as Galaga, the arcade game; asked):
+    shooting ticks at all of the deer from the egg sac. A "safety baby tick", to be shot at Isabella. Once all the deer
+    are dead and you've bubbled Isabella, it slowly disintegrates back into the Truckee River scene.
+  - Brudda Blaine, when diving: more human-like, less like a worm.
+  - The tick says, in place of the other sayings, "He is incredible. He is truly from the North" when it makes it into
+    the water.
 
 ## What you've decided
 
@@ -397,6 +404,12 @@ Every session reads this first and updates it last.
   coyotes with the photographers (2026-10-23; built).
 - Entering the Badlands is one scene: the oil rigs as before, then the bison and the two horses in the scene of entering
   Badlands National Park (2026-10-23; built).
+- The egg sac is a game like Galaga: you shoot baby ticks at all of the deer from it, and the safety baby tick at Isabella,
+  to bubble her. Every deer dead and Isabella bubbled, and it slowly disintegrates back into the Truckee River
+  (2026-10-23; built).
+- Brudda Blaine dives as a person, not a worm (2026-10-23; built).
+- In the water, the tick says "He is incredible. He is truly from the North." The lines "aint no way Bish" and "this shit
+  cray" are gone (2026-10-23; built).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1081,11 +1094,57 @@ Every session reads this first and updates it last.
   - Links for checks: `?level=4&tick=dog&at=yellowstone` (the trip to Yellowstone); `?level=4&tick=dog&at=badlands`
     (entering the Badlands).
 
+- 2026-10-23, sketch 2 changed (`gh-pages`, commits 365cfe0 and fa10bfe), from your next message:
+  - Brudda Blaine's dives: a person now, drawn along each leap, head first: arms out ahead with the hands together, his
+    head between them (dark hair, the shades still on), his body, legs together, pointed feet. The leaps are a little
+    longer and higher, to fit him. Nothing explicit is shown.
+  - In the water: you follow, slowly, hesitantly (a step in, a step back, then in, up to your knees). "Up to your knees."
+    You: "He is incredible. He is truly from the North." The other two lines are gone.
+  - The egg sac, as a game like Galaga, in the realm of California, after "An egg sac.":
+    - "It is full of baby ticks. Millions of them." (from your first story's "millions of baby ticks"). Then how to play:
+      "Left and right: move the egg sac." "A: shoot baby ticks at the deer." "Up: the safety baby tick. Shoot it at
+      Isabella, to keep her safe." "Get every deer."
+    - The sac sits on the ground at the bottom of the screen and moves left and right. A shoots a baby tick straight up
+      (two in the air at a time, like Galaga). One baby tick latches on, and that deer is sucked of all its being and
+      falls to the floor, like a rug on a carpet, right where it was.
+    - The ten deer stand in their ring round Isabella and sway as one; the one holding her rope, and the one with the
+      California flag, are still there. Now and then one breaks off, hops up and out, and charges down at the sac (a
+      falling whistle); it can be hit on the way. If one runs into the sac, the sac goes rolling for a moment ("!") and
+      can't move or shoot. They charge more often as the pack thins, and two at a time near the end.
+    - Isabella swats away any baby tick that comes at her, so you shoot round her.
+    - When the pack is down to four: "MORE DEER!", and six more come swooping in out of the redwoods, three from each
+      side, in curves, to stand in a row behind (Galaga's enemies fly into formation from the top and sides).
+    - The safety baby tick (Up), gold and sparkling, flies straight through the deer to Isabella, and bubbles her: a
+      shimmering bubble in every color, and she floats in it; the rope slips off. If it misses, it comes back to the sac
+      after a moment (a sparkle on the sac when it's ready).
+    - At the top of the screen: how many deer are left, and whether she's bubbled. If every deer is down and she isn't
+      yet: "Isabella still needs her safety baby tick: Up".
+    - Every deer down and Isabella bubbled: "The deer, sucked of all their being." "On the floor, like rugs on a
+      carpet." Then "Isabella is at last free from the tyranny of the ungulate gang." (your words, as before).
+    - Then the realm slowly disintegrates: it crumbles away in little bits, from the top down, drifting off like dust, the
+      Truckee at night showing through (about five seconds, a soft crumble and four falling notes). Then "Back at the
+      Truckee River.", as before.
+  - The end screen's summary says so, and its list of guesses has the new ones.
+  - Guesses: how the game plays (the controls, Up for the safety baby tick, the charges, the sac rolling, Isabella
+    swatting, the second wave, the bubble, every number), how it all looks and sounds, the disintegration, how he looks
+    diving, and the words not in your message.
+  - Gifts from Blaine: untouched, still on.
+  - Links for checks: `?level=4&tick=dog&at=sac` (straight to the egg sac game), `&at=realm` (the realm from its start),
+    `&at=dip` (back at the Truckee).
+  - Checked, about Galaga (Wikipedia, "Galaga"): "a 1981 fixed shooter video game developed and published by Namco";
+    "The player controls Gyaraga at the bottom of the screen"; enemies "fly into formation from the top and sides of the
+    screen" and some "dive towards the player"; it is "the sequel to 1979's Galaxian".
+
 ## Next to build (queued, in your order)
 
 1. Your words, on the card at the very end (waiting for you).
 
 ## Open questions
+
+- Asked 2026-10-23: did "Galactica" mean Galaga, the arcade game? (Built as a game like Galaga.)
+- Not asked yet: the egg sac game's feel. Too easy, too hard? (A bot clears it in about 10 to 20 seconds; a person, a
+  good deal longer.) Should the deer do more, like Galaga's (shoot back, or try to take Isabella back)? Is Up the right
+  button for the safety baby tick?
 
 - Waiting (asked 2026-10-22): your final words for the last scene. Until then it holds a blank card.
 - Not said yet: runs two and three are level 4 again, with another tick ("Try another tick" on the end screen), not the
@@ -1342,3 +1401,8 @@ Every session reads this first and updates it last.
   first (comment 6355741965) with the plan, and that back at the Truckee, the tick marks, the egg and the final scene are
   in (with a link straight there, and one as if it's your third run), and that the last card waits for your words. Then
   built both in sketch 2, same link (ae03227). Not posted about yet; the next reply says it's in.
+- 2026-10-23: one more message from you on issue #1 (it came in as the reply before went up): the egg sac as a game like
+  Galaga, the safety baby tick, the disintegration back into the Truckee, Brudda Blaine's dives, and your line in the
+  water. Replied first (comment 6355929759): Yellowstone and the Badlands are in (with links), and the plan for this, with
+  one question (Galaga?). Then built it in sketch 2, same link: the dives and your line (365cfe0), then the egg sac game
+  and the disintegration (fa10bfe). Not posted about yet; the next reply says it's in.
