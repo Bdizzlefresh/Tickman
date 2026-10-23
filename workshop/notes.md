@@ -243,6 +243,27 @@ Every session reads this first and updates it last.
     it's in your message on issue #1 of 2026-10-22, 02:39 UTC. You asked for options on how best to present it, and
     offered two: finish with all three ticks to unlock it, or finish all the battles and mini games.
   - About Blaine's gift: one change you asked for (done), and what you've enjoyed.
+- 2026-10-22, issue #1, seven messages over the day (16:23 to 21:23 UTC):
+  - The reveal: option 1 (finish with all three ticks), but as its own cut scene, like a grand reveal and the ending to an
+    epic. You'd love it to end like a manifested "easter egg", to confuse him even more.
+  - Jim's disintegration: the entire scene turns into the Truckee River, with a bridge overhead to the left (you changed
+    it from the right), the Sierra Nevada as a backdrop, a rocky river with slight rapids, at night. More dramatic, and he
+    screams at the top of his lungs: "THE DIE.....THEY LIE.... I CANNOT.... BE....."
+  - After the realm of California, back to the Truckee: Brudda Blaine and the tick on the banks; the job is complete.
+    Brudda Blaine says he needs to "take a dip, to wash off all of that stank", gets naked, and dives among the rocky water
+    like a dolphin, here, there, everywhere, so unsophisticated it comes across as beauty and grace. The tick slowly,
+    hesitantly follows, up to his knees, saying "aint no way Bish" and "this shit cray". Behind them, under the bridge, a
+    shadowy character arrives to steal all of the belongings. Brudda Blaine's reveal: he flashes that way, with vigor, a
+    last surprise, a last-ditch effort to thwart him. The shadowy character, extremely unpleased with the entire
+    experience, walks away mumbling about how the homeless are crazier than they used to be. Then the tick turns slowly to
+    Brudda Blaine, with an orchestra behind him like a Bocelli ballad, and says "I have a form of reveal to you, Brother."
+    The tick's own flash, and it cuts to the final scene of them all, as you wrote it (kept out of these notes, like the
+    secret; it's in your message on issue #1 of 2026-10-22, 16:56 UTC). Your final words go there; you'll send them.
+  - All of the flashing is metaphorical: no explicit imagery.
+  - Music: old-timey Rat Pack music when you enter Reno, New Orleans jazz in the canal, the Rat Pack music again in the
+    casino.
+- 2026-10-23, issue #1: "Balotelli" meant Bocelli. On the assistant's question (whether the first two runs stop at the
+  tick's line), you trust its pick.
 
 ## What you've decided
 
@@ -359,6 +380,16 @@ Every session reads this first and updates it last.
   egg sac, and Isabella free. Queued (see "Next to build"). This is where the egg sac went.
 - Blaine's gift: you said yes (2026-10-21). It's switched on in the sketch; talk about it lives in its own conversation on
   GitHub. Still on; one part of it taken out at your word (2026-10-22).
+- The very end (2026-10-22): option 1, finish with all three ticks; the reveal is its own grand cut scene, ending like a
+  manifested easter egg. The first two runs stop at the tick's line at the Truckee, and a tick mark fills in; the third
+  goes on to the flash and the final scene (the assistant's pick; you trust it, 2026-10-23). After the third run, an egg
+  manifests on the end screen; tap it, and the last cut scene plays (the assistant's reading of "a manifested easter
+  egg"; yours to change).
+- The music in Reno (2026-10-22; built): Rat Pack swing as you pull in, New Orleans jazz in the canals, the swing again in
+  the casino.
+- Jim's end and the Truckee River, then the realm of California (2026-10-22; built), as you wrote it. All of the flashing
+  to come is metaphorical: no explicit imagery.
+- The orchestra behind the tick's line: like a Bocelli ballad (2026-10-23), original.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -961,25 +992,66 @@ Every session reads this first and updates it last.
   - Links for checks: `?level=4&tick=dog&at=motel` (Reno from the start), `&at=canal`, `&at=strip`, `&at=casino`, `&at=jim`
     (Jim arriving), `&at=fight`, `&at=fight2` (the second phase).
 
+- 2026-10-22 (evening, into 2026-10-23 UTC), sketch 2 changed (`gh-pages`, commits 09b013a, 2aea3b9, b6bd468), from your
+  seven messages:
+  - Reno's music, all original: Rat Pack-style swing (a lounge band in F, 132 beats a minute, swung: a walking upright bass,
+    a ride cymbal and brushes, a piano comping, a muted trumpet on the tune, then a tenor sax, and the brass shouting) from
+    pulling into Reno, through the motel; New Orleans jazz (a brass band in B-flat, 104: a tuba on one and three, a banjo on
+    every beat, a parade snare, a trumpet on the tune, a clarinet weaving round it, a trombone sliding in) in the canals and
+    up onto the old strip; the swing again in the casino. The band stops when the dealer says "Oh, Jim." Checked: the same
+    loudness as the other tracks.
+  - Jim's end: "Light breaks out of every crack in him." "He screams, at the top of his lungs." His words come one at a
+    time, huge and shaking over the table (THE DIE....., THEY LIE...., I CANNOT...., BE.....), a raw roar with each, the
+    table shaking; then he bursts apart in a flash of white. "He disintegrates."
+  - The whole scene melts down, column by column, into the Truckee River at night, seen from the bank: the Sierra Nevada
+    behind (jagged, snow on top, catching the moon), pines, the moon, a stone bridge overhead on the left (arches, piers in
+    the water, lamps), rocks in the river with white water round them, a riffle across, the moon and the lamps on the
+    water, and Jim's bits carried off downstream. "Everything melts, and runs into the Truckee River." "Jim, too."
+  - The cigarette, as long as time itself: it glitters into being, from right by you off the edge of the screen, with
+    flecks of green and marks along it like the ticks of a clock. You grab it and light it (a match; a spark runs off along
+    it; far off, the other end glows). The drag of time itself: the stars wheel round in trails and the moon crosses the
+    sky, while the river all but stops; then you both breathe out. Then, slowly, you walk into the Truckee. "It is as cold
+    as the Sierra mountains themselves." (Your breath shows, frost glints, you shiver.) You go under; rings spread;
+    everything ripples and goes white.
+  - The realm of California, as if it were in The Santaroga Barrier (music: the warm, slow guitar from finding Braydon):
+    a valley of farms ringed by redwoods, a SANTAROGA sign, poppies in the meadow, a little town, and up the hill the cheese
+    cooperative (JASPERS on its front) with a cave behind it. The deer, ten of them, in a ring round Isabella, one holding
+    her by a rope, one with the California flag; they bob as one. The female spider walks in slowly (pink, with a flower),
+    everything goes soft and warm, hearts rise; a curtain of silk comes down over the two of you; "..."; it lifts, and
+    there's an egg sac. It bursts; the baby ticks pour across to every deer; the deer are sucked flat, pale, and fall like
+    rugs; Isabella hops, free, in sparkles. The words are yours, with a few added ("They move as one." and the like).
+  - Checked, about the novel (and used only as the look): it's a California valley farm town, with redwoods; a cheese
+    cooperative with caves under it makes a fungal drug, Jaspers, that joins the town into one shared awareness; Herbert
+    left it both a utopia and a dystopia. Sources: Wikipedia, "The Santaroga Barrier"; Tim O'Reilly's book "Frank Herbert"
+    (1981), chapter 6 (on his site); The SF Encyclopedia's entry on Herbert.
+  - Guesses, all of it but your words: how it looks and sounds, the melt, the scream's look, the cigarette and the drag,
+    the cold, the realm and everything in it.
+  - Links for checks: `?level=4&tick=dog&at=truckee` (the Truckee), `&at=realm` (the realm of California); `&at=fight2`
+    plays Jim's end first.
+
 ## Next to build (queued, in your order)
 
-1. The Truckee River: Jim melts into it; the cigarette as long as time itself, full of good California weed; you light it,
-   and you and Brudda Blaine take a drag of time itself, and slowly walk into the Truckee, as cold as the Sierra mountains.
-2. The realm of California, as if it were in Frank Herbert's The Santaroga Barrier: the deer holding Isabella; the female
-   spider and the egg sac (implied, kept PG); the baby ticks on every deer, the deer falling like rugs on a carpet; Isabella
-   free.
-3. The very end: the reveal, the way you choose (see the open questions).
+1. Back at the Truckee River: Brudda Blaine's dip and his dolphin dives; the tick to his knees ("aint no way Bish", "this
+   shit cray"); the shadowy character under the bridge; Brudda Blaine's flash (metaphorical); the mumbling; the tick's turn
+   and line, with an orchestra like a Bocelli ballad (original). The first two runs stop there, with a tick mark.
+2. The reveal: three tick marks on the end screen; after the third run, an egg manifests; tap it: the tick's flash
+   (metaphorical), and the final scene, as you wrote it, with your words (a blank card until you send them; the words
+   hidden in the game's code so nobody can read them by peeking).
 
 ## Open questions
 
+- Waiting (asked 2026-10-22): your final words for the last scene. Until then it holds a blank card.
+- Answered 2026-10-23: the orchestra is like a Bocelli ballad (asked: did "Balotelli" mean Andrea Bocelli?), and you
+  trust the assistant's pick on runs one and two.
+- Answered 2026-10-22: option 1 (asked below).
 - Asked 2026-10-22: how to reveal the very end. Three options offered: (1) finish with all three ticks, runs two and three
   shortened to the parts where your tick matters; (2) every fight and mini game, with each tick, opened as a menu after the
   first ending; (3) right at the end of the first run. The assistant's pick: (1), with three tick marks filling in on the end
   screen and a plain line that there's something left to find, and the words hidden in the game's code so nobody can read
   them by peeking. Also asked for the words you want on screen (yours, or a draft for you to change). Said plainly: this
   conversation is public; Blaine has agreed not to look.
-- Not checked yet, and not used: any facts about The Santaroga Barrier, the Truckee River or the Sierra. Check before
-  using them.
+- Checked 2026-10-22 (see "What's been built"): a few facts about The Santaroga Barrier, used only for the look of the
+  realm. Not checked, and not used: any facts about the Truckee River or the Sierra beyond your words.
 - Said 2026-10-22: how you beat Jim (turning his dice over) is the assistant's idea; yours to change.
 - Answered 2026-10-22: the canal maze is something you walk, and at craps you roll the dice yourself (asked 2026-10-21,
   evening).
@@ -1208,3 +1280,10 @@ Every session reads this first and updates it last.
   sketch 2, same link, and took out the part of Blaine's gift you asked. Queued the Truckee River, the realm of California
   and the very end. Replied on issue #1 (comment 6334496527) with what's in it, the real fact about dice, links straight to
   each part, three ways to reveal the very end with the assistant's pick, and two questions: which way, and what words.
+- 2026-10-22: seven messages from you on issue #1 over the day (answered that evening; the network on the computer the
+  workshop runs on kept dropping): the reveal as its own grand cut scene, Jim's end and the Truckee, the bridge on the left,
+  what happens back at the Truckee and the final scene, the music in Reno, and that all of it is metaphorical. Replied on
+  issue #1 first (comment 6355133109) with the plan, in your story's order, and two questions: Bocelli, and whether runs one
+  and two stop at the tick's line. Then built Reno's music, Jim's end and the Truckee, and the realm of California in sketch
+  2, same link. One more message from you (Bocelli; you trust the pick); replied (comment 6355353886) with what's in and
+  links. Still to build: back at the Truckee, and the reveal (see "Next to build").
