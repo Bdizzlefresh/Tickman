@@ -292,6 +292,8 @@ Every session reads this first and updates it last.
     Isabella in the scene.
   - Before the boss fight engages, Jim says: "You smell like hippie. You will pass" (similar to Gandalf).
   - Skip the Mac Miller part in Nevada; just have Kyuss play from Utah to Reno.
+- 2026-10-23, issue #1 (03:17 UTC): speed up the math part at the first camp: "it's getting a little long and I'm trying
+  to shave a little bit off."
 
 ## What you've decided
 
@@ -439,6 +441,7 @@ Every session reads this first and updates it last.
   (2026-10-23; built).
 - Before the fight, Jim: "You smell like hippie. You will pass.", like Gandalf (2026-10-23; built).
 - The drive to Reno: the desert rock plays all the way from Utah to Reno; no Mac Miller (2026-10-23; built).
+- The math at the first camp, sped up: the same three tries and the same math, shorter (2026-10-23; built).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1235,14 +1238,34 @@ Every session reads this first and updates it last.
   - Links for checks: `?level=4&tick=dog&at=fight` (Jim's line, then the fight), `&at=reno` (the drive to Reno),
     `&at=looney` (straight to the very last scene).
 
+- 2026-10-23, sketch 2 changed (`gh-pages`, commit c5bd3d8), from your one message: the math at the first camp, sped up.
+  - The same three tries, the same math in the thought bubble (8 > 10; 45°, 90°, 360°; y = x²), and the same ending, in
+    12 pages of words instead of 23. The words, now: "No tent tonight: a tarp, tied between two trees as a lean-to." /
+    "The math: the tarp is 8 feet across. The trees are 10 feet apart." / "8 is more than 10. Easy." / "It doesn't
+    reach. It doesn't go very well." / "Again, with an angle. 45 degrees. No, 90. No: 360. All the way round." / "You wrap
+    it round the tree. The rain comes down harder. Right on you." / "One more try: a curve, so the rain runs off. y =
+    x²." / "It holds! You crawl under it. Dry. For a moment." / "y = x² is a bowl. It catches every drop. The middle
+    sags, and sags..." / "...and dumps it all on you. Then the tarp comes down on top of you." / "It doesn't go well at
+    all." / "You wriggle out, soaked. The weed from Milwaukee did the math."
+  - The tarp moves faster too: each try's falling, spinning, rising, sagging and dumping takes about a third less time,
+    and the angles in the bubble flip twice as fast.
+  - Checked, headless and muted, all three ticks: the math part takes about 33 seconds for someone who reads each page
+    for a second, down from about 52; the camp still ends soaked under the tarp, then the DJ set; no errors.
+  - Unchanged: everything before the tarp (the weed, Brudda Blaine's line, the smoke, the rain) and after it.
+  - Gifts from Blaine: untouched.
+  - Link for checks: `?level=2&tick=dog&at=camp1` (the first camp).
+
 ## Next to build (queued, in your order)
 
 1. Your words, on the card at the very end (waiting for you).
 
 ## Open questions
 
-- Asked 2026-10-23: your speech ends "I also have junk to reveal", and the line you sent before ("I know you just revealed
-  your junk. But I now have junk to reveal to you.") still follows it on the third run. Keep both, or drop that one?
+- Asked 2026-10-23, and again in the next reply: your speech ends "I also have junk to reveal", and the line you sent
+  before ("I know you just revealed your junk. But I now have junk to reveal to you.") still follows it on the third run.
+  Keep both, or drop that one?
+- Not asked yet: anything else running long, now that you're shaving time? (The math at the first camp is about a third
+  shorter; it can go shorter still, say by cutting one of the three tries.)
 
 - Asked 2026-10-23: should the tick's new line and the baby tick come only on the third run, so the first two still stop at
   "I have a form of reveal to you, Brother."? (Built that way.)
@@ -1526,3 +1549,7 @@ Every session reads this first and updates it last.
   both lines?). The reply was edited twice in the next minute to take in your two 03:13 messages (Jim before the fight,
   and the drive to Reno). Then built all four in sketch 2, same link: the speech, Jim's line and the drive (4ed3d2e), and
   the very last scene (e93f4ea). Not posted about yet; the next reply says it's in.
+- 2026-10-23: one message from you on issue #1 (03:17): speed up the math at the first camp. Replied (comment 6356619722):
+  the four from last time are in (with links), a note that Jim's line and the drive were added to the reply before after
+  it went up, the plan for the math, and the open question again (keep both lines?). Then built it in sketch 2, same link
+  (c5bd3d8). Not posted about yet; the next reply says it's in.
