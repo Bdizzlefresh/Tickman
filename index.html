@@ -8519,12 +8519,10 @@ async function toReno() {
   await say(['Utah. On the stereo: Kyuss, the desert rock band.']);
   await wait(4.0);
   await fadeTo(1, 0.8);
-  musicStop();
-  Object.assign(scene3, { seg: 'nevada', dist: 0, signAt: -68 });
-  musicStart(CIRCLES);
+  Object.assign(scene3, { seg: 'nevada', dist: 0, signAt: -68 });  // the desert rock plays on, all the way to Reno (your ask: no Mac Miller part)
   await fadeTo(0, 0.8);
   await wait(1.6);
-  await say(['Nevada. On the stereo: Mac Miller, Circles.']);
+  await say(['Nevada.']);
   await wait(4.0);
   await fadeTo(1, 0.8);
   musicStop(); musicStart(SWING);  // into Reno: the swing
@@ -9826,6 +9824,13 @@ async function jimFight(from) {
   phase = 'fight';
   await fadeTo(0, 0.8);
   if (from !== 2) {
+    // before the fight engages (your ask): Jim, like Gandalf on the bridge; a slam that shakes the table, and his words
+    await wait(0.6);
+    growl(0.8);
+    await wait(0.9);
+    S.shake = time; boom();
+    await wait(0.5);
+    await say(['Jim: "You smell like hippie. You will pass."']);
     await say(['On a large craps table: the fight with Jim.', 'He throws the die that never lie at you, and spins his chips like frisbees.',
       'His hands are very dry, with scleroderma. When they close round you, tap A to jump out.']);
     musicStart(DESERT);
@@ -10682,6 +10687,10 @@ async function dip() {
   await wait(2.6);
   S.me.face = 'left';
   await wait(1.6);
+  await say(['You: "Brudda. We\'ve traversed the North Shore.', 'We\'ve rode a salmon to the great clubs of the South.',  // your words, all of them
+    'We\'ve saved my babygurl Isabella.', 'We have done it all.',
+    'You have revealed your junk as your final act and for my final act, I also have junk to reveal."']);
+  await wait(0.8);
   await say(['You: "I have a form of reveal to you, Brother."']);
   const done = markEnd(choice);
   if (done.size < 3) {  // the first two runs end here, with a tick mark
