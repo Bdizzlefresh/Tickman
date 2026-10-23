@@ -297,6 +297,8 @@ Every session reads this first and updates it last.
 - 2026-10-23, issue #1, two messages about 2 minutes apart (03:50 and 03:51 UTC):
   - Jim's line before the fight: "You will not pass! Like Gandalf. Not You will pass."
   - Take out the tick's line "I have a form of reveal to you" (your words: "the last line").
+- 2026-10-23, issue #1 (03:53 UTC): with "That's all folks!", a banner above it with your words (kept out of these notes,
+  like the secret; they're in your message on issue #1 of 2026-10-23, 03:53 UTC).
 
 ## What you've decided
 
@@ -444,7 +446,7 @@ Every session reads this first and updates it last.
   two fade out after it, and on the third, "I know you just revealed your junk. But I now have junk to reveal to you."
   follows it, then the egg.
 - The very last scene, after the dance: Looney Tunes, "That's all folks!", with the baby tick, your tick and Isabella
-  (2026-10-23; built).
+  (2026-10-23; built). Above it, a banner with your words (2026-10-23, 03:53 UTC; built).
 - Before the fight, Jim: "You smell like hippie. You will not pass!", like Gandalf (2026-10-23; built; first built as "You
   will pass.", changed at your word).
 - The drive to Reno: the desert rock plays all the way from Utah to Reno; no Mac Miller (2026-10-23; built).
@@ -1274,6 +1276,17 @@ Every session reads this first and updates it last.
   - Gifts from Blaine: untouched.
   - Links for checks: `?level=4&tick=dog&at=fight` (Jim), `?level=4&tick=dog&at=dip` (the speech).
 
+- 2026-10-23, sketch 2 changed (`gh-pages`, commit 4e85000), from your next message: in the very last scene, about a second
+  after "That's all folks!" comes up, a banner comes down from the top with your words, in two lines: the same cloth
+  banner as the one over the baby tick (cream, red letters, a wooden rod along the top, a notch at the bottom), with the
+  same unfurling sound. It holds about six seconds, then fades with "That's all folks!" as the circle closes. Your words
+  are kept in the game's code in a scrambled form, like your other words.
+  - Checked, headless and muted, on a phone-sized screen and a small one: the banner shows your words exactly, above
+    "That's all folks!", and clears before the end screen; your words can't be read in the code; no errors.
+  - Guesses: the banner's look, when it comes, and how long it holds (the scene is about four seconds longer).
+  - Gifts from Blaine: untouched.
+  - Link for checks: `?level=4&tick=dog&at=looney` (the very last scene).
+
 ## Next to build (queued, in your order)
 
 1. Your words, on the card at the very end (waiting for you).
@@ -1578,3 +1591,7 @@ Every session reads this first and updates it last.
   6356964408): both changes are coming (with links), the math at the first camp is in (with a link), both junk lines stay
   unless you say drop one, and one question: anything else feel long? Then built both in sketch 2, same link (82652fd).
   Not posted about yet; the next reply says it's in.
+- 2026-10-23: one more message from you on issue #1 (03:53, eight seconds after that reply): a banner with your words above
+  "That's all folks!". Replied (comment 6357012516) that it's coming, with a link straight to the very last scene, and that
+  the words will be scrambled in the code. No question. Then built it in sketch 2, same link (4e85000). Not posted about
+  yet; the next reply says it's in, along with the two changes in 82652fd.
