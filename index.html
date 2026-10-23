@@ -95,24 +95,24 @@ h2 { margin:0; font-size:23px; }
 .pickbtns { display:flex; flex-direction:column; gap:8px; margin-top:12px; }
 a { color:var(--accent); }
 [hidden] { display:none !important; }
-/* the title card, old timey, like an old silent movie's (it comes up after the opening) */
-#title.old { align-items:flex-end; background:linear-gradient(to bottom, rgba(12,8,4,0) 0%, rgba(12,8,4,0) 42%, rgba(12,8,4,.8) 62%); }
-#title.old .card { background:#17100a; color:#efdcae; text-align:center; border:2px solid #8f6d44;
-  box-shadow:inset 0 0 0 4px #17100a, inset 0 0 0 5px #6e5131, 0 8px 30px rgba(0,0,0,.5);
+/* the title card, old timey, like an old silent movie's, in black and white (it comes up after the opening) */
+#title.old { align-items:flex-end; background:linear-gradient(to bottom, rgba(8,8,8,0) 0%, rgba(8,8,8,0) 42%, rgba(8,8,8,.8) 62%); }
+#title.old .card { background:#0d0d0d; color:#ececec; text-align:center; border:2px solid #8a8a8a;
+  box-shadow:inset 0 0 0 4px #0d0d0d, inset 0 0 0 5px #5a5a5a, 0 8px 30px rgba(0,0,0,.5);
   font-family:"IM Fell English","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; }
 #title.old .marquee { font-family:"Limelight","IM Fell English SC",Georgia,serif; font-weight:normal; line-height:1.04;
-  margin:4px 0; color:#f4e6c2; text-shadow:0 2px 0 #3a2817; }
+  margin:4px 0; color:#f6f6f6; text-shadow:0 2px 0 #2b2b2b; }
 .marquee span { display:block; }
 .marquee .m1, .marquee .m3 { font-size:clamp(24px, 8.4vw, 36px); letter-spacing:.04em; }
 .marquee .m2 { font-family:"IM Fell English SC",Georgia,serif; font-size:16px; letter-spacing:.32em; margin:6px 0 4px;
-  color:#d4b884; text-shadow:none; }
-.marquee .m4 { font-size:clamp(32px, 11.2vw, 48px); letter-spacing:.02em; color:#efdcae; }
-#title.old .rule { display:flex; align-items:center; gap:10px; color:#b3915f; font-size:13px; margin:2px 10px; }
-#title.old .rule::before, #title.old .rule::after { content:''; flex:1; height:1px; background:#6e5131; }
-#title.old .sub { color:#b3915f; margin:10px 0 4px; }
-#title.old .card p { color:#e3cc9a; }
-#title.old .btn { background:#b3915f; color:#17100a; font-family:"IM Fell English",Georgia,serif; font-size:17px; }
-#title.old .btn.alt { background:#2a1d12; color:#e3cc9a; box-shadow:inset 0 0 0 1px #6e5131; font-size:15px; }
+  color:#c2c2c2; text-shadow:none; }
+.marquee .m4 { font-size:clamp(32px, 11.2vw, 48px); letter-spacing:.02em; color:#ececec; }
+#title.old .rule { display:flex; align-items:center; gap:10px; color:#9a9a9a; font-size:13px; margin:2px 10px; }
+#title.old .rule::before, #title.old .rule::after { content:''; flex:1; height:1px; background:#5a5a5a; }
+#title.old .sub { color:#9a9a9a; margin:10px 0 4px; }
+#title.old .card p { color:#d6d6d6; }
+#title.old .btn { background:#d6d6d6; color:#0d0d0d; font-family:"IM Fell English",Georgia,serif; font-size:17px; }
+#title.old .btn.alt { background:#1e1e1e; color:#d6d6d6; box-shadow:inset 0 0 0 1px #5a5a5a; font-size:15px; }
 </style>
 </head>
 <body>
@@ -11489,13 +11489,13 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   looney: () => { phase = 'cut'; fadeTo(0, 0.3); looneyEnd().then(finish4); },
 };
 
-// ---- the opening: RENDEZVOUS OF THE ARACHNID TICKMAN!, old timey, like an old silent movie (sepia, grain, flicker,
+// ---- the opening: RENDEZVOUS OF THE ARACHNID TICKMAN!, old timey, like an old silent movie (black and white, like a Buster Keaton film: grain, flicker,
 // scratches, 18 frames a second). Right at the beginning: close up, a spider rears its head, body and legs up toward
 // the camera, fangs out; then the view pulls back to a tick, staring at the spider. Then the title card comes up.
 // Silent: there's no sound before a tap. A tap on the screen, A or Space skips ahead to the title card.
 // (How it all looks is a guess at "old timey"; the spider rears up out of the mouth of its tunnel.) ----
 const PRE = { iris: 1.2, rear0: 0.8, rear1: 2.6, fangs: 2.8, pull0: 5.6, pull1: 9.2, card: 9.8 };
-const SEP = ['#120b06', '#241810', '#3a2817', '#523a22', '#6e5131', '#8f6d44', '#b3915f', '#d4b884', '#efdcae'];  // sepia, dark to light
+const SEP = ['#0b0b0b', '#1a1a1a', '#2b2b2b', '#3f3f3f', '#585858', '#767676', '#9a9a9a', '#c2c2c2', '#ececec'];  // black and white, dark to light (was sepia)
 let prelude = null, preVig = null, preZ = 1;
 function startPrelude() { prelude = { t0: time, done: false, skipped: false }; $('title').hidden = true; }
 function preludeCard(quick) {  // the title card fades up over the last shot
@@ -11616,20 +11616,20 @@ function preVignette() {
   if (preVig) return preVig;
   const c = document.createElement('canvas'); c.width = VW; c.height = VH;
   const g = c.getContext('2d'), gr = g.createRadialGradient(80, 72, 40, 80, 72, 112);
-  gr.addColorStop(0, 'rgba(10,6,3,0)'); gr.addColorStop(0.6, 'rgba(10,6,3,0.25)'); gr.addColorStop(1, 'rgba(10,6,3,0.85)');
+  gr.addColorStop(0, 'rgba(6,6,6,0)'); gr.addColorStop(0.6, 'rgba(6,6,6,0.25)'); gr.addColorStop(1, 'rgba(6,6,6,0.85)');
   g.fillStyle = gr; g.fillRect(0, 0, VW, VH);
   return (preVig = c);
 }
 function filmFx(t, f) {  // the old film: dark at the edges, grain, dust, scratches, flicker, and an iris opening at the start
   const r = rng(f * 7919 + 13);
   ctx.drawImage(preVignette(), 0, 0);
-  for (let i = 0; i < 70; i++) { ctx.fillStyle = r() < 0.5 ? 'rgba(239,220,174,0.2)' : 'rgba(18,11,6,0.32)'; ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1, 1); }
-  if (r() < 0.3) { ctx.fillStyle = 'rgba(18,11,6,0.75)'; ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1 + Math.floor(r() * 2), 1 + Math.floor(r() * 2)); }
-  if (r() < 0.07) { ctx.fillStyle = 'rgba(18,11,6,0.6)'; let x = r() * VW, y = r() * VH; for (let i = 0; i < 9; i++) { ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1); x += r() * 2 - 0.4; y += 1; } }
+  for (let i = 0; i < 70; i++) { ctx.fillStyle = r() < 0.5 ? 'rgba(236,236,236,0.2)' : 'rgba(11,11,11,0.32)'; ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1, 1); }
+  if (r() < 0.3) { ctx.fillStyle = 'rgba(11,11,11,0.75)'; ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1 + Math.floor(r() * 2), 1 + Math.floor(r() * 2)); }
+  if (r() < 0.07) { ctx.fillStyle = 'rgba(11,11,11,0.6)'; let x = r() * VW, y = r() * VH; for (let i = 0; i < 9; i++) { ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1); x += r() * 2 - 0.4; y += 1; } }
   const sr = rng(Math.floor(t * 3) * 31 + 7);  // scratches stay a little while
   for (let i = 0; i < 2; i++) {
     if (sr() > 0.55) continue;
-    const x = Math.floor(sr() * VW); ctx.fillStyle = sr() < 0.7 ? 'rgba(239,220,174,0.3)' : 'rgba(18,11,6,0.4)';
+    const x = Math.floor(sr() * VW); ctx.fillStyle = sr() < 0.7 ? 'rgba(236,236,236,0.3)' : 'rgba(11,11,11,0.4)';
     for (let y = 0; y < VH;) { const len = 5 + Math.floor(r() * 36); if (r() < 0.85) ctx.fillRect(x + (r() < 0.2 ? 1 : 0), y, 1, len); y += len + Math.floor(r() * 6); }
   }
   ctx.fillStyle = 'rgba(0,0,0,' + (0.02 + r() * 0.1).toFixed(3) + ')'; ctx.fillRect(0, 0, VW, VH);
