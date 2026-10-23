@@ -271,7 +271,7 @@ a { color:var(--accent); }
     <p id="end4Text"></p>
     <p><b>Still to come in level 4, from your story:</b></p>
     <ol>
-      <li>The realm of California: the deer, Isabella, the egg sac, and Isabella free at last.</li>
+      <li>Back at the Truckee River: Brudda Blaine's dip, the shadowy character, and the tick's turn.</li>
       <li>The very end, as you want it.</li>
     </ol>
     <p class="small">Guesses in level 4 so far: how the oil fields look (the oil rigs drawn as nodding pumps, with drilling
@@ -5856,7 +5856,7 @@ function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown,
     lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful,
-    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee })[scene3.kind]();
+    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee, realm: drawRealm })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -6152,6 +6152,7 @@ function update3(dt) {
   if (S && S.kind === 'craps') updateCraps();           // and craps
   if (S && S.kind === 'fight') updateFight(dt);         // and the fight with Jim
   if (S && S.kind === 'truckee') updateTruckee(dt);     // the Truckee River
+  if (S && S.kind === 'realm') updateRealm();           // the realm of California
 }
 
 // ---- level 3: the scenes ----
@@ -9744,7 +9745,7 @@ function drawFight() {
       if (hh > 4) die(d.x, d.y - 4, face, 4);
     } else die(d.x, d.y, d.face, d.h || 0);
     if (d.flip && time - d.flip.t0 < 2.2 && time - d.flip.t0 > 0.4) renoBubble(d.flip.from + ' ' + d.flip.to, d.x, d.y - 20, '#c8202a');
-    else if (S.ph === 2 && d.landed && !d.flip && !d.gone && fdist(d.x, d.y, m.x, m.y) < 13 && Math.floor(time * 3) % 2) renoBubble('A', d.x, d.y - 16, '#2b2118');
+    else if (S.ph === 2 && S.live && d.landed && !d.flip && !d.gone && fdist(d.x, d.y, m.x, m.y) < 13 && Math.floor(time * 3) % 2) renoBubble('A', d.x, d.y - 16, '#2b2118');
     ctx.globalAlpha = 1;
   }]);
   const jk = m.jump ? Math.sin(clamp((time - m.jump.t0) / 0.42, 0, 1) * Math.PI) : 0;
@@ -9906,7 +9907,7 @@ async function jimFight(from) {
   await say(['Seven times, the die lied.', 'Jim: "The die... lie."']);
   await say(['His philosophy, shattered.', 'His core being, full of untruths.']);
   await jimScreams(S);  // more dramatic: he screams, and comes apart
-  await truckee();     // and the whole scene turns into the Truckee River
+  await theEnd();      // and the whole scene turns into the Truckee River; then the realm of California
   phase = 'cut';
 }
 
@@ -10226,6 +10227,177 @@ function plunge() { if (!ac || muted) return; makeNoise(); noiseHit(ac.currentTi
 function coldSound() { if (!ac || muted) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(1900, t); o.frequency.linearRampToValueAtTime(2300, t + 1.6);
   g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.5); g.gain.exponentialRampToValueAtTime(0.0001, t + 2.0); o.connect(g); g.connect(master); o.start(t); o.stop(t + 2.05);
   makeNoise(); noiseHit(t, 'highpass', 4000, 0.5, 0.02, 1.8, 0.4, master); }  // a thin, cold wind
+// ---- the realm of California (your message), as if California were in Frank Herbert's The Santaroga Barrier (1968): a
+// valley of farms, ringed by redwoods; up the hill, the cheese cooperative, its caves behind it. (In the novel, what the
+// cooperative makes joins the town into one shared awareness; here, a nod: the deer move as one.) The pack of deer,
+// holding Isabella hostage; another spider, a female, in the euphoria of the dragging of time; an egg sac (implied, kept
+// PG); the baby ticks latch onto every deer; the deer are sucked of all their being and fall to the floor like rugs on a
+// carpet; Isabella, at last free from the tyranny of the ungulate gang. (How it all looks and sounds, and the words not
+// in your message, are guesses. Checked, about the novel: Wikipedia, "The Santaroga Barrier"; Tim O'Reilly, "Frank
+// Herbert", chapter 6.) ----
+const REALM_DEER = [[44, 84, 1], [58, 76, 1], [72, 71, 1], [90, 71, -1], [104, 76, -1], [118, 84, -1], [46, 99, 1], [116, 99, -1], [62, 105, 1], [100, 105, -1]];
+const ISA_AT = [80, 87], SAC_AT = [52, 131];
+const SHE_PAL = { C: '#3a2a20', A: '#9a3a7a', M: '#f2a0d0', L: '#2b1d14', e: '#ffe0f0', f: '#2b1d14' };  // the female spider (her colors: a guess)
+let realmCanvas = null, deerImgs = null;
+function paintRealm() {
+  realmCanvas = document.createElement('canvas'); realmCanvas.width = VW; realmCanvas.height = VH;
+  const g = realmCanvas.getContext('2d'), r = rng(19), f = (a, b, w, h, c) => { g.fillStyle = c; g.fillRect(a, b, w, h); };
+  const tri = u => 1 - 2 * Math.abs(u - Math.floor(u) - 0.5);
+  for (let y = 0; y < 64; y++) { const k = y / 64; f(0, y, VW, 1, 'rgb(' + Math.round(196 + 52 * k) + ',' + Math.round(150 + 72 * k) + ',' + Math.round(172 - 22 * k) + ')'); }  // a warm, hazy sky
+  const sun = g.createRadialGradient(118, 50, 2, 118, 50, 30); sun.addColorStop(0, 'rgba(255,246,200,.9)'); sun.addColorStop(1, 'rgba(255,230,170,0)');
+  g.fillStyle = sun; g.fillRect(88, 20, 60, 60); disc(g, 118, 50, 6, '#fff6d8');
+  for (let x = 0; x < VW; x++) { const h = 10 + 8 * tri(x / 61 + 0.3) + 3 * tri(x / 19), top = Math.round(62 - h); f(x, top, 1, 64 - top, '#b48aa8'); }  // far hills
+  for (let x = 0; x < VW; x++) { const h = 4 + 6 * tri(x / 43 + 0.7) + 2 * tri(x / 13), top = Math.round(64 - h); f(x, top, 1, 66 - top, '#9a8a6a'); }   // the valley's side
+  // up the hill: the cheese cooperative, its caves behind it; the town below
+  disc(g, 92, 52, 5, '#3a2a2a'); f(87, 52, 11, 4, '#3a2a2a'); disc(g, 92, 53, 3, '#1a1010');
+  f(70, 50, 28, 8, '#f4ecdc'); f(68, 48, 32, 2, '#7a3a2a'); f(70, 57, 28, 1, '#c8bca8');
+  signText(g, 'JASPERS', 72, 51, '#7a3a2a'); f(81, 54, 3, 3, '#5a3a2a');
+  for (let i = 0; i < 7; i++) { const x = 40 + i * 13 + (i % 2) * 3, y = 58 + (i % 3); f(x, y, 7, 4, '#f8f0e0'); f(x - 1, y - 2, 9, 2, i % 2 ? '#b84a32' : '#8a5a3a'); px(g, x + 3, y + 2, '#6a4a3a'); }
+  // the fields, in rows, out to the hills; then a meadow, with poppies
+  for (let y = 64; y < 80; y++) { const u = (y - 64) / 16, band = Math.floor(Math.pow(u, 0.7) * 7); f(0, y, VW, 1, band % 2 ? '#c8b058' : '#86a850'); }
+  for (let y = 80; y < VH; y++) { const k = (y - 80) / (VH - 80); f(0, y, VW, 1, 'rgb(' + Math.round(150 - 40 * k) + ',' + Math.round(170 - 30 * k) + ',' + Math.round(80 - 20 * k) + ')'); }
+  for (let i = 0; i < 90; i++) { const x = Math.round(r() * VW), y = 82 + Math.round(r() * (VH - 84)); f(x, y - 1, 1, 2, '#5a7a34'); if (i % 3 === 0) px(g, x + 1, y - 2, i % 2 ? '#f08a20' : '#ffb030'); }
+  // the redwoods, ringing it all: huge red trunks rising out of view, dark green up top
+  for (const [x, w] of [[0, 10], [13, 7], [141, 8], [151, 9]]) {
+    f(x, 0, w, VH - 14 + (x % 3), '#8a3e26'); f(x + 1, 0, 2, VH - 16, '#a8502e'); f(x + w - 2, 0, 1, VH - 16, '#6a2a1a');
+    for (let y = 8; y < VH - 20; y += 9) px(g, x + 3 + (y % 3), y, '#6a2a1a');
+    f(x - 2, VH - 16 + (x % 3), w + 4, 3, '#6a2a1a');  // flared at the root
+  }
+  for (let i = 0; i < 40; i++) { const x = (i < 20 ? -4 : 132) + Math.round(r() * 32), y = Math.round(r() * 26); disc(g, x, y, 3 + Math.round(r() * 3), i % 2 ? '#2a4a2a' : '#1e3a22'); }
+  // a sign by the road
+  f(33, 70, 1, 10, '#5a4a3a'); f(53, 70, 1, 10, '#5a4a3a');
+  signBoard(g, 'SANTAROGA', 43, 64, '#2a6a3a', '#f4f1ea', '#1a3a22');
+}
+function deerImg(dir) {
+  if (!deerImgs) { deerImgs = {}; for (const d of [1, -1]) { const c = document.createElement('canvas'); c.width = 16; c.height = 16; drawSprite(c.getContext('2d'), DEER, DEER_PAL, 0, 0, 0, d < 0); deerImgs[d] = c; } }
+  return deerImgs[dir];
+}
+const suckK = (S, i) => S.suck == null ? 0 : clamp((time - S.suck - i * 0.18) / 1.4, 0, 1);  // how far a deer is sucked dry
+const rugNow = (S, i) => S.suck != null && time - S.suck - i * 0.18 > 1.6;                   // and down, like a rug
+function drawRug(x, y, dir) {  // flat out on the ground, like a rug on a carpet
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+  f(1, 13, 14, 3, '#7a4a28'); f(3, 14, 10, 1, '#a8743e');
+  for (const [a, b] of [[-1, 12], [15, 12], [-1, 16], [15, 16]]) f(a, b, 2, 1, '#46291a');  // the legs, splayed
+  const hx = dir > 0 ? 15 : -2; f(hx, 13, 3, 2, '#7a4a28'); f(dir > 0 ? hx + 2 : hx, 11, 1, 2, '#d9c7a0');  // the head, an antler
+  f(dir > 0 ? 11 : 3, 13, 2, 1, '#c8102e');  // the bandana
+}
+async function realm() {
+  if (!realmCanvas) paintRealm();
+  riverSound(0); musicStop(); hud(null); phase = 'cut';
+  scene3 = { kind: 'realm', t0: time, euph: null, she: null, hearts: null, veil: null, veilUp: null, sac: null, burst: null, babies: [], arriveBy: 0,
+    suck: null, rugged: new Set(), free: null };
+  const S = scene3;
+  musicStart(REUNION_STYLE);
+  await wait(2.2);
+  await say(["You're carried to another realm: California.", "As if it were in Frank Herbert's The Santaroga Barrier."]);
+  await say(['A valley of farms, ringed by redwoods.', 'Up the hill, the cheese cooperative, and the caves behind it.']);
+  await say(['And there: the pack of deer, holding Isabella hostage.', 'They move as one.']);
+  S.euph = time; S.she = time + 0.4;
+  await say(['Then: another spider. A female.', 'In the euphoria of the dragging of time.']);
+  await wait(Math.max(0, S.she + 4.2 - time));
+  S.hearts = time; purrBreath(0.03);
+  await wait(1.8);
+  S.veil = time;
+  await wait(1.6);
+  await say(['...']);
+  S.veilUp = time; S.sac = time; spiritChime();
+  await wait(1.2);
+  await say(['An egg sac.']);
+  S.burst = time; sacBurst();
+  const r = rng(5);
+  for (let n = 0; n < 320; n++) {
+    const i = n % REALM_DEER.length, d = r() * 1.4, dur = 1.1 + r() * 1.2;
+    S.babies.push({ i, ox: 3 + r() * 10, oy: 5 + r() * 7, d, dur, arc: 6 + r() * 16 });
+    S.arriveBy = Math.max(S.arriveBy, time + d + dur);
+  }
+  skitter(2.6);
+  await wait(1.2);
+  await say(['It bursts: thousands of baby ticks.']);
+  await wait(Math.max(0, S.arriveBy - time) + 0.3);
+  await say(['They latch onto every deer.']);
+  S.suck = time; slurp();
+  await wait(1.6);
+  await say(['The deer are sucked of all their being.']);
+  await wait(Math.max(0, S.suck + 3.4 - time));
+  await say(['They fall to the floor, like rugs on a carpet.']);
+  S.free = time; perkUp();
+  await wait(1.6);
+  await say(['Isabella is at last free from the tyranny of the ungulate gang.']);
+  await wait(0.8);
+}
+function updateRealm() {
+  const S = scene3;
+  if (S.suck != null) REALM_DEER.forEach((_, i) => { if (rugNow(S, i) && !S.rugged.has(i)) { S.rugged.add(i); thump(0.05); } });
+}
+function drawRealm() {
+  const S = scene3;
+  ctx.drawImage(realmCanvas, 0, 0);
+  for (let i = 0; i < 26; i++) {  // motes of light, drifting
+    const x = Math.round(wrapX(i * 31 + time * (3 + i % 4), VW)), y = Math.round(16 + (i * 23) % 116 + Math.sin(time + i) * 3);
+    ctx.globalAlpha = 0.35 + 0.3 * Math.sin(time * 2 + i); px(ctx, x, y, '#fff6c8');
+  }
+  ctx.globalAlpha = 1;
+  const slow = S.euph != null && S.burst == null ? 0.3 : 1, bob = Math.round(Math.sin(time * 3 * slow));  // the deer, as one
+  const list = [];
+  REALM_DEER.forEach(([x, y, dir], i) => list.push([y, () => {
+    if (rugNow(S, i)) { drawRug(x, y, dir); return; }
+    const q = 1 - 0.78 * ease(suckK(S, i)), h = Math.max(3, Math.round(16 * q)), yy = y + (S.suck == null ? bob : 0) + 16 - h;
+    ctx.globalAlpha = 0.45 + 0.55 * q; ctx.drawImage(deerImg(dir), x, yy, 16, h); ctx.globalAlpha = 1;
+    if (i === 4 && S.suck == null) caFlag(x + 6, y - 22 + bob, time);  // the California flag, still with them
+    for (const b of S.babies) if (b.i === i && time - S.burst - b.d >= b.dur) px(ctx, Math.round(x + b.ox), Math.round(y + 16 - (16 - b.oy) * q), '#2a1a14');
+  }]));
+  const hop = S.free != null && time - S.free < 1.6 ? Math.round(Math.abs(Math.sin((time - S.free) * 6)) * 3) : 0;
+  list.push([ISA_AT[1], () => drawSprite(ctx, ISABELLA, ISABELLA_PAL, ISA_AT[0], ISA_AT[1] - hop)]);
+  list.push([118, () => drawBlaine(14, 118, 'right', 0)]);
+  list.push([122, () => drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], 34, 122, ROT.right)]);
+  if (S.she != null && time >= S.she) list.push([123, () => {
+    const k = ease(clamp((time - S.she) / 4, 0, 1)), x = Math.round(172 - k * 118);
+    drawSprite(ctx, SPIDER, SHE_PAL, x, 122, ROT.left, false, k < 1 ? Math.floor(time * 3) % 2 : 0);
+    px(ctx, x + 7, 121, '#ff7ab0'); px(ctx, x + 8, 120, '#ffd24f'); px(ctx, x + 9, 121, '#ff7ab0');  // a flower, on her head
+  }]);
+  list.sort((a, b) => a[0] - b[0]).forEach(([, f]) => f());
+  if (S.suck == null) line(ctx, REALM_DEER[2][0] + 14, REALM_DEER[2][1] + 6 + bob, ISA_AT[0] + 3, ISA_AT[1] + 10, '#8a6a3a');  // the rope: they hold her
+  if (S.free != null) for (let i = 0; i < 6; i++) sparkleAt(ISA_AT[0] + 8 + Math.round(Math.cos(i + time) * 12), ISA_AT[1] + 6 + Math.round(Math.sin(i * 2 + time) * 9), (time * 0.8 + i * 0.17) % 1);
+  // the euphoria of the dragging of time: everything goes soft and warm
+  if (S.euph != null && S.burst == null) { ctx.globalAlpha = 0.12 + 0.06 * Math.sin(time * 1.5); ctx.fillStyle = '#ff9ac8'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }
+  if (S.hearts != null) for (let i = 0; i < 5; i++) {  // hearts, rising off the two of you
+    const k = ((time - S.hearts) * 0.35 + i / 5) % 1, x = Math.round(48 + Math.sin(k * 7 + i) * 6), y = Math.round(118 - k * 34);
+    if (S.burst != null && time - S.burst > 0.5) break;
+    ctx.globalAlpha = 1 - k; HEART.forEach((row, j) => { for (let a = 0; a < 5; a++) if (row[a] === 'X') px(ctx, x + a, y + j, '#ff5a8a'); }); ctx.globalAlpha = 1;
+  }
+  if (S.veil != null) {  // a curtain of silk, drawn across the two of you
+    const down = ease(clamp((time - S.veil) / 1.0, 0, 1)), up = S.veilUp != null ? ease(clamp((time - S.veilUp) / 1.0, 0, 1)) : 0, h = Math.round(36 * down * (1 - up));
+    if (h > 0) {
+      ctx.globalAlpha = 0.92; ctx.fillStyle = '#fffaf4'; ctx.fillRect(28, 106, 48, h); ctx.globalAlpha = 1;
+      for (let x = 30; x < 76; x += 3) { ctx.fillStyle = '#e8e0f0'; ctx.fillRect(x, 106, 1, h); }
+      ctx.fillStyle = '#d8d0e0'; ctx.fillRect(28, 106, 48, 1);
+    }
+  }
+  if (S.sac != null) {  // the egg sac; then, burst open
+    const [sx, sy] = SAC_AT;
+    if (S.burst == null) { const p = Math.round(Math.sin(time * 4) * 0.6); disc(ctx, sx, sy, 5 + p, '#f4f0e8'); disc(ctx, sx + 1, sy + 1, 3, '#dcd4cc'); px(ctx, sx - 2, sy - 3, '#ffffff'); }
+    else { disc(ctx, sx, sy + 1, 4, '#e8e0d8'); disc(ctx, sx, sy, 2, '#bcb4ac'); for (let i = 0; i < 6; i++) px(ctx, sx - 5 + i * 2, sy - 3 - (i % 2), '#f4f0e8'); }
+  }
+  if (S.burst != null) for (const b of S.babies) {  // the baby ticks, pouring out, across to the deer
+    const k = (time - S.burst - b.d) / b.dur; if (k < 0 || k >= 1 || rugNow(S, b.i)) continue;
+    const [dx, dy] = REALM_DEER[b.i], e = ease(k), x = SAC_AT[0] + (dx + b.ox - SAC_AT[0]) * e, y = SAC_AT[1] + (dy + b.oy - SAC_AT[1]) * e - Math.sin(k * Math.PI) * b.arc;
+    px(ctx, Math.round(x), Math.round(y), '#2a1a14'); if ((b.ox * 7 | 0) % 3 === 0) px(ctx, Math.round(x) + 1, Math.round(y), '#7a1a1a');
+  }
+  if (time - S.t0 < 1.8) { ctx.globalAlpha = 1 - (time - S.t0) / 1.8; ctx.fillStyle = '#fffaf0'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }  // out of the white
+}
+function sacBurst() { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; noiseHit(t, 'bandpass', 1200, 1, 0.07, 0.25, 0.3, master); tone(master, 'triangle', 880, t, 0.25, 0.03); }
+function skitter(d) { if (!ac || muted) return; makeNoise(); const t = ac.currentTime; for (let i = 0; i < 60; i++) noiseHit(t + Math.random() * d, 'bandpass', 3000 + Math.random() * 3000, 4, 0.02, 0.015, 0, master); }
+function slurp() {  // the deer, sucked of all their being: low, falling, one after another
+  if (!ac || muted) return; const t0 = ac.currentTime;
+  REALM_DEER.forEach((_, i) => { const t = t0 + i * 0.18, o = ac.createOscillator(), lp = ac.createBiquadFilter(), g = ac.createGain();
+    o.type = 'sawtooth'; o.frequency.setValueAtTime(220, t); o.frequency.exponentialRampToValueAtTime(60, t + 1.2); lp.type = 'lowpass'; lp.frequency.value = 500;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.012, t + 0.1); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.3);
+    o.connect(lp); lp.connect(g); g.connect(master); o.start(t); o.stop(t + 1.35); });
+}
+async function theEnd(from = 'truckee') {  // after Jim: the Truckee River, then the realm of California
+  if (from === 'truckee') await truckee();
+  await realm();
+}
 function finish4() {
   phase = 'done4'; lock = 0; hud(null);  // (the last scene stays on screen, behind)
   $('end4Text').textContent = 'You drove West in the U-Haul with Brudda Blaine and IzzyKat, through the oil fields, past bison ' +
@@ -10239,7 +10411,7 @@ function finish4() {
     'smaller geysers, and a beer or two. Steam in the distance: Old Faithful. It tricked you, again and again, then ' +
     'exploded, with IzzyKat riding it, far into the air. She might be indestructible. She landed at your feet. Then on, ' +
     'through the barren wastelands, Kyuss in Utah and Mac Miller\'s Circles in Nevada, to Reno.' +
-    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered. Light broke out of every crack in him, and he screamed at the top of his lungs, "THE DIE.....THEY LIE.... I CANNOT.... BE.....", and came apart. The whole scene melted, and ran into the Truckee River, at night: rocky, with slight rapids, a bridge overhead on the left, the Sierra Nevada behind. A cigarette appeared, as long as time itself, full of good California weed, not Milwaukee weed. You grabbed it and lit it, and you and Brudda Blaine took a drag of time itself, and slowly walked into the Truckee, as cold as the Sierra mountains themselves. Next, from your story: the realm of California.';
+    ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered. Light broke out of every crack in him, and he screamed at the top of his lungs, "THE DIE.....THEY LIE.... I CANNOT.... BE.....", and came apart. The whole scene melted, and ran into the Truckee River, at night: rocky, with slight rapids, a bridge overhead on the left, the Sierra Nevada behind. A cigarette appeared, as long as time itself, full of good California weed, not Milwaukee weed. You grabbed it and lit it, and you and Brudda Blaine took a drag of time itself, and slowly walked into the Truckee, as cold as the Sierra mountains themselves. You were carried to another realm: California, as if it were in Frank Herbert\'s The Santaroga Barrier, a valley of farms ringed by redwoods, the cheese cooperative up the hill. The pack of deer, holding Isabella hostage, moving as one. Then another spider, a female, in the euphoria of the dragging of time; a curtain of silk; an egg sac. It burst: thousands of baby ticks latched onto every deer, and the deer, sucked of all their being, fell to the floor like rugs on a carpet. Isabella is at last free from the tyranny of the ungulate gang. Next, from your story: back at the Truckee River, and the very end.';
   $('end4').hidden = false;
 }
 const JUMP4 = {  // for checks: ?level=4&at=...
@@ -10262,7 +10434,8 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   jim: () => { phase = 'cut'; reno('jim').then(jimFight).then(finish4); },
   fight: () => { phase = 'cut'; jimFight().then(finish4); },
   fight2: () => { phase = 'cut'; jimFight(2).then(finish4); },
-  truckee: () => { phase = 'cut'; truckee().then(finish4); },
+  truckee: () => { phase = 'cut'; theEnd('truckee').then(finish4); },
+  realm: () => { phase = 'cut'; theEnd('realm').then(finish4); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
@@ -10656,6 +10829,7 @@ window.__sketch = {
   get canal() { const C = scene3; return C && C.kind === 'canal' ? { at: [C.me.tx, C.me.ty], moving: C.me.moving, hop: !!C.me.hop, live: C.live, jumped: C.jumped, grid: CANAL } : null; },
   get craps() { const C = scene3; return C && C.kind === 'craps' ? { chips: C.chips, point: C.point, drinks: C.drinks, ready: C.ready, rolls: C.rolls, jim: !!C.jim, shooter: C.shooter } : null; },
   get fight() { return fightState(); },
+  get realm() { const S = scene3; return S && S.kind === 'realm' ? { she: S.she != null, veil: S.veil != null, sac: S.sac != null, burst: S.burst != null, rugs: S.rugged.size, free: S.free != null } : null; },
   get truckee() { const S = scene3; return S && S.kind === 'truckee' ? { melt: !!S.melt, cig: !!S.cig, lit: !!(S.cig && S.cig.lit), drag: S.drag != null, moon: S.moonK, wade: Math.round(wadeK(S) * 100) / 100, under: !!S.under, warp: !!S.warp } : null; },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
