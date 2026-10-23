@@ -5857,7 +5857,7 @@ function drawScene3() {
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, VH);
   ({ ride: drawRide, cab: drawCab, hug: drawHug, shoulder: drawShoulder, bay: drawBay, cat: drawCatScene, drive: drawDrive, arrive: drawArrive, peek: drawPeek, field: drawField, search: drawSearch, under: drawUnder, dogtown: drawDogTown,
     lot: drawLot, photo: drawPhoto, hike: drawHike, faithful: drawFaithful,
-    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee, realm: drawRealm, pageant: drawPageant, final: drawFinal })[scene3.kind]();
+    motel: drawMotel, canal: drawCanal, strip: drawStrip, craps: drawCraps, fight: drawFight, truckee: drawTruckee, realm: drawRealm, pageant: drawPageant, final: drawFinal, party: drawParty })[scene3.kind]();
 }
 
 // ---- level 3: drawing the club and the town ----
@@ -10706,6 +10706,7 @@ async function dip() {
   riverSound(0);
   await babyReveal();  // the baby tick, revealed, and your banner
   await reveal();
+  await party();       // then the last dance
   return true;
 }
 // the realm's last moment, crumbling away in little bits, drifting off like dust, the Truckee at night showing through
@@ -11002,6 +11003,150 @@ function drawFinal() {  // up on a high rock at sunrise: Braydon and Isabella, h
   if (lift >= 12) for (let i = 0; i < 5; i++) sparkleAt(bx + Math.round(Math.cos(i * 1.3 + time) * 10), by + 3 + Math.round(Math.sin(i * 2.1 + time) * 7), (time * 0.9 + i * 0.2) % 1);
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, VW, 10); ctx.fillRect(0, VH - 10, VW, 10);  // a letterbox, like a film
   if (t < 1.6) { ctx.globalAlpha = 1 - t / 1.6; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }  // out of the white
+  if (S.toWhite != null) { ctx.globalAlpha = clamp((time - S.toWhite) / 2.2, 0, 1); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH); ctx.globalAlpha = 1; }  // and, at the end, into a blank white
+}
+// ---- the last dance (your ask). The last scene fades into a blank white. DJ Brudda Blaine hops back on the turntables,
+// his track drops, and every character from every scene comes in, all at once, and dances: until the end of time, the
+// time that is as long as Jim's cigarette (it lies along the bottom, still burning). It lingers. (Who stands where, how
+// they dance, the soft lights, and his track, are guesses.) ----
+const partyBeat = () => 60 / (mus && mus.style.kind === 'hip' ? mus.style.bpm : 94);
+const partyHop = (j, amp = 2) => Math.round(Math.abs(Math.sin(((time / partyBeat() + j * 0.13) % 1) * Math.PI)) * amp);
+const partyFlip = j => (Math.floor(time / partyBeat()) + j) % 2 === 1;
+const partyHue = j => i => RAINBOW[(i + j + Math.floor(time * 4)) % RAINBOW.length];
+function shadowy(x, y, step) {  // the shadowy character from under the bridge: a dark hood, two dim eyes
+  const f = (a, b, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x + a, y + b, w, h); };
+  f(2, 0, 6, 3, '#0c0a14'); f(1, 2, 8, 9, '#0c0a14'); f(0, 4, 10, 7, '#120e1c'); f(3, 11, 2, 4 + step, '#0c0a14'); f(6, 11, 2, 5 - step, '#0c0a14');
+  f(2, 1, 1, 9, '#22202c'); px(ctx, x + 5, y + 3, '#c8c890'); px(ctx, x + 7, y + 3, '#c8c890');
+}
+function partyPerson(X, Y, j, o) {  // a person, dancing: X, Y their feet; o: skin, hair, shirt, pants, and any extras
+  const hop = partyHop(j), arms = Math.floor(time / partyBeat() + j) % 3, x = X - 3, y = Y - 12;
+  if (o.longHair) { ctx.fillStyle = o.hair; ctx.fillRect(x, y + 1 - hop, 7, 7); }
+  person(x, y, o.skin, o.hair, o.shirt, arms, hop);
+  if (o.pants) { ctx.fillStyle = o.pants; ctx.fillRect(x + 2, y + 9 - hop, 1, 3 + hop); ctx.fillRect(x + 4, y + 9 - hop, 1, 3 + hop); }
+  if (o.vest) { ctx.fillStyle = '#1a1414'; ctx.fillRect(x + 1, y + 5 - hop, 1, 4); ctx.fillRect(x + 5, y + 5 - hop, 1, 4); px(ctx, x + 3, y + 5 - hop, '#c8202a'); }
+  if (o.tie) { px(ctx, x + 3, y + 5 - hop, '#c8202a'); px(ctx, x + 3, y + 6 - hop, '#c8202a'); px(ctx, x + 1, y + 5 - hop, '#f08ab0'); px(ctx, x + 2, y + 6 - hop, '#f08ab0'); px(ctx, x + 4, y + 8 - hop, '#f08ab0'); }  // a loosened tie, a sash
+  if (o.hat) { ctx.fillStyle = '#e8d090'; ctx.fillRect(x - 2, y - 1 - hop, 11, 1); ctx.fillRect(x + 1, y - 3 - hop, 5, 2); }  // a sun hat
+}
+function partyJim(X, Y, j) {  // Jim, dancing (he perks up on the beat); legs, now, out from behind the craps table
+  const perk = partyFlip(j), up = perk ? 1 : 0, bob = Math.round(Math.abs(Math.sin(time * 3))), y0 = 15 - up * 2 + bob + (perk ? 0 : 1);
+  ctx.save(); ctx.translate(0, Y - (y0 + 38));
+  ctx.fillStyle = '#3a4a6a'; ctx.fillRect(X - 5, y0 + 30, 3, 7); ctx.fillRect(X + 2, y0 + 30, 3, 7);
+  ctx.fillStyle = '#4a3a2a'; ctx.fillRect(X - 6, y0 + 37, 4, 1); ctx.fillRect(X + 2, y0 + 37, 4, 1);
+  drawJim(X, perk, true);
+  ctx.restore();
+}
+function partyCast() {  // everyone: where they dance (x, y: their feet), which edge they come in from, and how they're drawn
+  const C = [], add = (x, y, draw, layer = 'ground', from) => C.push({ x, y, draw, layer, from: from || (layer === 'ground' ? (x < 80 ? 'L' : 'R') : 'T'), j: C.length });
+  // up in the sky: the Gales of November, and the Edmund Fitzgerald, dancing as well as they can
+  add(23, 31, (X, Y, j) => drawBig(GALE, GALE_PAL, X - 20 + Math.round(Math.sin(time * 2) * 3), Y - 28 - partyHop(j, 2), 2), 'sky');
+  add(114, 29, (X, Y, j) => drawShip(X - 44 + Math.round(Math.sin(time * 1.6) * 2), Y - 25 - partyHop(j, 2)), 'sky');
+  // flying round: the eagle, the gull, the rainbow bugs, the massive mosquitoes, the sea turtles, the salmon, fairies
+  add(52, 14, (X, Y, j) => drawGrid(Math.floor(time * 6) % 2 ? EAGLE_UP : EAGLE_DOWN, EAGLE_PAL, Math.round(X - 8 + Math.cos(time * 1.3) * 14), Math.round(Y - 4 + Math.sin(time * 2.6) * 5), Math.cos(time * 1.3 + 1.57) > 0), 'fly');
+  add(58, 38, (X, Y, j) => drawFlyingGull(X + Math.round(Math.cos(time * 1.1 + 2) * 10), Y + Math.round(Math.sin(time * 2.2) * 4), 1, Math.floor(time * 5) % 2, Math.sin(time * 1.1 + 2) > 0), 'fly');
+  [['gnat', 36, 46], ['fly', 128, 42], ['moth', 64, 24], ['ladybug', 144, 50], ['firefly', 98, 20], ['beetle', 20, 56]].forEach(([kind, x, y]) =>
+    add(x, y, (X, Y, j) => drawBug(kind, X + Math.round(Math.cos(time * 2 + j) * 6), Y + Math.round(Math.sin(time * 3 + j) * 4), Math.floor(time * 18 + j) % 2 ? -1 : 0, partyHue(j)), 'fly'));
+  [[10, 44, true], [152, 36, false]].forEach(([x, y, left]) => add(x, y, (X, Y, j) => drawMosquito(X + Math.round(Math.sin(time * 1.7 + j) * 5), Y + Math.round(Math.cos(time * 2.3 + j) * 4), left, time + j), 'fly'));
+  [[44, 40], [120, 44]].forEach(([x, y]) => add(x, y, (X, Y, j) => { const a = time * 0.9 + j; turtle(X + Math.round(Math.cos(a) * 8), Y + Math.round(Math.sin(a) * 5), a + Math.PI / 2, time); }, 'fly'));
+  [0, 0.5].forEach(o => add(80, 46, (X, Y, j) => {  // the salmon, leaping across, in arcs
+    const u = (time * 0.32 + o) % 1, x = X - 100 + u * 200, y = Y - Math.sin(u * Math.PI) * 22, ang = Math.atan2(-Math.cos(u * Math.PI) * 22 * Math.PI, 200);
+    drawFish(Math.round(x), Math.round(y), ang, 2, SALMON);
+  }, 'fly', 'L'));
+  [0, 1, 2].forEach(i => add(80, 40, (X, Y, j) => {  // fairies, glowing, looping round the decks
+    const a = time * 1.4 + i * 2.1, x = Math.round(X + Math.cos(a) * (28 + i * 6)), y = Math.round(Y + Math.sin(a * 1.6) * 9) - partyHop(j), col = FAIRY_COLS[i % FAIRY_COLS.length];
+    ctx.globalAlpha = 0.35; disc(ctx, x, y, 3, col); ctx.globalAlpha = 1; px(ctx, x, y, '#ffffff'); px(ctx, x - 1, y - (Math.floor(time * 12) % 2), col); px(ctx, x + 1, y - (Math.floor(time * 12) % 2), col);
+  }, 'fly'));
+  // the back row, the tall ones: Phil, Jim, the bull elk, the gang
+  add(18, 64, (X, Y, j) => drawPhil(X - 16, Y - 31 - partyHop(j, 2)));
+  add(47, 64, (X, Y, j) => partyJim(X, Y, j));
+  add(104, 64, (X, Y, j) => elk(X, Y - partyHop(j, 1), false, Math.floor(time / partyBeat() / 2) % 2 ? 'bugle' : 'up'));
+  [124, 144].forEach((x, i) => add(x, 64, (X, Y, j) => ctx.drawImage(deerImg(partyFlip(j) ? 1 : -1), X - 8, Y - 16 - partyHop(j))));
+  // the next row: bison, the two horses (their slight battle, a dance now), the dealer, Karill, the promoters, Patrick
+  add(12, 84, (X, Y, j) => bison(X, Y - partyHop(j, 1), partyFlip(j), false, time + j));
+  add(34, 84, (X, Y, j) => horse(X, Y, true, 'black', partyFlip(j), time));
+  add(56, 84, (X, Y, j) => horse(X, Y, false, 'brown', !partyFlip(j), time + 0.5));
+  add(72, 84, (X, Y, j) => partyPerson(X, Y, j, { skin: '#e0b090', hair: '#1a1414', shirt: '#f4f1ea', pants: '#1a1414', vest: true }));
+  add(102, 84, (X, Y, j) => drawKarill(X - 8, Y - 16));
+  add(118, 84, (X, Y, j) => drawPromoter(X - 8, Y - 16 - partyHop(j, 1), 0));
+  add(134, 84, (X, Y, j) => drawPromoter(X - 8, Y - 16 - partyHop(j, 1), 1));
+  add(150, 84, (X, Y, j) => partyPerson(X, Y, j, { skin: '#f0c8a0', hair: '#8a6136', shirt: '#ffffff', pants: '#2a2a30', tie: true }));
+  // the next: the hunter, the shadowy character, Shawn, the girls from Yellowstone, the three locals from Akumal, the photographers
+  add(8, 104, (X, Y, j) => drawHunter(X - 5, Y - 18 - partyHop(j, 1), 1.2, 1, true));
+  add(21, 104, (X, Y, j) => shadowy(X - 5, Y - 16 - partyHop(j, 1), Math.floor(time * 4) % 2));
+  add(33, 104, (X, Y, j) => partyPerson(X, Y, j, { skin: '#f0c8a0', hair: '#6a4a2a', shirt: '#8ab4d8', pants: '#c8b088' }));
+  FANS.forEach((f, i) => add(45 + i * 10, 104, (X, Y, j) => partyPerson(X, Y, j, { skin: '#e2b48e', hair: f.hair, shirt: f.top, longHair: true, hat: f.hat })));
+  [0, 1, 2].forEach(k => add(80 + k * 15, 104, (X, Y, j) => drawLocal({ pose: 'cheer', kind: k }, X - 8, Y - 16)));
+  [0, 1].forEach(k => add(132 + k * 17, 104, (X, Y, j) => shooter(X + 2, Y, SHOOTERS[k], time + j, partyFlip(j))));
+  // the front: coyotes, prairie dogs, IzzyKat, the three ticks, you, Isabella, the female spider
+  add(10, 122, (X, Y, j) => coyote(X, Y - partyHop(j, 1), partyFlip(j), true, time + j));
+  add(26, 122, (X, Y, j) => drawGrid(PD, PD_PAL, X - 5, Y - 15 - partyHop(j, 3), partyFlip(j)));
+  add(40, 122, (X, Y, j) => drawGrid(CAT_SIT, TORTIE, X - 5, Y - 13 - partyHop(j, 2), partyFlip(j)));
+  add(55, 122, (X, Y, j) => drawGrid(TICK_ART.regular[0], TICK_ART.regular[1], X - 8, Y - 16 - partyHop(j), partyFlip(j)));
+  add(72, 122, (X, Y, j) => drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], X - 8, Y - 15 - partyHop(j, 3), partyFlip(j) ? ROT.left : ROT.right, false, Math.floor(time * 6) % 2));
+  add(89, 122, (X, Y, j) => drawSprite(ctx, ISABELLA, ISABELLA_PAL, X - 8, Y - 16 - partyHop(j, 2), 0, partyFlip(j)));
+  add(106, 122, (X, Y, j) => { const y = Y - 15 - partyHop(j, 2); drawSprite(ctx, SPIDER, SHE_PAL, X - 8, y, partyFlip(j) ? ROT.right : ROT.left); px(ctx, X - 1, y - 1, '#ff7ab0'); px(ctx, X, y - 2, '#ffd24f'); px(ctx, X + 1, y - 1, '#ff7ab0'); });
+  add(122, 122, (X, Y, j) => drawGrid(TICK_ART.human[0], TICK_ART.human[1], X - 8, Y - 16 - partyHop(j), partyFlip(j)));
+  add(138, 122, (X, Y, j) => drawGrid(TICK_ART.dog[0], TICK_ART.dog[1], X - 8, Y - 16 - partyHop(j), partyFlip(j)));
+  add(152, 122, (X, Y, j) => coyote(X, Y - partyHop(j, 1), !partyFlip(j), true, time + j));
+  // the very front: the woodland creatures, the naked mole rat, a prairie dog, and the baby tick, in the middle
+  [['elf', 12], ['gnome', 26], ['fox', 42], ['rabbit', 58], ['raccoon', 98], ['owl', 112], ['elf', 150]].forEach(([kind, x]) => add(x, 140, (X, Y, j) => drawDancer({ kind, j }, X, Y)));
+  add(80, 140, (X, Y, j) => drawBabyTick(X - 1, Y - 6 - partyHop(j, 3), 1, time));
+  add(128, 140, (X, Y, j) => drawGrid(Math.floor(time * 6) % 2 ? MOLE_STEP : MOLE, MOLE_PAL, X - 9, Y - 7 - partyHop(j, 1), partyFlip(j)));
+  // and any gifts from Blaine that dance, too
+  const gifts = []; extras.party(gifts);
+  gifts.forEach((g, i) => { const [x, y] = [[86, 84], [70, 104]][i] || [80, 84]; add(x, y, (X, Y, j) => g.draw(X, Y, partyHop(j), partyFlip(j))); });
+  return C;
+}
+async function party() {
+  const F = scene3;
+  if (F && F.kind === 'final') { F.toWhite = time; await wait(2.6); }  // the last scene fades into white
+  musicStop(); hud(null); phase = 'cut';
+  scene3 = { kind: 'party', t0: time, decks: null, dj: null, come: null, cast: null };
+  const S = scene3; S.cast = partyCast();
+  await wait(2.0);
+  S.decks = time; thump(0.05); spiritChime();  // the turntables
+  await wait(1.2);
+  S.dj = time;  // DJ Brudda Blaine hops back on
+  await wait(0.9);
+  thump(0.07);
+  musicStart(HIP[1]);  // his track drops
+  S.come = time;  // and everyone, all at once
+  await wait(40);  // until the end of time; it lingers
+  hud('Tap A for the end screen'); phase = 'egg'; S.dip = {};
+  await new Promise(res => { S.dip.tap = res; });
+  hud(null); phase = 'cut';
+}
+function partyCig() {  // Jim's cigarette, as long as time itself, along the bottom: from the filter, off the far edge, to the glow
+  const y = 141;
+  ctx.fillStyle = '#f2eee4'; ctx.fillRect(0, y, VW - 6, 1); ctx.fillStyle = '#cfc6b4'; ctx.fillRect(0, y + 1, VW - 6, 1);
+  for (let x = VW - 10; x > 0; x -= 7) px(ctx, x, y + 1, '#6a9a4a');
+  for (let x = VW - 13; x > 0; x -= 10) px(ctx, x, y, '#b4aa98');
+  ctx.fillStyle = '#d89a58'; ctx.fillRect(VW - 6, y, 6, 2);
+  const g = ctx.createRadialGradient(0, y, 0, 0, y, 14); g.addColorStop(0, 'rgba(255,140,60,' + (0.45 + 0.15 * Math.sin(time * 3)).toFixed(2) + ')'); g.addColorStop(1, 'rgba(255,90,30,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, y - 14, 14, 28);
+  for (let i = 0; i < 4; i++) { const p = (time * 0.25 + i / 4) % 1; ctx.globalAlpha = 0.35 * (1 - p); disc(ctx, Math.round(2 + p * 8 + Math.sin(p * 6 + i) * 3), Math.round(y - 2 - p * 30), 1 + Math.round(p * 2), '#c8c8d0'); }
+  ctx.globalAlpha = 1;
+}
+function drawParty() {
+  const S = scene3;
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, VW, VH);
+  if (S.come != null) for (let i = 0; i < 4; i++) {  // soft lights, sweeping, in every color
+    const a = time * 0.7 + i * 1.6; ctx.globalAlpha = 0.045; disc(ctx, Math.round(80 + Math.cos(a) * 60), Math.round(96 + Math.sin(a * 1.3) * 34), 20, RAINBOW[(i * 2) % RAINBOW.length]);
+  }
+  ctx.globalAlpha = 1;
+  partyCig();
+  const at = c => {
+    if (S.come == null) return null;
+    const k = ease(clamp((time - S.come - (c.j % 9) * 0.02) / 1.4, 0, 1)), [sx, sy] = c.from === 'L' ? [-34, c.y] : c.from === 'R' ? [VW + 34, c.y] : [c.x, -40];
+    return [Math.round(sx + (c.x - sx) * k), Math.round(sy + (c.y - sy) * k)];
+  };
+  for (const layer of ['sky', 'fly']) for (const c of S.cast) if (c.layer === layer) { const p = at(c); if (p) c.draw(p[0], p[1], c.j); }
+  if (S.dj != null) {  // DJ Brudda Blaine: a hop, back onto his turntables
+    const k = clamp((time - S.dj) / 0.9, 0, 1), x = Math.round(172 + (72 - 172) * ease(k)), y = Math.round(30 - Math.sin(k * Math.PI) * 26);
+    drawDJ(x, y, S.come != null && (time / partyBeat()) % 1 < 0.35 ? 1 : 0, time * 9);
+  }
+  if (S.decks != null) { drawDecks(72, 40, time * 6); if (time - S.decks < 0.6) sparkleAt(80, 46, (time - S.decks) / 0.6); }
+  const ground = S.cast.filter(c => c.layer === 'ground').sort((a, b) => a.y - b.y || a.x - b.x);
+  for (const c of ground) { const p = at(c); if (p) c.draw(p[0], p[1], c.j); }
 }
 async function theEnd(from = 'truckee') {  // after Jim: the Truckee River, the realm of California, back at the Truckee (and the reveal)
   if (from === 'truckee') await truckee();
@@ -11054,7 +11199,8 @@ const JUMP4 = {  // for checks: ?level=4&at=...
   sac: () => { phase = 'cut'; theEnd('sac').then(finish4); },
   dip: () => { phase = 'cut'; theEnd('dip').then(finish4); },
   reveal: () => { phase = 'cut'; reveal().then(finish4); },
-  baby: () => { phase = 'cut'; fadeTo(0, 0.3); babyReveal().then(reveal).then(finish4); },
+  baby: () => { phase = 'cut'; fadeTo(0, 0.3); babyReveal().then(reveal).then(party).then(finish4); },
+  party: () => { phase = 'cut'; fadeTo(0, 0.3); party().then(finish4); },
 };
 
 // ---- input: the pad, the A button, and the keyboard ----
@@ -11167,6 +11313,7 @@ const extras = {
   sprites(list, cx, cy, late) { for (const p of this.parts) if (p.sprites) p.sprites(list, cx, cy, late); },
   rider(X, Y, step) { return this.parts.some(p => p.rider && p.rider(X, Y, step)); },  // draws you, if it's its turn
   update(dt) { for (const p of this.parts) if (p.update) p.update(dt); },
+  party(list) { for (const p of this.parts) if (p.party) p.party(list); },  // the last dance: anyone who dances in it
 };
 const extraGrid = (g, rows, pal, x, y, flip) => {  // a sprite grid, onto any canvas
   const w = rows[0].length;
@@ -11300,6 +11447,9 @@ if (EXTRAS.on && EXTRAS.moonPie) {
     update(dt) {
       if (level !== 2 || pizzaVisited === false) { if (mp.done) reset(); return; }  // a new trip up the shore
       updateActor(mp.man, dt);
+    },
+    party(list) {  // the last dance, at the very end (his ask): the old man is there too, dancing, his Moon Pie in hand
+      list.push({ draw(X, Y, hop, flip) { extraGrid(ctx, Math.floor(time * 3) % 2 ? OLD_STEP : OLD, PAL, X - 8, Y - 18 - hop, flip); pie(X - 3, Y - 11 - hop); } });
     },
   });
 }
