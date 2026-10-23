@@ -1356,6 +1356,8 @@ Nothing queued.
   good deal longer.) Should the deer do more, like Galaga's (shoot back, or try to take Isabella back)? Is Up the right
   button for the safety baby tick?
 
+- Asked 2026-10-23 (comment 6359036142): your order was the Truckee, then the kingdom, then the Looney Tunes ending. The
+  stage with the baby tick and your first banner still comes between the egg and the kingdom. Keep it?
 - Answered 2026-10-23: leave the card out (asked: send your final words, or leave the card out now that your banners say
   it?). Before: waiting (asked 2026-10-22) for your final words for the last scene.
 - Not said yet: runs two and three are level 4 again, with another tick ("Try another tick" on the end screen), not the
@@ -1647,3 +1649,6 @@ Nothing queued.
   that plays the whole ending from your speech as a third run (working once it's in), and one question: the card. Then
   built it in sketch 2, same link (68549ec; the computer the workshop runs on slept partway through). Your 04:10 message
   (leave the card out) came in before the build, so the card is out.
+- 2026-10-23: replied to your 04:10 message (comment 6359036142): the card is out and the kingdom is in, with the link to
+  the whole ending as a third run, the order, and one check: keep the stage with your first banner between the egg and the
+  kingdom? Nothing new built for it (the card was already out in 68549ec).
