@@ -382,9 +382,9 @@ Every session reads this first and updates it last.
   GitHub. Still on; one part of it taken out at your word (2026-10-22).
 - The very end (2026-10-22): option 1, finish with all three ticks; the reveal is its own grand cut scene, ending like a
   manifested easter egg. The first two runs stop at the tick's line at the Truckee, and a tick mark fills in; the third
-  goes on to the flash and the final scene (the assistant's pick; you trust it, 2026-10-23). After the third run, an egg
-  manifests on the end screen; tap it, and the last cut scene plays (the assistant's reading of "a manifested easter
-  egg"; yours to change).
+  goes on to the flash and the final scene (the assistant's pick; you trust it, 2026-10-23). On the third run, an egg
+  manifests over the river after the tick's line; tap it, and the last cut scene plays (the assistant's reading of "a
+  manifested easter egg"; yours to change; built 2026-10-23).
 - The music in Reno (2026-10-22; built): Rat Pack swing as you pull in, New Orleans jazz in the canals, the swing again in
   the casino.
 - Jim's end and the Truckee River, then the realm of California (2026-10-22; built), as you wrote it. All of the flashing
@@ -1029,18 +1029,45 @@ Every session reads this first and updates it last.
   - Links for checks: `?level=4&tick=dog&at=truckee` (the Truckee), `&at=realm` (the realm of California); `&at=fight2`
     plays Jim's end first.
 
+- 2026-10-23, sketch 2 changed (`gh-pages`, commit 3641ae3), the rest of your messages:
+  - Back at the Truckee River, at night, out of the white: "Back at the Truckee River." "The job is complete." Brudda
+    Blaine: "I need to take a dip, to wash off all of that stank." A cartoon cloud, and his clothes fly out of it onto a
+    pile on the bank by the bridge (the jacket, the tee, the jeans, the red headphones, the chain, the shoes). "He gets
+    naked." (Nothing is shown.) He dives among the rocks like a dolphin, seven leaps across the river, one in slow motion
+    with sparkles. "Here. There. Everywhere." "So unsophisticated, it comes across as beauty, and grace."
+  - You follow, slowly, hesitantly: a step in, a step back ("aint no way Bish"), then up to your knees ("this shit cray"),
+    your breath showing in the cold.
+  - The shadowy character: a dark hooded figure with two dim eyes, creeping out of the dark under the bridge toward the
+    pile. Brudda Blaine stands up in the river (shades on, the water to his waist), arms flung wide toward the bridge, and
+    a burst of light goes that way: the flash, metaphorical. The character jumps ("!"), and walks off the way he came,
+    "MUMBLE MUMBLE" over his head. The words are yours.
+  - The turn: a letterbox comes down, a soft light on you, and an orchestra starts (original, in the spirit of a Bocelli
+    ballad: strings, a harp, a low swell, timpani, and a tenor voice singing "ah" on the tune, no words). You turn, slowly,
+    to Brudda Blaine: "I have a form of reveal to you, Brother."
+  - Runs one and two end there: the screen fades, and the end screen shows three tick marks (the regular tick, the
+    human-blood tick, the pointer), the ones you've finished with checked, and "Something is left to find. Finish with
+    each tick." They're kept in the browser the game is played in. "Try another tick" on the end screen plays level 4 again
+    with another tick, and that counts.
+  - On the third: an easter egg manifests out of the night over the river (sparkles drawing in; pastel bands, a zigzag,
+    a glow). "Tap A." It cracks, light pours out, you flash too (a burst of light in every color, metaphorical), and it
+    goes white: the final scene, as you wrote it (kept out of these notes, like the secret), with the orchestra. Then a
+    card comes up for your words; it's blank until you send them. Tap A, and the end screen: "All three ticks."
+  - Your words will be kept in the game's code in a scrambled form, so nobody can read them by looking at the code.
+  - The badge at the top now says "levels 1 to 4". Gifts from Blaine: untouched, still on.
+  - Guesses: all of it but your words.
+  - Links for checks: `?level=4&tick=dog&at=dip` (back at the Truckee); adding `&ends=regular,human` acts as if those two
+    are already finished, so the egg comes; `&at=reveal` goes straight to the final scene.
+
 ## Next to build (queued, in your order)
 
-1. Back at the Truckee River: Brudda Blaine's dip and his dolphin dives; the tick to his knees ("aint no way Bish", "this
-   shit cray"); the shadowy character under the bridge; Brudda Blaine's flash (metaphorical); the mumbling; the tick's turn
-   and line, with an orchestra like a Bocelli ballad (original). The first two runs stop there, with a tick mark.
-2. The reveal: three tick marks on the end screen; after the third run, an egg manifests; tap it: the tick's flash
-   (metaphorical), and the final scene, as you wrote it, with your words (a blank card until you send them; the words
-   hidden in the game's code so nobody can read them by peeking).
+1. Your words, on the card at the very end (waiting for you).
 
 ## Open questions
 
 - Waiting (asked 2026-10-22): your final words for the last scene. Until then it holds a blank card.
+- Not said yet: runs two and three are level 4 again, with another tick ("Try another tick" on the end screen), not the
+  whole game; the tick marks are kept in the browser, so all three runs need the same phone or computer. The egg is the
+  assistant's reading of "a manifested easter egg". Both are yours to change.
 - Answered 2026-10-23: the orchestra is like a Bocelli ballad (asked: did "Balotelli" mean Andrea Bocelli?), and you
   trust the assistant's pick on runs one and two.
 - Answered 2026-10-22: option 1 (asked below).
@@ -1286,4 +1313,5 @@ Every session reads this first and updates it last.
   issue #1 first (comment 6355133109) with the plan, in your story's order, and two questions: Bocelli, and whether runs one
   and two stop at the tick's line. Then built Reno's music, Jim's end and the Truckee, and the realm of California in sketch
   2, same link. One more message from you (Bocelli; you trust the pick); replied (comment 6355353886) with what's in and
-  links. Still to build: back at the Truckee, and the reveal (see "Next to build").
+  links. Then built the rest in sketch 2, same link: back at the Truckee, the three runs, the egg, and the final scene with
+  a blank card for your words. Not posted about yet (one reply per message); the next reply says it's in.
