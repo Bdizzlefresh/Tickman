@@ -319,6 +319,8 @@ Every session reads this first and updates it last.
     revealed, the club music drops, and it pauses there.
   - Eliminate the Bart Harley Jarvis scene (you wrote "Blake Harvey Jarvis") altogether. "Thank you for making that."
   - Switch the order of the fights: the Edmund Fitzgerald, then the Gales of November.
+- 2026-10-23, issue #1, two messages (14:19, 27 seconds apart), on your first banner: "Have it come out over pride rock.",
+  then "Eliminate the banner actually." The last bit will be the banner over "That's all folks!".
 
 ## What you've decided
 
@@ -484,6 +486,9 @@ Every session reads this first and updates it last.
   baby tick goes up on Pride Rock, the club's beat drops, and it pauses there until A is tapped.
 - Level 2's fights, in the new order (2026-10-23; built): the Edmund Fitzgerald between camps 1 and 2, then the Gales of
   November between camps 2 and 3.
+- Your first banner (the one that was over the stage) is eliminated: not over Pride Rock, not anywhere (2026-10-23). The
+  ending's last words on screen are your banner over "That's all folks!". (Nothing to build: it was already out, in
+  b2cb626.)
 - Before the fight, Jim: "You smell like hippie. You will not pass!", like Gandalf (2026-10-23; built; first built as "You
   will pass.", changed at your word).
 - The drive to Reno: the desert rock plays all the way from Utah to Reno; no Mac Miller (2026-10-23; built).
@@ -1401,8 +1406,9 @@ Nothing queued.
 
 ## Open questions
 
-- Asked 2026-10-23 (comment 6367023021): your first banner was over the stage, so it's gone with it. Should it come down
-  over Pride Rock during the pause instead, or stay out? (Its words are still kept, scrambled, in the game's code.)
+- Answered 2026-10-23: eliminate your first banner; the last bit is the banner over "That's all folks!" (asked, comment
+  6367023021: bring it back over Pride Rock in the pause, or leave it out?). Not shown anywhere. Its words still sit,
+  scrambled, in the unused stage code; not said to you.
 - Said 2026-10-23 (comment 6367023021): "the last line of my speech" was read as the speech's own last line ("You have
   revealed your junk as your final act..."), so the third run keeps "I know you just revealed your junk. But I now have
   junk to reveal to you." Easy to swap if you meant the other.
@@ -1724,3 +1730,6 @@ Nothing queued.
   Replied first (comment 6367023021) with the plan for all five, and one question: your first banner went with the stage;
   bring it back over Pride Rock in the pause, or leave it out? Then built all five in sketch 2, same link (b2cb626). Not
   posted about yet; the next reply says it's in.
+- 2026-10-23: two messages from you on issue #1 (14:19, a minute after that reply): over Pride Rock, then no, eliminate the
+  banner. Replied (comment 6367487125): no banner over Pride Rock, and everything from your last message is in, with links
+  to the whole ending as a third run, the sloppy steak, and the first fight. No question. Nothing new built.
