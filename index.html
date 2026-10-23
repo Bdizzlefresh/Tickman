@@ -11124,8 +11124,8 @@ async function party() {
   await looneyEnd();  // then the very last scene (your ask)
 }
 // ---- the very last scene, after the dance (your ask): a Looney Tunes ending. Rings, and in the middle, the baby tick,
-// your tick, and Isabella; your words over them, "That's all folks!"; then a circle closes in on the three of them,
-// to black. (How it looks is a guess; nothing is copied from the cartoons. The little fanfare is original. Checked: the
+// your tick, and Isabella; your words over them, "That's all folks!", and above, a banner with more of your words (kept in
+// the code in a form that can't be read by peeking); then a circle closes in on the three of them, to black. (How it looks is a guess; nothing is copied from the cartoons. The little fanfare is original. Checked: the
 // line is Porky Pig's, said at the end of many of the shorts: Wikipedia, "Porky Pig".) ----
 async function looneyEnd() {
   musicStop(); hud(null); phase = 'cut';
@@ -11141,12 +11141,25 @@ async function looneyEnd() {
   el.textContent = "That's all folks!";
   $('screen').insertBefore(el, $('hud'));
   requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'scale(1)'; });
-  await wait(3.6);
+  await wait(1.2);
+  // and above it, a banner with your words (your ask), the same cloth banner as the one over the baby tick
+  S.banner = time;
+  const ban = document.createElement('div'); ban.id = 'looneyBanner';
+  ban.style.cssText = 'position:absolute;left:9%;right:9%;top:2%;padding:.4em .7em .95em;background:#fbf3df;color:#9a1a24;' +
+    'border-top:5px solid #7a4a2a;text-align:center;font:bold 1.02rem/1.3 Georgia,serif;box-shadow:0 4px 14px rgba(0,0,0,.45);' +
+    'clip-path:polygon(0 0,100% 0,100% 84%,50% 100%,0 84%);transform:translateY(-130%);transition:transform 1.6s ease-out,opacity 1.4s';
+  for (const line0 of looneyWords()) { const p = document.createElement('p'); p.style.margin = '.1em 0'; p.textContent = line0; ban.appendChild(p); }
+  $('screen').insertBefore(ban, $('hud'));
+  requestAnimationFrame(() => { ban.style.transform = 'translateY(0)'; });
+  unfurl();
+  await wait(6.0);  // time to read it
   S.iris = time;  // the circle closes in on the three of them
-  el.style.opacity = '0';
+  el.style.opacity = '0'; ban.style.opacity = '0';
   await wait(3.0);
-  el.remove();
+  el.remove(); ban.remove();
 }
+const LOONEY_WORDS = ['RG1raml1bnI5', 'QH0+aH48bWV9fnR6cmk2'];  // your words for the banner over "That's all folks!", one line each, hidden (unhidden the same way as the others)
+const looneyWords = () => LOONEY_WORDS.map(s => { const b = atob(s); let o = ''; for (let i = 0; i < b.length; i++) o += String.fromCharCode(b.charCodeAt(i) ^ (23 + i % 7)); return decodeURIComponent(escape(o)); });
 function drawLooney() {
   const S = scene3, t = time - S.t0, cx = 80, cy = 74;
   ctx.fillStyle = '#1a0a18'; ctx.fillRect(0, 0, VW, VH);
