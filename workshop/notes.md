@@ -369,6 +369,28 @@ Every session reads this first and updates it last.
   - When Blaine comes out of the crowd at the club in Playa del Carmen and says "last taxi", he has to drag the tick by its
     web outside the rest of the maze, out of the club. "The scene after is still good."
   - "can you make it seem like the tick, from lake itasca to Reno, has a broken wrist and has a cast on it?"
+- 2026-10-24, issue #1, eight messages (15:27 to 15:39 UTC):
+  - When IzzyKat saves your lives against Jim, make it more dramatic, in a Thundercats style way: "She escaped the Uhaul in
+    the badlands and feasted on a Prairie dog - Spirit of the Prairie dog - Go to Blaine!", then, in the same fashion, her:
+    "I escaped the Uhual in Yellowstone and feasted on a silly coyote! Spirit of the Coyote - Go to Tickman!", and once
+    you're revived, "Jim - Off with you", in a nonchalant way.
+  - The cast stays on, and comes off only for the Pride Rock scene. Can Blaine's DJing in that scene be him in the sky, or
+    something where we can know he's doing it?
+  - After chugging a beer, make the last sip a geyser out of your mouths, a small spray to mimic the others.
+  - If you get hit by a geyser, make it a chug session, as punishment.
+  - In IzzyKat's lines, where it says "feasted", make it "I motel ate". (The assistant first read it as "I mutilated"; you
+    set it straight, below.)
+  - An attractive casino waitress delivers the bottles, walking along the bottom of the screen from left to right; Blaine
+    grabs one each time, and curtsies.
+  - Change Jim's saying before the fight to "Santa Cruz was once a paradise. It's people like you - you Kooks - who've
+    changed it all. You. Must. Not. Pass." and have him slam a cane down, like Gandalf fighting the Balrog.
+  - Take the "you must not pass" line out of the next scene, and add one of the assistant's choosing, that fits his
+    mystique.
+- 2026-10-24, issue #1, three messages (15:46 to 15:48 UTC):
+  - Take one line out of the scroll (its words kept out of these notes, like the rest of the scroll's).
+  - The assistant's line for Jim is perfect; add "Hippies..." at the end of it.
+  - Take out "mutilated", and put "I motel ate" in the coyote line and the prairie dog line: an entendre, for the motel 8
+    IzzyKat was staying in.
 
 ## What you've decided
 
@@ -540,7 +562,27 @@ Every session reads this first and updates it last.
   ending's last words on screen are your banner over "That's all folks!". (Nothing to build: it was already out, in
   b2cb626.)
 - Before the fight, Jim: "You smell like hippie. You will not pass!", like Gandalf (2026-10-23; built; first built as "You
-  will pass.", changed at your word).
+  will pass.", changed at your word). (Changed 2026-10-24, below: that line is out.)
+- Jim, at the craps table, before he enlarges (2026-10-24, your words; built, in place of "Santa Cruz is only for hippies.
+  You. Are. Not. Welcome."): "Santa Cruz was once a paradise. It's people like you - you Kooks - who've changed it all."
+  Then he raises a cane over his head and slams it down on the table, like Gandalf against the Balrog: "You. Must. Not.
+  Pass." Then he enlarges.
+- At the start of the fight, in place of the "pass" line (2026-10-24; built): "The die don't remember you, kooks. Neither
+  will I. Hippies..." (the assistant's line, for his mystique; "Hippies..." is yours). Reading of your two messages: the
+  new line is at the craps table, and "the next scene" is the start of the fight.
+- IzzyKat saves your lives, more dramatic, Thundercats style (2026-10-24; built): thunder, lightning, she rises a little in
+  a glow, and the words come huge on screen, a line at a time: "She escaped the U-Haul in the Badlands and I motel ate a
+  Prairie dog - Spirit of the Prairie dog - Go to Blaine!" (said over her), then hers: "I escaped the U-Haul in
+  Yellowstone and I motel ate a silly coyote! Spirit of the Coyote - Go to Tickman!" "I motel ate" in place of "feasted
+  on", in both, your word. The prairie dog's spirit goes into Brudda Blaine now, the coyote's into you. Once you're both
+  up, she yawns: "Jim - Off with you." (Asked: should the first line be "I escaped" too?)
+- The hike at Yellowstone (2026-10-24; built): the last sip of every beer sprays up out of your mouths, like a little
+  geyser. Get hit by a geyser, and it's a chug session, as punishment, Brudda Blaine chugging one with you.
+- Craps (2026-10-24; built): an attractive waitress brings the free drinks, walking along the bottom of the screen, left to
+  right; Brudda Blaine grabs his off her tray and curtsies, every round.
+- In the kingdom, DJ Brudda Blaine is up in the sky, big, at his decks, so you can tell it's him playing (2026-10-24;
+  built). The rock in the crowd is gone.
+- One line is out of the scroll (2026-10-24, your word; built). The other five stay.
 - The drive to Reno: the desert rock plays all the way from Utah to Reno; no Mac Miller (2026-10-23; built).
 - The math at the first camp, sped up: the same three tries and the same math, shorter (2026-10-23; built).
 - It's a game now, not a sketch (2026-10-23, 20:49 UTC; built). Nothing on screen calls it a sketch or lists guesses any
@@ -575,7 +617,9 @@ Every session reads this first and updates it last.
   grabs you by your web and drags you through the rest of the maze, out of the club. Then the blackout and the taxi, as
   before. A scene you watch (the assistant's pick; offered: steering him yourself).
 - The broken wrist (2026-10-24, your word; built): a white cast on one of your front legs, from Lake Itasca until you pull
-  into Reno. Off in Reno (a guess; asked).
+  into Reno. Off in Reno (a guess; asked). (Changed 2026-10-24, your answer; built: it stays on through Reno, Jim, the
+  Truckee, the realm and the sloppy steak, and comes off only for Pride Rock. It stays off for the scroll and "That's all
+  folks!" after: the assistant's reading; offered to put it back on there.)
 - "You're Braydon again." is out; the rest of that scene is the same (2026-10-24; built).
 - The fight with Jim plays smoother (2026-10-24; built): eight ways to move, a smooth start and stop, an eased jump. And
   Jim himself moves smoother ("blocky" meant how he moves, 2026-10-24; built): he sways, breathes, leans after you, and
@@ -1773,6 +1817,53 @@ Every session reads this first and updates it last.
   - Links for checks: `?level=3&tick=dog&at=dance` (the dance floor, then the drag), `?level=3&tick=dog&at=itasca` (the
     ride back up, the cast from Lake Itasca), `?level=4&tick=dog&at=field` (the cast in the field).
 
+- 2026-10-24, eleven changes (`gh-pages`, commit 0dec0c8), from your messages (15:27 to 15:48 UTC):
+  - IzzyKat's calls: the scene goes dark as before; then a crack of thunder, lightning flashing down from the top, and she
+    rises a little in a golden glow. Your first line comes up huge, a line at a time (in the game's capitals: "SHE ESCAPED
+    THE U-HAUL / IN THE BADLANDS AND I MOTEL ATE / A PRAIRIE DOG - / SPIRIT OF THE PRAIRIE DOG -", then "GO TO BLAINE!"
+    bigger, in gold, with another crack of thunder); the prairie dog's spirit flies to Brudda Blaine. "Tap A". Then hers,
+    the same way, with "IZZYKAT" over it, and the coyote's spirit flies to you. The old lines ("Back in the Badlands, she
+    ate a prairie dog.", "In Yellowstone, a coyote.", "She sends their spirits into you.") are out. After "The very
+    stereotype Jim fears, for Santa Cruz.": she yawns, licks a paw, and 'IzzyKat, mid-yawn: "Jim - Off with you."' Then
+    Jim's "...Hippies." as before. The M and the W in the call are drawn wider than in the game's signs, so MOTEL can't be
+    read as HOTEL.
+  - Jim, at the craps table, after "Oh, Jim.": your new line; then his cane comes up over his head (a whoosh), and down on
+    the table: a boom, the table shakes, a crack in the felt, dust; "You. Must. Not. Pass."; then he enlarges, the cane
+    fading as he does.
+  - The start of the fight: a growl and the slam, as before, then 'Jim: "The die don't remember you, kooks. Neither will I.
+    Hippies..."'
+  - The cast: on from Lake Itasca all the way to Pride Rock, where it comes off; off after. Never on the female spider.
+  - The kingdom: Brudda Blaine twice his size, high in the sky with his decks, a warm glow behind him and clouds at his feet,
+    in front of the Gales of November and the Edmund Fitzgerald. He drifts slowly left as the view pans, so he's still in
+    sight, top left, at Pride Rock. During the slow music he waits; on the drop he bobs on the beat and works the record,
+    notes rise off the decks, and three colored beams sweep down over the crowd.
+  - The hike: when a beer runs out, a little column of beer and foam sprays up out of that mouth, spray falling round it,
+    with a soft spurt, his and yours each when you finish. Get caught by a geyser: knocked back as before, then the first
+    time "Hot! The spray knocks you back." / "Wait for it to stop, then go." / "And for getting hit: a chug session, as
+    punishment." / "Brudda Blaine pulls out two beers." / "Chug it! Tap A, fast."; after that, "Hot! Another chug
+    session, as punishment." Then you both chug, the sprays, a burp, and a count: "Ahh." for the first beer, then "Ahh.
+    Two beers.", "Ahh. Three beers." and so on, the benches' beers and the punishments together.
+  - Craps: each round the waitress walks in along the bottom (a red corset dress with black lace, black stockings, red
+    heels, a high ponytail, red lips, a silver tray with two bottles held up), stops below the end of the table; yours goes
+    on the rail, Brudda Blaine's flies up into his hand, he dips in a curtsy (a CURTSY bubble), and she walks on, off to the
+    right. The first round's words: "An attractive waitress brings the free drinks round." / "A Sierra Nevada Pale Ale, for
+    each of you." / "Brudda Blaine grabs his, and curtsies." ("Brudda Blaine gets one too." is out.)
+  - The scroll: the line you named is out; five lines now.
+  - The level 4 end screen's summary follows all of it.
+  - Checked, headless and muted: the casino from its start (the waitress every round, six rounds; the first round's words;
+    your line, then the cane up and the slam, then "You. Must. Not. Pass.", then he enlarges; the old lines never show);
+    the fight with two ticks (both calls, all five lines each, the prairie dog's spirit to Brudda Blaine and the coyote's to
+    you, the old lines never show, "Jim - Off with you." before "...Hippies.", on to the second phase); the hike (hit, the
+    punishment, both sprays, the count, then on); the kingdom (the sky DJ, seen in screenshots at the start, mid-pan and
+    after the drop); the scroll (five lines, the one you named gone, on to the very last scene); the cast at the start of
+    each part of level 4; the cast all through Reno and the fight; no errors anywhere. Also checked through the preview
+    site, by the commit's own link.
+  - Guesses: how it all looks and sounds (the call, the lightning, the glow; the cane; the waitress; the sky DJ; the
+    sprays), the timing, and the words not in your messages.
+  - Gifts from Blaine: untouched, still on.
+  - Links for checks: `?level=4&tick=dog&at=casino` (the waitress, then Jim and the cane), `&at=jim` (Jim, sooner),
+    `&at=fight` (the line, then the calls), `&at=hike`, `&at=kingdom`, `&at=scroll`.
+
 ## Next to build
 
 - If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
@@ -1781,8 +1872,16 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
+- Asked 2026-10-24 (comment 6390100958): IzzyKat's first call still starts "She escaped"; should it be "I escaped" too,
+  so both lines are hers?
+- Said 2026-10-24 (comment 6386173041), an offer: the cast stays off for the scroll and "That's all folks!" after Pride
+  Rock; say if it should go back on there. Also said: Jim's new line at the start of the fight is easy to change (you
+  called it perfect, and added "Hippies...").
+- Answered 2026-10-24: the cast stays on, and comes off only for Pride Rock (asked, comment 6386003705: in Reno, should
+  the cast come off, or stay on to the end?). Still open from that comment, an offer: steering Brudda Blaine through the
+  maze yourself, in place of watching the drag.
 - Asked 2026-10-24 (comment 6386003705): in Reno, should the cast come off (built that way), or stay on to the end? Also
-  offered: steering Brudda Blaine through the maze yourself, in place of watching the drag.
+  offered: steering Brudda Blaine through the maze yourself, in place of watching the drag. (Answered, above.)
 - Said 2026-10-24 (comment 6385905422), an offer: "the leaving" was read as leaving Lake Superior; if it meant the ride back
   up from Mexico, the son goes there too.
 - Said 2026-10-24 (comment 6379914991), an offer, not a question: the opening keeps its piano and crackle with the voice
@@ -2194,3 +2293,11 @@ Every session reads this first and updates it last.
   went up, so the reply took in both: the broken wrist too. Replied first (comment 6386003705) with the plan for both, an
   offer (steer him yourself), one question (the cast in Reno), and that the son is in. Then built both, same link (gh-pages
   001569a).
+- 2026-10-24: eight messages from you on issue #1 (15:27 to 15:39): IzzyKat's calls, the cast and the sky DJ, the beer
+  spray, the punishment chug, "I motel ate", the waitress, Jim's line and cane, and a line of the assistant's choosing.
+  Replied first (comment 6386173041) with the plan for all eight and how two were read ("I motel ate" as "I mutilated";
+  your two Jim messages together), and an offer (the cast after Pride Rock). The build was under way when the assistant
+  hit a usage limit and stopped for a few hours. Three more messages from you came in
+  meanwhile (15:46 to 15:48): a line off the scroll, "Hippies..." at the end of Jim's line, and "I motel ate" in both of
+  IzzyKat's lines, not "mutilated". Replied (comment 6390100958) with the three, and one question ("She escaped" or "I
+  escaped"?). Then built all eleven, same link (gh-pages 0dec0c8).
