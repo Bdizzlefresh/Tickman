@@ -597,6 +597,29 @@ const SPIDER_PAL = {
   human:   { C: '#3a2a20', A: '#4f3f78', M: '#b9a9e3', L: '#2b1d14', e: '#e6dcff', f: '#2b1d14' },
   dog:     { C: '#3a2a20', A: '#6b3f2a', M: '#f4efe4', L: '#2b1d14', e: '#e8dcc0', f: '#2b1d14' },
 };
+// the broken wrist (your ask, 2026-10-24): from Lake Itasca until you pull into Reno, one of your front legs is in a white
+// cast, near the tip. It's drawn over every sprite that is you: from above, from the side, and big; it turns and steps
+// with you. (How it looks is a guess.)
+var castOn = false;  // (var: it can be read before this line runs)
+const CAST = { top: [[12, 1, 'w'], [13, 1, 'w'], [11, 2, 'w'], [12, 2, 'w'], [13, 2, 's'], [14, 0, 'L']],  // on you from above
+  side: [[8, 4, 'w'], [9, 4, 's'], [9, 5, 'w']] };                                                            // on you from the side
+const CAST_COL = { w: '#f3f1ea', s: '#c9c4b8' };
+function castTop(g, x, y, rot, flip, legShift, pal) {  // the way drawSprite draws a sprite, so the cast turns and steps with you
+  for (const [sx0, sy0, c] of CAST.top) {
+    const sx = flip ? 15 - sx0 : sx0, sy = sy0 + (legShift ? (sx < 8 ? -legShift : legShift) : 0);
+    let dx, dy;
+    if (rot === 0) { dx = sx; dy = sy; } else if (rot === 1) { dx = 15 - sy; dy = sx; }
+    else if (rot === 2) { dx = 15 - sx; dy = 15 - sy; } else { dx = sy; dy = 15 - sx; }
+    g.fillStyle = c === 'L' ? pal.L : CAST_COL[c]; g.fillRect(x + dx, y + dy, 1, 1);
+  }
+}
+function castBig(rows, pal, x, y, s, flip, legShift) {  // the way drawBig (and drawGrid, at s = 1) draws a sprite
+  const top = rows === SPIDER, w = rows[0].length;
+  for (const [i, j0, c] of top ? CAST.top : CAST.side) {
+    const j = top && legShift ? j0 + (i < w / 2 ? -legShift : legShift) : j0;
+    ctx.fillStyle = c === 'L' ? pal.L : CAST_COL[c]; ctx.fillRect(x + (flip ? w - 1 - i : i) * s, y + j * s, s, s);
+  }
+}
 // the ticks, scarier: a barbed mouth, red eyes, long hooked legs that twitch (how they look is a guess)
 const SMALL_TICK = [
   '..K....xx....K..',
@@ -698,6 +721,7 @@ function drawSprite(g, rows, pal, x, y, rot = 0, flip = false, legShift = 0) {
       g.fillStyle = col; g.fillRect(x + dx, y + dy, 1, 1);
     }
   }
+  if (castOn && rows === SPIDER) castTop(g, x, y, rot, flip, legShift, pal);  // the broken wrist, in its cast
 }
 
 // ---- sound: a few soft plucked-string notes, made in the browser ----
@@ -2483,6 +2507,7 @@ function drawGrid(rows, pal, x, y, flip) {
     const c = pal[rows[j][i]]; if (!c) continue;
     ctx.fillStyle = c; ctx.fillRect(x + (flip ? w - 1 - i : i), y + j, 1, 1);
   }
+  if (castOn && rows === MINI) castBig(rows, pal, x, y, 1, flip, 0);  // the broken wrist, in its cast
 }
 // the spider, small, riding (seen from the side)
 const MINI = [
@@ -2792,6 +2817,7 @@ function drawBig(rows, pal, x, y, s, flip = false, legShift = 0) {  // a sprite 
     const jj = legShift && (ch === 'L' || ch === 'K') ? j + (i < w / 2 ? -legShift : legShift) : j;
     ctx.fillStyle = c; ctx.fillRect(x + (flip ? w - 1 - i : i) * s, y + jj * s, s, s);
   }
+  if (castOn && (rows === SPIDER || rows === MINI)) castBig(rows, pal, x, y, s, flip, legShift);  // the broken wrist, in its cast
 }
 // the enemies (how they look is a guess):
 //   the Gales of November: a storm cloud, dark and heavy, with cold, narrow eyes under an angry brow, blowing at you
@@ -5936,10 +5962,11 @@ function draw3(cx, cy) {
       const b = L3.bl;
       if (b && !b.gone) list.push([b.y * TS + 9, () => {
         ctx.globalAlpha = b.fadeT > 0 ? clamp(1 - (time - b.fadeT) / 0.8, 0, 1) : 1;
-        const mv = b.path && b.path.length;
-        drawBlaine(Math.round(b.x * TS) - cx, Math.round(b.y * TS) - cy, b.facing, mv ? (Math.floor(b.walkT * 8) % 2 ? 1 : 2) : 0);
+        const mv = (b.path && b.path.length) || b.dragging;
+        drawBlaine(Math.round(b.x * TS) - cx, Math.round(b.y * TS) - cy - (b.hop || 0), b.facing, mv ? (Math.floor(b.walkT * 8) % 2 ? 1 : 2) : 0);
         ctx.globalAlpha = 1;
       }]);
+      if (drag && b) drawDragged(list, cx, cy);  // out of the club: you, dragged along on your silk
     }
   } else if (area === 'playa') {  // the bridge over the bay: the water, the club bouncing, Brudda Blaine behind you
     drawPlayaWater(cx, cy);
@@ -6134,6 +6161,7 @@ function buzzUpdate() {  // the mosquitoes' whine, at the bay (soft)
 function update3(dt) {
   const b = L3.bl;
   if (b) { const was = [b.x, b.y]; updateActor(b, dt); if (b.y < was[1] - 0.001) b.facing = 'up'; else if (b.y > was[1] + 0.001) b.facing = 'down'; else if (b.x < was[0] - 0.001) b.facing = 'left'; else if (b.x > was[0] + 0.001) b.facing = 'right'; }
+  if (drag && b) updateDrag(dt);  // out of the club: Brudda Blaine, dragging you
   buzzUpdate();
   if (area === 'playa' && mus && mus.lp) {  // the club's music, from across the bay: clearer as you get close to its door
     const [px0, py0] = ppos(), d = Math.hypot(px0 / TS - PLAYA_DOOR.x, py0 / TS - PLAYA_DOOR.y);
@@ -6186,7 +6214,7 @@ async function level3(k) {
   Object.assign(P, { tx: 5, ty: 13, nx: 5, ny: 13, moving: false, t: 0, facing: 'up' });
   camMode = 'follow'; pan = null; [cam.x, cam.y] = playerCam();
   fade.tween = null; fade.v = 1; $('fade').style.opacity = 1;
-  musicStop(); scene3 = null;
+  musicStop(); scene3 = null; castOn = false;  // (the cast comes at Lake Itasca)
   const jump = JUMP3[new URLSearchParams(location.search).get('at')];  // for checks: start part way along
   if (jump) { jump(); return; }
   await levelCard(3);  // the level's title card, like a silent film's, with applause
@@ -6314,11 +6342,100 @@ async function danceFloor() {  // you come back on the dance floor, dancing, par
   await say(['Brudda Blaine comes out of the crowd.', 'Brudda Blaine: "Where have you been Brudda!? We have to go! Last Taxi out!"']);
   await say(['You dance, with the music, toward him.']);
   await stepTo(16, 'right');
-  await wait(0.9);
+  await wait(0.5);
+  await say(['Brudda Blaine grabs you by your web.', 'He drags you through the rest of the maze, out of the club.']);
+  await dragOut();  // (your ask, 2026-10-24: see "out of the club", below)
+  await wait(0.3);
   await fadeTo(1, 0.5);  // and black out again
   L3.dance = false; L3.bl = null; musicStop(); P.hidden = true;
   await wait(0.6);
   cab();
+}
+// ---- out of the club (your ask, 2026-10-24): when Brudda Blaine comes out of the crowd ("Last Taxi out!"), he drags
+// you by your web through the rest of the maze, and out of the club. He takes the shortest way: along the dance floor,
+// a vault over the bar into the other half of the maze, and down through it, out the way you came in. You're on the
+// end of a strand of your silk, a little behind him, still dancing; as he passes you, you're yanked up into the air and
+// over, and you hop the bar after him. Then the blackout, and the cab, as before. (How it all looks, the way he goes,
+// and his speed are guesses.) ----
+const DRAG = { len: 1.2, speed: 3.6, door: [5, 14] };  // how far behind him you're dragged, and how fast he goes (tiles); the way out
+let drag = null, dragsDone = 0;
+function dragRoute(from, to) {  // the cheapest way over floor 1: the floor costs 1 a tile, the bar a lot (so he vaults it once)
+  const key = (x, y) => y * MW + x, dist = new Map([[key(...from), 0]]), prev = new Map(), open = [[0, from[0], from[1]]];
+  const cost = (x, y) => {
+    if ((x === KARILL.x && y === KARILL.y) || PROMOS.some(p => p.x === x && p.y === y)) return 0;
+    const ch = tile(x, y); return ch === '.' || ch === 'E' ? 1 : ch === 'B' ? 40 : 0;
+  };
+  while (open.length) {
+    open.sort((a, b) => a[0] - b[0]);
+    const [d, x, y] = open.shift();
+    if (d > dist.get(key(x, y))) continue;
+    if (x === to[0] && y === to[1]) break;
+    for (const [dx, dy] of [[-1, 0], [0, 1], [1, 0], [0, -1]]) {
+      const nx = x + dx, ny = y + dy, c = cost(nx, ny);
+      if (!c) continue;
+      const k = key(nx, ny), nd = d + c;
+      if (!dist.has(k) || nd < dist.get(k)) { dist.set(k, nd); prev.set(k, [x, y]); open.push([nd, nx, ny]); }
+    }
+  }
+  if (!dist.has(key(...to))) return null;
+  const pts = [];
+  for (let c = to; c; c = prev.get(key(...c))) pts.unshift(c);
+  return pts;
+}
+function dragAt(s) {  // a spot along the way, s tiles in: x and y in tiles, and which way it's heading
+  const W = drag.pts, i = clamp(Math.floor(s), 0, W.length - 2), k = clamp(s - i, 0, 1), a = W[i], b = W[i + 1];
+  const dx = b[0] - a[0], dy = b[1] - a[1];
+  return [a[0] + dx * k, a[1] + dy * k, dx < 0 ? 'left' : dx > 0 ? 'right' : dy < 0 ? 'up' : 'down'];
+}
+function dragOut() {  // resolves once you're both out the door
+  const b = L3.bl, route = b && dragRoute([Math.round(b.x), Math.round(b.y)], DRAG.door);
+  return new Promise(res => {
+    if (!route) { res(); return; }
+    const pts = route.concat([[DRAG.door[0], DRAG.door[1] + 1]]);  // and one more step, out the door
+    const at = pts.findIndex(p => p[0] === P.tx && p[1] === P.ty);
+    drag = { pts, s: 0, you: Math.max(0, at), onRoute: at >= 0, bar: pts.findIndex(p => tile(p[0], p[1]) === 'B'), out: pts.length - 2, res, clinked: false };
+    P.hidden = true; b.path = []; camMode = 'script'; pan = null;
+    whoosh(0.5, 0.04);
+  });
+}
+const dragYou = () => Math.max(drag.you, drag.s - DRAG.len);  // how far along you are: you stay put till he's past you
+function dragHop(s) {  // over the bar
+  return drag.bar >= 0 && Math.abs(s - drag.bar) < 1 ? Math.round(7 * Math.cos(Math.abs(s - drag.bar) * Math.PI / 2)) : 0;
+}
+function dragYank() {  // as he passes you: up into the air, and over
+  if (!drag.onRoute) return 0;
+  const k = (drag.s - (drag.you - 0.6)) / (DRAG.len + 0.6);
+  return k > 0 && k < 1 ? Math.round(12 * Math.sin(Math.PI * k)) : 0;
+}
+function updateDrag(dt) {
+  const D = drag, b = L3.bl, end = D.pts.length - 1;
+  D.s = Math.min(end + DRAG.len, D.s + DRAG.speed * dt);
+  const [x, y, f] = dragAt(Math.min(D.s, end));
+  b.x = x; b.y = y; b.facing = f; b.walkT += dt; b.hop = dragHop(Math.min(D.s, end)); b.dragging = D.s < end;
+  if (!D.clinked && D.bar >= 0 && D.s > D.bar - 0.2) { D.clinked = true; clink(); }  // a bottle on the bar, as he goes over
+  if (D.s >= D.out && !(b.fadeT > 0)) b.fadeT = time;  // out the door
+  const [tx, ty] = camAt(x * TS + 8, y * TS + 8), m = Math.min(1, dt * 7);
+  cam.x = Math.round(cam.x + (tx - cam.x) * m); cam.y = Math.round(cam.y + (ty - cam.y) * m);
+  if (D.s >= end + DRAG.len - 0.001) {  // you're both through
+    const r = D.res; D.res = null; b.gone = true; b.dragging = false; b.hop = 0; drag = null; dragsDone++; if (r) r();
+  }
+}
+function drawDragged(list, cx, cy) {  // you, on the end of your silk, still dancing; and the strand, up to his hand
+  const D = drag, b = L3.bl, s = dragYou(), [x, y] = dragAt(s), yank = dragYank(), hop = dragHop(s);
+  const bt = clubBeats(), bob = yank || hop ? 0 : Math.round(Math.sin(wrapX(bt, 1) * Math.PI) * 3);
+  const X = Math.round(x * TS) - cx, Y = Math.round(y * TS) - cy - hop - yank - bob;
+  const alpha = clamp(1 - (s - D.out), 0, 1);
+  list.push([yank ? b.y * TS + 30 : y * TS + 9, () => {
+    const bx = Math.round(b.x * TS) - cx, by = Math.round(b.y * TS) - cy - (b.hop || 0);
+    const hx = bx + (b.facing === 'right' ? 12 : b.facing === 'up' ? 13 : 3), hy = by + (b.facing === 'up' ? 10 : 11);
+    const ax = X + 8, ay = Y + 8, n = Math.max(1, Math.ceil(Math.hypot(hx - ax, hy - ay)));
+    ctx.globalAlpha = alpha * 0.85; ctx.fillStyle = '#eef3fa';
+    for (let i = 0; i <= n; i++) ctx.fillRect(Math.round(ax + (hx - ax) * i / n), Math.round(ay + (hy - ay) * i / n + Math.sin(Math.PI * i / n) * 1.5), 1, 1);
+    ctx.globalAlpha = alpha;
+    const spin = yank ? Math.floor(time * 14) : Math.floor(bt);
+    drawSprite(ctx, SPIDER, SPIDER_PAL[choice || 'none'], X, Y, ROT[['up', 'right', 'down', 'left'][wrapX(spin, 4)]], false, wrapX(Math.floor(bt * 2), 2));
+    ctx.globalAlpha = 1;
+  }]);
 }
 async function cab() {
   phase = 'cut'; scene3 = { kind: 'cab', t0: time, dist: 0, v: 40, vGoal: 40, bridgeAt: null };
@@ -6437,6 +6554,7 @@ async function rideUp() {
   await wait(4.0);
   await fadeTo(1, 0.6);
   const stop = scene3.dist + 120; Object.assign(scene3, { seg: 'itasca', brakeTo: stop, signAt: 128 - stop, truckAt: 2 - stop });
+  castOn = true;  // the broken wrist: in its cast from Lake Itasca on, until you pull into Reno (your ask)
   await fadeTo(0, 0.6);
   await wait(3.8);
   await say(['...to Lake Itasca, the headwaters of the Mississippi.']);
@@ -6668,6 +6786,8 @@ async function level4(k) {
   P.mount = null; P.blaine = false; blur(false); P.hidden = true; sugarMeter(null); L3.bl = null;
   fade.tween = null; fade.v = 1; $('fade').style.opacity = 1;
   musicStop(); scene3 = null; field = null; purr.on = false;
+  const at4 = new URLSearchParams(location.search).get('at');  // the cast, from the start of the level until Reno
+  castOn = !at4 || ['field', 'bison', 'horses', 'badlands', 'town', 'search', 'yellowstone', 'lot', 'photo', 'hike', 'geyser', 'reno'].includes(at4);
   const jump = JUMP4[new URLSearchParams(location.search).get('at')];  // for checks: start part way along
   if (jump) { jump(); return; }
   await levelCard(4);  // the level's title card, like a silent film's, with applause
@@ -9403,6 +9523,7 @@ async function casino(jump) {
   await say(['Jim enlarges.']);
 }
 async function reno(from = 'motel') {  // Reno, from the motel to Jim (for checks, it can start part way along)
+  castOn = false;  // you've pulled into Reno: the cast is off (a guess; asked)
   if (from === 'motel') await motel();
   if (from === 'motel' || from === 'canal') await canal();
   if (from === 'motel' || from === 'canal' || from === 'strip') await oldStrip();
@@ -12586,6 +12707,8 @@ window.__sketch = {
   get truckee() { const S = scene3; return S && S.kind === 'truckee' ? { melt: !!S.melt, cig: !!S.cig, lit: !!(S.cig && S.cig.lit), drag: S.drag != null, moon: S.moonK, wade: Math.round(wadeK(S) * 100) / 100, under: !!S.under, warp: !!S.warp } : null; },
   get clubSec() { return clubSection(); }, get chant() { const w = clubWordsNow(); return w ? w[0] : null; },
   get follower() { return L3.bl ? { x: L3.bl.x, y: L3.bl.y, gone: L3.bl.gone } : null; },
+  get drag() { return drag ? { s: drag.s, you: dragYou(), n: drag.pts.length, bar: drag.bar, onRoute: drag.onRoute, yank: dragYank(), hop: dragHop(dragYou()), cam: [cam.x, cam.y] } : null; },
+  get dragsDone() { return dragsDone; }, get cast() { return !!castOn; },
   get vistaState() { return vista ? { flag: !!vista.flag, latch: !!vista.latch, ride: !!vista.ride, fall: !!vista.fall, splash: !!vista.splash,
     leash: !!vista.leash, jump: !!vista.jump, yank: !!vista.yank, low: !!vista.low, faint: !!vista.faint, bump: !!vista.bump,
     eagle: !!vista.eagle, hit: !!vista.hit, fall2: !!vista.fall2 } : null; },
