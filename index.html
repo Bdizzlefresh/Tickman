@@ -122,6 +122,18 @@ a { color:var(--accent); }
 #title.old .btn { padding:9px; }
 #title.old .btn { background:#d6d6d6; color:#0d0d0d; font-family:"IM Fell English",Georgia,serif; font-size:17px; }
 #title.old .btn.alt { background:#1e1e1e; color:#d6d6d6; box-shadow:inset 0 0 0 1px #5a5a5a; font-size:15px; }
+/* a title card at the start of each level, like a silent film's: black and white, flicker and grain, with applause */
+#lvcard { position:absolute; inset:0; z-index:4; background:#000; cursor:pointer; overflow:hidden; }
+#lvcard canvas { position:absolute; inset:0; width:100%; height:100%; }
+#lvcard .lvtext { position:absolute; left:13%; right:13%; top:0; bottom:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; color:#ececec; opacity:0; pointer-events:none; }
+#lvcard .lvnum { font-family:"IM Fell English SC","IM Fell English",Georgia,serif; font-size:clamp(16px, 5.4vw, 22px);
+  letter-spacing:.32em; margin-right:-.32em; color:#c2c2c2; }
+#lvcard .lvnum span { font-family:"Limelight",Georgia,serif; font-size:.92em; }
+#lvcard .lvrule { display:flex; align-items:center; gap:8px; align-self:stretch; color:#9a9a9a; font-size:12px; margin:6px 8% 8px; }
+#lvcard .lvrule::before, #lvcard .lvrule::after { content:''; flex:1; height:1px; background:#6a6a6a; }
+#lvcard .lvname { font-family:"Limelight","IM Fell English SC",Georgia,serif; font-size:clamp(22px, 7.8vw, 33px); line-height:1.14;
+  color:#f6f6f6; text-shadow:0 2px 0 #2b2b2b; overflow-wrap:break-word; }
 </style>
 </head>
 <body>
@@ -144,6 +156,8 @@ a { color:var(--accent); }
     <div id="fade"></div>
     <div id="begin" hidden><span>Tap to begin</span></div>
     <div id="box" hidden><p id="text"></p><div id="choices" hidden></div><span id="more" hidden>&#9660;</span></div>
+    <div id="lvcard" hidden><canvas id="lvc" width="160" height="144"></canvas>
+      <div class="lvtext" id="lvText"><div class="lvnum" id="lvNum"></div><div class="lvrule"><span>&#10022;</span></div><div class="lvname" id="lvName"></div></div></div>
   </div>
   <div id="pad">
     <div id="dpad" aria-label="Move">
@@ -161,7 +175,7 @@ a { color:var(--accent); }
     <div class="rule"><span>&#10022;</span></div>
     <h1 class="marquee"><span class="m1">RENDEZVOUS </span><span class="m2">OF THE </span><span class="m3">ARACHNID </span><span class="m4">TICKMAN!</span></h1>
     <div class="rule"><span>&#10022;</span></div>
-    <div class="sub">Level 1: The transformation<br>Level 2: Moon Pie on Easter Eggy<br>Level 3: Heading down South<br>Level 4: Heading towards eternity</div>
+    <div class="sub">Level 1: The Dilemma<br>Level 2: Moon Pie on Easter Eggy<br>Level 3: Heading down South<br>Level 4: Heading towards eternity</div>
     <p><b>How to play:</b> move with the arrows under the screen. Tap <b>A</b> to look at things, and to read on.</p>
     <div class="btns"><button class="btn" id="start">Start</button></div>
     <div class="btns"><button class="btn alt" id="skip">Skip to level 2</button><button class="btn alt" id="skip3">Skip to level 3</button><button class="btn alt" id="skip4">Skip to level 4</button></div>
@@ -184,7 +198,7 @@ a { color:var(--accent); }
 <div id="end" class="panel" hidden>
   <div class="card">
     <h2>Level 1 done</h2>
-    <div class="sub">The transformation</div>
+    <div class="sub">The Dilemma</div>
     <p id="endText"></p>
     <div class="btns">
       <button class="btn" id="next">On to level 2</button>
@@ -1408,6 +1422,8 @@ function hud(t) { $('hud').hidden = !t; $('hud').textContent = t || ''; }
 // ---- the scenes ----
 async function intro() {
   phase = 'intro'; lock++;
+  fade.tween = null; fade.v = 1; $('fade').style.opacity = 1;
+  await levelCard(1); await fadeTo(0, 0.6);  // the level's title card, like a silent film's, with applause; then in
   await say(['A one-bedroom apartment. A college apartment.',
              'You are a tunneling spider, deep in your tunneled web.']);
   await panTo(camAt(phil.x * TS + 16, phil.y * TS + 16), 1.1);
@@ -1696,6 +1712,7 @@ function update(dt) {
     if (k >= 1) { fade.tween = null; f.res(); }
   }
   updatePrelude();  // the opening, then the title card
+  updateCard();     // the title card at the start of a level
   if (wrap) {  // the bug wriggles, working the silk loose
     wrap.silk -= GRIP[wrap.g.kind] * dt; silkMeter();
     if (wrap.silk <= 0) wriggleFree();
@@ -3119,6 +3136,7 @@ async function level2(k) {
   Object.assign(P, { tx: 3, ty: 4, nx: 3, ny: 4, moving: false, t: 0, facing: 'down' });
   camMode = 'follow'; pan = null; [cam.x, cam.y] = playerCam();
   fade.tween = null; fade.v = 1; $('fade').style.opacity = 1;
+  await levelCard(2);  // the level's title card, like a silent film's, with applause
   if (!musicOn || musicStyle !== STYLES[choice]) { musicStop(); musicStart(); }
   await fadeTo(0, 0.8);
   matWiggle = time; pluck(NOTE.D4, 0.14); pluck(NOTE.A3, 0.12, 0.25);
@@ -6126,6 +6144,7 @@ async function level3(k) {
   musicStop(); scene3 = null;
   const jump = JUMP3[new URLSearchParams(location.search).get('at')];  // for checks: start part way along
   if (jump) { jump(); return; }
+  await levelCard(3);  // the level's title card, like a silent film's, with applause
   rideDown();
 }
 async function rideDown() {
@@ -6606,6 +6625,7 @@ async function level4(k) {
   musicStop(); scene3 = null; field = null; purr.on = false;
   const jump = JUMP4[new URLSearchParams(location.search).get('at')];  // for checks: start part way along
   if (jump) { jump(); return; }
+  await levelCard(4);  // the level's title card, like a silent film's, with applause
   driveWest();
 }
 async function driveWest() {
@@ -11773,22 +11793,22 @@ function drawLeader(t, f) {  // before the film: a film leader (rings, a cross, 
   ctx.fillStyle = SEP[7]; ctx.fillRect(0, 72, VW, 1); ctx.fillRect(80, 0, 1, VH);
   filmFx(t, f, true);
 }
-function filmFx(t, f, noIris) {  // the old film: dark at the edges, grain, dust, scratches, flicker, and an iris opening at the start
-  const r = rng(f * 7919 + 13);
-  ctx.drawImage(preVignette(), 0, 0);
-  for (let i = 0; i < 70; i++) { ctx.fillStyle = r() < 0.5 ? 'rgba(236,236,236,0.2)' : 'rgba(11,11,11,0.32)'; ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1, 1); }
-  if (r() < 0.3) { ctx.fillStyle = 'rgba(11,11,11,0.75)'; ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1 + Math.floor(r() * 2), 1 + Math.floor(r() * 2)); }
-  if (r() < 0.07) { ctx.fillStyle = 'rgba(11,11,11,0.6)'; let x = r() * VW, y = r() * VH; for (let i = 0; i < 9; i++) { ctx.fillRect(Math.floor(x), Math.floor(y), 1, 1); x += r() * 2 - 0.4; y += 1; } }
+function filmFx(t, f, noIris, g = ctx) {  // the old film: dark at the edges, grain, dust, scratches, flicker, and an iris opening at the start
+  const r = rng(f * 7919 + 13);  // (g: where to draw it; the game's screen, unless the level title card asks for its own)
+  g.drawImage(preVignette(), 0, 0);
+  for (let i = 0; i < 70; i++) { g.fillStyle = r() < 0.5 ? 'rgba(236,236,236,0.2)' : 'rgba(11,11,11,0.32)'; g.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1, 1); }
+  if (r() < 0.3) { g.fillStyle = 'rgba(11,11,11,0.75)'; g.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1 + Math.floor(r() * 2), 1 + Math.floor(r() * 2)); }
+  if (r() < 0.07) { g.fillStyle = 'rgba(11,11,11,0.6)'; let x = r() * VW, y = r() * VH; for (let i = 0; i < 9; i++) { g.fillRect(Math.floor(x), Math.floor(y), 1, 1); x += r() * 2 - 0.4; y += 1; } }
   const sr = rng(Math.floor(t * 3) * 31 + 7);  // scratches stay a little while
   for (let i = 0; i < 2; i++) {
     if (sr() > 0.55) continue;
-    const x = Math.floor(sr() * VW); ctx.fillStyle = sr() < 0.7 ? 'rgba(236,236,236,0.3)' : 'rgba(11,11,11,0.4)';
-    for (let y = 0; y < VH;) { const len = 5 + Math.floor(r() * 36); if (r() < 0.85) ctx.fillRect(x + (r() < 0.2 ? 1 : 0), y, 1, len); y += len + Math.floor(r() * 6); }
+    const x = Math.floor(sr() * VW); g.fillStyle = sr() < 0.7 ? 'rgba(236,236,236,0.3)' : 'rgba(11,11,11,0.4)';
+    for (let y = 0; y < VH;) { const len = 5 + Math.floor(r() * 36); if (r() < 0.85) g.fillRect(x + (r() < 0.2 ? 1 : 0), y, 1, len); y += len + Math.floor(r() * 6); }
   }
-  ctx.fillStyle = 'rgba(0,0,0,' + (0.02 + r() * 0.1).toFixed(3) + ')'; ctx.fillRect(0, 0, VW, VH);
+  g.fillStyle = 'rgba(0,0,0,' + (0.02 + r() * 0.1).toFixed(3) + ')'; g.fillRect(0, 0, VW, VH);
   if (!noIris && t < PRE.iris + 0.05) {
-    ctx.fillStyle = '#000'; ctx.beginPath(); ctx.rect(0, 0, VW, VH);
-    ctx.arc(80, 72, Math.max(0.01, 112 * ease(clamp(t / PRE.iris, 0, 1))), 0, Math.PI * 2, true); ctx.fill('evenodd');
+    g.fillStyle = '#000'; g.beginPath(); g.rect(0, 0, VW, VH);
+    g.arc(80, 72, Math.max(0.01, 112 * ease(clamp(t / PRE.iris, 0, 1))), 0, Math.PI * 2, true); g.fill('evenodd');
   }
 }
 function drawPrelude() {
@@ -11823,11 +11843,114 @@ function drawPrelude() {
   filmFx(t, f);
 }
 
+// ---- a title card at the start of each level (your ask: like a title card in a silent film, with applause behind it).
+// Black and white like the opening: grain, flicker, scratches, the picture jumping now and then; the level's number and
+// name in the old movie lettering, inside a double border. The applause is original, made by the game: a crowd of soft
+// claps, each person at their own pace, swelling up and dying away (no recordings). It holds a few seconds, fades, and
+// the level begins. A tap on the screen, A or Space skips it. (Links for checks that start part way along, with ?at=,
+// skip it.) (How it looks and sounds is a guess.) ----
+const LEVEL_NAMES = { 1: 'The Dilemma', 2: 'Moon Pie on Easter Eggy', 3: 'Heading down South', 4: 'Heading towards eternity' };
+const LC = { in: 0.45, hold: 3.7, out: 0.7, quick: 0.3 }, APPLAUSE_VOL = 0.2;
+const lcx = $('lvc').getContext('2d'), lvText = $('lvText');
+let lvCard = null, applause = null, clapBuf = null;
+function levelCard(n) {  // resolves once the card is done, and the level can begin
+  if (new URLSearchParams(location.search).has('at')) return Promise.resolve();
+  return new Promise(res => {
+    $('lvNum').innerHTML = 'Level <span>' + n + '</span>'; $('lvName').textContent = LEVEL_NAMES[n];  // (the number in plain figures)
+    lvCard = { n, t0: time, out: null, outDur: LC.out, res };
+    $('lvcard').hidden = false; lvText.style.opacity = '0';
+    musicStop(); applauseStart(); drawCard();
+  });
+}
+function cardOut(quick) {  // the card fades to black (quickly, if it was tapped), and the applause dies away
+  if (!lvCard || lvCard.out != null) return;
+  lvCard.out = time; lvCard.outDur = quick ? LC.quick : LC.out;
+  applauseStop(quick ? 0.25 : 1.0);
+}
+function updateCard() {
+  if (!lvCard) return;
+  if (lvCard.out == null && time - lvCard.t0 >= LC.in + LC.hold) cardOut(false);
+  if (lvCard.out != null && time - lvCard.out >= lvCard.outDur) {
+    const C = lvCard; lvCard = null; $('lvcard').hidden = true; C.res(); return;
+  }
+  drawCard();
+}
+function cardDiamond(x, y, r, c) {
+  lcx.fillStyle = c;
+  for (let dy = -r; dy <= r; dy++) { const w = r - Math.abs(dy); lcx.fillRect(x - w, y + dy, w * 2 + 1, 1); }
+}
+function drawCard() {
+  const C = lvCard, t = time - C.t0, f = Math.floor(t * 18), g = lcx;
+  const jy = f % 23 === 9 ? 1 : 0;  // the picture jumps a little, now and then
+  g.fillStyle = SEP[0]; g.fillRect(0, 0, VW, VH);
+  const rule = (i, c) => {  // one line of the border, i in from the edge
+    g.fillStyle = c;
+    g.fillRect(i, i + jy, VW - 2 * i, 1); g.fillRect(i, VH - 1 - i + jy, VW - 2 * i, 1);
+    g.fillRect(i, i + jy, 1, VH - 2 * i); g.fillRect(VW - 1 - i, i + jy, 1, VH - 2 * i);
+  };
+  rule(7, SEP[6]); rule(10, SEP[4]);
+  for (const [x, y] of [[10, 10], [VW - 11, 10], [10, VH - 11], [VW - 11, VH - 11]]) { cardDiamond(x, y + jy, 3, SEP[0]); cardDiamond(x, y + jy, 2, SEP[7]); }
+  for (const y of [7, VH - 8]) { cardDiamond(80, y + jy, 3, SEP[0]); cardDiamond(80, y + jy, 2, SEP[6]); }
+  filmFx(t, f, true, g);
+  let k = 1 - clamp(t / LC.in, 0, 1);  // up out of black, and back into it at the end
+  if (C.out != null) k = Math.max(k, clamp((time - C.out) / C.outDur, 0, 1));
+  if (k > 0) { g.fillStyle = 'rgba(0,0,0,' + k.toFixed(3) + ')'; g.fillRect(0, 0, VW, VH); }
+  const fl = 0.84 + 0.16 * rng(f * 131 + 5)();  // the words flicker with the film
+  lvText.style.opacity = ((1 - k) * fl).toFixed(3);
+  lvText.style.transform = jy ? 'translateY(0.7%)' : '';
+}
+function applauseBuffer() {  // about five seconds of a crowd clapping: each clap a short burst of noise; each person
+  // at their own pace and place, some cupped (duller), some flat (sharper); they come in, then drop away one by one
+  if (clapBuf) return clapBuf;
+  const sr = ac.sampleRate, len = Math.floor(sr * 5.4), b = ac.createBuffer(2, len, sr);
+  const Lc = b.getChannelData(0), Rc = b.getChannelData(1), r = rng(1927);
+  for (let p = 0; p < 26; p++) {
+    const rate = 3.4 + r() * 2.4, start = r() * 0.6 + (p % 3 === 2 ? r() * 0.5 : 0), stop = 3.3 + r() * 1.9;
+    const tone = 0.18 + r() * 0.55, amp = 0.45 + r() * 0.55, tau = sr * (0.005 + r() * 0.007), n = Math.floor(tau * 5), dk = Math.exp(-1 / tau);
+    const pan = 0.15 + r() * 0.7, gl = Math.cos(pan * Math.PI / 2), gr = Math.sin(pan * Math.PI / 2);
+    for (let at = start; at < stop; at += (0.9 + r() * 0.2) / rate) {
+      const i0 = Math.floor(at * sr), a = amp * (0.7 + r() * 0.3) * Math.min(1, (stop - at) / 0.8) * Math.min(1, (at - start + 0.15) / 0.4);
+      let y = 0, e = 1;
+      for (let j = 0; j < n && i0 + j < len; j++) { y += tone * ((r() * 2 - 1) * e - y); e *= dk; Lc[i0 + j] += y * a * gl; Rc[i0 + j] += y * a * gr; }
+    }
+  }
+  let pk = 0; for (let i = 0; i < len; i++) pk = Math.max(pk, Math.abs(Lc[i]), Math.abs(Rc[i]));
+  for (let i = 0; i < len; i++) { Lc[i] /= pk || 1; Rc[i] /= pk || 1; }
+  return (clapBuf = b);
+}
+function applauseStart() {
+  if (!ac || muted) return;
+  applauseStop(0.05);
+  const s = ac.createBufferSource(); s.buffer = applauseBuffer();
+  const hp = ac.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 350;  // a little narrow, like an old film's sound
+  const pk = ac.createBiquadFilter(); pk.type = 'peaking'; pk.frequency.value = 1600; pk.Q.value = 0.8; pk.gain.value = 3;
+  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200;
+  const g = ac.createGain(); g.gain.value = APPLAUSE_VOL;
+  s.connect(hp); hp.connect(pk); pk.connect(lp); lp.connect(g); g.connect(ac.destination);
+  let meter = null;  // (with ?meter: how loud it is, for checks)
+  if (METER) { meter = ac.createAnalyser(); meter.fftSize = 2048; g.connect(meter); }
+  s.start(ac.currentTime + 0.05);
+  const A = applause = { s, g, meter };
+  s.onended = () => { if (applause === A) applause = null; };
+}
+function applauseStop(rel) {
+  if (!applause) return;
+  const A = applause; applause = null;
+  A.g.gain.setTargetAtTime(0, ac.currentTime, rel / 3);
+  try { A.s.stop(ac.currentTime + rel + 0.1); } catch (e) {}
+  setTimeout(() => { try { A.g.disconnect(); } catch (e) {} }, (rel + 0.5) * 1000);
+}
+$('mute').addEventListener('click', () => setTimeout(() => {  // (after the mute button has done its part)
+  if (applause) applause.g.gain.setTargetAtTime(muted ? 0 : APPLAUSE_VOL, ac.currentTime, 0.05);
+}, 0));
+$('lvcard').addEventListener('pointerdown', e => { e.preventDefault(); audio(); cardOut(true); });
+
 // ---- input: the pad, the A button, and the keyboard ----
 const held = []; let padDir = null;
 const curDir = () => padDir || held[held.length - 1] || null;
 function pressA() {
   audio();
+  if (lvCard) { cardOut(true); return; }  // (a tap skips a level's title card)
   if (phase === 'title') { skipPrelude(); return; }  // (a tap skips ahead, past the opening)
   if (wrap) { spinSilk(); return; }
   if (box.active) { boxA(); return; }
@@ -12226,6 +12349,13 @@ window.__sketch = {
   get realm() { const S = scene3; return S && S.kind === 'realm' ? { she: S.she != null, veil: S.veil != null, sac: S.sac != null, burst: S.burst != null, rugs: S.rugged.size, free: S.free != null } : null; },
   get sac() { const G = scene3 && scene3.kind === 'realm' && scene3.game; if (!G) return null; const [ix, iy] = isaPos(G); return { x: G.x, stun: G.stun != null && time - G.stun < 1.2, shots: G.shots.length, safety: !!G.safety, safeReady: !G.safety && time >= G.safeBack, bubbled: G.bubbled != null, isa: [ix, iy], wave: !!G.wave, won: G.won != null, playing: phase === 'sacgame', deer: G.deer.map(d => ({ x: d.x, y: d.y, state: d.state, e0: d.e0 || 0 })) }; },
   get dis() { return !!(scene3 && scene3.dis); },
+  get card() { return lvCard ? { level: lvCard.n, t: time - lvCard.t0, out: lvCard.out != null, shown: !$('lvcard').hidden, sound: !!applause } : null; },
+  get cardName() { return lvCard ? $('lvName').textContent : null; },
+  get cardLevel() {  // with ?meter: how loud the applause is right now, [rms, peak] (for checks)
+    if (!applause || !applause.meter) return null;
+    const a = new Float32Array(applause.meter.fftSize); applause.meter.getFloatTimeDomainData(a);
+    let s = 0, p = 0; for (const v of a) { s += v * v; p = Math.max(p, Math.abs(v)); } return [Math.sqrt(s / a.length), p];
+  },
   get prelude() { return prelude ? { t: time - prelude.t0, done: prelude.done, skipped: prelude.skipped, waiting: !!prelude.waiting, title: !$('title').hidden,
     begin: !$('begin').hidden, sound: !!preSnd, tada: !!(preSnd && preSnd.tada), spoken: preUtts.map(u => u.text) } : null; },
   get preLevel() {  // with ?meter: how loud the opening's sound is right now, [rms, peak] (for checks)
