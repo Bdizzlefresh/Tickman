@@ -3095,7 +3095,7 @@ function arrive2() {
   } else if (area === 'pizza') {
     if (ch === 'm') warp('route', 40, 4, 'down', 41, 4).then(() => { if (phase === 'route') hud(routeHud()); });
   } else if (area === 'climb' && phase === 'climb') {
-    hud('Climb: ' + climbFeet() + ' of ' + CLIMB_FEET + ' feet');
+    hud('Climb, up to the overlook');
     if (P.ty <= CLIMB_TOP) overlook();
   }
 }
@@ -3320,24 +3320,24 @@ async function sleep() {
   musicStart();  // back on the road, and your beat comes back
   await say(camps === 1 ? ['Morning. The rain has stopped.', 'You wring out the tarp, and ride on.']
           : camps < 3 ? ['Morning. You pack up the tent, and ride on.']
-                      : ['Morning. You pack up the tent.', 'One last climb: 400 feet, up Palisade Head.']);
+                      : ['Morning. You pack up the tent.', 'One last climb, up Palisade Head.']);  // ("400 feet" taken out, at your word)
   hud(routeHud());
   phase = 'route'; lock--;
 }
 async function toClimb() {
   lock++; phase = 'warp'; hud(null);
-  await say(['The road up Palisade Head: 400 feet, through giant trees, to the overlook.']);
+  await say(['The road up Palisade Head, through giant trees, to the overlook.']);
   await fadeTo(1, 0.5);
   useArea('climb');
   Object.assign(P, { tx: 7, ty: 65, nx: 7, ny: 65, moving: false, t: 0, facing: 'up' });
   bruddaPlace(7, 66);
   [cam.x, cam.y] = playerCam();
   await fadeTo(0, 0.5);
-  phase = 'climb'; hud('Climb: 0 of ' + CLIMB_FEET + ' feet'); lock--;
+  phase = 'climb'; hud('Climb, up to the overlook'); lock--;  // (no count of the feet any more, at your word)
 }
 async function overlook() {
   phase = 'vista'; lock++;
-  await say(['The top of Palisade Head. 400 feet up.']);
+  await say(['The top of Palisade Head.']);
   hud(null);
   await fadeTo(1, 1.0);
   musicStop(); musicStart(VIEW);
@@ -3840,7 +3840,7 @@ function interact2() {
       'C': 'The cliffs of Palisade Head.', 'T': 'The trail up Palisade Head.',
     }[ch];
     if (ch === '?') {
-      say([fx < 30 ? 'Lake Superior: the North Shore.' : fx < 70 ? 'Gooseberry Falls.' : 'Palisade Head. The trail climbs 400 feet, up to the overlook.']);
+      say([fx < 30 ? 'Lake Superior: the North Shore.' : fx < 70 ? 'Gooseberry Falls.' : 'Palisade Head. The trail climbs up to the overlook.']);
       return;
     }
     if (words) say([words]);
