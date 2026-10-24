@@ -360,6 +360,9 @@ Every session reads this first and updates it last.
     like the secret; they're in your message on issue #1 of 2026-10-24, 03:58 UTC).
   - To replay: "either start at or beginning or just have the completion of the mini games specifically."
   - For Jim, "blocky" meant how he moves. The Cuban music should just be played on the way down.
+- 2026-10-24, issue #1, two messages (04:07 and 04:09 UTC):
+  - "Take away the voice of the intro. Just have it as a silent film like the others."
+  - "Can we drop the 'go to next level' screen and just add a pause in between and let them keep rolling?"
 
 ## What you've decided
 
@@ -540,7 +543,7 @@ Every session reads this first and updates it last.
   start: a spider rearing up toward the camera, then the view pulling back to a tick staring at it (built). Old timey is
   like a Buster Keaton film (2026-10-23, your answer): a silent movie, as built. In black and white, not sepia
   (2026-10-23, "lets try black and white"; built, the title card too). With music, and an old-timey radio voice
-  (2026-10-23; built).
+  (2026-10-23; built; the voice is out since 2026-10-24, the music stays).
 - The level names (2026-10-23; built): Level 1: The transformation. Level 2: Moon Pie on Easter Eggy. Level 3: Heading
   down South. Level 4: Heading towards eternity. (Level 1 is The Dilemma now, below.)
 - Level 1 is The Dilemma (2026-10-24; built), in place of The transformation.
@@ -548,7 +551,13 @@ Every session reads this first and updates it last.
   the announcer doesn't read the level's name (2026-10-24).
 - The radio voice in the opening, like Groucho Marx (2026-10-24; built). The phone's voice can only change its pitch and
   speed, so it's his kind of delivery (fast-talking, a sly lift, a beat before the name), not his voice. The other option
-  you gave, Dave Chappelle's caricature, wasn't used.
+  you gave, Dave Chappelle's caricature, wasn't used. (Out since 2026-10-24, at your word, below: no voice in the opening.)
+- No voice in the opening (2026-10-24; built): a silent film, like the level cards. The piano and the crackle stay, and the
+  tremolo and the two chords as the title card comes up (the assistant's reading of "the voice"; said in the reply, with an
+  offer to take the music out too). So your voice recording isn't needed.
+- No "level done" screen after levels 1, 2 and 3 (2026-10-24; built): the level ends in black, a short pause while the music
+  eases out, then the next level's title card and applause, and it keeps rolling. The only end screen left is after the
+  Looney Tunes ending (your joke, the tick marks, "Play the other ticks").
 - No "400 feet" at Palisade Head (2026-10-24; built): not in the words, the sign, or the line at the top of the screen.
 - The salmon in Mexican waters plays Cuban son, like the Buena Vista Social Club (2026-10-24; built): on the way down from
   the Gulf of Mexico to Playa del Carmen. Only on the way down (changed 2026-10-24, your word; built): the ride back up
@@ -1693,16 +1702,36 @@ Every session reads this first and updates it last.
     full), `&at=dip` (the line out, the steak), `&at=steak` (the two lines), `&at=scroll` (the scroll, then the Looney
     Tunes ending), `&at=fight` and `&at=fight2` (Jim).
 
+- 2026-10-24, the opening without a voice, and no screens between levels (`gh-pages`, commit 4993ab2), from your two
+  messages (04:07 and 04:09 UTC):
+  - The opening: the announcer is out; nothing is spoken. The film's piano and the old radio crackle play as before; as the
+    title card comes up, the soft tremolo, then the two chords (about two seconds in), then just the crackle under the card.
+    The phone's voice code is kept in the page, unused, in case it's wanted back.
+  - Between levels: the "Level 1 done", "Level 2 done" and "Level 3 done" screens no longer come. Each of those levels
+    already ends in black; now there's a pause of about a second and a half while the music eases out, then the next
+    level's title card with its applause, and the level begins, as if you'd tapped "On to level". The three screens are
+    kept in the page, unused, in case they're wanted back. Level 4's end screen is unchanged.
+  - A link for checks that starts part way along (`&at=`) plays the next level from its beginning when it rolls on.
+  - Checked, headless and muted: the opening, skipped ahead and played through, brings up the title card and the chords
+    and speaks nothing (the version before spoke the three parts); Start still goes into level 1; level 1 rolls on to level
+    2, level 2 to level 3 (all three ticks, from the top of Palisade Head), and level 3 to level 4 (two ticks), each with no
+    screen in between, a pause, the next level's card, then the level; the end of level 4 still shows its screen and the
+    "Play the other ticks" button; no errors. Also checked through the preview site, by the commit's own link.
+  - Guesses: the pause's length; keeping the piano (you said "the voice").
+  - Gifts from Blaine: untouched, still on.
+  - Links for checks: `?level=2&tick=dog&at=top` (the end of level 2, rolling on into level 3), `?level=3&tick=dog&at=cat`
+    (the end of level 3, rolling on into level 4).
+
 ## Next to build
 
-- Your voice recording for the opening, once you send it (2026-10-24): it goes in place of the phone's voice, through the
-  old radio crackle, no louder than the music around it. Waiting for the file (a short video, or an .mp3 or .wav, attached
-  to a comment on the website).
 - If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
   (offered 2026-10-24, comment 6379652837; a bigger build).
+- Off the list (2026-10-24): your voice recording for the opening. The voice is out at your word, so it isn't needed.
 
 ## Open questions
 
+- Said 2026-10-24 (comment 6379914991), an offer, not a question: the opening keeps its piano and crackle with the voice
+  gone; say if you'd rather it have no music at all. Also said: with the voice gone, no recording is needed.
 - Asked 2026-10-24 (comment 6379652837): replaying starts over from the beginning now; would you rather it play just the
   mini games with the new tick? Also said: Jim's "I roll my own." from the river is easy to drop if the hand is enough.
 - Answered 2026-10-24: "blocky" meant how Jim moves, and the Cuban music is only for the way down (asked, comment
@@ -2100,3 +2129,6 @@ Every session reads this first and updates it last.
   the Cuban music. Replied first (comment 6379652837) with the plan and one question (replay: the beginning, or just the
   mini games?). Then built all of it, same link (gh-pages 43643eb). Two more messages from you (04:07 and 04:09) came in
   after the reply went up; the next session answers them.
+- 2026-10-24: answered those two messages (04:07 and 04:09): the opening's voice out, and no screen between levels. Replied
+  first (comment 6379914991) with the plan, an offer (no music in the opening at all, if you'd rather), and that the
+  recording is off the list. No question. Then built both, same link (gh-pages 4993ab2).
