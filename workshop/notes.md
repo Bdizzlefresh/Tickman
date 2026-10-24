@@ -391,6 +391,9 @@ Every session reads this first and updates it last.
   - The assistant's line for Jim is perfect; add "Hippies..." at the end of it.
   - Take out "mutilated", and put "I motel ate" in the coyote line and the prairie dog line: an entendre, for the motel 8
     IzzyKat was staying in.
+- 2026-10-24, issue #1, two messages (22:22 and 22:23 UTC):
+  - On IzzyKat's calls (asked: "She escaped" or "I escaped"?): "Both should be she escaped".
+  - The line about eating the gummies in the Badlands should read "We shouldn't have eaten those gummies".
 
 ## What you've decided
 
@@ -575,7 +578,12 @@ Every session reads this first and updates it last.
   Prairie dog - Spirit of the Prairie dog - Go to Blaine!" (said over her), then hers: "I escaped the U-Haul in
   Yellowstone and I motel ate a silly coyote! Spirit of the Coyote - Go to Tickman!" "I motel ate" in place of "feasted
   on", in both, your word. The prairie dog's spirit goes into Brudda Blaine now, the coyote's into you. Once you're both
-  up, she yawns: "Jim - Off with you." (Asked: should the first line be "I escaped" too?)
+  up, she yawns: "Jim - Off with you." (Changed 2026-10-24, your answer; built: both calls start "She escaped"; the second
+  is "She escaped the U-Haul in Yellowstone and I motel ate a silly coyote! Spirit of the Coyote - Go to Tickman!", still
+  with her name over it.)
+- Back at the U-Haul in the Badlands, after "You're frantic." (2026-10-24, your words; built): 'You and Brudda Blaine: "We
+  shouldn't have eaten those gummies."', in place of "Why did you eat those gummies?". Then "Filled with the same stuff
+  from Milwaukee.", as before. Said together: the assistant's pick.
 - The hike at Yellowstone (2026-10-24; built): the last sip of every beer sprays up out of your mouths, like a little
   geyser. Get hit by a geyser, and it's a chug session, as punishment, Brudda Blaine chugging one with you.
 - Craps (2026-10-24; built): an attractive waitress brings the free drinks, walking along the bottom of the screen, left to
@@ -1864,6 +1872,19 @@ Every session reads this first and updates it last.
   - Links for checks: `?level=4&tick=dog&at=casino` (the waitress, then Jim and the cane), `&at=jim` (Jim, sooner),
     `&at=fight` (the line, then the calls), `&at=hike`, `&at=kingdom`, `&at=scroll`.
 
+- 2026-10-24, two changes (`gh-pages`, commit 31acf18), from your two messages (22:22 and 22:23 UTC):
+  - IzzyKat's second call starts "SHE ESCAPED THE U-HAUL" now, like the first. The rest of it, her name over it, the
+    thunder and the spirit are the same.
+  - Back at the U-Haul: 'You and Brudda Blaine: "We shouldn't have eaten those gummies."', then "Filled with the same stuff
+    from Milwaukee." The gummies over your head and the haze are the same.
+  - Checked, headless and muted: the search, all three ticks (the new line, then the Milwaukee line right after; the old
+    line never; the search plays on to the end); the fight, two ticks (both calls start "SHE ESCAPED", none "I ESCAPED",
+    five lines each, her name over the second, on to the second phase); no errors. Also checked through the preview site,
+    by the commit's own link.
+  - Guesses: said together, by you and Brudda Blaine.
+  - Gifts from Blaine: untouched, still on.
+  - Links for checks: `?level=4&tick=dog&at=search` (back at the U-Haul), `&at=fight` (the calls).
+
 ## Next to build
 
 - If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
@@ -1872,8 +1893,11 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
-- Asked 2026-10-24 (comment 6390100958): IzzyKat's first call still starts "She escaped"; should it be "I escaped" too,
-  so both lines are hers?
+- Said 2026-10-24 (comment 6390315797), two offers: IzzyKat's name still sits over her second call, now that both start
+  "She escaped"; say if it should go. And "Filled with the same stuff from Milwaukee." still follows the gummies line; say
+  if that should go too. Also: the gummies line is said together, easy to make it just one of you.
+- Answered 2026-10-24: "Both should be she escaped" (asked, comment 6390100958: IzzyKat's first call still starts "She
+  escaped"; should it be "I escaped" too, so both lines are hers?).
 - Said 2026-10-24 (comment 6386173041), an offer: the cast stays off for the scroll and "That's all folks!" after Pride
   Rock; say if it should go back on there. Also said: Jim's new line at the start of the fight is easy to change (you
   called it perfect, and added "Hippies...").
@@ -2301,3 +2325,6 @@ Every session reads this first and updates it last.
   meanwhile (15:46 to 15:48): a line off the scroll, "Hippies..." at the end of Jim's line, and "I motel ate" in both of
   IzzyKat's lines, not "mutilated". Replied (comment 6390100958) with the three, and one question ("She escaped" or "I
   escaped"?). Then built all eleven, same link (gh-pages 0dec0c8).
+- 2026-10-24: two messages from you on issue #1 (22:22 and 22:23): both calls "She escaped", and the gummies line reworded.
+  Replied first (comment 6390315797) with the plan for both, two offers (her name over the second call; the Milwaukee line),
+  and that the eleven before are in, with links. Then built both, same link (gh-pages 31acf18).
