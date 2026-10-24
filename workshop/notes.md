@@ -330,6 +330,8 @@ Every session reads this first and updates it last.
 - 2026-10-23, issue #1 (23:53 UTC): add music to the introductory scene. "Something like an old timey radio voice?"
 - 2026-10-23, issue #1 (23:55 UTC): make the levels say Level 1: The transformation; Level 2: Moon Pie on Easter Eggy;
   Level 3: Heading down South; Level 4: Heading towards eternity.
+- 2026-10-24, issue #1 (00:10 UTC): introducing each level like a title card in a silent film is "a fantastic idea", with
+  applause behind it. Make Level 1 say "The Dilemma".
 
 ## What you've decided
 
@@ -510,7 +512,9 @@ Every session reads this first and updates it last.
   (2026-10-23, "lets try black and white"; built, the title card too). With music, and an old-timey radio voice
   (2026-10-23; built).
 - The level names (2026-10-23; built): Level 1: The transformation. Level 2: Moon Pie on Easter Eggy. Level 3: Heading
-  down South. Level 4: Heading towards eternity.
+  down South. Level 4: Heading towards eternity. (Level 1 is The Dilemma now, below.)
+- Level 1 is The Dilemma (2026-10-24; built), in place of The transformation.
+- Each level opens on a title card, like a silent film's, with applause behind it (2026-10-24; built).
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1501,14 +1505,39 @@ Every session reads this first and updates it last.
     chords, and where the names go).
   - Gifts from Blaine: untouched, still on.
 
+- 2026-10-24, a title card for each level, and level 1's new name (`gh-pages`, commit 2ca1ea9), from your message (00:10 UTC):
+  - Level 1 is "The Dilemma" on the title card and on the level 1 screen.
+  - At the start of each level, before anything else, a title card like a silent film's: black and white like the opening,
+    with its grain, flicker, scratches and the picture jumping now and then. A double border with little diamonds at the
+    corners; "Level 1" (and so on) in the old printer's type, a star rule, and the level's name in the tall movie
+    lettering. It comes up out of black, holds about four seconds, and fades back to black; then the level begins as
+    before (level 1 now fades in from black after it).
+  - Applause behind it, original, made by the game: a crowd of about two dozen people clapping, each at their own pace,
+    some cupped and some flat, a little narrow like an old film's sound. It swells in and dies away with the card. It's
+    soft: measured, it's quieter than the house music and the opening, on average and at its loudest. The ♪ button mutes it.
+  - The music stops for the card. Going from level 1 into level 2, the beat now starts again after the card (before, it
+    carried on).
+  - A tap on the screen, A or Space skips the card. It plays on Start, "On to level", "Skip to level", "Play level again"
+    and "Try another tick" on levels 2 to 4 (each starts the level over). Not on "Try another tick" in level 1, which goes
+    back to the three ticks, mid-level. The links for checks that start part way along (`&at=`) skip it.
+  - Checked, headless and muted: the card shows for each level with the right number and name, the words fit at a phone
+    size and a small one, nothing moves and no text comes while it's up, it goes, and the level goes on (level 1 through
+    its opening words to the bugs); a tap and Space skip it; the applause plays, and with the ♪ off it doesn't; links with
+    `&at=` have no card; the title card has the new name; no errors.
+  - Guesses: all of it but your words (the look, the border, the timing, the applause's sound).
+  - Gifts from Blaine: untouched, still on.
+
 ## Next to build
 
 Nothing queued.
 
 ## Open questions
 
-- Asked 2026-10-23 (comment 6377175604): should the announcer say anything besides the title? And should each level open
-  on its name, like a title card in a silent film?
+- Asked 2026-10-24 (comment 6377332681): should the radio announcer read each level's name on its title card too, or just
+  the applause?
+- Answered 2026-10-24: yes, each level opens on its name, like a title card in a silent film, with applause behind it
+  (asked, comment 6377175604). Its other question (should the announcer say anything besides the title?) is folded into
+  the one above.
 - Answered 2026-10-23: "lets try black and white" (asked, comment 6377080877: the opening is sepia; Keaton's films are
   black and white. Make it black and white, like his?). Checked: Wikipedia lists The General (1926) and Sherlock Jr. in its category "American black-and-white
   films", and a critic quoted in The General's article mentions "its spare, grey photography". Neither article mentions
@@ -1862,3 +1891,6 @@ Nothing queued.
   the level names. Replied first (comment 6377175604) with the plan, two plain notes (tap to begin; the voice is the
   phone's own), and two questions: anything else for the announcer to say, and should each level open on its name? Then
   built both, same link (gh-pages 1988b5d).
+- 2026-10-24: one message from you on issue #1 (00:10): a title card for each level, with applause, and level 1 as The
+  Dilemma. Replied first (comment 6377332681) with the plan, and one question: should the announcer read each level's
+  name too? Then built both, same link (gh-pages 2ca1ea9).
