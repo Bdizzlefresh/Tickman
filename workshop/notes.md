@@ -332,6 +332,13 @@ Every session reads this first and updates it last.
   Level 3: Heading down South; Level 4: Heading towards eternity.
 - 2026-10-24, issue #1 (00:10 UTC): introducing each level like a title card in a silent film is "a fantastic idea", with
   applause behind it. Make Level 1 say "The Dilemma".
+- 2026-10-24, issue #1, three messages (00:12 to 00:16 UTC):
+  - Can the voice be a bit more like Groucho Marx, or similar to the caricature that Dave Chappelle does in his stand-up
+    act?
+  - On whether the announcer reads each level's name: "Just the applause."
+  - A different ending: everything is revealed at the end on the first run, and after it's over, the option of playing
+    the other ticks. With a joke: "I was going to force you to play all three to unlock it, but for some reason it seemed
+    harsh."
 
 ## What you've decided
 
@@ -448,7 +455,8 @@ Every session reads this first and updates it last.
   egg sac, and Isabella free. Queued (see "Next to build"). This is where the egg sac went.
 - Blaine's gift: you said yes (2026-10-21). It's switched on in the sketch; talk about it lives in its own conversation on
   GitHub. Still on; one part of it taken out at your word (2026-10-22).
-- The very end (2026-10-22): option 1, finish with all three ticks; the reveal is its own grand cut scene, ending like a
+- (Changed 2026-10-24: everything is revealed on the first run now; see "The ending", above.) The very end (2026-10-22):
+  option 1, finish with all three ticks; the reveal is its own grand cut scene, ending like a
   manifested easter egg. The first two runs stop at the tick's line at the Truckee, and a tick mark fills in; the third
   goes on to the flash and the final scene (the assistant's pick; you trust it, 2026-10-23). On the third run, an egg
   manifests over the river after the tick's line; tap it, and the last cut scene plays (the assistant's reading of "a
@@ -514,7 +522,13 @@ Every session reads this first and updates it last.
 - The level names (2026-10-23; built): Level 1: The transformation. Level 2: Moon Pie on Easter Eggy. Level 3: Heading
   down South. Level 4: Heading towards eternity. (Level 1 is The Dilemma now, below.)
 - Level 1 is The Dilemma (2026-10-24; built), in place of The transformation.
-- Each level opens on a title card, like a silent film's, with applause behind it (2026-10-24; built).
+- Each level opens on a title card, like a silent film's, with applause behind it (2026-10-24; built). Just the applause:
+  the announcer doesn't read the level's name (2026-10-24).
+- The radio voice in the opening, like Groucho Marx (2026-10-24; built). The phone's voice can only change its pitch and
+  speed, so it's his kind of delivery (fast-talking, a sly lift, a beat before the name), not his voice. The other option
+  you gave, Dave Chappelle's caricature, wasn't used.
+- The ending (changed 2026-10-24; built): everything is revealed on the first run, with any tick. After it, the end screen
+  has your joke and the option to play the other ticks. (Before: option 1, finish with all three ticks to unlock it.)
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1527,14 +1541,41 @@ Every session reads this first and updates it last.
   - Guesses: all of it but your words (the look, the border, the timing, the applause's sound).
   - Gifts from Blaine: untouched, still on.
 
+- 2026-10-24, the ending on every run, and the voice (`gh-pages`, commit 054cce0), from your three messages (00:12 to 00:16):
+  - The ending: on every run now, the first included, with any tick, your speech at the Truckee goes on to your next
+    line, the egg, the sloppy steak, the kingdom and the Looney Tunes ending. A tick mark still fills in for each tick you
+    finish with.
+  - The level 4 end screen, up top under its heading: the tick marks, your joke, "I was going to force you to play all
+    three to unlock it, but for some reason it seemed harsh.", and a button, "Play the other ticks" (it opens the card
+    where you pick a tick, and plays level 4 again with it, like "Try another tick"). Once all three are done: "All three
+    ticks." and no button. The line "Something is left to find. Finish with each tick." is gone. The tick marks now wrap
+    onto a second line on a phone (before, the last one ran off the side).
+  - The voice, like Groucho: "Rendezvous..." drawn out and a little high, "of the Arachnid..." quick, then "Tickman!" with
+    a lift. An American man's voice first, where the phone has one (before: a British one first), then any man's English
+    voice. It's still the phone's own voice: it sounds different on each phone.
+  - Checked, headless and muted: a first run from your speech plays the whole ending to the end screen, with the joke and
+    the button up top, and the button opens the tick picker; a second run plays it all too; as if the third, "All three
+    ticks." and no button; the whole stretch from the dip, too; the end screen at a small phone size, nothing off the side,
+    its buttons reachable; the voice is asked for the three parts, at the new pitch and speed; no errors.
+  - Checked, about Groucho (used only for the delivery): Wikipedia's article "Groucho Marx" says he usually portrayed "a
+    fast-talking, slightly shady protagonist", and calls him "a master of the one-line retort". The reply said
+    "fast-talking"; nothing of his is quoted in the game.
+  - Guesses: the delivery's pitch and speed, the button's words, and where the joke sits.
+  - Gifts from Blaine: untouched, still on.
+
 ## Next to build
 
 Nothing queued.
 
 ## Open questions
 
-- Asked 2026-10-24 (comment 6377332681): should the radio announcer read each level's name on its title card too, or just
-  the applause?
+- Said 2026-10-24 (comment 6377552887), not asked: the voice is the phone's own, so it can only be Groucho's kind of
+  delivery, not his voice ("Say if it's not close enough"); and runs after the first play the whole ending too ("say if they
+  should stop sooner"). Not checked, and not used: Dave Chappelle's caricature (which one you meant).
+- Answered 2026-10-24: "Just the applause." (asked, comment 6377332681: should the radio announcer read each level's name
+  on its title card too?)
+- Changed 2026-10-24, at your word: the secret ending no longer needs all three ticks (see below, 2026-10-23, comment
+  6375843278, and the very end, 2026-10-22). It plays on every run.
 - Answered 2026-10-24: yes, each level opens on its name, like a title card in a silent film, with applause behind it
   (asked, comment 6377175604). Its other question (should the announcer say anything besides the title?) is folded into
   the one above.
@@ -1894,3 +1935,6 @@ Nothing queued.
 - 2026-10-24: one message from you on issue #1 (00:10): a title card for each level, with applause, and level 1 as The
   Dilemma. Replied first (comment 6377332681) with the plan, and one question: should the announcer read each level's
   name too? Then built both, same link (gh-pages 2ca1ea9).
+- 2026-10-24: three messages from you on issue #1 (00:12 to 00:16, in while that reply was going up): the voice like
+  Groucho, "Just the applause", and the ending on the first run with your joke. Replied first (comment 6377552887) with the
+  plan for both, a plain note about the voice, and no question. Then built both, same link (gh-pages 054cce0).
