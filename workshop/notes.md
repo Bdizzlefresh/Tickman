@@ -327,6 +327,9 @@ Every session reads this first and updates it last.
   camera; then it pans back to a tick, staring at the spider.
 - 2026-10-23, issue #1 (23:49 UTC), on old timey: "Like a buster Keaton Film".
 - 2026-10-23, issue #1 (23:52 UTC), on the opening being sepia: "lets try black and white".
+- 2026-10-23, issue #1 (23:53 UTC): add music to the introductory scene. "Something like an old timey radio voice?"
+- 2026-10-23, issue #1 (23:55 UTC): make the levels say Level 1: The transformation; Level 2: Moon Pie on Easter Eggy;
+  Level 3: Heading down South; Level 4: Heading towards eternity.
 
 ## What you've decided
 
@@ -504,7 +507,10 @@ Every session reads this first and updates it last.
 - The game's name is RENDEZVOUS OF THE ARACHNID TICKMAN! (2026-10-23; built). Old timey, with an opening right at the
   start: a spider rearing up toward the camera, then the view pulling back to a tick staring at it (built). Old timey is
   like a Buster Keaton film (2026-10-23, your answer): a silent movie, as built. In black and white, not sepia
-  (2026-10-23, "lets try black and white"; built, the title card too).
+  (2026-10-23, "lets try black and white"; built, the title card too). With music, and an old-timey radio voice
+  (2026-10-23; built).
+- The level names (2026-10-23; built): Level 1: The transformation. Level 2: Moon Pie on Easter Eggy. Level 3: Heading
+  down South. Level 4: Heading towards eternity.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1466,12 +1472,43 @@ Every session reads this first and updates it last.
   - Guesses: the exact grays, and the card in black and white too (you said black and white for the opening).
   - Gifts from Blaine: untouched, still on.
 
+- 2026-10-23, music for the opening, and the level names (`gh-pages`, commit 1988b5d), from your two messages (23:53 and
+  23:55 UTC):
+  - Tap to begin: the page now opens on an old film leader (two rings, a cross, a sweep going round, grain and flicker)
+    with "Tap to begin" over it, because phones play no sound until the screen is tapped. A tap anywhere on the screen,
+    A or Space starts the film; after that, a tap skips ahead to the title card, as before.
+  - The music, original, all made by the game: an old-timey upright piano (two strings a hair out of tune), played
+    through an old radio (a narrow band, a little gritty) with crackle and hiss the whole time. A low tremolo as the
+    circle opens; the bass climbs, with stabs of a tense chord, as the spider rears up; a crash when it's up, and a
+    trembling chord up high; a shriek of high notes when the fangs come out; a tiptoeing tune as the view pulls back to
+    the tick; a run up to the title.
+  - The radio voice: as the title card comes up, a soft tremolo, and an announcer calls out the title, in three parts:
+    "Rendezvous...", "of the Arachnid...", "Tickman!". It's the phone's own built-in voice (speech synthesis), a man's
+    English voice where the phone has one, slow and a little low; so it sounds different on each phone, and it can't be
+    put through the radio crackle (said in the reply). As it says the name, two chords, ta-da. Then just the crackle,
+    quietly, under the title card. Start ends it all.
+  - The mute button (♪) mutes it, voice and all. Muted, the film plays silent, as before.
+  - The level names, your words: on the title card (one per line), on the card where you pick a tick (when skipping to a
+    level), under each "Level done" heading, and in the "Next:" line at the end of levels 1, 2 and 3. The "Skip to level"
+    and "On to level" buttons still say the number.
+  - The title card is a little tighter, to fit the names and stay below the picture on a phone.
+  - Checked, headless and muted: it waits for the tap; the tap starts the film and its sound; the title card and the
+    announcer's three parts come, then the chords; a second tap and Space skip ahead; Start stops the sound and goes into
+    level 1; muted, it plays to the title card silently; a link straight to a level has no opening; the names show on
+    the title card, the pick card and the level screens; levels 2, 3 and 4 still reach their ends; no errors. Loudness,
+    measured: the opening's loudest moment is about as loud as the house music's, and on average it's quieter.
+  - Guesses: all of it but your words (the leader, the music, the radio sound, the voice's words and delivery, the
+    chords, and where the names go).
+  - Gifts from Blaine: untouched, still on.
+
 ## Next to build
 
 Nothing queued.
 
 ## Open questions
 
+- Asked 2026-10-23 (comment 6377175604): should the announcer say anything besides the title? And should each level open
+  on its name, like a title card in a silent film?
 - Answered 2026-10-23: "lets try black and white" (asked, comment 6377080877: the opening is sepia; Keaton's films are
   black and white. Make it black and white, like his?). Checked: Wikipedia lists The General (1926) and Sherlock Jr. in its category "American black-and-white
   films", and a critic quoted in The General's article mentions "its spare, grey photography". Neither article mentions
@@ -1820,4 +1857,8 @@ Nothing queued.
   built as that kind of silent movie, and one question: black and white, like his films, instead of sepia? Nothing built.
 - 2026-10-23: one message from you on issue #1 (23:52, half a minute after that reply): let's try black and white.
   Replied first (comment 6377098334) that it's on its way, the title card to match. No question. Then built it, same link
-  (gh-pages bdf3aff).
+  (gh-pages bdf3aff). Two more messages from you came in right after that reply; the next session answered them.
+- 2026-10-23: two messages from you on issue #1 (23:53 and 23:55): music and an old-timey radio voice for the opening, and
+  the level names. Replied first (comment 6377175604) with the plan, two plain notes (tap to begin; the voice is the
+  phone's own), and two questions: anything else for the announcer to say, and should each level open on its name? Then
+  built both, same link (gh-pages 1988b5d).
