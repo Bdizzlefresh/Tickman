@@ -341,6 +341,7 @@ Every session reads this first and updates it last.
     harsh."
 - 2026-10-24, issue #1 (03:12 UTC): could you add a voice recording, to help make it closer to what you're thinking for the
   intro screen?
+- 2026-10-24, issue #1 (03:21 UTC): take out the "400 feet" in Palisade Head.
 
 ## What you've decided
 
@@ -529,6 +530,7 @@ Every session reads this first and updates it last.
 - The radio voice in the opening, like Groucho Marx (2026-10-24; built). The phone's voice can only change its pitch and
   speed, so it's his kind of delivery (fast-talking, a sly lift, a beat before the name), not his voice. The other option
   you gave, Dave Chappelle's caricature, wasn't used.
+- No "400 feet" at Palisade Head (2026-10-24; built): not in the words, the sign, or the line at the top of the screen.
 - The ending (changed 2026-10-24; built): everything is revealed on the first run, with any tick. After it, the end screen
   has your joke and the option to play the other ticks. (Before: option 1, finish with all three ticks to unlock it.)
 - Everything else is yours to decide.
@@ -1565,6 +1567,17 @@ Every session reads this first and updates it last.
   - Guesses: the delivery's pitch and speed, the button's words, and where the joke sits.
   - Gifts from Blaine: untouched, still on.
 
+- 2026-10-24, "400 feet" out at Palisade Head (`gh-pages`, commit 278c5f4), from your message (03:21 UTC):
+  - The last camp's morning: "One last climb, up Palisade Head."
+  - The road up: "The road up Palisade Head, through giant trees, to the overlook."
+  - The line at the top of the screen on the climb no longer counts the feet: "Climb, up to the overlook".
+  - At the top: "The top of Palisade Head."
+  - The sign by the trail: "Palisade Head. The trail climbs up to the overlook."
+  - Nothing else changed.
+  - Checked, headless and muted: from the last camp through its morning, the road up and a step of the climb, and from
+    the top through the view to the end of level 2, no "400" or "feet" in any words or in the line at the top; no errors.
+  - Gifts from Blaine: untouched, still on.
+
 ## Next to build
 
 - Your voice recording for the opening, once you send it (2026-10-24): it goes in place of the phone's voice, through the
@@ -1949,3 +1962,5 @@ Every session reads this first and updates it last.
   plan for both, a plain note about the voice, and no question. Then built both, same link (gh-pages 054cce0).
 - 2026-10-24: one message from you on issue #1 (03:12): could you add a voice recording for the opening? Replied (comment
   6379180401): yes, as the voice itself, with the steps to send it. Nothing built yet; it's queued until the file comes.
+- 2026-10-24: one message from you on issue #1 (03:21): take out the "400 feet" at Palisade Head. Replied first (comment
+  6379258911) with what comes out, and no question. Then built it, same link (gh-pages 278c5f4).
