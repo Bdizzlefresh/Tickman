@@ -7346,7 +7346,7 @@ function yip(v = 0.03) {  // the jump-yip: "wee-oo"
   o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.3);
 }
 // ---- level 4: IzzyKat gets out, and the search for her. A scene you watch (your answer). Back at the U-Haul, the door
-// was left open, and IzzyKat is gone. You're frantic, and wondering why you ate those gummies (the same stuff from
+// was left open, and IzzyKat is gone. You're frantic: "We shouldn't have eaten those gummies" (the same stuff from
 // Milwaukee). Then you search, Brudda Blaine and you, each tick its own way:
 //   the pointer: a pointer's nose, to the ground; the scent leads to a rock, and you point.
 //   the regular tick: up a stalk of dune grass, front legs held out, feeling for breath and body heat (real ticks do
@@ -7393,7 +7393,7 @@ async function searchIzzy() {
   await say(["You're frantic."]);
   S.think = time; S.haze = time;
   await wait(1.2);
-  await say(['Why did you eat those gummies?', 'Filled with the same stuff from Milwaukee.']);
+  await say(['You and Brudda Blaine: "We shouldn\'t have eaten those gummies."', 'Filled with the same stuff from Milwaukee.']);  // your words (2026-10-24); said together, a guess
   S.frantic = null; S.think = null;
   await Promise.all([walkTo(bl, [[62, 88]], 40), walkTo(me, [[30, 92]], 40)]);
   bl.facing = 'left'; me.facing = 'down';
@@ -10228,11 +10228,12 @@ function coyoteHowl() { if (!ac || muted) return; const t = ac.currentTime, o = 
   o.connect(g); g.connect(master); o.start(t); o.stop(t + 1.45); }
 // ---- IzzyKat saves your lives, more dramatic (your ask), in a Thundercats style: she rises a little, in a glow; thunder,
 // lightning, and her call, huge on screen, a line at a time. Your words, in the sign alphabet's capitals: the first is
-// said over her; the second is hers. With "GO TO ...!", the spirit goes. Tap A to go on. "I motel ate", in both, in place
-// of "feasted on" (your word: an entendre, for the motel 8 she was staying in). (How it all looks and sounds: guesses.) ----
+// said over her; the second is hers, with her name over it. Both start "SHE ESCAPED" (your answer, 2026-10-24). With
+// "GO TO ...!", the spirit goes. Tap A to go on. "I motel ate", in both, in place of "feasted on" (your word: an
+// entendre, for the motel 8 she was staying in). (How it all looks and sounds: guesses.) ----
 const IZZY_CALLS = [
   ['SHE ESCAPED THE U-HAUL', 'IN THE BADLANDS AND I MOTEL ATE', 'A PRAIRIE DOG -', 'SPIRIT OF THE PRAIRIE DOG -', 'GO TO BLAINE!'],
-  ['I ESCAPED THE U-HAUL', 'IN YELLOWSTONE AND I MOTEL ATE', 'A SILLY COYOTE!', 'SPIRIT OF THE COYOTE -', 'GO TO TICKMAN!']];
+  ['SHE ESCAPED THE U-HAUL', 'IN YELLOWSTONE AND I MOTEL ATE', 'A SILLY COYOTE!', 'SPIRIT OF THE COYOTE -', 'GO TO TICKMAN!']];
 async function izzyCall(S, lines, who, onGo) {
   S.call = { lines, who, shown: 0, at: time, bolt: time };
   thunder();
