@@ -5276,7 +5276,7 @@ function reunionStep(S, n, t, six) {
   if (s % 2 === 0) nylon(mtof(ch[[0, 1, 2, 1][(s / 2) % 4]] + (s % 8 === 0 ? 0 : 12)), t, 0.5);
   if (bar >= 1) for (const [at, m, len] of REUNION_TUNE[i]) if (at === s) bell(mtof(m), t, 0.05, six * len + 0.6, 0.7);
 }
-// the salmon, in Mexican waters (your ask: something that sounds like the Buena Vista Social Club): Cuban son, original,
+// the salmon, the whole ride down South (your ask: something that sounds like the Buena Vista Social Club): Cuban son, original,
 // in A minor, 100 beats a minute. The claves on the son clave (two, then three); bongos keeping eighths, the low drum
 // opening up on the "and" of two and four; maracas; the upright bass in a tumbao, landing ahead of the beat (the next
 // chord, on four); a tres-like guitar (each note doubled an octave up) picking a syncopated figure; and a soft trumpet on
@@ -6201,12 +6201,12 @@ async function rideDown() {
   scene3.salmon = time; splashSound(0.2);
   await wait(1.0);
   await say(['A salmon swims up under you both.', 'Impossible, the fox said, at the falls.', 'You climb on.']);
-  scene3.vGoal = 40; musicStart();
+  scene3.vGoal = 40; musicStart(SON);  // Cuban son, the whole ride down South: from Lake Superior, down the Mississippi, through the Gulf, to Playa del Carmen (your ask, 2026-10-24)
   await wait(1.8);
   await fadeTo(1, 0.6); scene3.seg = 'river'; scene3.dist = 0; await fadeTo(0, 0.6);
   await say(['All the way down the Mississippi River.']);
   await wait(4.2);
-  await fadeTo(1, 0.6); scene3.seg = 'gulf'; musicStop(); musicStart(SON); await fadeTo(0, 0.6);  // Cuban son, from the Gulf to Playa del Carmen (your ask)
+  await fadeTo(1, 0.6); scene3.seg = 'gulf'; await fadeTo(0, 0.6);
   await say(['Into the Gulf of Mexico.']);
   await wait(1.2);
   await fadeTo(1, 0.6);
