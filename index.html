@@ -250,8 +250,8 @@ a { color:var(--accent); }
   <div class="card">
     <h2>Level 4 done</h2>
     <div class="sub">Heading towards eternity</div>
-    <p id="end4Text"></p>
     <p id="ticks4"></p>
+    <p id="end4Text"></p>
     <div class="btns">
       <button class="btn" id="again4">Play level 4 again</button>
     </div>
@@ -10556,9 +10556,9 @@ function waveCall() { if (!ac || muted) return; [523.25, 659.25, 783.99, 659.25,
 // hesitantly, up to your knees: "He is incredible. He is truly from the North." (In place of the other two lines.) Behind you, under the bridge, a shadowy character
 // comes for all of your belongings; Brudda Blaine flashes him, with vigor (metaphorical: a burst of light, nothing
 // explicit), and he walks off, extremely unpleased, mumbling. Then you turn slowly to Brudda Blaine, an orchestra behind
-// you like a Bocelli ballad (original), and say your line. The first two runs end there, and a tick mark fills in. On the
-// third, an easter egg manifests: tap it, and you flash too (metaphorical), and out of the flash: a sloppy steak, then
-// the kingdom. (How it all looks and sounds, and the words not in your message, are guesses.) ----
+// you like a Bocelli ballad (original), and say your line, and a tick mark fills in. Then (on every run, the first
+// included, at your word) an easter egg manifests: tap it, and you flash too (metaphorical), and out of the flash: a sloppy
+// steak, then the kingdom. (How it all looks and sounds, and the words not in your message, are guesses.) ----
 const BALLAD = { name: 'ballad', kind: 'ballad', bpm: 60, swing: 0, verb: 0.55, room: 3.4, gain: 2.5 };
 const BALLAD_CH = [[58, 62, 65], [57, 60, 63, 65], [55, 58, 62], [55, 58, 63]];  // B-flat, F7, G minor, E-flat
 const BALLAD_TUNE = [[[0, 70, 8], [8, 74, 4], [12, 77, 4]], [[0, 75, 12], [12, 72, 4]], [[0, 74, 6], [6, 72, 2], [8, 70, 8]], [[0, 67, 4], [4, 70, 4], [8, 75, 8]]];
@@ -10686,14 +10686,9 @@ async function dip(atTurn) {  // atTurn (?at=speech): straight to the turn, with
   await wait(1.6);
   await say(['You: "Brudda. We\'ve traversed the North Shore.', 'We\'ve rode a salmon to the great clubs of the South.',  // your words
     'We\'ve saved my babygurl Isabella.', 'We have done it all."']);  // (its last line is out, at your word: it was a repeat)
-  const done = markEnd(choice);
-  if (done.size < 3) {  // the first two runs end here, with a tick mark
-    await wait(2.4);
-    await fadeTo(1, 1.4);
-    musicStop(); riverSound(0);
-    return false;
-  }
-  // the third: one more line (your ask), and an easter egg manifests
+  markEnd(choice);  // a tick mark, for this tick. (Before, the first two runs ended here. Now, at your word, everything is
+  // revealed on the first run: every run goes on, through the egg, to the very end.)
+  // one more line (your ask), and an easter egg manifests
   await wait(0.8);
   await say(['You: "I know you just revealed your junk. But I now have junk to reveal to you."']);
   await wait(1.0);
@@ -11485,8 +11480,17 @@ function finish4() {
     ' You pulled into a motel 8, and left IzzyKat in the room. You jumped the fence next to the Denny\'s, into the canals, thin and a little grimy, and walked them to the old strip. Into a casino: darkish, the lights of the screens in the background, a slight smell of despair and cigarettes. Craps, just you, Brudda Blaine and the dealer, rolling the dice yourself, the free drinks coming. Good and drunk, you were about to go, and Jim strolled in: the enigma. A few rounds; then "Oh, Jim," and he enlarged. The fight, on the craps table: dice, chips spinning like frisbees, and his dry hands closing round you. You both died. IzzyKat sent the spirits of the prairie dog and the coyote into you, and you came back: the true hippiest of hippies of them all. Jim, even larger, swung down like a giant; IzzyKat dodged it all, bored. You turned his dice over, seven times, to show him what was underneath: the die do lie. His philosophy shattered. Light broke out of every crack in him, and he screamed at the top of his lungs, "THE DIE.....THEY LIE.... I CANNOT.... BE.....", and came apart. The whole scene melted, and ran into the Truckee River, at night: rocky, with slight rapids, a bridge overhead on the left, the Sierra Nevada behind. A cigarette appeared, as long as time itself, full of good California weed, not Milwaukee weed. You grabbed it and lit it, and you and Brudda Blaine took a drag of time itself, and slowly walked into the Truckee, as cold as the Sierra mountains themselves. You were carried to another realm: California, as if it were in Frank Herbert\'s The Santaroga Barrier, a valley of farms ringed by redwoods, the cheese cooperative up the hill. The pack of deer, holding Isabella hostage, moving as one. Then another spider, a female, in the euphoria of the dragging of time; a curtain of silk; an egg sac. It was full of baby ticks: you shot them at every deer, like Galaga, and the safety baby tick at Isabella, to bubble her. The deer, sucked of all their being, fell to the floor like rugs on a carpet. Isabella is at last free from the tyranny of the ungulate gang. Then it all slowly disintegrated, back into the Truckee River. Back at the Truckee River, Brudda Blaine took a dip, to wash off all of that stank, diving like a dolphin, here, there, everywhere; you followed, slowly, up to your knees: "He is incredible. He is truly from the North." A shadowy character came for your belongings, under the bridge; Brudda Blaine flashed him, with vigor, and he walked off, extremely unpleased, mumbling. And you turned, slowly, to Brudda Blaine: "...We have done it all."';
   const done = endsSeen || endsDone(), el = $('ticks4'); el.innerHTML = '';
   if (done.size) {
-    for (const k of ['regular', 'human', 'dog']) { const sp = document.createElement('span'); sp.textContent = (done.has(k) ? '\u2713 ' : '\u25CB ') + TICK_WORDS[k]; sp.style.marginRight = '1em'; sp.style.whiteSpace = 'nowrap'; el.appendChild(sp); }
-    const d = document.createElement('div'); d.textContent = done.size < 3 ? 'Something is left to find. Finish with each tick.' : 'All three ticks.'; el.appendChild(d);
+    for (const k of ['regular', 'human', 'dog']) { const sp = document.createElement('span'); sp.textContent = (done.has(k) ? '\u2713 ' : '\u25CB ') + TICK_WORDS[k]; sp.style.marginRight = '1em'; sp.style.whiteSpace = 'nowrap'; el.appendChild(sp); el.appendChild(document.createTextNode(' ')); }  // (the space lets the marks wrap onto a new line on a phone)
+    if (done.size === 3) { const a = document.createElement('div'); a.textContent = 'All three ticks.'; el.appendChild(a); }
+  }
+  const joke = document.createElement('div');  // your joke (everything is revealed on the first run now, at your word)
+  joke.textContent = '"I was going to force you to play all three to unlock it, but for some reason it seemed harsh."';
+  joke.style.marginTop = '8px'; joke.style.fontStyle = 'italic'; el.appendChild(joke);
+  if (done.size < 3) {  // and the option of playing the other ticks, right there, up top (it's the same as "Try another tick")
+    const b = document.createElement('button'); b.className = 'btn'; b.id = 'others4'; b.textContent = 'Play the other ticks';
+    b.style.display = 'block'; b.style.width = '100%'; b.style.marginTop = '10px';
+    b.addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('end4', 4); });
+    el.appendChild(b);
   }
   $('end4').hidden = false;
 }
@@ -11637,12 +11641,14 @@ function preCardSound() {
     S.trem = ac.createGain(); S.trem.connect(S.card);
     for (let i = 0; i < 56; i++) for (const n of i % 2 ? [53] : [50, 57]) prePiano(S.trem, n, t0 + i / 14, 0.035, 0.14);
   }
-  const spoke = preSay([['Rendezvous...', 0.8, 0.8], ['of the Arachnid...', 0.8, 0.85], ['Tickman!', 1.05, 0.78]], preTada);
+  // like Groucho (your ask): fast-talking, a sly lift, a beat before the punchline. The phone's voice can only change its
+  // pitch and speed, so it's his kind of delivery, not his voice: the first word drawn out, the middle quick, then the name.
+  const spoke = preSay([['Rendezvous...', 1.15, 0.85], ['of the Arachnid...', 1.05, 1.35], ['Tickman!', 1.3, 1.05]], preTada);
   S.timers.push(setTimeout(preTada, spoke ? 4500 : 2400));  // (if the voice doesn't come, the chords come anyway)
 }
-function preVoice() {  // a man's English voice, if the phone has one (an announcer's), or its usual English voice
+function preVoice() {  // an American man's voice, if the phone has one (for Groucho), then any man's English voice, or its usual English voice
   const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [], en = vs.filter(v => /^en/i.test(v.lang));
-  for (const name of ['Daniel', 'Arthur', 'Google UK English Male', 'Aaron', 'Alex', 'David', 'George']) {
+  for (const name of ['Aaron', 'Alex', 'Evan', 'Nathan', 'Tom', 'Microsoft Guy', 'Microsoft David', 'Daniel', 'Arthur', 'Google UK English Male', 'David', 'George']) {
     const v = en.find(x => x.name.indexOf(name) === 0); if (v) return v;
   }
   return en.find(v => v.default) || en[0] || null;
