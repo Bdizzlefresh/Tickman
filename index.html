@@ -843,6 +843,7 @@ function musicStep(n, t) {
   else if (S.kind === 'club') clubStep(S, n, t, mus.six);      // the club,
   else if (S.kind === 'town') townStep(S, n, t, mus.six);      // Akumal,
   else if (S.kind === 'reunion') reunionStep(S, n, t, mus.six);  // and finding Braydon
+  else if (S.kind === 'son') sonStep(S, n, t, mus.six);          // the salmon, in Mexican waters: Cuban son
   else if (S.kind === 'desert') desertStep(S, n, t, mus.six);    // level 4: Utah, on the stereo,
   else if (S.kind === 'circles') circlesStep(S, n, t, mus.six);  // and Nevada
   else if (S.kind === 'swing') swingStep(S, n, t, mus.six);      // Reno: the swing,
@@ -5258,6 +5259,33 @@ function reunionStep(S, n, t, six) {
   if (s % 2 === 0) nylon(mtof(ch[[0, 1, 2, 1][(s / 2) % 4]] + (s % 8 === 0 ? 0 : 12)), t, 0.5);
   if (bar >= 1) for (const [at, m, len] of REUNION_TUNE[i]) if (at === s) bell(mtof(m), t, 0.05, six * len + 0.6, 0.7);
 }
+// the salmon, in Mexican waters (your ask: something that sounds like the Buena Vista Social Club): Cuban son, original,
+// in A minor, 100 beats a minute. The claves on the son clave (two, then three); bongos keeping eighths, the low drum
+// opening up on the "and" of two and four; maracas; the upright bass in a tumbao, landing ahead of the beat (the next
+// chord, on four); a tres-like guitar (each note doubled an octave up) picking a syncopated figure; and a soft trumpet on
+// the tune, from the second bar. Eight bars go round: Am, Am, E7, E7, Am, Dm, E7, Am. (All of it a guess at the feel.)
+const SON = { name: 'son', kind: 'son', bpm: 100, swing: 0.03, verb: 0.28, room: 1.6, gain: 1.2 };  // (measured: no louder than your beat)
+const SON_CH = [{ r: 45, f: 52, ch: [57, 60, 64] }, { r: 45, f: 52, ch: [57, 60, 64] }, { r: 40, f: 47, ch: [56, 59, 62, 64] },
+  { r: 40, f: 47, ch: [56, 59, 62, 64] }, { r: 45, f: 52, ch: [57, 60, 64] }, { r: 38, f: 45, ch: [57, 62, 65] },
+  { r: 40, f: 47, ch: [56, 59, 62, 64] }, { r: 45, f: 52, ch: [57, 60, 64] }];
+const SON_TRES = [[2, 0], [4, 1], [6, 2], [9, 1], [10, 2], [12, 0], [14, 1]];  // [sixteenth, which chord tone], an octave up, doubled
+const SON_TUNE = [  // the trumpet's tune, bar by bar from the second bar (over Am, E7, E7, Am, Dm, E7, Am, Am): [sixteenth, note, length]
+  [[0, 76, 6], [6, 72, 2], [8, 74, 4], [12, 76, 4]], [[0, 74, 8], [8, 71, 4], [12, 68, 4]], [[2, 71, 2], [4, 74, 4], [8, 76, 6], [14, 74, 2]],
+  [[0, 72, 12]], [[0, 77, 6], [6, 76, 2], [8, 74, 4], [12, 72, 4]], [[2, 71, 2], [4, 74, 4], [8, 71, 2], [10, 68, 2], [12, 71, 4]],
+  [[0, 72, 4], [4, 71, 2], [6, 72, 2], [8, 76, 8]], [[0, 69, 12]]];
+function sonStep(S, n, t, six) {
+  const bar = Math.floor(n / 16), s = n % 16, i = bar % 8, ch = SON_CH[i], nx = SON_CH[(bar + 1) % 8];
+  if ((bar % 2 ? [0, 6, 12] : [4, 8]).includes(s)) clave(t);                                     // the son clave, two then three
+  if (s % 2 === 0) conga(s === 6 || s === 14 ? 392 : 587, t, s === 6 || s === 14 ? 0.1 : s % 4 ? 0.05 : 0.07);  // the bongos
+  if (s % 2 === 0) hat(t, 0.045, s % 4 ? 0.022 : 0.034, 0.1);                                    // the maracas
+  if (bar === 0 && s === 0) upright(mtof(ch.r), t, six * 6, 1);                                  // the bass: a tumbao
+  if (s === 6) upright(mtof(ch.f), t, six * 5.5, 0.9);
+  if (s === 12) upright(mtof(nx.r), t, six * 9.5, 1);                                            // (the next chord, early)
+  for (const [at, k] of SON_TRES) if (at === s) {                                                // the guitar, like a tres
+    const m = ch.ch[k % ch.ch.length] + 12; nylon(mtof(m), t, 0.42, 0.28); nylon(mtof(m + 12), t + 0.006, 0.26, 0.24);
+  }
+  if (bar >= 1) for (const [at, m, len] of SON_TUNE[(bar - 1) % 8]) if (at === s) trumpet(mtof(m), t, six * len * 0.92, 0.42);  // the trumpet, soft
+}
 
 // ---- level 3: little sounds ----
 function leashClip() {  // a little metal click, the leash's clip
@@ -6161,7 +6189,7 @@ async function rideDown() {
   await fadeTo(1, 0.6); scene3.seg = 'river'; scene3.dist = 0; await fadeTo(0, 0.6);
   await say(['All the way down the Mississippi River.']);
   await wait(4.2);
-  await fadeTo(1, 0.6); scene3.seg = 'gulf'; await fadeTo(0, 0.6);
+  await fadeTo(1, 0.6); scene3.seg = 'gulf'; musicStop(); musicStart(SON); await fadeTo(0, 0.6);  // Cuban son, from the Gulf to Playa del Carmen (your ask)
   await say(['Into the Gulf of Mexico.']);
   await wait(1.2);
   await fadeTo(1, 0.6);
@@ -6346,8 +6374,8 @@ async function hug() {
   phase = 'cut'; P.blaine = false; P.hidden = true;
   scene3 = { kind: 'hug', t0: time, leapT: 0 };
   musicStop(); musicStart(REUNION_STYLE);
-  await fadeTo(0, 1.4);
-  await say(["You're Braydon again."]);
+  await fadeTo(0, 1.4);  // (the line that was here is out, at your word)
+  await wait(0.8);
   scene3.leapT = time;
   await wait(3.0);
   await say(['And there is Brudda Blaine, so overjoyed to see you.']);
@@ -6383,7 +6411,7 @@ async function bay() {
 async function rideUp() {
   phase = 'cut';
   scene3 = { kind: 'ride', t0: time, dir: -1, seg: 'gulf', dist: 0, v: 40, vGoal: 40, salmon: time - 5 };
-  if (!musicOn) musicStart();
+  musicStop(); musicStart(SON);  // Cuban son, the whole way back up, to Lake Itasca (your ask)
   await fadeTo(0, 0.7);
   await say(['Back across the Gulf of Mexico.']);
   await wait(1.0);
@@ -6403,7 +6431,7 @@ async function rideUp() {
 }
 async function catInWindow() {  // inside the U-Haul, close up: the cat in the window
   phase = 'cut'; scene3 = { kind: 'cat', t0: time };
-  if (!musicOn) musicStart();
+  if (!musicOn || musicStyle === SON) { musicStop(); musicStart(); }  // off the salmon: your beat again, as before
   await fadeTo(0, 0.8);
   await wait(1.6);
   await say(['Inside the U-Haul, IzzyKat, a tortoiseshell cat, is looking out the window at you.', 'Waiting.']);
@@ -9428,7 +9456,7 @@ function fightPop(s, x, y, c, life = 1.2) { scene3.pops.push({ s: String(s), x, 
 
 // ---- the attacks ----
 function jimThrow(S) {  // two dice, at you (a little ahead of you, if you're moving)
-  const m = S.me, d = curDir(), lead = d && S.live ? DIRS[d].map(v => v * 10) : [0, 0];
+  const m = S.me, d = fightDir(), lead = d && S.live ? d.map(v => v * 10) : [0, 0];
   const tx = clamp(m.x + lead[0] + (Math.random() - 0.5) * 12, FT.x0 + 4, FT.x1 - 4), ty = clamp(m.y + lead[1] + (Math.random() - 0.5) * 10, FT.y0 + 4, FT.y1 - 4);
   const hx = S.ph === 2 ? 80 + (Math.random() < 0.5 ? -26 : 26) : 80 + (Math.random() < 0.5 ? -18 : 18), hy = 44;
   const dur = S.ph === 2 ? 1.0 : clamp(1.0 - S.el * 0.004, 0.72, 1.0) * (S.barrage ? 0.85 : 1);
@@ -9467,10 +9495,21 @@ function fightA() {
     if (d && fdist(d.x, d.y, m.x, m.y) < 13) { flipDie(S, d); return; }
   }
   if (m.jump || S.final) return;
-  const dir = curDir() || m.face, [dx, dy] = DIRS[dir];
+  const v = fightDir() || DIRS[m.face], [dx, dy] = v;  // the way you're going (diagonals too), or the way you face
   m.jump = { t0: time, fx: m.x, fy: m.y, tx: clamp(m.x + dx * 32, FT.x0, FT.x1), ty: clamp(m.y + dy * 32, FT.y0, FT.y1) };
-  m.face = dir; whoosh(0.3, 0.035);
+  m.face = faceOf(v); m.vx = m.vy = 0; whoosh(0.3, 0.035);
 }
+// smoother play (your ask: it felt blocky): eight ways to go, not four (two arrows at once, or a corner of the pad), and
+// you speed up and slow down smoothly, gliding, instead of starting and stopping dead; the jump eases out and lands soft
+function fightDir() {  // [dx, dy], one of eight directions, length 1; or null
+  let dx = 0, dy = 0;
+  if (padVec) [dx, dy] = padVec;
+  else { for (const k of held) { dx += DIRS[k][0]; dy += DIRS[k][1]; } }
+  if (!dx && !dy) return null;
+  const a = Math.round(Math.atan2(dy, dx) / (Math.PI / 4)) * (Math.PI / 4);
+  return [Math.round(Math.cos(a) * 1e6) / 1e6, Math.round(Math.sin(a) * 1e6) / 1e6];
+}
+const faceOf = ([dx, dy]) => Math.abs(dx) > Math.abs(dy) + 0.01 ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
 function hurt(S) {
   const m = S.me;
   if (time < m.inv || m.jump || S.dead) return;
@@ -9508,15 +9547,22 @@ function updateFight(dt) {
   if (box.active) return;
   // you: walk, or mid-jump
   if (m.jump) {
-    const k = clamp((time - m.jump.t0) / 0.42, 0, 1);
-    m.x = m.jump.fx + (m.jump.tx - m.jump.fx) * k; m.y = m.jump.fy + (m.jump.ty - m.jump.fy) * k;
+    const k = clamp((time - m.jump.t0) / 0.42, 0, 1), e = 1 - Math.pow(1 - k, 2.2);  // eases out: quick off, soft landing
+    m.x = m.jump.fx + (m.jump.tx - m.jump.fx) * e; m.y = m.jump.fy + (m.jump.ty - m.jump.fy) * e;
     if (k >= 1) { m.jump = null; thump(0.03); }
   } else if (S.live) {
-    const d = curDir(); m.moving = !!d;
-    if (d) {
-      m.face = d; m.walkT += dt;
-      const sp = FIGHT_SPEED[choice] || 62, [dx, dy] = DIRS[d];
-      let nx = clamp(m.x + dx * sp * dt, FT.x0, FT.x1), ny = clamp(m.y + dy * sp * dt, FT.y0, FT.y1);
+    const v = fightDir(), sp = FIGHT_SPEED[choice] || 62;
+    const kv = 1 - Math.exp(-dt * (v ? 16 : 20));  // up to speed in about a tenth of a second; a short glide to a stop
+    m.vx = (m.vx || 0) + ((v ? v[0] * sp : 0) - (m.vx || 0)) * kv; m.vy = (m.vy || 0) + ((v ? v[1] * sp : 0) - (m.vy || 0)) * kv;
+    if (!v && Math.hypot(m.vx, m.vy) < 2) m.vx = m.vy = 0;
+    m.moving = !!v || Math.hypot(m.vx, m.vy) > 8;
+    if (v) {  // facing: on a diagonal, keep the way you faced, if it's one of its two
+      const f = faceOf(v), [fx, fy] = DIRS[m.face];
+      if (!(v[0] && v[1] && (fx * v[0] > 0 || fy * v[1] > 0))) m.face = f;
+    }
+    if (m.vx || m.vy) {
+      m.walkT += dt;
+      let nx = clamp(m.x + m.vx * dt, FT.x0, FT.x1), ny = clamp(m.y + m.vy * dt, FT.y0, FT.y1);
       for (const h of S.hands) {  // the fingers: once a hand closes round you, you can't walk out (jump!)
         if (h.lift || time < h.t0 + h.tele) continue;
         const r = handR(h), was = fdist(m.x, m.y, h.cx, h.cy), now = fdist(nx, ny, h.cx, h.cy);
@@ -10040,9 +10086,7 @@ async function truckee() {
   const S = scene3;
   if (!snap) await fadeTo(0, 0.8);
   else { meltSound(); await wait(3.0); S.melt = null; }
-  await say(['Everything melts, and runs into the Truckee River.', 'Jim, too.']);
-  await say(['At night. A rocky river, with slight rapids.', 'A bridge overhead, on the left.', 'The Sierra Nevada, behind.']);
-  await wait(0.8);
+  await wait(2.4);  // (the words that opened the scene are out, at your word: it holds quietly on the river instead)
   S.cig = { t0: time, held: null, lit: null, gone: null }; spiritChime();
   await wait(1.8);
   await say(['Then a cigarette appears, as long as time itself.', 'Full of good California weed. Not Milwaukee weed.']);
@@ -11953,6 +11997,7 @@ $('lvcard').addEventListener('pointerdown', e => { e.preventDefault(); audio(); 
 
 // ---- input: the pad, the A button, and the keyboard ----
 const held = []; let padDir = null;
+let padVec = null;  // where on the pad you're pressing, as [dx, dy] (for the fight with Jim, which goes eight ways)
 const curDir = () => padDir || held[held.length - 1] || null;
 function pressA() {
   audio();
@@ -11981,7 +12026,7 @@ window.addEventListener('keydown', e => {
   }
 });
 window.addEventListener('keyup', e => { const d = KEYDIR[e.key]; if (d) { const i = held.indexOf(d); if (i >= 0) held.splice(i, 1); } });
-window.addEventListener('blur', () => { held.length = 0; setPad(null); });
+window.addEventListener('blur', () => { held.length = 0; setPad(null); padVec = null; });
 
 const dpad = $('dpad'), arms = {};
 for (const k of ['up', 'down', 'left', 'right']) arms[k] = dpad.querySelector('.' + k);
@@ -11996,9 +12041,13 @@ function setPad(d) {
   padDir = d; for (const k in arms) arms[k].classList.toggle('on', k === d);
   if (d) moveSel(d);
 }
-dpad.addEventListener('pointerdown', e => { e.preventDefault(); audio(); try { dpad.setPointerCapture(e.pointerId); } catch (x) {} setPad(padFrom(e)); });
-dpad.addEventListener('pointermove', e => { if (dpad.hasPointerCapture && dpad.hasPointerCapture(e.pointerId)) setPad(padFrom(e)); });
-for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) dpad.addEventListener(ev, () => setPad(null));
+function padVecFrom(e) {  // the pad, eight ways: [dx, dy] from its middle, or null in the middle
+  const r = dpad.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+  return Math.hypot(dx, dy) < 10 ? null : [dx, dy];
+}
+dpad.addEventListener('pointerdown', e => { e.preventDefault(); audio(); try { dpad.setPointerCapture(e.pointerId); } catch (x) {} setPad(padFrom(e)); padVec = padVecFrom(e); });
+dpad.addEventListener('pointermove', e => { if (dpad.hasPointerCapture && dpad.hasPointerCapture(e.pointerId)) { setPad(padFrom(e)); padVec = padVecFrom(e); } });
+for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) dpad.addEventListener(ev, () => { setPad(null); padVec = null; });
 dpad.addEventListener('contextmenu', e => e.preventDefault());
 
 const abtn = $('abtn');
@@ -12322,7 +12371,7 @@ window.__sketch = {
   get feet() { return area === 'climb' ? climbFeet() : null; }, get vista() { return !!vista; },
   get brudda() { return B.here ? { x: B.tx, y: B.ty, mode: B.mode, playing: B.playing } : null; },
   get ended2() { return !$('end2').hidden; }, get stepTime() { return P.stepTime; }, get hidden() { return P.hidden; },
-  play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, clubFar: CLUB_FAR, town: TOWN_STYLE, reunion: REUNION_STYLE, desert: DESERT, circles: CIRCLES, swing: SWING, nola: NOLA, ballad: BALLAD }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
+  play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, clubFar: CLUB_FAR, town: TOWN_STYLE, reunion: REUNION_STYLE, desert: DESERT, circles: CIRCLES, swing: SWING, nola: NOLA, ballad: BALLAD, son: SON }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
   get battle() { return battle ? { foe: battle.F.kind, hp: battle.hp, me: battle.me, sugar: battle.sugar, open: battle.open, cool: battle.cool } : null; },
   get foes() { return FOES.map(F => !!F.beaten); }, get pizza() { return pizzaVisited; },
   get dancers() { return night ? dancersAt(night).filter(d => time > d.at).length : 0; },
