@@ -1592,7 +1592,23 @@ async function finish() {
   $('endText').textContent = 'You ate the ' + TICKS[choice].name +
     (choice === 'human' ? ', ate a honeybun from your N.E.R.D. album case,' : ',') +
     ' and slipped out under the door after Isabella. Next: Level 2, Moon Pie on Easter Eggy.';
-  $('end').hidden = false;
+  rollOn(1);  // (no "level done" screen now: a pause in the dark, and on to level 2)
+}
+// ---- between levels (your ask, 2026-10-24): no "level done" screen after levels 1, 2 and 3. The level ends in black; a
+// short pause, the music easing out; then the next level rolls on, with its title card and applause. (The three screens
+// are kept in the page, unused, in case they're wanted back. The pause's length is a guess.) ----
+const ROLL_PAUSE = 1.5;
+const rolled = new Set();  // (for checks: the levels that have rolled on into the next)
+async function rollOn(n) {
+  rolled.add(n);
+  musicStop();
+  const q = new URLSearchParams(location.search);
+  if (q.has('at')) {  // (a link for checks that started part way along: the next level starts at its beginning)
+    q.delete('at');
+    try { history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '')); } catch (e) {}
+  }
+  await wait(ROLL_PAUSE);
+  ({ 1: level2, 2: level3, 3: level4 })[n]();
 }
 async function tryAnother() {
   $('end').hidden = true;
@@ -3367,7 +3383,7 @@ async function overlook() {
   $('end2Text').textContent = 'You ' + how + ' up the North Shore with Brudda Blaine, sank the Edmund Fitzgerald, ' +
     'killed the Gales of November, camped three times, climbed Palisade Head, and ' + off + '. ' +
     "The deer still have Isabella, and it sounds like they're heading to Mexico. Next: Level 3, Heading down South.";
-  $('end2').hidden = false;
+  rollOn(2);  // (no "level done" screen now: a pause in the dark, and on to level 3)
 }
 async function offLatch() {  // the regular tick: you latch onto Brudda Blaine, and mind-control him into flying after them
   vista.latch = time; whoosh(0.5, 0.04);
@@ -6447,7 +6463,7 @@ function finish3() {
     'crossed the bridge over the bay to the bouncing club, found Shawn and Karill in the club maze, woke up in Akumal as Brudda ' +
     'Blaine, found Braydon, left Shawn to the mosquitoes, and rode back up to Lake Itasca, where IzzyKat, a tortoiseshell cat, waits in the ' +
     'U-Haul. The deer still have Isabella. Next: the final chapter, West, in the U-Haul: Level 4, Heading towards eternity.';
-  $('end3').hidden = false;
+  rollOn(3);  // (no "level done" screen now: a pause in the dark, and on to level 4)
 }
 // for checks: start level 3 part way along (?level=3&at=...)
 function townAt(x, y, facing, rockDone0) {
@@ -11723,8 +11739,8 @@ const JUMP4 = {  // for checks: ?level=4&at=...
 // the camera, fangs out; then the view pulls back to a tick, staring at the spider. Then the title card comes up.
 // It waits on a film leader with "Tap to begin" (phones play no sound before a tap). Then the film, with music: an
 // old-timey piano tune, original, through an old radio (narrow, a little gritty, crackling), and at the title card a
-// radio announcer calls out the title: the phone's own built-in voice (speech synthesis), so no recordings. After
-// that, a tap on the screen, A or Space skips ahead to the title card.
+// soft tremolo and two chords. No voice: silent, like the level cards (your word, 2026-10-24; the radio announcer that
+// called out the title is out). After that, a tap on the screen, A or Space skips ahead to the title card.
 // (How it all looks and sounds is a guess at "old timey"; the spider rears up out of the mouth of its tunnel.) ----
 const PRE = { iris: 1.2, rear0: 0.8, rear1: 2.6, fangs: 2.8, pull0: 5.6, pull1: 9.2, card: 9.8 };
 const SEP = ['#0b0b0b', '#1a1a1a', '#2b2b2b', '#3f3f3f', '#585858', '#767676', '#9a9a9a', '#c2c2c2', '#ececec'];  // black and white, dark to light (was sepia)
@@ -11732,13 +11748,12 @@ let prelude = null, preVig = null, preZ = 1;
 function startPrelude() {
   prelude = { t0: time, done: false, skipped: false, waiting: true };
   $('title').hidden = true; $('begin').hidden = false;
-  try { if (window.speechSynthesis) speechSynthesis.getVoices(); } catch (e) {}  // (the list of voices loads in the background)
 }
 function beginPrelude() {  // the tap: the film starts, with its music
   prelude.waiting = false; prelude.t0 = time; $('begin').hidden = true;
-  audio(); preUnlockVoice(); preScore();
+  audio(); preScore();
 }
-function preludeCard(quick) {  // the title card fades up over the last shot, and the announcer calls out the title
+function preludeCard(quick) {  // the title card fades up over the last shot, with a tremolo and two chords
   if (!prelude || prelude.done) return;
   prelude.done = true;
   const el = $('title'); el.style.transition = 'opacity ' + (quick ? 0.35 : 1.4) + 's'; el.style.opacity = '0'; el.hidden = false;
@@ -11816,7 +11831,7 @@ function preScoreStop() {
   const g = preSnd.score; g.gain.setTargetAtTime(0, ac.currentTime, 0.04); setTimeout(() => { try { g.disconnect(); } catch (e) {} }, 600);
   preSnd.score = ac.createGain(); preSnd.score.connect(preSnd.out);
 }
-function preTada() {  // the last two chords, as the announcer calls the name
+function preTada() {  // the last two chords, as the title card comes up
   if (!preSnd || preSnd.tada) return;
   preSnd.tada = true;
   const t = ac.currentTime + 0.05, o = preSnd.card;
@@ -11828,15 +11843,15 @@ function preTada() {  // the last two chords, as the announcer calls the name
 function preCardSound() {
   if (!ac) return;
   const S = preRadio(), t0 = ac.currentTime + 0.05;
-  if (!muted) {  // a soft tremolo under the announcer
+  if (!muted) {  // a soft tremolo as the card comes up
     S.trem = ac.createGain(); S.trem.connect(S.card);
     for (let i = 0; i < 56; i++) for (const n of i % 2 ? [53] : [50, 57]) prePiano(S.trem, n, t0 + i / 14, 0.035, 0.14);
   }
-  // like Groucho (your ask): fast-talking, a sly lift, a beat before the punchline. The phone's voice can only change its
-  // pitch and speed, so it's his kind of delivery, not his voice: the first word drawn out, the middle quick, then the name.
-  const spoke = preSay([['Rendezvous...', 1.15, 0.85], ['of the Arachnid...', 1.05, 1.35], ['Tickman!', 1.3, 1.05]], preTada);
-  S.timers.push(setTimeout(preTada, spoke ? 4500 : 2400));  // (if the voice doesn't come, the chords come anyway)
+  // No voice now (your word, 2026-10-24: "Just have it as a silent film like the others"): the tremolo, then the chords.
+  S.timers.push(setTimeout(preTada, 1800));
 }
+// (Unused since 2026-10-24, when the voice came out: the phone's own voice, and the Groucho-like delivery it had. Kept,
+// in case it's wanted back.)
 function preVoice() {  // an American man's voice, if the phone has one (for Groucho), then any man's English voice, or its usual English voice
   const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [], en = vs.filter(v => /^en/i.test(v.lang));
   for (const name of ['Aaron', 'Alex', 'Evan', 'Nathan', 'Tom', 'Microsoft Guy', 'Microsoft David', 'Daniel', 'Arthur', 'Google UK English Male', 'David', 'George']) {
@@ -12500,7 +12515,7 @@ window.__sketch = {
   get wrapped() { return bundles.map(b => ({ x: b.x, y: b.y, kind: b.kind })); },
   get isabella() { return { x: isa.x, y: isa.y, visible: isa.visible }; },
   get busy() { return lock > 0 || !!fade.tween || !!pan; },
-  get ended() { return !$('end').hidden; },
+  get ended() { return !$('end').hidden || rolled.has(1); }, get rolled() { return [...rolled]; },
   get sugar() { return sugarState; }, get bun() { return { x: albumCase.x, y: albumCase.y, eaten: bun.eaten }; },
   get albumCase() { return { x: albumCase.x, y: albumCase.y, open: time - albumCase.opened < 2.6, notes: caseNotes.length }; },
   get beat() { return mus ? mus.style.name : null; }, get stings() { return stings; },
@@ -12518,7 +12533,7 @@ window.__sketch = {
   get night() { return night ? CAMPS.indexOf(night) : -1; }, get tents() { return CAMPS.map(C => C.tent || 'none'); },
   get feet() { return area === 'climb' ? climbFeet() : null; }, get vista() { return !!vista; },
   get brudda() { return B.here ? { x: B.tx, y: B.ty, mode: B.mode, playing: B.playing } : null; },
-  get ended2() { return !$('end2').hidden; }, get stepTime() { return P.stepTime; }, get hidden() { return P.hidden; },
+  get ended2() { return !$('end2').hidden || rolled.has(2); }, get stepTime() { return P.stepTime; }, get hidden() { return P.hidden; },
   play(k) { audio(); musicStop(); musicStart({ view: VIEW, mari: MARIACHI, mariFar: MARIACHI_FAR, club: CLUB_STYLE, clubFar: CLUB_FAR, town: TOWN_STYLE, reunion: REUNION_STYLE, desert: DESERT, circles: CIRCLES, swing: SWING, nola: NOLA, ballad: BALLAD, son: SON }[k] || HIP[k] || STYLES[k]); },  // for loudness checks
   get battle() { return battle ? { foe: battle.F.kind, hp: battle.hp, me: battle.me, sugar: battle.sugar, open: battle.open, cool: battle.cool } : null; },
   get foes() { return FOES.map(F => !!F.beaten); }, get pizza() { return pizzaVisited; },
@@ -12531,7 +12546,7 @@ window.__sketch = {
   get scene() { return scene3 ? scene3.kind + (scene3.seg ? ':' + scene3.seg : '') : null; },
   get l3() { return { shawn: L3.shawn, karillSeen: L3.karillSeen, karill: L3.karill, restaurant: L3.restaurant, found: L3.found,
     rock: L3.rock.x, rockDone: L3.rock.done, yells: L3.yells, steps: L3.steps, blaine: !!P.blaine }; },
-  get ended3() { return !$('end3').hidden; }, get ended4() { return !$('end4').hidden; },
+  get ended3() { return !$('end3').hidden || rolled.has(3); }, get ended4() { return !$('end4').hidden; },
   get whack() {  // level 4: whack-a-prairie-dog
     const F = field; if (!F) return null;
     return { live: F.live, n: F.n, goal: WHACK_GOAL, at: [F.at.c, F.at.r], up: F.holes.map((H, i) => hittable(H) ? i : -1).filter(i => i >= 0),
