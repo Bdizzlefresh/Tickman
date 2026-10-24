@@ -342,6 +342,12 @@ Every session reads this first and updates it last.
 - 2026-10-24, issue #1 (03:12 UTC): could you add a voice recording, to help make it closer to what you're thinking for the
   intro screen?
 - 2026-10-24, issue #1 (03:21 UTC): take out the "400 feet" in Palisade Head.
+- 2026-10-24, issue #1, four messages (03:23 to 03:46 UTC):
+  - Make the first trip on the salmon, from the Gulf of Mexico to Playa del Carmen, something that sounds like the Buena
+    Vista Social Club. On the way back up as well.
+  - Take out the line "You're Braydon again.", when Blaine finds Braydon. Keep everything else the same.
+  - Make the play style of Jim a little more smooth: "It feels very blocky at the moment."
+  - Take out the dialogue at the beginning of the Truckee River scene.
 
 ## What you've decided
 
@@ -531,6 +537,13 @@ Every session reads this first and updates it last.
   speed, so it's his kind of delivery (fast-talking, a sly lift, a beat before the name), not his voice. The other option
   you gave, Dave Chappelle's caricature, wasn't used.
 - No "400 feet" at Palisade Head (2026-10-24; built): not in the words, the sign, or the line at the top of the screen.
+- The salmon in Mexican waters plays Cuban son, like the Buena Vista Social Club (2026-10-24; built): on the way down from
+  the Gulf of Mexico to Playa del Carmen; on the way back up, the whole ride, Akumal bay to Lake Itasca (the assistant's
+  reading of "on the way back up as well"; asked whether the way down should start at Lake Superior).
+- "You're Braydon again." is out; the rest of that scene is the same (2026-10-24; built).
+- The fight with Jim plays smoother (2026-10-24; built): eight ways to move, a smooth start and stop, an eased jump. (Asked
+  whether "blocky" meant how it moves, or how he looks.)
+- The Truckee River opens without words (2026-10-24; built): it holds quietly on the river, then the cigarette.
 - The ending (changed 2026-10-24; built): everything is revealed on the first run, with any tick. After it, the end screen
   has your joke and the option to play the other ticks. (Before: option 1, finish with all three ticks to unlock it.)
 - Everything else is yours to decide.
@@ -1578,6 +1591,34 @@ Every session reads this first and updates it last.
     the top through the view to the end of level 2, no "400" or "feet" in any words or in the line at the top; no errors.
   - Gifts from Blaine: untouched, still on.
 
+- 2026-10-24, the salmon's music, two lines out, and a smoother fight (`gh-pages`, commit 6feeb33), from your four messages
+  (03:23 to 03:46 UTC):
+  - The salmon, Cuban son (original, all made by the game): A minor, 100 beats a minute. The claves on the son clave (two,
+    then three); bongos keeping eighths, the low drum opening up on the "and" of two and four; maracas; the upright bass
+    in a tumbao, landing the next chord early, on four; a guitar picking a syncopated figure, each note doubled an octave
+    up, like a tres; and a soft trumpet on the tune, from the second bar. Eight bars go round: Am, Am, E7, E7, Am, Dm, E7,
+    Am. On the way down it comes in with the Gulf of Mexico and plays to Playa del Carmen (then the club, from the
+    bridge, as before). On the way back up it plays from the moment you're back on the salmon at Akumal bay to Lake
+    Itasca; in the U-Haul, your beat again. Measured: it's softer than each tick's beat, on average and at its loudest.
+  - Finding Braydon: "You're Braydon again." is out. In its place, a short pause (0.8 seconds) before the leap, so the
+    scene still opens gently. Everything else is the same.
+  - The fight with Jim, smoother: you move eight ways (two arrows at once, or a corner of the pad), and you speed up and
+    slow down smoothly, with a short glide to a stop, instead of starting and stopping dead. The jump goes the way you're
+    moving, diagonals too, and eases out to a soft landing. Jim, the attacks and the rest of the fight are the same.
+  - The Truckee River: its opening words are out ("Everything melts, and runs into the Truckee River." / "Jim, too." and
+    "At night. A rocky river, with slight rapids." / "A bridge overhead, on the left." / "The Sierra Nevada, behind.").
+    It holds quietly on the river for a few seconds, then the cigarette appears, as before.
+  - Checked, headless and muted: the ride down plays your beat to the Gulf, then son to Playa del Carmen, then the club;
+    the ride back up plays son the whole way, and the U-Haul your beat; the removed line never shows and the scene goes
+    on to the bay; the Truckee's first words are the cigarette's; in both phases of the fight, the diagonals, the glide,
+    the diagonal jump and the pad's corner work, and a minute of moving and jumping about has no errors.
+  - Checked, about the Buena Vista Social Club (used only as the idea): Wikipedia's article on the album "Buena Vista
+    Social Club" lists son cubano first among its genres; it was recorded at Havana's EGREM studios in March 1996,
+    produced by Ry Cooder, and released June 23, 1997. Its players include bongos, claves, maracas, upright bass, trumpet,
+    piano and guitars. Nothing from it is copied.
+  - Guesses: the music's key, tempo, chords and tune; where it starts and stops on the way up; the glide's feel.
+  - Gifts from Blaine: untouched, still on.
+
 ## Next to build
 
 - Your voice recording for the opening, once you send it (2026-10-24): it goes in place of the phone's voice, through the
@@ -1586,6 +1627,9 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
+- Asked 2026-10-24 (comment 6379483725): on the way down, should the Cuban music start back at Lake Superior, as soon as
+  you climb on the salmon? And with Jim, did "blocky" mean how it moves, or how he looks (he's drawn in big square
+  pixels)?
 - Said 2026-10-24 (comment 6379180401): yes to your recording, as the voice itself (the assistant can't listen to a
   recording the way you would, so it can't serve as a guide for the phone's voice); how to send it, step by step, on the
   website; and that this conversation is public. Checked: GitHub's help page "Attaching files" lists video (.mp4, .mov,
@@ -1964,3 +2008,8 @@ Every session reads this first and updates it last.
   6379180401): yes, as the voice itself, with the steps to send it. Nothing built yet; it's queued until the file comes.
 - 2026-10-24: one message from you on issue #1 (03:21): take out the "400 feet" at Palisade Head. Replied first (comment
   6379258911) with what comes out, and no question. Then built it, same link (gh-pages 278c5f4).
+- 2026-10-24: two messages from you on issue #1 (03:23 and 03:28), and two more (03:45 and 03:46) that came in while the
+  reply was being written, so it took in all four: the salmon's music, a line out when Blaine finds Braydon, a smoother
+  fight with Jim, and the Truckee's opening words out. Replied first (comment 6379483725) with the plan and two questions.
+  Then built all four, same link (gh-pages 6feeb33). One more message from you (03:47) came in just before the reply went
+  up; the next session answers it.
