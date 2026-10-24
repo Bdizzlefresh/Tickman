@@ -363,6 +363,8 @@ Every session reads this first and updates it last.
 - 2026-10-24, issue #1, two messages (04:07 and 04:09 UTC):
   - "Take away the voice of the intro. Just have it as a silent film like the others."
   - "Can we drop the 'go to next level' screen and just add a pause in between and let them keep rolling?"
+- 2026-10-24, issue #1 (15:14 UTC): "Make the buena vista social club music the whole travel down south, during Mississippi
+  River and the leaving as well."
 
 ## What you've decided
 
@@ -561,7 +563,10 @@ Every session reads this first and updates it last.
 - No "400 feet" at Palisade Head (2026-10-24; built): not in the words, the sign, or the line at the top of the screen.
 - The salmon in Mexican waters plays Cuban son, like the Buena Vista Social Club (2026-10-24; built): on the way down from
   the Gulf of Mexico to Playa del Carmen. Only on the way down (changed 2026-10-24, your word; built): the ride back up
-  has your beat again, as before.
+  has your beat again, as before. (Since 2026-10-24, 15:14 UTC: the whole ride down, from Lake Superior; below.)
+- The Cuban son plays the whole ride down South (changed 2026-10-24, 15:14 UTC, your word; built): from climbing on the
+  salmon in Lake Superior, down the Mississippi River, through the Gulf of Mexico, to Playa del Carmen. "The leaving" was
+  read as leaving Lake Superior; the ride back up keeps your beat (said in the reply; easy to change).
 - "You're Braydon again." is out; the rest of that scene is the same (2026-10-24; built).
 - The fight with Jim plays smoother (2026-10-24; built): eight ways to move, a smooth start and stop, an eased jump. And
   Jim himself moves smoother ("blocky" meant how he moves, 2026-10-24; built): he sways, breathes, leans after you, and
@@ -1722,6 +1727,16 @@ Every session reads this first and updates it last.
   - Links for checks: `?level=2&tick=dog&at=top` (the end of level 2, rolling on into level 3), `?level=3&tick=dog&at=cat`
     (the end of level 3, rolling on into level 4).
 
+- 2026-10-24, the son for the whole ride down (`gh-pages`, commit fcd0d2f), from your message (15:14 UTC): the Cuban son
+  starts as you climb on the salmon in Lake Superior and plays straight through the Mississippi, the Gulf and the beach at
+  Playa del Carmen, with no switch at the Gulf (before, your beat played until the Gulf). Then the club's music from the
+  bridge, as before. The ride back up from Akumal bay keeps your beat.
+  - Checked, headless and muted, two ticks: the son, and nothing else, on all four stretches of the ride down; not on the
+    bridge; the ride back up has your beat, not the son, and level 3 rolls on into level 4; no errors. Also checked
+    through the preview site, by the commit's own link. The music is the same track as before, so no louder.
+  - Gifts from Blaine: untouched, still on.
+  - Link for checks: `?level=3&tick=dog` (level 3 from its start).
+
 ## Next to build
 
 - If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
@@ -1730,6 +1745,8 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
+- Said 2026-10-24 (comment 6385905422), an offer: "the leaving" was read as leaving Lake Superior; if it meant the ride back
+  up from Mexico, the son goes there too.
 - Said 2026-10-24 (comment 6379914991), an offer, not a question: the opening keeps its piano and crackle with the voice
   gone; say if you'd rather it have no music at all. Also said: with the voice gone, no recording is needed.
 - Asked 2026-10-24 (comment 6379652837): replaying starts over from the beginning now; would you rather it play just the
@@ -2132,3 +2149,6 @@ Every session reads this first and updates it last.
 - 2026-10-24: answered those two messages (04:07 and 04:09): the opening's voice out, and no screen between levels. Replied
   first (comment 6379914991) with the plan, an offer (no music in the opening at all, if you'd rather), and that the
   recording is off the list. No question. Then built both, same link (gh-pages 4993ab2).
+- 2026-10-24: one message from you on issue #1 (15:14): the Cuban son for the whole ride down South. Replied first (comment
+  6385905422) with the plan, how "the leaving" was read (with an offer if it meant the ride back up), and that your two
+  before are in. Then built it, same link (gh-pages fcd0d2f).
