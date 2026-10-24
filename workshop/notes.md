@@ -348,6 +348,18 @@ Every session reads this first and updates it last.
   - Take out the line "You're Braydon again.", when Blaine finds Braydon. Keep everything else the same.
   - Make the play style of Jim a little more smooth: "It feels very blocky at the moment."
   - Take out the dialogue at the beginning of the Truckee River scene.
+- 2026-10-24, issue #1, nine messages (03:47 to 04:01 UTC):
+  - The Truckee's opening: "not all of the dialogue, just the 'the mountains, and the excessive explanatory comments'".
+  - Make it very clear that the cigarette of time is from Jim. "Jim gifted it, in a sense."
+  - A joke on the curtain of silk, over the spiders "doing something", that says "doing something".
+  - Take out the line "He is incredible. He is truly from the North."; keep it all as it is otherwise.
+  - At the end of "junk to reveal to you": the floating image not a baby, but a steak, "that correlates with sloppy steaks
+    but doesn't give it away".
+  - Switch "Let's slop em up!!" and "They can't stop us from ordering a steak AND a glass of Truckee water."
+  - Between Pride Rock and the Looney Tunes ending, your words on parchment paper, like a scroll (kept out of these notes,
+    like the secret; they're in your message on issue #1 of 2026-10-24, 03:58 UTC).
+  - To replay: "either start at or beginning or just have the completion of the mini games specifically."
+  - For Jim, "blocky" meant how he moves. The Cuban music should just be played on the way down.
 
 ## What you've decided
 
@@ -469,7 +481,7 @@ Every session reads this first and updates it last.
   manifested easter egg. The first two runs stop at the tick's line at the Truckee, and a tick mark fills in; the third
   goes on to the flash and the final scene (the assistant's pick; you trust it, 2026-10-23). On the third run, an egg
   manifests over the river after the tick's line; tap it, and the last cut scene plays (the assistant's reading of "a
-  manifested easter egg"; yours to change; built 2026-10-23).
+  manifested easter egg"; yours to change; built 2026-10-23). (Changed 2026-10-24: a steak floats there now, not an egg.)
 - The music in Reno (2026-10-22; built): Rat Pack swing as you pull in, New Orleans jazz in the canals, the swing again in
   the casino.
 - Jim's end and the Truckee River, then the realm of California (2026-10-22; built), as you wrote it. All of the flashing
@@ -484,7 +496,7 @@ Every session reads this first and updates it last.
   (2026-10-23; built).
 - Brudda Blaine dives as a person, not a worm (2026-10-23; built).
 - In the water, the tick says "He is incredible. He is truly from the North." The lines "aint no way Bish" and "this shit
-  cray" are gone (2026-10-23; built).
+  cray" are gone (2026-10-23; built). (That line is out too since 2026-10-24.)
 - On the third run, after "I have a form of reveal to you, Brother.", the tick's next line, then a baby tick revealed the
   way Bart Harley Jarvis is, with your banner above it, held for Blaine to read (2026-10-23; built). Only on the third
   run: the assistant's pick, asked. (The stage, and the banner on it, are gone since 2026-10-23, at your word; see the
@@ -509,7 +521,8 @@ Every session reads this first and updates it last.
   follows, then the egg.
 - The Bart Harley Jarvis stage is gone, and the banner over it with it (2026-10-23; built). In its place, out of the flash:
   a sloppy steak. Water from the Truckee scooped and poured all over it; Brudda Blaine and you: "Let's slop em up!!"; you:
-  "They can't stop us from ordering a steak AND a glass of Truckee water."; then it fades into the kingdom.
+  "They can't stop us from ordering a steak AND a glass of Truckee water."; then it fades into the kingdom. (The two lines
+  switched, 2026-10-24.)
 - The kingdom (2026-10-23; built): slow music while the view pans (original, like the opening of The Lion King); when the
   baby tick goes up on Pride Rock, the club's beat drops, and it pauses there until A is tapped.
 - Level 2's fights, in the new order (2026-10-23; built): the Edmund Fitzgerald between camps 1 and 2, then the Gales of
@@ -538,14 +551,32 @@ Every session reads this first and updates it last.
   you gave, Dave Chappelle's caricature, wasn't used.
 - No "400 feet" at Palisade Head (2026-10-24; built): not in the words, the sign, or the line at the top of the screen.
 - The salmon in Mexican waters plays Cuban son, like the Buena Vista Social Club (2026-10-24; built): on the way down from
-  the Gulf of Mexico to Playa del Carmen; on the way back up, the whole ride, Akumal bay to Lake Itasca (the assistant's
-  reading of "on the way back up as well"; asked whether the way down should start at Lake Superior).
+  the Gulf of Mexico to Playa del Carmen. Only on the way down (changed 2026-10-24, your word; built): the ride back up
+  has your beat again, as before.
 - "You're Braydon again." is out; the rest of that scene is the same (2026-10-24; built).
-- The fight with Jim plays smoother (2026-10-24; built): eight ways to move, a smooth start and stop, an eased jump. (Asked
-  whether "blocky" meant how it moves, or how he looks.)
-- The Truckee River opens without words (2026-10-24; built): it holds quietly on the river, then the cigarette.
+- The fight with Jim plays smoother (2026-10-24; built): eight ways to move, a smooth start and stop, an eased jump. And
+  Jim himself moves smoother ("blocky" meant how he moves, 2026-10-24; built): he sways, breathes, leans after you, and
+  lunges into each throw; his giant swing winds up high and comes down, faster and faster, then eases back up; his hands
+  come down out of the air instead of popping in. (How: the assistant's guesses.)
+- The Truckee River's opening (changed 2026-10-24, your word; built): "Everything melts, and runs into the Truckee River." /
+  "Jim, too." are back; the mountains, the river and the bridge lines stay out.
+- The cigarette is from Jim, very clearly (2026-10-24; built): his hand rises out of the river, dry and cracked, his faded
+  denim cuff at the water, holding the cigarette he rolled himself; it grows, as long as time itself; he lets go, and his
+  hand sinks back under. Jim, from the river: "I roll my own." (his line from the craps table; said it's easy to drop).
+  Then: "A gift from Jim. In a sense."
+- The curtain of silk in the realm has DOING SOMETHING woven into it, a letter at a time, before the "..." (2026-10-24;
+  built).
+- "He is incredible. He is truly from the North." is out; "Up to your knees." stays (2026-10-24; built).
+- After "junk to reveal to you", a steak floats over the river in place of the egg (2026-10-24; built): the same T-bone as
+  the sloppy steak, small and glowing, no plate, no water. Tap A: it sizzles, and you flash, as before.
+- At the sloppy steak, your two lines are switched (2026-10-24; built): "They can't stop us from ordering a steak AND a
+  glass of Truckee water." first, then "Let's slop em up!!"
+- Between Pride Rock and the Looney Tunes ending, your words on a parchment scroll (2026-10-24; built; the words are kept
+  out of these notes, like the secret).
 - The ending (changed 2026-10-24; built): everything is revealed on the first run, with any tick. After it, the end screen
   has your joke and the option to play the other ticks. (Before: option 1, finish with all three ticks to unlock it.)
+  "Play the other ticks" starts the game over from the very beginning (2026-10-24, the first of your two options; built).
+  The other, just the mini games with the new tick, was offered as next if you'd rather.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1619,17 +1650,67 @@ Every session reads this first and updates it last.
   - Guesses: the music's key, tempo, chords and tune; where it starts and stops on the way up; the glide's feel.
   - Gifts from Blaine: untouched, still on.
 
+- 2026-10-24, nine changes (`gh-pages`, commit 43643eb), from your nine messages (03:47 to 04:01 UTC):
+  - The Truckee River: "Everything melts, and runs into the Truckee River." / "Jim, too." are back; the other opening
+    lines stay out. Then Jim's hand rises out of the river, out in front of you: drawn twice the size of the rest, like
+    Jim enlarged; pale, dry and cracked like his hands at the craps table, his faded denim cuff at the water, rings
+    spreading round it, flakes drifting off. It holds up the cigarette he rolled himself, short, for a few seconds with
+    no words over it. "Then Jim's hand rises out of the river." / "In it: the cigarette he rolled himself." It grows, as
+    long as time itself, off the edge of the screen, sparkling. "It grows, as long as time itself." / "Full of good
+    California weed. Not Milwaukee weed." He lets go; his hand sinks back under, and the cigarette settles on the water.
+    'Jim, from the river: "I roll my own."' / "A gift from Jim. In a sense." Then you grab it, as before.
+  - The realm: once the curtain of silk is down, DOING SOMETHING is woven into it, a letter at a time, with a soft
+    skitter; it holds about three seconds before the "...".
+  - Back at the Truckee: "He is incredible. He is truly from the North." is out; "Up to your knees." stays.
+  - After "...junk to reveal to you.": a small T-bone floats over the river where the egg was (seared, grill marks, a
+    strip of fat, the bone), glowing, bobbing, a little sheen. Tap A: a soft sizzle, steam curling off it, and you flash,
+    as before.
+  - The sloppy steak: "They can't stop us from ordering a steak AND a glass of Truckee water." now comes first, then
+    "Let's slop em up!!"
+  - The scroll (new), between Pride Rock and the Looney Tunes ending: out of the white, a warm dark backdrop with motes of
+    gold drifting up; a parchment scroll, wooden rollers at top and bottom, unrolls from the middle; your words come in a
+    line at a time, in the old printer's type, with a beat before the short one; it holds, then "Tap A", as long as you
+    like; it rolls back up, into the white, and the Looney Tunes ending. The slow music from the kingdom plays again, from
+    the top. Your words are kept in the code in a scrambled form, like the others.
+  - Jim, how he moves: a slow sway and a breath; he leans after you as you move about; he lunges into each throw, and the
+    dice leave from where he is. His giant swing comes down out of the air over the strip, winds up high, then comes down
+    faster and faster, slams, and eases back up out of sight. His hands come down out of the air, fading in, instead of
+    popping in. He settles, still, while there are words on screen, and before he comes apart.
+  - The salmon: the Cuban son only on the way down (the Gulf to Playa del Carmen); the ride back up has your beat again.
+  - Replaying: "Play the other ticks" on the end screen now starts the game over from the very beginning (the opening,
+    the title card). The tick marks are kept.
+  - The level 4 end screen's summary follows all of it.
+  - Checked, headless and muted: the Truckee's words in the new order, none of the old ones, the hand up and then gone;
+    the curtain's words (seen in a screenshot) and about four seconds before the "..."; the line out, the steak floating
+    (seen), the two lines in the new order; the scroll with all six lines, matching your words exactly, fitting on a phone
+    and a small phone; the Looney Tunes ending and the end screen; the button starting over from the beginning; the fight
+    in both phases, Jim swaying, leaning and lunging, the swing winding up and the hands coming down (seen), then seven
+    dice turned and him still when he comes apart; the son on the way down from the Gulf and not on the way up; no
+    errors anywhere.
+  - Guesses: how the hand, the steak, the scroll and the woven words look; the timing; how Jim moves.
+  - Gifts from Blaine: untouched, still on.
+  - Links for checks: `?level=4&tick=dog&at=truckee` (the hand), `&at=realm` (the curtain; from `at=truckee` it plays in
+    full), `&at=dip` (the line out, the steak), `&at=steak` (the two lines), `&at=scroll` (the scroll, then the Looney
+    Tunes ending), `&at=fight` and `&at=fight2` (Jim).
+
 ## Next to build
 
 - Your voice recording for the opening, once you send it (2026-10-24): it goes in place of the phone's voice, through the
   old radio crackle, no louder than the music around it. Waiting for the file (a short video, or an .mp3 or .wav, attached
   to a comment on the website).
+- If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
+  (offered 2026-10-24, comment 6379652837; a bigger build).
 
 ## Open questions
 
+- Asked 2026-10-24 (comment 6379652837): replaying starts over from the beginning now; would you rather it play just the
+  mini games with the new tick? Also said: Jim's "I roll my own." from the river is easy to drop if the hand is enough.
+- Answered 2026-10-24: "blocky" meant how Jim moves, and the Cuban music is only for the way down (asked, comment
+  6379483725; the way down still starts at the Gulf, not at Lake Superior).
+
 - Asked 2026-10-24 (comment 6379483725): on the way down, should the Cuban music start back at Lake Superior, as soon as
   you climb on the salmon? And with Jim, did "blocky" mean how it moves, or how he looks (he's drawn in big square
-  pixels)?
+  pixels)? (Answered, above.)
 - Said 2026-10-24 (comment 6379180401): yes to your recording, as the voice itself (the assistant can't listen to a
   recording the way you would, so it can't serve as a guide for the phone's voice); how to send it, step by step, on the
   website; and that this conversation is public. Checked: GitHub's help page "Attaching files" lists video (.mp4, .mov,
@@ -2013,3 +2094,9 @@ Every session reads this first and updates it last.
   fight with Jim, and the Truckee's opening words out. Replied first (comment 6379483725) with the plan and two questions.
   Then built all four, same link (gh-pages 6feeb33). One more message from you (03:47) came in just before the reply went
   up; the next session answers it.
+- 2026-10-24: six messages from you on issue #1 (03:47 to 03:54), and three more (03:58 to 04:01) that came in while the
+  reply was being written, so it took in all nine: the Truckee's opening, the cigarette from Jim, the curtain's joke, a
+  line out, a steak in place of the egg, two lines switched, your words on a scroll, replaying, and Jim's movement and
+  the Cuban music. Replied first (comment 6379652837) with the plan and one question (replay: the beginning, or just the
+  mini games?). Then built all of it, same link (gh-pages 43643eb). Two more messages from you (04:07 and 04:09) came in
+  after the reply went up; the next session answers them.
