@@ -95,6 +95,12 @@ h2 { margin:0; font-size:23px; }
 .pickbtns { display:flex; flex-direction:column; gap:8px; margin-top:12px; }
 a { color:var(--accent); }
 [hidden] { display:none !important; }
+/* before the opening: a film leader, and "Tap to begin" (phones play no sound before a tap) */
+#begin { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+#begin span { font-family:"IM Fell English SC","IM Fell English",Georgia,serif; color:#ececec; font-size:22px; letter-spacing:.1em;
+  padding:8px 18px 10px; background:rgba(13,13,13,.8); border:1px solid #8a8a8a;
+  box-shadow:inset 0 0 0 3px #0d0d0d, inset 0 0 0 4px #5a5a5a; animation:beginPulse 2.4s ease-in-out infinite; }
+@keyframes beginPulse { 50% { opacity:.6; } }
 /* the title card, old timey, like an old silent movie's, in black and white (it comes up after the opening) */
 #title.old { align-items:flex-end; background:linear-gradient(to bottom, rgba(8,8,8,0) 0%, rgba(8,8,8,0) 42%, rgba(8,8,8,.8) 62%); }
 #title.old .card { background:#0d0d0d; color:#ececec; text-align:center; border:2px solid #8a8a8a;
@@ -109,8 +115,11 @@ a { color:var(--accent); }
 .marquee .m4 { font-size:clamp(32px, 11.2vw, 48px); letter-spacing:.02em; color:#ececec; }
 #title.old .rule { display:flex; align-items:center; gap:10px; color:#9a9a9a; font-size:13px; margin:2px 10px; }
 #title.old .rule::before, #title.old .rule::after { content:''; flex:1; height:1px; background:#5a5a5a; }
-#title.old .sub { color:#9a9a9a; margin:10px 0 4px; }
-#title.old .card p { color:#d6d6d6; }
+#title.old .sub { color:#9a9a9a; margin:8px 0 2px; font-size:14px; line-height:1.28; }
+#title.old .card { padding-top:12px; padding-bottom:12px; }
+#title.old .card p { color:#d6d6d6; font-size:14px; margin:6px 0; }
+#title.old .btns { margin-top:8px; }
+#title.old .btn { padding:9px; }
 #title.old .btn { background:#d6d6d6; color:#0d0d0d; font-family:"IM Fell English",Georgia,serif; font-size:17px; }
 #title.old .btn.alt { background:#1e1e1e; color:#d6d6d6; box-shadow:inset 0 0 0 1px #5a5a5a; font-size:15px; }
 </style>
@@ -133,6 +142,7 @@ a { color:var(--accent); }
       <div id="bmeTag" class="tag" hidden></div>
     </div>
     <div id="fade"></div>
+    <div id="begin" hidden><span>Tap to begin</span></div>
     <div id="box" hidden><p id="text"></p><div id="choices" hidden></div><span id="more" hidden>&#9660;</span></div>
   </div>
   <div id="pad">
@@ -151,7 +161,7 @@ a { color:var(--accent); }
     <div class="rule"><span>&#10022;</span></div>
     <h1 class="marquee"><span class="m1">RENDEZVOUS </span><span class="m2">OF THE </span><span class="m3">ARACHNID </span><span class="m4">TICKMAN!</span></h1>
     <div class="rule"><span>&#10022;</span></div>
-    <div class="sub">Level 1: the apartment &middot; Level 2: the North Shore &middot; Level 3: Mexico &middot; Level 4: West</div>
+    <div class="sub">Level 1: The transformation<br>Level 2: Moon Pie on Easter Eggy<br>Level 3: Heading down South<br>Level 4: Heading towards eternity</div>
     <p><b>How to play:</b> move with the arrows under the screen. Tap <b>A</b> to look at things, and to read on.</p>
     <div class="btns"><button class="btn" id="start">Start</button></div>
     <div class="btns"><button class="btn alt" id="skip">Skip to level 2</button><button class="btn alt" id="skip3">Skip to level 3</button><button class="btn alt" id="skip4">Skip to level 4</button></div>
@@ -160,7 +170,7 @@ a { color:var(--accent); }
 
 <div id="pick" class="panel" hidden>
   <div class="card">
-    <h2 id="pickTitle">Level 2: the North Shore</h2>
+    <h2 id="pickTitle">Level 2: Moon Pie on Easter Eggy</h2>
     <p>Which tick did you eat?</p>
     <div class="pickbtns">
       <button class="btn" data-tick="regular">The regular tick</button>
@@ -174,6 +184,7 @@ a { color:var(--accent); }
 <div id="end" class="panel" hidden>
   <div class="card">
     <h2>Level 1 done</h2>
+    <div class="sub">The transformation</div>
     <p id="endText"></p>
     <div class="btns">
       <button class="btn" id="next">On to level 2</button>
@@ -188,6 +199,7 @@ a { color:var(--accent); }
 <div id="end2" class="panel" hidden>
   <div class="card">
     <h2>Level 2 done</h2>
+    <div class="sub">Moon Pie on Easter Eggy</div>
     <p id="end2Text"></p>
     <div class="btns">
       <button class="btn" id="next2">On to level 3</button>
@@ -205,6 +217,7 @@ a { color:var(--accent); }
 <div id="end3" class="panel" hidden>
   <div class="card">
     <h2>Level 3 done</h2>
+    <div class="sub">Heading down South</div>
     <p id="end3Text"></p>
     <div class="btns">
       <button class="btn" id="next3">On to level 4</button>
@@ -222,6 +235,7 @@ a { color:var(--accent); }
 <div id="end4" class="panel" hidden>
   <div class="card">
     <h2>Level 4 done</h2>
+    <div class="sub">Heading towards eternity</div>
     <p id="end4Text"></p>
     <p id="ticks4"></p>
     <div class="btns">
@@ -1559,7 +1573,7 @@ async function finish() {
   await fadeTo(1, 0.9);
   $('endText').textContent = 'You ate the ' + TICKS[choice].name +
     (choice === 'human' ? ', ate a honeybun from your N.E.R.D. album case,' : ',') +
-    ' and slipped out under the door after Isabella. Next: level 2, the North Shore.';
+    ' and slipped out under the door after Isabella. Next: Level 2, Moon Pie on Easter Eggy.';
   $('end').hidden = false;
 }
 async function tryAnother() {
@@ -3332,7 +3346,7 @@ async function overlook() {
     human: 'fainted off it into Lake Superior, with a honeybun from an eagle on the way down' }[choice] || 'fell off it into Lake Superior';
   $('end2Text').textContent = 'You ' + how + ' up the North Shore with Brudda Blaine, sank the Edmund Fitzgerald, ' +
     'killed the Gales of November, camped three times, climbed Palisade Head, and ' + off + '. ' +
-    "The deer still have Isabella, and it sounds like they're heading to Mexico. Next: level 3.";
+    "The deer still have Isabella, and it sounds like they're heading to Mexico. Next: Level 3, Heading down South.";
   $('end2').hidden = false;
 }
 async function offLatch() {  // the regular tick: you latch onto Brudda Blaine, and mind-control him into flying after them
@@ -6384,7 +6398,7 @@ function finish3() {
   $('end3Text').textContent = 'You fell off Palisade Head with Brudda Blaine, rode a salmon down the Mississippi to Playa del Carmen, ' +
     'crossed the bridge over the bay to the bouncing club, found Shawn and Karill in the club maze, woke up in Akumal as Brudda ' +
     'Blaine, found Braydon, left Shawn to the mosquitoes, and rode back up to Lake Itasca, where IzzyKat, a tortoiseshell cat, waits in the ' +
-    'U-Haul. The deer still have Isabella. Next: the final chapter, West, in the U-Haul.';
+    'U-Haul. The deer still have Isabella. Next: the final chapter, West, in the U-Haul: Level 4, Heading towards eternity.';
   $('end3').hidden = false;
 }
 // for checks: start level 3 part way along (?level=3&at=...)
@@ -11492,26 +11506,156 @@ const JUMP4 = {  // for checks: ?level=4&at=...
 // ---- the opening: RENDEZVOUS OF THE ARACHNID TICKMAN!, old timey, like an old silent movie (black and white, like a Buster Keaton film: grain, flicker,
 // scratches, 18 frames a second). Right at the beginning: close up, a spider rears its head, body and legs up toward
 // the camera, fangs out; then the view pulls back to a tick, staring at the spider. Then the title card comes up.
-// Silent: there's no sound before a tap. A tap on the screen, A or Space skips ahead to the title card.
-// (How it all looks is a guess at "old timey"; the spider rears up out of the mouth of its tunnel.) ----
+// It waits on a film leader with "Tap to begin" (phones play no sound before a tap). Then the film, with music: an
+// old-timey piano tune, original, through an old radio (narrow, a little gritty, crackling), and at the title card a
+// radio announcer calls out the title: the phone's own built-in voice (speech synthesis), so no recordings. After
+// that, a tap on the screen, A or Space skips ahead to the title card.
+// (How it all looks and sounds is a guess at "old timey"; the spider rears up out of the mouth of its tunnel.) ----
 const PRE = { iris: 1.2, rear0: 0.8, rear1: 2.6, fangs: 2.8, pull0: 5.6, pull1: 9.2, card: 9.8 };
 const SEP = ['#0b0b0b', '#1a1a1a', '#2b2b2b', '#3f3f3f', '#585858', '#767676', '#9a9a9a', '#c2c2c2', '#ececec'];  // black and white, dark to light (was sepia)
 let prelude = null, preVig = null, preZ = 1;
-function startPrelude() { prelude = { t0: time, done: false, skipped: false }; $('title').hidden = true; }
-function preludeCard(quick) {  // the title card fades up over the last shot
+function startPrelude() {
+  prelude = { t0: time, done: false, skipped: false, waiting: true };
+  $('title').hidden = true; $('begin').hidden = false;
+  try { if (window.speechSynthesis) speechSynthesis.getVoices(); } catch (e) {}  // (the list of voices loads in the background)
+}
+function beginPrelude() {  // the tap: the film starts, with its music
+  prelude.waiting = false; prelude.t0 = time; $('begin').hidden = true;
+  audio(); preUnlockVoice(); preScore();
+}
+function preludeCard(quick) {  // the title card fades up over the last shot, and the announcer calls out the title
   if (!prelude || prelude.done) return;
   prelude.done = true;
   const el = $('title'); el.style.transition = 'opacity ' + (quick ? 0.35 : 1.4) + 's'; el.style.opacity = '0'; el.hidden = false;
   requestAnimationFrame(() => requestAnimationFrame(() => { el.style.opacity = '1'; }));
+  preCardSound();
 }
 function skipPrelude() {
   if (!prelude || prelude.done) return;
-  prelude.skipped = true; prelude.t0 = Math.min(prelude.t0, time - PRE.pull1 - 0.1); preludeCard(true);
+  if (prelude.waiting) { beginPrelude(); return; }
+  prelude.skipped = true; prelude.t0 = Math.min(prelude.t0, time - PRE.pull1 - 0.1);
+  preScoreStop(); preludeCard(true);
 }
 function updatePrelude() {
-  if (prelude && !prelude.done && phase === 'title' && time - prelude.t0 >= PRE.card) preludeCard(false);
+  if (prelude && !prelude.done && !prelude.waiting && phase === 'title' && time - prelude.t0 >= PRE.card) preludeCard(false);
+  if (preSnd && phase !== 'title') preSoundStop();  // the game has begun: the opening's sound goes
 }
 $('screen').addEventListener('pointerdown', () => { if (phase === 'title') skipPrelude(); });
+
+// the opening's sound
+let preSnd = null;
+const preUtts = [], PRE_VOL = 0.3, hz = n => 440 * Math.pow(2, (n - 69) / 12);
+function preRadio() {  // an old radio: everything through a narrow band, a little gritty, with crackle and hiss
+  if (preSnd) return preSnd;
+  const out = ac.createGain(); out.gain.value = muted ? 0 : PRE_VOL;
+  const hp = ac.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 320;
+  const pk = ac.createBiquadFilter(); pk.type = 'peaking'; pk.frequency.value = 1400; pk.Q.value = 0.9; pk.gain.value = 6;
+  const sh = ac.createWaveShaper(), curve = new Float32Array(1024);
+  for (let i = 0; i < 1024; i++) { const x = i / 511.5 - 1; curve[i] = Math.tanh(2.2 * x) / Math.tanh(2.2); }
+  sh.curve = curve;
+  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3000;
+  out.connect(hp); hp.connect(pk); pk.connect(sh); sh.connect(lp); lp.connect(ac.destination);
+  const score = ac.createGain(); score.connect(out);
+  const card = ac.createGain(); card.connect(out);
+  const sr = ac.sampleRate, len = sr * 3, b = ac.createBuffer(1, len, sr), d = b.getChannelData(0);  // the crackle
+  for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * 0.03;
+  for (let k = 0; k < 120; k++) {
+    const at = Math.floor(Math.random() * (len - 40)), a = (Math.random() * 0.6 + 0.2) * (Math.random() < 0.5 ? -1 : 1);
+    for (let j = 0; j < 30; j++) d[at + j] += a * Math.exp(-j / 4);
+  }
+  const cs = ac.createBufferSource(), cbp = ac.createBiquadFilter(), cg = ac.createGain();
+  cs.buffer = b; cs.loop = true; cbp.type = 'bandpass'; cbp.frequency.value = 2400; cbp.Q.value = 0.6; cg.gain.value = 0.5;
+  cs.connect(cbp); cbp.connect(cg); cg.connect(out); cs.start();
+  let meter = null;  // (with ?meter: how loud it is, for checks)
+  if (METER) { meter = ac.createAnalyser(); meter.fftSize = 2048; lp.connect(meter); }
+  return (preSnd = { out, score, card, crackle: cs, crackleGain: cg, tada: false, timers: [], meter });
+}
+function prePiano(dest, n, t, v = 0.1, d = 1.4) {  // an old upright piano: two strings a hair out of tune, a bright strike
+  if (n == null) return;
+  const f = hz(n);
+  for (const [m, a, type] of [[1, 1, 'triangle'], [1.0045, 0.7, 'triangle'], [2, 0.32, 'sine'], [3, 0.1, 'sine']]) {
+    const o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.value = f * m;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v * a, t + 0.006);
+    g.gain.exponentialRampToValueAtTime(v * a * 0.35, t + Math.min(0.18, d * 0.5)); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(g); g.connect(dest); o.start(t); o.stop(t + d + 0.05);
+  }
+}
+function preScore() {  // the film's music, original: creeping in, a crash as it rears, a shriek at the fangs, tiptoeing, a run up
+  if (!ac || muted) return;
+  const S = preRadio(), o = S.score, t0 = ac.currentTime + 0.05, P = (n, t, v, d) => prePiano(o, n, t0 + t, v, d);
+  for (let i = 0; i < 10; i++) P(i % 2 ? 45 : 38, i / 12, 0.03 + i * 0.008, 0.3);  // a low tremolo, creeping in
+  for (let i = 0; i < 8; i++) {  // the bass climbs as it rears up, with stabs of a tense chord
+    P(38 + i, 0.8 + i * 0.225, 0.12, 0.3);
+    for (const n of [61, 64, 67, 70]) P(n + Math.floor(i / 2), 0.91 + i * 0.225, 0.035 + i * 0.004, 0.2);
+  }
+  for (const n of [26, 38]) P(n, 2.6, 0.18, 2.6);  // the crash
+  for (const n of [49, 52, 55, 58]) P(n, 2.6, 0.11, 2.2);
+  for (let i = 0; i < 40; i++) for (const n of i % 2 ? [76, 82] : [73, 79]) P(n, 2.66 + i / 14, 0.06 - i * 0.0008, 0.12);  // trembling, up high
+  for (const n of [85, 86, 88]) P(n, 2.8, 0.06, 0.45);  // the fangs
+  const tip = [69, 70, 69, 68, 69, null, 65, 64, 62, null, 64, 65];  // tiptoeing, as the view pulls back
+  tip.forEach((n, i) => { P(i % 2 ? 45 : 38, 5.6 + i * 0.3, 0.08, 0.2); P(n, 5.6 + i * 0.3, 0.075, 0.26); });
+  [62, 65, 69, 74, 77, 81, 86].forEach((n, i) => P(n, 9.2 + i * 0.085, 0.07, 0.6));  // a run up, to the title
+}
+function preScoreStop() {
+  if (!preSnd) return;
+  const g = preSnd.score; g.gain.setTargetAtTime(0, ac.currentTime, 0.04); setTimeout(() => { try { g.disconnect(); } catch (e) {} }, 600);
+  preSnd.score = ac.createGain(); preSnd.score.connect(preSnd.out);
+}
+function preTada() {  // the last two chords, as the announcer calls the name
+  if (!preSnd || preSnd.tada) return;
+  preSnd.tada = true;
+  const t = ac.currentTime + 0.05, o = preSnd.card;
+  if (preSnd.trem) { preSnd.trem.gain.setTargetAtTime(0, t, 0.05); }
+  for (const n of [45, 61, 64, 67, 69]) prePiano(o, n, t, 0.09, 0.5);
+  for (const n of [38, 50, 62, 65, 69, 74]) prePiano(o, n, t + 0.38, 0.09, 2.6);
+  preSnd.crackleGain.gain.setTargetAtTime(0.18, t + 2, 0.6);  // then just the crackle, quietly, under the title card
+}
+function preCardSound() {
+  if (!ac) return;
+  const S = preRadio(), t0 = ac.currentTime + 0.05;
+  if (!muted) {  // a soft tremolo under the announcer
+    S.trem = ac.createGain(); S.trem.connect(S.card);
+    for (let i = 0; i < 56; i++) for (const n of i % 2 ? [53] : [50, 57]) prePiano(S.trem, n, t0 + i / 14, 0.035, 0.14);
+  }
+  const spoke = preSay([['Rendezvous...', 0.8, 0.8], ['of the Arachnid...', 0.8, 0.85], ['Tickman!', 1.05, 0.78]], preTada);
+  S.timers.push(setTimeout(preTada, spoke ? 4500 : 2400));  // (if the voice doesn't come, the chords come anyway)
+}
+function preVoice() {  // a man's English voice, if the phone has one (an announcer's), or its usual English voice
+  const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [], en = vs.filter(v => /^en/i.test(v.lang));
+  for (const name of ['Daniel', 'Arthur', 'Google UK English Male', 'Aaron', 'Alex', 'David', 'George']) {
+    const v = en.find(x => x.name.indexOf(name) === 0); if (v) return v;
+  }
+  return en.find(v => v.default) || en[0] || null;
+}
+function preUnlockVoice() {  // (some phones only let a page speak once it has spoken during a tap)
+  try { if (window.speechSynthesis && !muted) { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } } catch (e) {}
+}
+function preSay(parts, onLast) {
+  try {
+    if (!window.speechSynthesis || muted) return false;
+    speechSynthesis.cancel();
+    const v = preVoice(); preUtts.length = 0;
+    parts.forEach(([text, pitch, rate], i) => {
+      const u = new SpeechSynthesisUtterance(text); preUtts.push(u);  // (held on to, so they aren't dropped before they speak)
+      if (v) u.voice = v; u.lang = (v && v.lang) || 'en-US'; u.pitch = pitch; u.rate = rate; u.volume = 1;
+      if (i === parts.length - 1 && onLast) u.onstart = () => setTimeout(onLast, 250);
+      speechSynthesis.speak(u);
+    });
+    return true;
+  } catch (e) { return false; }
+}
+function preSoundStop() {
+  if (!preSnd) return;
+  const S = preSnd; preSnd = null;
+  for (const id of S.timers) clearTimeout(id);
+  S.out.gain.setTargetAtTime(0, ac.currentTime, 0.12);
+  setTimeout(() => { try { S.crackle.stop(); S.out.disconnect(); } catch (e) {} }, 900);
+  try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
+}
+$('mute').addEventListener('click', () => setTimeout(() => {  // (after the mute button has done its part)
+  if (preSnd) preSnd.out.gain.setTargetAtTime(muted ? 0 : PRE_VOL, ac.currentTime, 0.05);
+  if (muted) try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
+}, 0));
 function clipSeg(a, b, p, q, m) {  // the part of a line that's on screen (with a margin m), as [from, to], or null
   let t0 = 0, t1 = 1; const dx = p - a, dy = q - b;
   for (const [pp, qq] of [[-dx, a + m], [dx, VW + m - a], [-dy, b + m], [dy, VH + m - b]]) {
@@ -11620,7 +11764,16 @@ function preVignette() {
   g.fillStyle = gr; g.fillRect(0, 0, VW, VH);
   return (preVig = c);
 }
-function filmFx(t, f) {  // the old film: dark at the edges, grain, dust, scratches, flicker, and an iris opening at the start
+function drawLeader(t, f) {  // before the film: a film leader (rings, a cross, a sweep going round), waiting for a tap
+  ctx.fillStyle = SEP[3]; ctx.fillRect(0, 0, VW, VH);
+  const a = -Math.PI / 2 + (t % 1.2) / 1.2 * Math.PI * 2;
+  ctx.fillStyle = SEP[4]; ctx.beginPath(); ctx.moveTo(80, 72); ctx.arc(80, 72, 120, -Math.PI / 2, a); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = SEP[7]; ctx.lineWidth = 1;
+  for (const r of [56, 47]) { ctx.beginPath(); ctx.arc(80, 72, r, 0, Math.PI * 2); ctx.stroke(); }
+  ctx.fillStyle = SEP[7]; ctx.fillRect(0, 72, VW, 1); ctx.fillRect(80, 0, 1, VH);
+  filmFx(t, f, true);
+}
+function filmFx(t, f, noIris) {  // the old film: dark at the edges, grain, dust, scratches, flicker, and an iris opening at the start
   const r = rng(f * 7919 + 13);
   ctx.drawImage(preVignette(), 0, 0);
   for (let i = 0; i < 70; i++) { ctx.fillStyle = r() < 0.5 ? 'rgba(236,236,236,0.2)' : 'rgba(11,11,11,0.32)'; ctx.fillRect(Math.floor(r() * VW), Math.floor(r() * VH), 1, 1); }
@@ -11633,13 +11786,14 @@ function filmFx(t, f) {  // the old film: dark at the edges, grain, dust, scratc
     for (let y = 0; y < VH;) { const len = 5 + Math.floor(r() * 36); if (r() < 0.85) ctx.fillRect(x + (r() < 0.2 ? 1 : 0), y, 1, len); y += len + Math.floor(r() * 6); }
   }
   ctx.fillStyle = 'rgba(0,0,0,' + (0.02 + r() * 0.1).toFixed(3) + ')'; ctx.fillRect(0, 0, VW, VH);
-  if (t < PRE.iris + 0.05) {
+  if (!noIris && t < PRE.iris + 0.05) {
     ctx.fillStyle = '#000'; ctx.beginPath(); ctx.rect(0, 0, VW, VH);
     ctx.arc(80, 72, Math.max(0.01, 112 * ease(clamp(t / PRE.iris, 0, 1))), 0, Math.PI * 2, true); ctx.fill('evenodd');
   }
 }
 function drawPrelude() {
   const t = time - prelude.t0, f = Math.floor(t * 18), tq = f / 18;
+  if (prelude.waiting) { drawLeader(t, f); return; }
   const pk = ease(clamp((tq - PRE.pull0) / (PRE.pull1 - PRE.pull0), 0, 1));  // the view pulls back
   const Z = 1.25 * Math.pow(0.5 / 1.25, pk), CX = -20 * pk, CY = -6 + 46 * pk;
   const jy = f % 29 === 11 ? 1 : 0;  // the picture jumps a little, now and then
@@ -11735,7 +11889,7 @@ $('over').addEventListener('click', () => { location.href = location.pathname; }
 let pickLevel = 2;
 function showPick(from, lv = 2) {
   fromPanel = from; pickLevel = lv; $(from).hidden = true; $('pick').hidden = false;
-  $('pickTitle').textContent = { 2: 'Level 2: the North Shore', 3: 'Level 3: Mexico', 4: 'Level 4: West' }[lv];
+  $('pickTitle').textContent = { 2: 'Level 2: Moon Pie on Easter Eggy', 3: 'Level 3: Heading down South', 4: 'Level 4: Heading towards eternity' }[lv];
 }
 $('next').addEventListener('click', e => { e.currentTarget.blur(); audio(); level2(); });
 $('skip').addEventListener('click', e => { e.currentTarget.blur(); audio(); showPick('title'); });
@@ -12072,7 +12226,13 @@ window.__sketch = {
   get realm() { const S = scene3; return S && S.kind === 'realm' ? { she: S.she != null, veil: S.veil != null, sac: S.sac != null, burst: S.burst != null, rugs: S.rugged.size, free: S.free != null } : null; },
   get sac() { const G = scene3 && scene3.kind === 'realm' && scene3.game; if (!G) return null; const [ix, iy] = isaPos(G); return { x: G.x, stun: G.stun != null && time - G.stun < 1.2, shots: G.shots.length, safety: !!G.safety, safeReady: !G.safety && time >= G.safeBack, bubbled: G.bubbled != null, isa: [ix, iy], wave: !!G.wave, won: G.won != null, playing: phase === 'sacgame', deer: G.deer.map(d => ({ x: d.x, y: d.y, state: d.state, e0: d.e0 || 0 })) }; },
   get dis() { return !!(scene3 && scene3.dis); },
-  get prelude() { return prelude ? { t: time - prelude.t0, done: prelude.done, skipped: prelude.skipped, title: !$('title').hidden } : null; },
+  get prelude() { return prelude ? { t: time - prelude.t0, done: prelude.done, skipped: prelude.skipped, waiting: !!prelude.waiting, title: !$('title').hidden,
+    begin: !$('begin').hidden, sound: !!preSnd, tada: !!(preSnd && preSnd.tada), spoken: preUtts.map(u => u.text) } : null; },
+  get preLevel() {  // with ?meter: how loud the opening's sound is right now, [rms, peak] (for checks)
+    if (!preSnd || !preSnd.meter) return null;
+    const a = new Float32Array(preSnd.meter.fftSize); preSnd.meter.getFloatTimeDomainData(a);
+    let s = 0, p = 0; for (const v of a) { s += v * v; p = Math.max(p, Math.abs(v)); } return [Math.sqrt(s / a.length), p];
+  },
   get kingdom() { const S = scene3; return S && S.kind === 'kingdom' ? { cam: kCam(S), end: KW - VW, pan: S.pan != null, lift: S.lift != null, drop: S.drop != null, calm: partyCalm, music: mus ? mus.style.kind : null, cast: S.cast.length } : null; },
   get steak() { const S = scene3; if (!S || S.kind !== 'steak') return null; const g = glassNow(S); return { scoop: S.scoop != null, pour: S.pour != null, put: S.put != null, white: S.toWhite != null, fill: g.fill, tilt: g.tilt, hand: g.hand, under: g.under }; },
   get truckee() { const S = scene3; return S && S.kind === 'truckee' ? { melt: !!S.melt, cig: !!S.cig, lit: !!(S.cig && S.cig.lit), drag: S.drag != null, moon: S.moonK, wade: Math.round(wadeK(S) * 100) / 100, under: !!S.under, warp: !!S.warp } : null; },
