@@ -365,6 +365,10 @@ Every session reads this first and updates it last.
   - "Can we drop the 'go to next level' screen and just add a pause in between and let them keep rolling?"
 - 2026-10-24, issue #1 (15:14 UTC): "Make the buena vista social club music the whole travel down south, during Mississippi
   River and the leaving as well."
+- 2026-10-24, issue #1, two messages (15:18 and 15:21 UTC):
+  - When Blaine comes out of the crowd at the club in Playa del Carmen and says "last taxi", he has to drag the tick by its
+    web outside the rest of the maze, out of the club. "The scene after is still good."
+  - "can you make it seem like the tick, from lake itasca to Reno, has a broken wrist and has a cast on it?"
 
 ## What you've decided
 
@@ -567,6 +571,11 @@ Every session reads this first and updates it last.
 - The Cuban son plays the whole ride down South (changed 2026-10-24, 15:14 UTC, your word; built): from climbing on the
   salmon in Lake Superior, down the Mississippi River, through the Gulf of Mexico, to Playa del Carmen. "The leaving" was
   read as leaving Lake Superior; the ride back up keeps your beat (said in the reply; easy to change).
+- Out of the club (2026-10-24, your word; built): after Brudda Blaine's "Last Taxi out!" and your dance toward him, he
+  grabs you by your web and drags you through the rest of the maze, out of the club. Then the blackout and the taxi, as
+  before. A scene you watch (the assistant's pick; offered: steering him yourself).
+- The broken wrist (2026-10-24, your word; built): a white cast on one of your front legs, from Lake Itasca until you pull
+  into Reno. Off in Reno (a guess; asked).
 - "You're Braydon again." is out; the rest of that scene is the same (2026-10-24; built).
 - The fight with Jim plays smoother (2026-10-24; built): eight ways to move, a smooth start and stop, an eased jump. And
   Jim himself moves smoother ("blocky" meant how he moves, 2026-10-24; built): he sways, breathes, leans after you, and
@@ -1737,6 +1746,33 @@ Every session reads this first and updates it last.
   - Gifts from Blaine: untouched, still on.
   - Link for checks: `?level=3&tick=dog` (level 3 from its start).
 
+- 2026-10-24, out of the club, and the broken wrist (`gh-pages`, commit 001569a), from your two messages (15:18 and 15:21
+  UTC):
+  - Out of the club: after "Where have you been Brudda!? We have to go! Last Taxi out!" and "You dance, with the music,
+    toward him.", two new lines: "Brudda Blaine grabs you by your web." / "He drags you through the rest of the maze, out
+    of the club." Then he goes, about eight seconds, the camera following him: left along the dance floor (as he passes
+    you, you're yanked up into the air, spinning, and over him), down the side of the bar, a vault over the bar (a clink of
+    a bottle, and you hop it after him), then down through the other half of the maze and out the door you came in, both
+    of you fading out through it. You're on the end of a strand of your silk the whole way, a little behind him, still
+    dancing on the beat. The club's music plays on. Then the blackout and the taxi, unchanged. He takes the shortest way
+    there is (the two halves of floor 1 only meet over the bar).
+  - The broken wrist: a white cast near the tip of one of your front legs, with a little shading and the tip of the leg
+    poking out. It's on every drawing of you from Lake Itasca (arriving on the salmon) through level 4 until you pull into
+    Reno: from above (it turns and steps with you), from the side (at the geyser, on the salmon), and big (the picture at
+    the park sign, where it sits on the leg holding IzzyKat up). Off from the motel on, and in level 4 links that start in
+    Reno or after. Nothing is said about it in the words.
+  - Checked, headless and muted: the drag plays for all three ticks, from the dance floor out the door, with the yank, the
+    bar vault and the camera following, then on to the taxi, no errors; the cast is off on the ride back up until Lake
+    Itasca, on at Lake Itasca, on in level 4 from its start, the field, the picture and the hike, on during the drive to
+    Reno and off once you pull in, and never on in the fight, the kingdom, level 2 or the club; seen in screenshots;
+    earlier checks (the opening, levels rolling on, the son on the ride down) still pass. Also checked through the
+    preview site, by the commit's own link.
+  - Guesses: all of it but your words (the new lines, the way he goes, the yank, the vault, the speed; how the cast
+    looks, which leg, and that it comes off in Reno).
+  - Gifts from Blaine: untouched, still on.
+  - Links for checks: `?level=3&tick=dog&at=dance` (the dance floor, then the drag), `?level=3&tick=dog&at=itasca` (the
+    ride back up, the cast from Lake Itasca), `?level=4&tick=dog&at=field` (the cast in the field).
+
 ## Next to build
 
 - If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
@@ -1745,6 +1781,8 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
+- Asked 2026-10-24 (comment 6386003705): in Reno, should the cast come off (built that way), or stay on to the end? Also
+  offered: steering Brudda Blaine through the maze yourself, in place of watching the drag.
 - Said 2026-10-24 (comment 6385905422), an offer: "the leaving" was read as leaving Lake Superior; if it meant the ride back
   up from Mexico, the son goes there too.
 - Said 2026-10-24 (comment 6379914991), an offer, not a question: the opening keeps its piano and crackle with the voice
@@ -2152,3 +2190,7 @@ Every session reads this first and updates it last.
 - 2026-10-24: one message from you on issue #1 (15:14): the Cuban son for the whole ride down South. Replied first (comment
   6385905422) with the plan, how "the leaving" was read (with an offer if it meant the ride back up), and that your two
   before are in. Then built it, same link (gh-pages fcd0d2f).
+- 2026-10-24: one message from you on issue #1 (15:18): the drag out of the club; a second (15:21) came in before the reply
+  went up, so the reply took in both: the broken wrist too. Replied first (comment 6386003705) with the plan for both, an
+  offer (steer him yourself), one question (the cast in Reno), and that the son is in. Then built both, same link (gh-pages
+  001569a).
