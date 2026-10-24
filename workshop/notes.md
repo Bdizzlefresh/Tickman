@@ -339,6 +339,8 @@ Every session reads this first and updates it last.
   - A different ending: everything is revealed at the end on the first run, and after it's over, the option of playing
     the other ticks. With a joke: "I was going to force you to play all three to unlock it, but for some reason it seemed
     harsh."
+- 2026-10-24, issue #1 (03:12 UTC): could you add a voice recording, to help make it closer to what you're thinking for the
+  intro screen?
 
 ## What you've decided
 
@@ -1565,10 +1567,17 @@ Every session reads this first and updates it last.
 
 ## Next to build
 
-Nothing queued.
+- Your voice recording for the opening, once you send it (2026-10-24): it goes in place of the phone's voice, through the
+  old radio crackle, no louder than the music around it. Waiting for the file (a short video, or an .mp3 or .wav, attached
+  to a comment on the website).
 
 ## Open questions
 
+- Said 2026-10-24 (comment 6379180401): yes to your recording, as the voice itself (the assistant can't listen to a
+  recording the way you would, so it can't serve as a guide for the phone's voice); how to send it, step by step, on the
+  website; and that this conversation is public. Checked: GitHub's help page "Attaching files" lists video (.mp4, .mov,
+  .webm, 10 MB on a free plan) and audio (.mp3, .wav) for comments, and not .m4a, the kind of file an iPhone's voice memos
+  save. GitHub's 2011 announcement "Reply to Comments from Email" says email attachments are ignored.
 - Said 2026-10-24 (comment 6377552887), not asked: the voice is the phone's own, so it can only be Groucho's kind of
   delivery, not his voice ("Say if it's not close enough"); and runs after the first play the whole ending too ("say if they
   should stop sooner"). Not checked, and not used: Dave Chappelle's caricature (which one you meant).
@@ -1938,3 +1947,5 @@ Nothing queued.
 - 2026-10-24: three messages from you on issue #1 (00:12 to 00:16, in while that reply was going up): the voice like
   Groucho, "Just the applause", and the ending on the first run with your joke. Replied first (comment 6377552887) with the
   plan for both, a plain note about the voice, and no question. Then built both, same link (gh-pages 054cce0).
+- 2026-10-24: one message from you on issue #1 (03:12): could you add a voice recording for the opening? Replied (comment
+  6379180401): yes, as the voice itself, with the steps to send it. Nothing built yet; it's queued until the file comes.
