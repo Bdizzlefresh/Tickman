@@ -394,6 +394,7 @@ Every session reads this first and updates it last.
 - 2026-10-24, issue #1, two messages (22:22 and 22:23 UTC):
   - On IzzyKat's calls (asked: "She escaped" or "I escaped"?): "Both should be she escaped".
   - The line about eating the gummies in the Badlands should read "We shouldn't have eaten those gummies".
+- 2026-10-25, issue #1 (01:10 UTC): make the bridge at Gooseberry Falls more realistic.
 
 ## What you've decided
 
@@ -584,6 +585,8 @@ Every session reads this first and updates it last.
 - Back at the U-Haul in the Badlands, after "You're frantic." (2026-10-24, your words; built): 'You and Brudda Blaine: "We
   shouldn't have eaten those gummies."', in place of "Why did you eat those gummies?". Then "Filled with the same stuff
   from Milwaukee.", as before. Said together: the assistant's pick.
+- The bridge at Gooseberry Falls, more realistic (2026-10-25, your ask; built): an arch bridge, like the real one there
+  (the assistant's reading of "realistic"; asked if it's the bridge you pictured). Before, it showed as a black box.
 - The hike at Yellowstone (2026-10-24; built): the last sip of every beer sprays up out of your mouths, like a little
   geyser. Get hit by a geyser, and it's a chug session, as punishment, Brudda Blaine chugging one with you.
 - Craps (2026-10-24; built): an attractive waitress brings the free drinks, walking along the bottom of the screen, left to
@@ -1885,6 +1888,33 @@ Every session reads this first and updates it last.
   - Gifts from Blaine: untouched, still on.
   - Links for checks: `?level=4&tick=dog&at=search` (back at the U-Haul), `&at=fight` (the calls).
 
+- 2026-10-25, the bridge at Gooseberry Falls (`gh-pages`, commit 8fcde62), from your message (01:10 UTC):
+  - A fix first: since 2026-10-21 (gh-pages 24ce760) the bridge had been drawn as a plain black box. The level 2 code that
+    paints it and level 3's walk on the bridge over the bay had the same name, and the level 3 one won. The painter has
+    its own name now; level 3's bridge scene is unchanged. Said plainly in the reply, with an apology.
+  - The bridge is an arch bridge now. From above: a deck of weathered concrete, a little stained, worn down the middle; a
+    steel rail on posts along both sides over a concrete curb; a joint where the deck meets each bank; and a stone post at
+    each corner, in red, blue, brown and black basalt.
+  - From the side, over the rapids below it: the deck's edge, and under it the arch, its crown just under the deck and its
+    feet on stone at each bank. Posts run from the arch up to the deck, and it's open between them, so the rapids show
+    through. Shade lies on the water under it.
+  - Checked, about the real place (Wikipedia, read directly):
+    - "Gooseberry River": a bridge was built over the river near the falls in 1922 for Highway 61. A third arch was added
+      in 1937 to widen the road. In 1990 the decision was made to replace it with another arch bridge evocative of the
+      original. The original truss bridge had an arch of 150 feet; the one there now, 154 feet.
+    - "Gooseberry Falls State Park": the park's rustic stone structures were built by the Civilian Conservation Corps
+      between 1934 and 1941, from red, blue, brown and black basalt; "Three distinct layers of lava can be seen from the
+      highway bridge."
+    - Not used: what the real bridge looks like up close (its railings, its colors, where it sits by the falls). The look
+      is a guess, not a copy.
+  - Checked, headless and muted: at the third camp (starting on the bridge), the deck is drawn, not black (in screenshots:
+    99% near-black before, 1% after), for all three ticks; night falls, and morning comes, no errors. Level 2 from its
+    start rides on with no errors. Level 3's bridge scene plays as before. Also checked through the preview site, by the
+    commit's own link.
+  - Guesses: the whole look, the colors and the sizes; the stone posts and the stone at the banks.
+  - Gifts from Blaine: untouched, still on.
+  - Link for checks: `?level=2&tick=dog&at=camp3` (starts you on the bridge).
+
 ## Next to build
 
 - If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
@@ -1893,6 +1923,8 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
+- Asked 2026-10-25 (comment 6391866526): is the arch bridge the one you pictured at Gooseberry Falls, or a different
+  one, like a wooden footbridge done more true to life? (Built as an arch bridge, like the real one.)
 - Said 2026-10-24 (comment 6390315797), two offers: IzzyKat's name still sits over her second call, now that both start
   "She escaped"; say if it should go. And "Filled with the same stuff from Milwaukee." still follows the gummies line; say
   if that should go too. Also: the gummies line is said together, easy to make it just one of you.
@@ -2328,3 +2360,7 @@ Every session reads this first and updates it last.
 - 2026-10-24: two messages from you on issue #1 (22:22 and 22:23): both calls "She escaped", and the gummies line reworded.
   Replied first (comment 6390315797) with the plan for both, two offers (her name over the second call; the Milwaukee line),
   and that the eleven before are in, with links. Then built both, same link (gh-pages 31acf18).
+- 2026-10-25: one message from you on issue #1 (01:10): the bridge at Gooseberry Falls, more realistic. Replied first
+  (comment 6391866526) with an apology (it had been showing as a black box since 2026-10-21), the plan (an arch bridge, like
+  the real one, with the checked facts), a link straight to it, and one question (is that the bridge you pictured?). Then
+  built it, with the fix, same link (gh-pages 8fcde62).
