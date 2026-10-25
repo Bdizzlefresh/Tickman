@@ -395,6 +395,7 @@ Every session reads this first and updates it last.
   - On IzzyKat's calls (asked: "She escaped" or "I escaped"?): "Both should be she escaped".
   - The line about eating the gummies in the Badlands should read "We shouldn't have eaten those gummies".
 - 2026-10-25, issue #1 (01:10 UTC): make the bridge at Gooseberry Falls more realistic.
+- 2026-10-25, issue #1 (01:42 UTC): when IzzyKat saves your lives, take out the "I" in it. Make it just "she".
 
 ## What you've decided
 
@@ -581,7 +582,10 @@ Every session reads this first and updates it last.
   on", in both, your word. The prairie dog's spirit goes into Brudda Blaine now, the coyote's into you. Once you're both
   up, she yawns: "Jim - Off with you." (Changed 2026-10-24, your answer; built: both calls start "She escaped"; the second
   is "She escaped the U-Haul in Yellowstone and I motel ate a silly coyote! Spirit of the Coyote - Go to Tickman!", still
-  with her name over it.)
+  with her name over it.) (Changed 2026-10-25, your word; built: the "I" is out of both, so "she" is the only one. Now:
+  "She escaped the U-Haul in the Badlands and motel ate a Prairie dog - Spirit of the Prairie dog - Go to Blaine!" and
+  "She escaped the U-Haul in Yellowstone and motel ate a silly coyote! Spirit of the Coyote - Go to Tickman!" Read as
+  taking the "I" out, not as "and she motel ate"; offered.)
 - Back at the U-Haul in the Badlands, after "You're frantic." (2026-10-24, your words; built): 'You and Brudda Blaine: "We
   shouldn't have eaten those gummies."', in place of "Why did you eat those gummies?". Then "Filled with the same stuff
   from Milwaukee.", as before. Said together: the assistant's pick.
@@ -1915,6 +1919,14 @@ Every session reads this first and updates it last.
   - Gifts from Blaine: untouched, still on.
   - Link for checks: `?level=2&tick=dog&at=camp3` (starts you on the bridge).
 
+- 2026-10-25, the "I" out of IzzyKat's calls (`gh-pages`, commit 34b90d1), from your message (01:42 UTC): both calls'
+  second lines read "IN THE BADLANDS AND MOTEL ATE" and "IN YELLOWSTONE AND MOTEL ATE" now. Everything else in the calls
+  is the same, her name over the second one included.
+  - Checked, headless and muted, all three ticks: both calls match your words exactly, no "I" in either, her name over the
+    second, on to the second phase, no errors. Also checked through the preview site, by the commit's own link.
+  - Gifts from Blaine: untouched, still on.
+  - Link for checks: `?level=4&tick=dog&at=fight`.
+
 ## Next to build
 
 - If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
@@ -1923,6 +1935,9 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
+- Said 2026-10-25 (comment 6392077640), an offer: "take out the I" was read as dropping it ("and motel ate"); if you meant
+  "and she motel ate", it's a quick change. (Still open from before: the bridge question, and IzzyKat's name over her
+  second call.)
 - Asked 2026-10-25 (comment 6391866526): is the arch bridge the one you pictured at Gooseberry Falls, or a different
   one, like a wooden footbridge done more true to life? (Built as an arch bridge, like the real one.)
 - Said 2026-10-24 (comment 6390315797), two offers: IzzyKat's name still sits over her second call, now that both start
@@ -2364,3 +2379,6 @@ Every session reads this first and updates it last.
   (comment 6391866526) with an apology (it had been showing as a black box since 2026-10-21), the plan (an arch bridge, like
   the real one, with the checked facts), a link straight to it, and one question (is that the bridge you pictured?). Then
   built it, with the fix, same link (gh-pages 8fcde62).
+- 2026-10-25: one message from you on issue #1 (01:42): take the "I" out of IzzyKat's calls; just "she". Replied first
+  (comment 6392077640) with both lines as they'll read, an offer ("and she motel ate" if you meant that), and a link. No
+  question. Then built it, same link (gh-pages 34b90d1).
