@@ -2112,8 +2112,8 @@ function buildRoute() {
   }
   for (let y = 1; y <= 3; y++) put(37, y, 'QQQQQQQ');  // the pizza joint, and its door
   put(40, 3, 'P'); put(37, 4, 'ggg-ggg');
-  // Gooseberry Falls, violent: a wide river crashing over the falls into a churning pool, a footbridge, then rapids
-  // with rocks in them, down to the lake
+  // Gooseberry Falls, violent: a wide river crashing over the falls into a churning pool, a bridge (an arch bridge, more
+  // realistic, since 2026-10-24), then rapids with rocks in them, down to the lake
   for (let y = 0; y <= 8; y++) for (const x of FALLS) m[y][x] = 'v';
   for (let y = 0; y <= 3; y++) m[y][59] = 'x';
   for (let y = 0; y <= 2; y++) for (const x of FALLS) m[y][x] = 'Y';
@@ -2279,13 +2279,70 @@ function rockLedge(g, x, y, tx, ty) {
   speckle(g, x, y, tx * 5 + ty * 3, 10, ['#4f6b3a', '#6e5e54', '#3e342e']);
   g.fillStyle = '#3e342e'; g.fillRect(x, y + 5 + ty % 3, 16, 1);
 }
-function bridge(g, x, y, tx, ty) {  // a wooden footbridge across the river
-  g.fillStyle = '#9b6f43'; g.fillRect(x, y, 16, 16);
-  g.fillStyle = '#7a5432'; for (let i = 0; i < 16; i += 3) g.fillRect(x + i, y, 1, 16);
-  g.fillStyle = '#5e3e22';
-  if (tile(tx, ty - 1) !== 'b') { g.fillRect(x, y, 16, 2); g.fillStyle = '#b8895a'; g.fillRect(x, y, 16, 1); }
-  g.fillStyle = '#5e3e22';
-  if (tile(tx, ty + 1) !== 'b') g.fillRect(x, y + 14, 16, 2);
+// ---- the bridge at Gooseberry Falls, more realistic (your ask, 2026-10-24). Like the real one: an arch bridge has crossed
+// the river by the falls since 1922, and the one there now (decided on in 1990) was made to echo the first (Wikipedia,
+// "Gooseberry River"). Seen from above: a deck of weathered concrete, steel railings on both sides, and a stone post at
+// each corner, in the reds, blues, browns and blacks of the basalt the park's stone buildings were made of, built 1934 to
+// 1941 (Wikipedia, "Gooseberry Falls State Park"). Its side, with the arch under it, is drawn over the water below, in drawBridgeFace().
+// (The look, the colors and the sizes are guesses; the real bridge's details aren't copied.) ----
+const BASALT = ['#5e3a30', '#3c4553', '#5b4a3a', '#262320', '#6a4234', '#45505c'];
+function stones(g, x, y, w, h, seed) {  // a block of fitted stones, mortar between
+  g.fillStyle = '#8b8579'; g.fillRect(x, y, w, h);
+  const r = rng(seed);
+  for (let j = 0; j < h; j += 3) for (let i = (j / 3) % 2 ? -1 : 0; i < w; i += 3) {
+    const sx = Math.max(x, x + i), sw = Math.min(x + w, x + i + 2) - sx; if (sw <= 0) continue;
+    g.fillStyle = BASALT[Math.floor(r() * BASALT.length)]; g.fillRect(sx, y + j, sw, Math.min(2, h - j));
+  }
+  g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(x, y, w, 1);  // the top catches the light
+}
+function bridgeTile(g, x, y, tx, ty) {  // (its own name: "bridge" is level 3's walk on the bridge over the bay, and the two
+  // had the same name, so the bridge here was painted black)
+  const first =tile(tx - 1, ty) !== 'b', last = tile(tx + 1, ty) !== 'b', top = tile(tx, ty - 1) !== 'b', bot = tile(tx, ty + 1) !== 'b';
+  g.fillStyle = '#a9a49a'; g.fillRect(x, y, 16, 16);  // the deck: concrete, weathered and a little stained
+  speckle(g, x, y, tx * 13 + ty * 7 + 5, 18, ['#b7b2a8', '#99948b', '#a19d93', '#8f8b82']);
+  g.fillStyle = 'rgba(70,64,56,.12)'; g.fillRect(x, y + (top ? 7 : 3), 16, 5);  // worn where everyone walks and rides
+  if (first) { g.fillStyle = '#6c6860'; g.fillRect(x + 4, y, 1, 16); g.fillStyle = '#c4bfb5'; g.fillRect(x + 5, y, 1, 16); }  // a joint where the deck meets the bank
+  if (last) { g.fillStyle = '#6c6860'; g.fillRect(x + 11, y, 1, 16); g.fillStyle = '#c4bfb5'; g.fillRect(x + 12, y, 1, 16); }
+  if (top) {  // the far railing: a steel rail on posts, over a concrete curb
+    g.fillStyle = '#8f8a81'; g.fillRect(x, y + 4, 16, 2); g.fillStyle = '#cbc6bc'; g.fillRect(x, y + 4, 16, 1);
+    g.fillStyle = '#3c4249'; for (let i = 1; i < 16; i += 4) g.fillRect(x + i, y + 1, 1, 3);
+    g.fillStyle = '#3c4249'; g.fillRect(x, y + 1, 16, 1); g.fillStyle = '#7e868e'; g.fillRect(x, y, 16, 1);
+    g.fillStyle = 'rgba(0,0,0,.16)'; g.fillRect(x, y + 6, 16, 2);  // its shadow on the deck
+  }
+  if (bot) {  // the near railing, seen from the front: the rail, its posts, then the curb's face
+    g.fillStyle = '#7e868e'; g.fillRect(x, y + 10, 16, 1); g.fillStyle = '#3c4249'; g.fillRect(x, y + 11, 16, 1);
+    for (let i = 1; i < 16; i += 4) g.fillRect(x + i, y + 12, 1, 2);
+    g.fillStyle = '#cbc6bc'; g.fillRect(x, y + 14, 16, 1); g.fillStyle = '#9a958c'; g.fillRect(x, y + 15, 16, 1);
+  }
+  // a stone post at each corner
+  if (top && first) stones(g, x, y, 4, 7, tx * 7 + 1);
+  if (top && last) stones(g, x + 12, y, 4, 7, tx * 7 + 2);
+  if (bot && first) stones(g, x, y + 9, 4, 7, tx * 7 + 3);
+  if (bot && last) stones(g, x + 12, y + 9, 4, 7, tx * 7 + 4);
+}
+function drawBridgeFace(cx, cy) {  // the bridge's side, over the rapids below it: the deck's edge, the arch, and the stone it
+  // springs from on each bank. Open between the posts, so the rapids show through
+  const x0 = FALLS[0] * TS - cx, x1 = (FALLS[FALLS.length - 1] + 1) * TS - cx, y0 = 6 * TS - cy, w = x1 - x0;
+  if (x1 < -8 || x0 > VW + 8) return;
+  ctx.globalAlpha = 0.3; ctx.fillStyle = '#0d2633'; ctx.fillRect(x0, y0, w, 11);  // the shade under it, on the water
+  ctx.globalAlpha = 0.15; ctx.fillRect(x0, y0 + 11, w, 3); ctx.globalAlpha = 1;
+  const rib = i => { const u = (i + 0.5) / w * 2 - 1; return y0 + 4 + Math.round(8 * u * u); };  // the arch: its crown under the deck, its feet at the banks
+  for (let i = 6; i < w - 5; i += 6) {  // posts from the arch up to the deck (open between them)
+    const r = rib(i); if (r - (y0 + 4) < 2) continue;
+    ctx.fillStyle = '#9d988f'; ctx.fillRect(x0 + i, y0 + 3, 1, r - y0 - 3); ctx.fillStyle = '#6f6a62'; ctx.fillRect(x0 + i + 1, y0 + 3, 1, r - y0 - 3);
+  }
+  for (let i = 0; i < w; i++) {  // the arch rib: lit on top, in shadow underneath
+    const r = rib(i);
+    ctx.fillStyle = '#b3aea4'; ctx.fillRect(x0 + i, r, 1, 1);
+    ctx.fillStyle = '#8f8a81'; ctx.fillRect(x0 + i, r + 1, 1, 1);
+    ctx.fillStyle = '#55514b'; ctx.fillRect(x0 + i, r + 2, 1, 1);
+  }
+  ctx.fillStyle = '#8f8a81'; ctx.fillRect(x0 - 2, y0, w + 4, 3);  // the deck's edge, seen from the side
+  ctx.fillStyle = '#b3aea4'; ctx.fillRect(x0 - 2, y0, w + 4, 1);
+  ctx.fillStyle = '#5f5b54'; ctx.fillRect(x0 - 2, y0 + 3, w + 4, 1);
+  stones(ctx, x0 - 4, y0 + 1, 6, 13, 61);  // the stone the arch springs from, on each bank
+  stones(ctx, x1 - 2, y0 + 1, 6, 13, 62);
+  ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(x0 - 4, y0 + 13, 6, 1); ctx.fillRect(x1 - 2, y0 + 13, 6, 1);
 }
 function cliff(g, x, y, tx, ty) {  // a cliff of reddish rock
   g.fillStyle = '#86432e'; g.fillRect(x, y, 16, 16);
@@ -2362,7 +2419,7 @@ function paintRoute(ch, x, y, tx, ty) {
     case 'Y': falls(g, x, y, tx, ty); break;
     case 'j': rapidRock(g, x, y, tx, ty); break;
     case 'x': rockLedge(g, x, y, tx, ty); break;
-    case 'b': bridge(g, x, y, tx, ty); break;
+    case 'b': bridgeTile(g, x, y, tx, ty); break;
     case 'C': cliff(g, x, y, tx, ty); break;
     case 'T': trailSteps(g, x, y); break;
     default: grass2(g, x, y, tx, ty);  // the buildings are painted whole, after
@@ -3945,6 +4002,7 @@ function draw2(cx, cy) {
     }
   }
   if (area === 'route') neonSign(37 * TS + 56 - cx, 1 * TS + 4 - cy, false);
+  if (area === 'route') drawBridgeFace(cx, cy);  // the bridge at the falls: its side and its arch, over the rapids
   if (area === 'pizza') neonSign(5 * TS - cx, 4 - cy, false);
   const list = [], late = [];  // late: drawn over the dark of night
   if (area === 'route') {
