@@ -400,6 +400,7 @@ Every session reads this first and updates it last.
   ready for him: he's going to sleep, and you both agree he should play it before bed.
 - 2026-10-25, issue #1 (01:49 UTC): "It has been a pleasure. I look forward to more."
 - 2026-10-25, issue #1 (02:51 UTC), after the steps to turn on GitHub Pages: "I believe I did it".
+- 2026-10-25, issue #1 (02:59 UTC), on a sideways version for phones: "That could be fun. Sure."
 
 ## What you've decided
 
@@ -668,6 +669,8 @@ Every session reads this first and updates it last.
 - The game's home (2026-10-25): https://bdizzlefresh.github.io/Tickman/ . You turned GitHub Pages on (from the
   `gh-pages` branch, its root folder). Checked: it loads, it's the same file as the `gh-pages` branch, and it plays on a
   phone-sized touch screen with no errors. This is the link to use from now on. The old preview link still works, too.
+- A sideways version for phones (2026-10-25, your yes; built): turn the phone sideways and the screen sits in the middle,
+  the arrows on the left and A on the right, like a handheld. Held upright, it's just as before.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1948,6 +1951,25 @@ Every session reads this first and updates it last.
   - The new link (https://bdizzlefresh.github.io/Tickman/) loads on a phone-sized touch screen, and a tap starts the
     opening, with no errors.
 
+- 2026-10-25, a sideways version for phones (`gh-pages`, commit c57b1c0), from your yes (02:59 UTC):
+  - Turned sideways, the screen sits in the middle, as big as the phone's height allows; the arrows are on the left and A
+    on the right; the game's name and the ♪ button sit in the top corners. Held upright, nothing changes (checked: every
+    part of the page sits in exactly the same place as before, at four phone sizes).
+  - Only the page's layout changed. The game itself, its words and its sounds are untouched.
+  - The title card, sideways: the name on the left half; the level names, how to play and the buttons on the right, so it
+    fits without scrolling. "How to play" says "the arrows on the left" when sideways, "under the screen" when upright.
+  - The tick picker, sideways: its four buttons in two rows. The words drawn over the screen (the level cards, the scroll)
+    keep the same size against the screen as they have upright.
+  - On narrow phones turned sideways, the pad and A are a little smaller (the pad 132px across, A 76px), so the screen can
+    be bigger.
+  - Checked, headless and muted, at ten sideways sizes (568x270 to 932x430): no sideways scroll, nothing to scroll down to,
+    the screen, the pad, A and ♪ all in view and not overlapping, the title card and the tick picker fit, the smallest text
+    12px. Played start to finish by touch alone, sideways, all three ticks, at five of those sizes: all four levels, no
+    errors, no scrolling, every gift from Blaine reached. The scroll fits the screen at every size. The very last card
+    scrolls inside itself, the same as upright (the long recap); "Play the other ticks" is at its top, in view.
+  - Guesses: the sizes and spacing, and where the name and ♪ go.
+  - Gifts from Blaine: untouched, still on.
+
 ## Next to build
 
 - If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
@@ -1956,9 +1978,10 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
-- Asked 2026-10-25 (comment 6392706692): a sideways version, with the arrows on the left of the screen and A on the right,
-  like a handheld game? Or keep it upright only? (Upright works on all three phone sizes checked; sideways needs a scroll
-  to reach the controls.)
+- Answered 2026-10-25: yes to the sideways version ("That could be fun. Sure."; asked, comment 6392706692: a sideways
+  version, with the arrows on the left of the screen and A on the right, like a handheld game, or upright only?). Built.
+- Said 2026-10-25 (comment 6392772993): if the game stays upright when the phone turns, the phone's rotation lock is on, and
+  how to turn it off on an iPhone and on Android.
 - Answered 2026-10-25: GitHub Pages is on (asked, comment 6392572580: the steps to turn it on, and to say once it's on).
 - 2026-10-25: you called the game complete, so the offers still open below (the bridge, IzzyKat's name over her second
   call, "and she motel ate") are left as they are, not asked again. Any of them is still a quick change if you want it.
@@ -2424,3 +2447,6 @@ Every session reads this first and updates it last.
   one question (a sideways version?). Nothing built.
 - 2026-10-25: the phone check (above, in "What's been built"), at Blaine's request: upright passes at three sizes, start
   to finish by touch; sideways needs a scroll to reach the controls, asked.
+- 2026-10-25: one message from you on issue #1 (02:59): yes to the sideways version. Replied first (comment 6392772993) with
+  what it will look like, and how to turn off a phone's rotation lock if it stays upright. No question. Then built it
+  (gh-pages c57b1c0); upright is unchanged.
