@@ -399,6 +399,7 @@ Every session reads this first and updates it last.
 - 2026-10-25, issue #1, two messages (01:47 UTC): "It is complete." You asked the assistant to let Blaine know the game is
   ready for him: he's going to sleep, and you both agree he should play it before bed.
 - 2026-10-25, issue #1 (01:49 UTC): "It has been a pleasure. I look forward to more."
+- 2026-10-25, issue #1 (02:51 UTC), after the steps to turn on GitHub Pages: "I believe I did it".
 
 ## What you've decided
 
@@ -664,6 +665,9 @@ Every session reads this first and updates it last.
   The other, just the mini games with the new tick, was offered as next if you'd rather.
 - The game is complete (2026-10-25, 01:47 UTC, your word). Blaine was told it's ready for him, in his terminal, without
   anything about what's in it.
+- The game's home (2026-10-25): https://bdizzlefresh.github.io/Tickman/ . You turned GitHub Pages on (from the
+  `gh-pages` branch, its root folder). Checked: it loads, it's the same file as the `gh-pages` branch, and it plays on a
+  phone-sized touch screen with no errors. This is the link to use from now on. The old preview link still works, too.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1932,6 +1936,18 @@ Every session reads this first and updates it last.
   - Gifts from Blaine: untouched, still on.
   - Link for checks: `?level=4&tick=dog&at=fight`.
 
+- 2026-10-25, a check of how the game plays on phones (asked by Blaine; nothing changed in the game):
+  - Upright, at three phone sizes (375x667, 390x844, 412x915), with touch: it fits the screen with no sideways scroll; the
+    screen, the arrows and A are all in view at once; the smallest text is 12px; A is 84px across and each arrow 50px.
+  - Played start to finish by touch alone at each of the three sizes (a different tick at each), on the controls where
+    they sit on the page: the opening, Start, the level cards, all four levels with every mini game, the choices, and the
+    end screen's button. No keyboard, no scrolling needed, no errors. The easter eggs from Blaine were reached on the way.
+  - Sideways, at the same three sizes: no sideways scroll, but the screen fills the phone's height and the arrows and A end
+    up 180 to 220px below it, so you have to scroll down to reach them (and on the two smaller phones, scroll the title card
+    to reach Start). Making a sideways layout is a design choice, so it's asked, not built.
+  - The new link (https://bdizzlefresh.github.io/Tickman/) loads on a phone-sized touch screen, and a tap starts the
+    opening, with no errors.
+
 ## Next to build
 
 - If you'd rather: replaying with another tick as just the mini games, in place of starting over from the beginning
@@ -1940,6 +1956,10 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
+- Asked 2026-10-25 (comment 6392706692): a sideways version, with the arrows on the left of the screen and A on the right,
+  like a handheld game? Or keep it upright only? (Upright works on all three phone sizes checked; sideways needs a scroll
+  to reach the controls.)
+- Answered 2026-10-25: GitHub Pages is on (asked, comment 6392572580: the steps to turn it on, and to say once it's on).
 - 2026-10-25: you called the game complete, so the offers still open below (the bridge, IzzyKat's name over her second
   call, "and she motel ate") are left as they are, not asked again. Any of them is still a quick change if you want it.
 - Said 2026-10-25 (comment 6392077640), an offer: "take out the I" was read as dropping it ("and motel ate"); if you meant
@@ -2396,3 +2416,11 @@ Every session reads this first and updates it last.
 - 2026-10-25: one message from you on issue #1 (01:49): it's been a pleasure, and you look forward to more. Replied (comment
   6392136955): thanks, and that a reply to any of these emails picks it up again whenever you like, with the notes keeping
   everything. No question. Nothing built.
+- 2026-10-25: at Blaine's request, a post on issue #1 (comment 6392572580): GitHub Pages was off, so the game only played
+  through a borrowed preview link; the steps to turn it on (checked against GitHub's docs page "Configuring a publishing
+  source for your GitHub Pages site"), that a computer is easiest, that Blaine can help, and to reply once it's on.
+- 2026-10-25: one message from you on issue #1 (02:51): you believe you did it. Checked: Pages is on, and the game loads at
+  https://bdizzlefresh.github.io/Tickman/ . Replied (comment 6392706692) with the new link, what the phone check found, and
+  one question (a sideways version?). Nothing built.
+- 2026-10-25: the phone check (above, in "What's been built"), at Blaine's request: upright passes at three sizes, start
+  to finish by touch; sideways needs a scroll to reach the controls, asked.
