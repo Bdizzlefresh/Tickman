@@ -134,6 +134,54 @@ a { color:var(--accent); }
 #lvcard .lvrule::before, #lvcard .lvrule::after { content:''; flex:1; height:1px; background:#6a6a6a; }
 #lvcard .lvname { font-family:"Limelight","IM Fell English SC",Georgia,serif; font-size:clamp(22px, 7.8vw, 33px); line-height:1.14;
   color:#f6f6f6; text-shadow:0 2px 0 #2b2b2b; overflow-wrap:break-word; }
+/* sideways on a phone (your ask, 2026-10-25): the screen in the middle, as big as the phone's height allows, the arrows on
+   the left and A on the right, like a handheld. Held upright, nothing here applies, so it's just as before. --sw is the
+   screen's width, so the words drawn over the screen keep the same size against it as they have upright. */
+.side-only { display:none; }
+@media (orientation: landscape) and (max-height: 600px) {
+  .up-only { display:none; }
+  .side-only { display:inline; }
+  #app { --vh:100vh; --pt:max(8px, env(safe-area-inset-top)); --pb:max(8px, env(safe-area-inset-bottom));
+    --pl:max(12px, env(safe-area-inset-left)); --pr:max(12px, env(safe-area-inset-right)); --side:156px; --gap:14px;
+    max-width:none; height:var(--vh); padding:var(--pt) var(--pr) var(--pb) var(--pl);
+    display:grid; grid-template-columns:minmax(var(--side), 1fr) auto minmax(var(--side), 1fr); grid-template-rows:auto 1fr;
+    column-gap:var(--gap); row-gap:0; align-items:center; }
+  @supports (height: 100dvh) { #app { --vh:100dvh; } }
+  #top, #pad { display:contents; }
+  #badge { grid-column:1; grid-row:1; align-self:start; padding-top:4px; }
+  #mute { grid-column:3; grid-row:1; align-self:start; justify-self:end; }
+  #screen { --sw:min(calc((var(--vh) - var(--pt) - var(--pb)) * 160 / 144),
+      calc(100vw - var(--pl) - var(--pr) - 2 * var(--gap) - 2 * var(--side)));
+    grid-column:2; grid-row:1 / span 2; align-self:center; width:var(--sw); }
+  #dpad { grid-column:1; grid-row:2; justify-self:center; }
+  #abtn { grid-column:3; grid-row:2; justify-self:center; margin:0; }
+  #hint { display:none; }
+  #lvcard .lvnum { font-size:clamp(14px, calc(var(--sw) * .057), 22px); }
+  #lvcard .lvname { font-size:clamp(20px, calc(var(--sw) * .083), 33px); }
+  #scroll > div:nth-child(2) { font-size:clamp(11px, calc(var(--sw) * .0415), 16px) !important; }
+  /* the cards over the game: a little wider and shorter, so they fit the phone's height */
+  .panel { padding:8px max(16px, env(safe-area-inset-right)) 8px max(16px, env(safe-area-inset-left)); }
+  .card { max-width:520px; padding:12px 16px 10px; }
+  .card p { margin:6px 0; }
+  .btns { margin-top:8px; }
+  .pickbtns { display:grid; grid-template-columns:1fr 1fr; }
+  #title.old { align-items:center; }
+  #title.old .card { max-width:700px; display:flex; align-items:center; gap:22px; padding:10px 18px; }
+  #title .tl, #title .tr { flex:1 1 0; min-width:0; }
+  .marquee .m1, .marquee .m3 { font-size:clamp(20px, 4.2vw, 36px); }
+  .marquee .m4 { font-size:clamp(26px, 5.6vw, 48px); }
+  #title.old .sub, #title.old .card p { font-size:13px; }
+  body:has(.panel:not([hidden])) #badge, body:has(.panel:not([hidden])) #mute { visibility:hidden; }  /* under a card, out of its way */
+}
+/* a narrow phone, sideways: a smaller pad and A, so the screen can be bigger */
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 700px) {
+  #app { --side:136px; --gap:10px; }
+  #dpad { width:132px; height:132px; }
+  #dpad .arm, #dpad .mid { width:44px; height:44px; }
+  #dpad .up { left:44px; top:0; } #dpad .down { left:44px; top:88px; }
+  #dpad .left { left:0; top:44px; } #dpad .right { left:88px; top:44px; } #dpad .mid { left:44px; top:44px; }
+  #abtn { width:76px; height:76px; font-size:24px; }
+}
 </style>
 </head>
 <body>
@@ -172,13 +220,17 @@ a { color:var(--accent); }
 
 <div id="title" class="panel old" hidden>
   <div class="card">
+    <div class="tl">
     <div class="rule"><span>&#10022;</span></div>
     <h1 class="marquee"><span class="m1">RENDEZVOUS </span><span class="m2">OF THE </span><span class="m3">ARACHNID </span><span class="m4">TICKMAN!</span></h1>
     <div class="rule"><span>&#10022;</span></div>
+    </div>
+    <div class="tr">
     <div class="sub">Level 1: The Dilemma<br>Level 2: Moon Pie on Easter Eggy<br>Level 3: Heading down South<br>Level 4: Heading towards eternity</div>
-    <p><b>How to play:</b> move with the arrows under the screen. Tap <b>A</b> to look at things, and to read on.</p>
+    <p><b>How to play:</b> move with the arrows <span class="up-only">under the screen</span><span class="side-only">on the left</span>. Tap <b>A</b> to look at things, and to read on.</p>
     <div class="btns"><button class="btn" id="start">Start</button></div>
     <div class="btns"><button class="btn alt" id="skip">Skip to level 2</button><button class="btn alt" id="skip3">Skip to level 3</button><button class="btn alt" id="skip4">Skip to level 4</button></div>
+    </div>
   </div>
 </div>
 
