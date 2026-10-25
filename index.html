@@ -10287,11 +10287,12 @@ function coyoteHowl() { if (!ac || muted) return; const t = ac.currentTime, o = 
 // ---- IzzyKat saves your lives, more dramatic (your ask), in a Thundercats style: she rises a little, in a glow; thunder,
 // lightning, and her call, huge on screen, a line at a time. Your words, in the sign alphabet's capitals: the first is
 // said over her; the second is hers, with her name over it. Both start "SHE ESCAPED" (your answer, 2026-10-24). With
-// "GO TO ...!", the spirit goes. Tap A to go on. "I motel ate", in both, in place of "feasted on" (your word: an
-// entendre, for the motel 8 she was staying in). (How it all looks and sounds: guesses.) ----
+// "GO TO ...!", the spirit goes. Tap A to go on. "Motel ate", in both, in place of "feasted on" (your word: an
+// entendre, for the motel 8 she was staying in); the "I" before it is out, so it's just "she" (your word, 2026-10-25).
+// (How it all looks and sounds: guesses.) ----
 const IZZY_CALLS = [
-  ['SHE ESCAPED THE U-HAUL', 'IN THE BADLANDS AND I MOTEL ATE', 'A PRAIRIE DOG -', 'SPIRIT OF THE PRAIRIE DOG -', 'GO TO BLAINE!'],
-  ['SHE ESCAPED THE U-HAUL', 'IN YELLOWSTONE AND I MOTEL ATE', 'A SILLY COYOTE!', 'SPIRIT OF THE COYOTE -', 'GO TO TICKMAN!']];
+  ['SHE ESCAPED THE U-HAUL', 'IN THE BADLANDS AND MOTEL ATE', 'A PRAIRIE DOG -', 'SPIRIT OF THE PRAIRIE DOG -', 'GO TO BLAINE!'],
+  ['SHE ESCAPED THE U-HAUL', 'IN YELLOWSTONE AND MOTEL ATE', 'A SILLY COYOTE!', 'SPIRIT OF THE COYOTE -', 'GO TO TICKMAN!']];
 async function izzyCall(S, lines, who, onGo) {
   S.call = { lines, who, shown: 0, at: time, bolt: time };
   thunder();
