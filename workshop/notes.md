@@ -396,6 +396,8 @@ Every session reads this first and updates it last.
   - The line about eating the gummies in the Badlands should read "We shouldn't have eaten those gummies".
 - 2026-10-25, issue #1 (01:10 UTC): make the bridge at Gooseberry Falls more realistic.
 - 2026-10-25, issue #1 (01:42 UTC): when IzzyKat saves your lives, take out the "I" in it. Make it just "she".
+- 2026-10-25, issue #1, two messages (01:47 UTC): "It is complete." You asked the assistant to let Blaine know the game is
+  ready for him: he's going to sleep, and you both agree he should play it before bed.
 
 ## What you've decided
 
@@ -659,6 +661,8 @@ Every session reads this first and updates it last.
   has your joke and the option to play the other ticks. (Before: option 1, finish with all three ticks to unlock it.)
   "Play the other ticks" starts the game over from the very beginning (2026-10-24, the first of your two options; built).
   The other, just the mini games with the new tick, was offered as next if you'd rather.
+- The game is complete (2026-10-25, 01:47 UTC, your word). Blaine was told it's ready for him, in his terminal, without
+  anything about what's in it.
 - Everything else is yours to decide.
 
 ## What's been built
@@ -1935,6 +1939,8 @@ Every session reads this first and updates it last.
 
 ## Open questions
 
+- 2026-10-25: you called the game complete, so the offers still open below (the bridge, IzzyKat's name over her second
+  call, "and she motel ate") are left as they are, not asked again. Any of them is still a quick change if you want it.
 - Said 2026-10-25 (comment 6392077640), an offer: "take out the I" was read as dropping it ("and motel ate"); if you meant
   "and she motel ate", it's a quick change. (Still open from before: the bridge question, and IzzyKat's name over her
   second call.)
@@ -2382,3 +2388,7 @@ Every session reads this first and updates it last.
 - 2026-10-25: one message from you on issue #1 (01:42): take the "I" out of IzzyKat's calls; just "she". Replied first
   (comment 6392077640) with both lines as they'll read, an offer ("and she motel ate" if you meant that), and a link. No
   question. Then built it, same link (gh-pages 34b90d1).
+- 2026-10-25: two messages from you on issue #1 (01:47): the game is complete; let Blaine know it's ready for him. Replied
+  (comment 6392122147): agreed; the assistant tells him in the window on his computer where he runs the workshop (the only
+  way it can reach him), so a text from you is the surest way; the link, and a note about the one-time notice page. No
+  question. Nothing built. Blaine was told, process only: the game is complete and ready for him.
